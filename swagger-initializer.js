@@ -1,17 +1,14 @@
 window.onload = function() {
-  //<editor-fold desc="Changeable Configuration Block">
-      var url = window.location.search.match(/url=([^&]+)/);
-      if (url && url.length > 1) {
-        url = decodeURIComponent(url[1]);
-      } else {
-        url = "http://petstore.swagger.io/v2/swagger.json";
-      }
+  const params = new URLSearchParams(window.location.search);
+  const specUrl = params.get('url') || 'Security.api.json';
+  const readableName = specUrl.split('/').pop().replace(/\.json$/i, '');
+  document.title = `YiQi API · ${readableName}`;
 
-  // the following lines will be replaced by docker/configurator, when it runs in a docker-container
   window.ui = SwaggerUIBundle({
-    url: url,
+    url: decodeURIComponent(specUrl),
     dom_id: '#swagger-ui',
     deepLinking: true,
+    displayRequestDuration: true,
     presets: [
       SwaggerUIBundle.presets.apis,
       SwaggerUIStandalonePreset
@@ -19,8 +16,6 @@ window.onload = function() {
     plugins: [
       SwaggerUIBundle.plugins.DownloadUrl
     ],
-    layout: "StandaloneLayout"
+    layout: 'StandaloneLayout'
   });
-
-  //</editor-fold>
 };

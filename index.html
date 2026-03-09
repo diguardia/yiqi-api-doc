@@ -3,25 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>YiQi ERP · API</title>
-
-  <!-- Base styles -->
+  <title>YiQi ERP · Índice de APIs</title>
+  <meta name="description" content="Índice completo de APIs de YiQi ERP con acceso por módulo, pensado para personas y agentes automatizados." />
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+  <link rel="canonical" href="https://apidoc.yiqi.com.ar/" />
   <link rel="stylesheet" href="index.css" />
-
-  <!-- Font Awesome (icons) -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    referrerpolicy="no-referrer"
-  />
-
-  <!-- Favicons (usando el logo de YiQi) -->
-  <link rel="icon" type="image/png" sizes="32x32" href="https://yiqi.com.ar/wp-content/uploads/2022/05/FM_logo_header-544x303-1-300x167.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="https://yiqi.com.ar/wp-content/uploads/2022/05/FM_logo_header-544x303-1-300x167.png" />
-  <link rel="shortcut icon" href="https://yiqi.com.ar/wp-content/uploads/2022/05/FM_logo_header-544x303-1-300x167.png" />
-  <meta name="description" content="Documentación de APIs de YiQi ERP por módulo" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" />
 </head>
-
 <body>
   <header class="topbar">
     <div class="container topbar__inner">
@@ -29,13 +17,12 @@
         <img class="brand__img" src="https://yiqi.com.ar/wp-content/uploads/2022/05/FM_logo_header-544x303-1-300x167.png" alt="YiQi ERP" />
         <span class="brand__name">YiQi ERP</span>
         <span class="brand__dot">•</span>
-        <span class="brand__section">API</span>
+        <span class="brand__section">API Docs</span>
       </div>
-      <nav class="topbar__nav">
+      <nav class="topbar__nav" aria-label="Navegación principal">
         <a class="navlink" href="#" aria-current="page">Inicio</a>
-        <a class="navlink" href="https://yiqi.com.ar" target="_blank" rel="noopener">Sitio</a>
-        <a class="navlink" href="https://apidoc.yiqi.com.ar" target="_blank" rel="noopener">OpenAPI</a>
-        <a class="navlink" href="https://openai.com" target="_blank" rel="noopener">OpenAI</a>
+        <a class="navlink" href="view.html?url=Security.api.json">Probar Swagger</a>
+        <a class="navlink" href="modules.json">Listado JSON</a>
       </nav>
     </div>
   </header>
@@ -44,168 +31,95 @@
     <section class="hero">
       <div class="container hero__inner">
         <div class="hero__text">
-          <h1>API de YiQi ERP</h1>
-          <p>Explorá la documentación de endpoints por módulo. Cada tarjeta abre un <strong>viewer OpenAPI</strong> con el detalle de los recursos, parámetros y ejemplos.</p>
+          <h1>Índice completo de APIs de YiQi ERP</h1>
+          <p>Este portal reúne los <strong>módulos funcionales</strong> y sus especificaciones OpenAPI. Podés buscar por tema y abrir el Swagger de cada módulo.</p>
           <div class="search">
-            <label for="search" class="sr-only">Buscar módulo</label>
+            <label for="search" class="sr-only">Buscar módulo o keyword</label>
             <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-            <input id="search" type="text" placeholder="Buscar módulo (ej.: Ventas, Stock, Gestión…)" autocomplete="off" />
+            <input id="search" type="text" placeholder="Buscar módulo, keyword o dominio (ej: ventas, auth, tracking)" autocomplete="off" />
           </div>
-        </div>
-        <div class="hero__illu" aria-hidden="true">
-          <div class="glass"></div>
-          <div class="glass"></div>
-          <div class="glass"></div>
+          <p id="result-count" class="result-count" aria-live="polite"></p>
         </div>
       </div>
     </section>
 
-    <section class="grid container" aria-label="Listado de módulos">
-      <!-- Seguridad -->
-      <a class="card" data-name="Seguridad Auth OAuth Login Token"
-         href="view.html?url=https://apidoc.yiqi.com.ar/security.api.json">
-        <div class="card__icon"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></div>
-        <div class="card__body">
-          <h3 class="card__title">Seguridad</h3>
-          <p class="card__desc">Autenticación, tokens y gestión de acceso.</p>
-        </div>
-        <span class="card__cta" aria-hidden="true">Ver</span>
-      </a>
-
-      <!-- Ventas -->
-      <a class="card" data-name="Ventas Pedidos Facturas NC Remitos"
-         href="view.html?url=https://apidoc.yiqi.com.ar/erpdemo.schema-Ventas-api.json">
-        <div class="card__icon"><i class="fa-solid fa-receipt" aria-hidden="true"></i></div>
-        <div class="card__body">
-          <h3 class="card__title">Módulo Ventas</h3>
-          <p class="card__desc">Pedidos, facturación, notas de crédito, remitos.</p>
-        </div>
-        <span class="card__cta" aria-hidden="true">Ver</span>
-      </a>
-
-      <!-- Stock -->
-      <a class="card" data-name="Stock Depósitos Movimientos Inventario"
-         href="view.html?url=https://apidoc.yiqi.com.ar/erpdemo.schema-Stock-api.json">
-        <div class="card__icon"><i class="fa-solid fa-boxes-stacked" aria-hidden="true"></i></div>
-        <div class="card__body">
-          <h3 class="card__title">Módulo Stock</h3>
-          <p class="card__desc">Depósitos, movimientos, inventarios y ajustes.</p>
-        </div>
-        <span class="card__cta" aria-hidden="true">Ver</span>
-      </a>
-
-      <!-- Clientes y Proveedores -->
-      <a class="card" data-name="Clientes Proveedores Terceros"
-         href="view.html?url=https://apidoc.yiqi.com.ar/erpdemo.schema-Clientes_y_proveedor-api.json">
-        <div class="card__icon"><i class="fa-solid fa-people-arrows" aria-hidden="true"></i></div>
-        <div class="card__body">
-          <h3 class="card__title">Clientes y Proveedores</h3>
-          <p class="card__desc">Maestros de terceros, cuentas y condiciones.</p>
-        </div>
-        <span class="card__cta" aria-hidden="true">Ver</span>
-      </a>
-
-      <!-- Compras -->
-      <a class="card" data-name="Compras OC Recepciones"
-         href="view.html?url=https://apidoc.yiqi.com.ar/erpdemo.schema-Compras-api.json">
-        <div class="card__icon"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i></div>
-        <div class="card__body">
-          <h3 class="card__title">Módulo Compras</h3>
-          <p class="card__desc">Órdenes de compra, recepciones y precios.</p>
-        </div>
-        <span class="card__cta" aria-hidden="true">Ver</span>
-      </a>
-
-      <!-- Contabilidad -->
-      <a class="card" data-name="Contabilidad Asientos Mayores"
-         href="view.html?url=https://apidoc.yiqi.com.ar/erpdemo.schema-Contabilidad-api.json">
-        <div class="card__icon"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i></div>
-        <div class="card__body">
-          <h3 class="card__title">Módulo Contabilidad</h3>
-          <p class="card__desc">Asientos, mayores, centros de costo.</p>
-        </div>
-        <span class="card__cta" aria-hidden="true">Ver</span>
-      </a>
-
-      <!-- Finanzas -->
-      <a class="card" data-name="Finanzas Tesorería Bancos"
-         href="view.html?url=https://apidoc.yiqi.com.ar/erpdemo.schema-Finanzas-api.json">
-        <div class="card__icon"><i class="fa-solid fa-piggy-bank" aria-hidden="true"></i></div>
-        <div class="card__body">
-          <h3 class="card__title">Módulo Finanzas</h3>
-          <p class="card__desc">Tesorería, bancos, cobranzas y pagos.</p>
-        </div>
-        <span class="card__cta" aria-hidden="true">Ver</span>
-      </a>
-
-      <!-- Gestión -->
-      <a class="card" data-name="Gestión Parametría Tablas"
-         href="view.html?url=https://apidoc.yiqi.com.ar/erpdemo.schema-Gestion-api.json">
-        <div class="card__icon"><i class="fa-solid fa-sliders" aria-hidden="true"></i></div>
-        <div class="card__body">
-          <h3 class="card__title">Módulo Gestión</h3>
-          <p class="card__desc">Parámetros generales y catálogos maestros.</p>
-        </div>
-        <span class="card__cta" aria-hidden="true">Ver</span>
-      </a>
-
-      <!-- Producción -->
-      <a class="card" data-name="Producción OP BOM Rutas"
-         href="view.html?url=https://apidoc.yiqi.com.ar/erpdemo.schema-Produccion-api.json">
-        <div class="card__icon"><i class="fa-solid fa-industry" aria-hidden="true"></i></div>
-        <div class="card__body">
-          <h3 class="card__title">Módulo Producción</h3>
-          <p class="card__desc">Órdenes, listas de materiales y rutas.</p>
-        </div>
-        <span class="card__cta" aria-hidden="true">Ver</span>
-      </a>
-
-      <!-- Comercial/CRM -->
-      <a class="card" data-name="Comercial CRM Oportunidades"
-         href="view.html?url=https://apidoc.yiqi.com.ar/erpdemo.schema-Comercial_CRM-api.json">
-        <div class="card__icon"><i class="fa-solid fa-user-tie" aria-hidden="true"></i></div>
-        <div class="card__body">
-          <h3 class="card__title">Módulo Comercial / CRM</h3>
-          <p class="card__desc">Oportunidades, actividades y pipeline.</p>
-        </div>
-        <span class="card__cta" aria-hidden="true">Ver</span>
-      </a>
-    </section>
-
-    <section class="help container">
+    <section class="container help">
       <div class="help__box">
-        <h4><i class="fa-solid fa-circle-question" aria-hidden="true"></i> ¿Cómo navego los endpoints?</h4>
+        <h2><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Cómo usar esta documentación</h2>
         <ol>
-          <li>Hacé clic en un módulo para abrir el <em>viewer</em>.</li>
-          <li>Expandí el tag que te interese y elegí el endpoint.</li>
-          <li>Usá el panel derecho para ver parámetros, modelos y ejemplos.</li>
+          <li>Elegí un módulo desde el índice.</li>
+          <li>Dentro del Swagger, expandí tags y operaciones.</li>
+          <li>Validá parámetros obligatorios, cuerpos de request y respuestas.</li>
         </ol>
-        <p>¿Necesitás credenciales de prueba? <a href="mailto:atencion@yiqi.com.ar">Contactanos</a>.</p>
+        <p><strong>Para bots/agentes:</strong> consumí <a href="modules.json">modules.json</a> para descubrir el catálogo de specs de manera estructurada.</p>
       </div>
     </section>
+
+    <section id="module-grid" class="grid container" aria-label="Listado de módulos API"></section>
   </main>
 
   <footer class="footer">
     <div class="container footer__inner">
-      <small>© <span id="year"></span> YiQi ERP — Documentación de API</small>
-      <small><a href="https://apidoc.yiqi.com.ar" target="_blank" rel="noopener">OpenAPI Specs</a></small>
+      <small>© <span id="year"></span> YiQi ERP — API Docs</small>
+      <small><a href="modules.json">Catálogo machine-readable (JSON)</a></small>
     </div>
   </footer>
 
-  <script>
-    // Año dinámico
-    document.getElementById('year').textContent = new Date().getFullYear();
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "YiQi ERP API Docs",
+      "url": "https://apidoc.yiqi.com.ar/",
+      "inLanguage": "es"
+    }
+  </script>
 
-    // Búsqueda cliente-side por nombre/keywords
+  <script>
+    const grid = document.getElementById('module-grid');
     const input = document.getElementById('search');
-    const cards = Array.from(document.querySelectorAll('.card'));
-    input?.addEventListener('input', () => {
+    const resultCount = document.getElementById('result-count');
+    const year = document.getElementById('year');
+    year.textContent = new Date().getFullYear();
+
+    let modules = [];
+
+    function buildCard(mod) {
+      const queryUrl = encodeURIComponent(mod.spec);
+      const keywords = (mod.keywords || []).join(' ');
+      return `
+        <a class="card" data-name="${(mod.name + ' ' + keywords + ' ' + mod.description).toLowerCase()}" href="view.html?url=${queryUrl}">
+          <div class="card__icon"><i class="fa-solid ${mod.icon || 'fa-cube'}" aria-hidden="true"></i></div>
+          <div class="card__body">
+            <h3 class="card__title">${mod.name}</h3>
+            <p class="card__desc">${mod.description}</p>
+          </div>
+          <span class="card__cta" aria-hidden="true">Ver</span>
+        </a>`;
+    }
+
+    function render(list) {
+      grid.innerHTML = list.map(buildCard).join('');
+      resultCount.textContent = `${list.length} módulo(s) visible(s).`;
+    }
+
+    function filterModules() {
       const q = input.value.trim().toLowerCase();
-      cards.forEach(c => {
-        const name = (c.dataset.name || '').toLowerCase();
-        c.style.display = name.includes(q) ? '' : 'none';
+      if (!q) return render(modules);
+      render(modules.filter((m) => `${m.name} ${(m.keywords || []).join(' ')} ${m.description}`.toLowerCase().includes(q)));
+    }
+
+    fetch('modules.json')
+      .then((res) => res.json())
+      .then((data) => {
+        modules = data;
+        render(modules);
+      })
+      .catch(() => {
+        resultCount.textContent = 'No se pudo cargar el índice JSON.';
       });
-    });
+
+    input.addEventListener('input', filterModules);
   </script>
 </body>
 </html>
