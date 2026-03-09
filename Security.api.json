@@ -1,0 +1,69 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "YiQi ERP - Seguridad",
+    "version": "0"
+  },
+  "servers": [
+    {
+      "url": "https://api.yiqi.com.ar/"
+    }
+  ],
+  "paths": {
+    "/token": {
+      "summary": "Get a valid bearer token",
+      "post": {
+        "summary": "",
+        "description": "",
+        "operationId": "",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "username",
+                  "password",
+                  "grant_type"
+                ],
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "description": "A valid e-mail"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "user password"
+                  },
+                  "grant_type": {
+                    "type": "string",
+                    "description": "password",
+                    "example": "password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A valid token",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "A sample token (this is just an example, don´t try to use it)": {
+                    "value": "{\n  \"access_token\": \"sdfsdfsdfsdfsdfPFhfVAv0mTa-B9wN9nhK6QuB8jECFM4j4HxL26s4vfIahTIJa5c1rJ7qhtLtaDfwtnYViuixZzvQcJq8tmw2OkDQSFsXXtzAcZEHbXiBH2svEXfj-o9ih4j4pS8ibeDdH8g_RhI363BUw6yCepmhYqRxkTubDOf885E5p-oSn9sjhxGroTPOHL3QxeUHZiW7QkgP1YN4_jQresdfsdfsdfsdf9Y-ZUWCBVfTkki6dfLOZHUBa70Ikmj4wrEG2-hG5dEdreGVs53O2BzaoU_r2F-fu0T8nfN36LTFUK_KtKGjB3ZkNOssljZE25mrKJw5jHkykrTyNgsmNySilAEw5uOaho8wL6nXX41ktgiFrvgRpFwYw_TNYy7_M6-4z3Jr0TItqZsSgpfsA-UrQF3J8fc24x-n3enSwTH3qi20rn0B4RS0RLmTsah3ich-2rWeTDbMvKCpuA\",\n  \"token_type\": \"bearer\",\n  \"expires_in\": 120959999,\n  \"userName\": \"xxx@test.com\",\n  \".issued\": \"Mon, 30 May 2022 23:29:34 GMT\",\n  \".expires\": \"Mon, 30 Mar 2026 23:29:34 GMT\"\n}"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid username or password"
+          }
+        }
+      }
+    }
+  }
+}

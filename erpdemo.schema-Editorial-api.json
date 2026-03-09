@@ -1,0 +1,2517 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "erpdemo.schema Editorial",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.yiqi.com.ar/api/public"
+    }
+  ],
+  "paths": {
+    "/COMISION_POR_ARTICUL": {
+      "post": {
+        "tags": [
+          "Comisión por artículo"
+        ],
+        "summary": "Create a Comisión por artículo.",
+        "description": "Creates a Comisión por artículo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "COPA_DESDE": {
+                        "title": "Desde",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "COPA_HASTA": {
+                        "title": "Hasta",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MATE_ID_MATE": {
+                        "title": "Artículo",
+                        "type": "integer",
+                        "description": " This is a foreign key to Artículo. An id of Artículo is expected",
+                        "nullable": true
+                      },
+                      "CLIE_ID_CLIE": {
+                        "title": "Autor",
+                        "type": "integer",
+                        "description": " This is a foreign key to Empresa. An id of Empresa is expected",
+                        "nullable": true
+                      },
+                      "COPA_PORC_NACIONAL": {
+                        "title": "Nacional %",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "COPA_NACIONAL_SOBRE_PVP": {
+                        "title": "Nacional sobre PVP",
+                        "type": "boolean",
+                        "nullable": true
+                      },
+                      "COPA_PORC_INSTITUCIONAL": {
+                        "title": "Institucional %",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "COPA_INSTITUCIONAL_SOBRE_": {
+                        "title": "Institucional sobre PVP",
+                        "type": "boolean",
+                        "nullable": true
+                      },
+                      "COPA_PORC_INTERNACIONAL": {
+                        "title": "Internacional %",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "COPA_INTERNACIONAL_SOBRE_": {
+                        "title": "Internacional sobre PVP",
+                        "type": "boolean",
+                        "nullable": true
+                      },
+                      "COPA_ROL": {
+                        "title": "Rol",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/COMISION_POR_ARTICUL/{id}": {
+      "get": {
+        "tags": [
+          "Comisión por artículo"
+        ],
+        "description": "Get a Comisión por artículo by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Comisión por artículo id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Comisión por artículo"
+        ],
+        "summary": "Update a Comisión por artículo by id.",
+        "description": "Update a Comisión por artículo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Comisión por artículo id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "COPA_DESDE": {
+                        "title": "Desde",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "COPA_HASTA": {
+                        "title": "Hasta",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MATE_ID_MATE": {
+                        "title": "Artículo",
+                        "type": "integer",
+                        "description": " This is a foreign key to Artículo. An id of Artículo is expected",
+                        "nullable": true
+                      },
+                      "CLIE_ID_CLIE": {
+                        "title": "Autor",
+                        "type": "integer",
+                        "description": " This is a foreign key to Empresa. An id of Empresa is expected",
+                        "nullable": true
+                      },
+                      "COPA_PORC_NACIONAL": {
+                        "title": "Nacional %",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "COPA_NACIONAL_SOBRE_PVP": {
+                        "title": "Nacional sobre PVP",
+                        "type": "boolean",
+                        "nullable": true
+                      },
+                      "COPA_PORC_INSTITUCIONAL": {
+                        "title": "Institucional %",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "COPA_INSTITUCIONAL_SOBRE_": {
+                        "title": "Institucional sobre PVP",
+                        "type": "boolean",
+                        "nullable": true
+                      },
+                      "COPA_PORC_INTERNACIONAL": {
+                        "title": "Internacional %",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "COPA_INTERNACIONAL_SOBRE_": {
+                        "title": "Internacional sobre PVP",
+                        "type": "boolean",
+                        "nullable": true
+                      },
+                      "COPA_ROL": {
+                        "title": "Rol",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Comisión por artículo"
+        ],
+        "summary": "Delete a Comisión por artículo by id.",
+        "description": "Delete a Comisión por artículo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Comisión por artículo id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance deleted successfully"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Entity or instance not found"
+          }
+        }
+      }
+    },
+    "/COMISION_POR_ARTICUL/search": {
+      "get": {
+        "tags": [
+          "Comisión por artículo"
+        ],
+        "summary": "Note: This endpoint returns 50 max instances of {e.title}.",
+        "description": "Search instances of Comisión por artículo",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/COMISION_POR_ARTICUL/smartie": {
+      "get": {
+        "tags": [
+          "Comisión por artículo"
+        ],
+        "description": "Get a page of a smartie",
+        "parameters": [
+          {
+            "name": "smartieId",
+            "in": "query",
+            "description": "Smartie id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": " Page number (1-based)",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": " Search term",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/COMISION_POR_ARTICUL/file": {
+      "get": {
+        "tags": [
+          "Comisión por artículo"
+        ],
+        "summary": "Descarga un archivo de una entidad",
+        "description": "Devuelve el archivo cargado en un atributo de tipo archivo de una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archivo encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Comisión por artículo"
+        ],
+        "summary": "Carga o reemplaza un archivo en una entidad",
+        "description": "Guarda el archivo en el atributo de tipo archivo de una instancia de entidad. Soporta dos formatos: multipart/form-data o binary directo (application/octet-stream, application/pdf, etc.).",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "description": "Tipo de contenido (MIME) del archivo (ej: application/pdf, image/png)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Nombre del archivo (opcional, se puede inferir del multipart)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Archivo a cargar. Puede enviarse como multipart/form-data o como binary directo.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "Contenido del archivo",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido binario del archivo enviado directamente",
+                "format": "binary"
+              }
+            },
+            "application/pdf": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido PDF enviado directamente",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Archivo guardado correctamente"
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/COMISION_POR_ARTICUL/report": {
+      "get": {
+        "tags": [
+          "Comisión por artículo"
+        ],
+        "summary": "Descarga un reporte asociado a una entidad",
+        "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "reportName",
+            "in": "query",
+            "description": "Nombre del reporte",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reporte encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo de reporte"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un reporte con ese nombre en la entidad"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/COMISION_POR_AUTOR": {
+      "post": {
+        "tags": [
+          "Registro comisión por autor."
+        ],
+        "summary": "Create a Registro comisión por autor..",
+        "description": "Creates a Registro comisión por autor.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "LDDA_ID_LDDA": {
+                        "title": "Liquidación",
+                        "type": "integer",
+                        "description": " This is a foreign key to Liq. Derechos de Autor. An id of Liq. Derechos de Autor is expected",
+                        "nullable": true
+                      },
+                      "CLIE_ID_CLIE": {
+                        "title": "Autor",
+                        "type": "integer",
+                        "description": " This is a foreign key to Empresa. An id of Empresa is expected",
+                        "nullable": true
+                      },
+                      "MATE_ID_MATE": {
+                        "title": "Libro",
+                        "type": "integer",
+                        "description": " This is a foreign key to Artículo. An id of Artículo is expected",
+                        "nullable": true
+                      },
+                      "COPA_DOCUMENTO": {
+                        "title": "Documento",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "COPA_MONTO_ORIGINAL": {
+                        "title": "Monto original",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "COPA_PORCENTAJE": {
+                        "title": "Porcentaje",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "COPA_COMISION": {
+                        "title": "Comisión",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "COPA_CATEGORIA": {
+                        "title": "Categoría",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "COPA_CANTIDAD": {
+                        "title": "Cantidad",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "FACT_ID_FACT": {
+                        "title": "Factura",
+                        "type": "integer",
+                        "description": " This is a foreign key to Factura. An id of Factura is expected",
+                        "nullable": true
+                      },
+                      "NOCR_ID_NOCR": {
+                        "title": "Nota",
+                        "type": "integer",
+                        "description": " This is a foreign key to Nota de Crédito (V). An id of Nota de Crédito (V) is expected",
+                        "nullable": true
+                      },
+                      "COPA_NACIONAL": {
+                        "title": "Nacional",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "COPA_INSTITUCIONAL": {
+                        "title": "Institucional",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "COPA_INTERNACIONAL": {
+                        "title": "Internacional",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "COPA_PVP": {
+                        "title": "PVP",
+                        "type": "number",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/COMISION_POR_AUTOR/{id}": {
+      "get": {
+        "tags": [
+          "Registro comisión por autor."
+        ],
+        "description": "Get a Registro comisión por autor. by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Registro comisión por autor. id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Registro comisión por autor."
+        ],
+        "summary": "Update a Registro comisión por autor. by id.",
+        "description": "Update a Registro comisión por autor.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Registro comisión por autor. id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "LDDA_ID_LDDA": {
+                        "title": "Liquidación",
+                        "type": "integer",
+                        "description": " This is a foreign key to Liq. Derechos de Autor. An id of Liq. Derechos de Autor is expected",
+                        "nullable": true
+                      },
+                      "CLIE_ID_CLIE": {
+                        "title": "Autor",
+                        "type": "integer",
+                        "description": " This is a foreign key to Empresa. An id of Empresa is expected",
+                        "nullable": true
+                      },
+                      "MATE_ID_MATE": {
+                        "title": "Libro",
+                        "type": "integer",
+                        "description": " This is a foreign key to Artículo. An id of Artículo is expected",
+                        "nullable": true
+                      },
+                      "COPA_DOCUMENTO": {
+                        "title": "Documento",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "COPA_MONTO_ORIGINAL": {
+                        "title": "Monto original",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "COPA_PORCENTAJE": {
+                        "title": "Porcentaje",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "COPA_COMISION": {
+                        "title": "Comisión",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "COPA_CATEGORIA": {
+                        "title": "Categoría",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "COPA_CANTIDAD": {
+                        "title": "Cantidad",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "FACT_ID_FACT": {
+                        "title": "Factura",
+                        "type": "integer",
+                        "description": " This is a foreign key to Factura. An id of Factura is expected",
+                        "nullable": true
+                      },
+                      "NOCR_ID_NOCR": {
+                        "title": "Nota",
+                        "type": "integer",
+                        "description": " This is a foreign key to Nota de Crédito (V). An id of Nota de Crédito (V) is expected",
+                        "nullable": true
+                      },
+                      "COPA_NACIONAL": {
+                        "title": "Nacional",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "COPA_INSTITUCIONAL": {
+                        "title": "Institucional",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "COPA_INTERNACIONAL": {
+                        "title": "Internacional",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "COPA_PVP": {
+                        "title": "PVP",
+                        "type": "number",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Registro comisión por autor."
+        ],
+        "summary": "Delete a Registro comisión por autor. by id.",
+        "description": "Delete a Registro comisión por autor.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Registro comisión por autor. id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance deleted successfully"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Entity or instance not found"
+          }
+        }
+      }
+    },
+    "/COMISION_POR_AUTOR/search": {
+      "get": {
+        "tags": [
+          "Registro comisión por autor."
+        ],
+        "summary": "Note: This endpoint returns 50 max instances of {e.title}.",
+        "description": "Search instances of Registro comisión por autor.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/COMISION_POR_AUTOR/smartie": {
+      "get": {
+        "tags": [
+          "Registro comisión por autor."
+        ],
+        "description": "Get a page of a smartie",
+        "parameters": [
+          {
+            "name": "smartieId",
+            "in": "query",
+            "description": "Smartie id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": " Page number (1-based)",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": " Search term",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/COMISION_POR_AUTOR/file": {
+      "get": {
+        "tags": [
+          "Registro comisión por autor."
+        ],
+        "summary": "Descarga un archivo de una entidad",
+        "description": "Devuelve el archivo cargado en un atributo de tipo archivo de una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archivo encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Registro comisión por autor."
+        ],
+        "summary": "Carga o reemplaza un archivo en una entidad",
+        "description": "Guarda el archivo en el atributo de tipo archivo de una instancia de entidad. Soporta dos formatos: multipart/form-data o binary directo (application/octet-stream, application/pdf, etc.).",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "description": "Tipo de contenido (MIME) del archivo (ej: application/pdf, image/png)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Nombre del archivo (opcional, se puede inferir del multipart)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Archivo a cargar. Puede enviarse como multipart/form-data o como binary directo.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "Contenido del archivo",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido binario del archivo enviado directamente",
+                "format": "binary"
+              }
+            },
+            "application/pdf": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido PDF enviado directamente",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Archivo guardado correctamente"
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/COMISION_POR_AUTOR/report": {
+      "get": {
+        "tags": [
+          "Registro comisión por autor."
+        ],
+        "summary": "Descarga un reporte asociado a una entidad",
+        "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "reportName",
+            "in": "query",
+            "description": "Nombre del reporte",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reporte encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo de reporte"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un reporte con ese nombre en la entidad"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/DET_LIQ_DERECHOS_DE_": {
+      "post": {
+        "tags": [
+          "Det Liq Derechos de Autor"
+        ],
+        "summary": "Create a Det Liq Derechos de Autor.",
+        "description": "Creates a Det Liq Derechos de Autor",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "LDDA_ID_LDDA": {
+                        "title": "Liquidación",
+                        "type": "integer",
+                        "description": " This is a foreign key to Liq. Derechos de Autor. An id of Liq. Derechos de Autor is expected",
+                        "nullable": true
+                      },
+                      "CLIE_ID_CLIE": {
+                        "title": "Autor",
+                        "type": "integer",
+                        "description": " This is a foreign key to Empresa. An id of Empresa is expected",
+                        "nullable": true
+                      },
+                      "DLDD_NACIONAL": {
+                        "title": "Nacional",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "DLDD_INSTITUCIONAL": {
+                        "title": "Institucional",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "DLDD_INTERNACIONAL": {
+                        "title": "Internacional",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "DLDD_PVP": {
+                        "title": "PVP",
+                        "type": "number",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/DET_LIQ_DERECHOS_DE_/{id}": {
+      "get": {
+        "tags": [
+          "Det Liq Derechos de Autor"
+        ],
+        "description": "Get a Det Liq Derechos de Autor by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Det Liq Derechos de Autor id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Det Liq Derechos de Autor"
+        ],
+        "summary": "Update a Det Liq Derechos de Autor by id.",
+        "description": "Update a Det Liq Derechos de Autor",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Det Liq Derechos de Autor id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "LDDA_ID_LDDA": {
+                        "title": "Liquidación",
+                        "type": "integer",
+                        "description": " This is a foreign key to Liq. Derechos de Autor. An id of Liq. Derechos de Autor is expected",
+                        "nullable": true
+                      },
+                      "CLIE_ID_CLIE": {
+                        "title": "Autor",
+                        "type": "integer",
+                        "description": " This is a foreign key to Empresa. An id of Empresa is expected",
+                        "nullable": true
+                      },
+                      "DLDD_NACIONAL": {
+                        "title": "Nacional",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "DLDD_INSTITUCIONAL": {
+                        "title": "Institucional",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "DLDD_INTERNACIONAL": {
+                        "title": "Internacional",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "DLDD_PVP": {
+                        "title": "PVP",
+                        "type": "number",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Det Liq Derechos de Autor"
+        ],
+        "summary": "Delete a Det Liq Derechos de Autor by id.",
+        "description": "Delete a Det Liq Derechos de Autor",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Det Liq Derechos de Autor id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance deleted successfully"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Entity or instance not found"
+          }
+        }
+      }
+    },
+    "/DET_LIQ_DERECHOS_DE_/search": {
+      "get": {
+        "tags": [
+          "Det Liq Derechos de Autor"
+        ],
+        "summary": "Note: This endpoint returns 50 max instances of {e.title}.",
+        "description": "Search instances of Det Liq Derechos de Autor",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/DET_LIQ_DERECHOS_DE_/smartie": {
+      "get": {
+        "tags": [
+          "Det Liq Derechos de Autor"
+        ],
+        "description": "Get a page of a smartie",
+        "parameters": [
+          {
+            "name": "smartieId",
+            "in": "query",
+            "description": "Smartie id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": " Page number (1-based)",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": " Search term",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/DET_LIQ_DERECHOS_DE_/changestate": {
+      "post": {
+        "tags": [
+          "Det Liq Derechos de Autor"
+        ],
+        "description": "Change an instance's state",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Instance id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Possibles values: <ul><li>Ingresado</li></ul>",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/DET_LIQ_DERECHOS_DE_/file": {
+      "get": {
+        "tags": [
+          "Det Liq Derechos de Autor"
+        ],
+        "summary": "Descarga un archivo de una entidad",
+        "description": "Devuelve el archivo cargado en un atributo de tipo archivo de una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archivo encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Det Liq Derechos de Autor"
+        ],
+        "summary": "Carga o reemplaza un archivo en una entidad",
+        "description": "Guarda el archivo en el atributo de tipo archivo de una instancia de entidad. Soporta dos formatos: multipart/form-data o binary directo (application/octet-stream, application/pdf, etc.).",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "description": "Tipo de contenido (MIME) del archivo (ej: application/pdf, image/png)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Nombre del archivo (opcional, se puede inferir del multipart)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Archivo a cargar. Puede enviarse como multipart/form-data o como binary directo.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "Contenido del archivo",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido binario del archivo enviado directamente",
+                "format": "binary"
+              }
+            },
+            "application/pdf": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido PDF enviado directamente",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Archivo guardado correctamente"
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/DET_LIQ_DERECHOS_DE_/report": {
+      "get": {
+        "tags": [
+          "Det Liq Derechos de Autor"
+        ],
+        "summary": "Descarga un reporte asociado a una entidad",
+        "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "reportName",
+            "in": "query",
+            "description": "Nombre del reporte",
+            "required": true,
+            "schema": {
+              "enum": [
+                "AJUSTE_LIQ_AUTOR",
+                null
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reporte encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo de reporte"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un reporte con ese nombre en la entidad"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/LIQ_DERECHOS_DE_AUTO": {
+      "post": {
+        "tags": [
+          "Liq. Derechos de Autor"
+        ],
+        "summary": "Create a Liq. Derechos de Autor.",
+        "description": "Creates a Liq. Derechos de Autor",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "LDDA_FECHA_DESDE": {
+                        "title": "Fecha Desde",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "LDDA_FECHA_HASTA": {
+                        "title": "Fecha Hasta",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "Detalles": {
+                        "title": "Detalles",
+                        "type": "array",
+                        "items": {
+                          "title": "Detalles",
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "title": "Instance unique identifier",
+                              "type": "integer",
+                              "description": "Instance identity. If ommited a new instance is created."
+                            },
+                            "CLIE_ID_CLIE": {
+                              "title": "Autor",
+                              "type": "integer",
+                              "description": " This is a foreign key to Empresa. An id of Empresa is expected",
+                              "nullable": true
+                            },
+                            "DLDD_NACIONAL": {
+                              "title": "Nacional",
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "DLDD_INSTITUCIONAL": {
+                              "title": "Institucional",
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "DLDD_INTERNACIONAL": {
+                              "title": "Internacional",
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "DLDD_PVP": {
+                              "title": "PVP",
+                              "type": "number",
+                              "nullable": true
+                            }
+                          },
+                          "description": "Child entity of Detalles"
+                        },
+                        "description": "Array of child entities of Detalles"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/LIQ_DERECHOS_DE_AUTO/{id}": {
+      "get": {
+        "tags": [
+          "Liq. Derechos de Autor"
+        ],
+        "description": "Get a Liq. Derechos de Autor by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Liq. Derechos de Autor id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Liq. Derechos de Autor"
+        ],
+        "summary": "Update a Liq. Derechos de Autor by id.",
+        "description": "Update a Liq. Derechos de Autor",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Liq. Derechos de Autor id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "LDDA_FECHA_DESDE": {
+                        "title": "Fecha Desde",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "LDDA_FECHA_HASTA": {
+                        "title": "Fecha Hasta",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "Detalles": {
+                        "title": "Detalles",
+                        "type": "array",
+                        "items": {
+                          "title": "Detalles",
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "title": "Instance unique identifier",
+                              "type": "integer",
+                              "description": "Instance identity. If ommited a new instance is created."
+                            },
+                            "CLIE_ID_CLIE": {
+                              "title": "Autor",
+                              "type": "integer",
+                              "description": " This is a foreign key to Empresa. An id of Empresa is expected",
+                              "nullable": true
+                            },
+                            "DLDD_NACIONAL": {
+                              "title": "Nacional",
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "DLDD_INSTITUCIONAL": {
+                              "title": "Institucional",
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "DLDD_INTERNACIONAL": {
+                              "title": "Internacional",
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "DLDD_PVP": {
+                              "title": "PVP",
+                              "type": "number",
+                              "nullable": true
+                            }
+                          },
+                          "description": "Child entity of Detalles"
+                        },
+                        "description": "Array of child entities of Detalles"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Liq. Derechos de Autor"
+        ],
+        "summary": "Delete a Liq. Derechos de Autor by id.",
+        "description": "Delete a Liq. Derechos de Autor",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Liq. Derechos de Autor id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance deleted successfully"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Entity or instance not found"
+          }
+        }
+      }
+    },
+    "/LIQ_DERECHOS_DE_AUTO/search": {
+      "get": {
+        "tags": [
+          "Liq. Derechos de Autor"
+        ],
+        "summary": "Note: This endpoint returns 50 max instances of {e.title}.",
+        "description": "Search instances of Liq. Derechos de Autor",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/LIQ_DERECHOS_DE_AUTO/smartie": {
+      "get": {
+        "tags": [
+          "Liq. Derechos de Autor"
+        ],
+        "description": "Get a page of a smartie",
+        "parameters": [
+          {
+            "name": "smartieId",
+            "in": "query",
+            "description": "Smartie id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": " Page number (1-based)",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": " Search term",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/LIQ_DERECHOS_DE_AUTO/changestate": {
+      "post": {
+        "tags": [
+          "Liq. Derechos de Autor"
+        ],
+        "description": "Change an instance's state",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Instance id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Possibles values: <ul><li>Error al procesar</li>\n<li>Procesada</li>\n<li>Reprocesando</li></ul>",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/LIQ_DERECHOS_DE_AUTO/file": {
+      "get": {
+        "tags": [
+          "Liq. Derechos de Autor"
+        ],
+        "summary": "Descarga un archivo de una entidad",
+        "description": "Devuelve el archivo cargado en un atributo de tipo archivo de una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archivo encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Liq. Derechos de Autor"
+        ],
+        "summary": "Carga o reemplaza un archivo en una entidad",
+        "description": "Guarda el archivo en el atributo de tipo archivo de una instancia de entidad. Soporta dos formatos: multipart/form-data o binary directo (application/octet-stream, application/pdf, etc.).",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "description": "Tipo de contenido (MIME) del archivo (ej: application/pdf, image/png)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Nombre del archivo (opcional, se puede inferir del multipart)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Archivo a cargar. Puede enviarse como multipart/form-data o como binary directo.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "Contenido del archivo",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido binario del archivo enviado directamente",
+                "format": "binary"
+              }
+            },
+            "application/pdf": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido PDF enviado directamente",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Archivo guardado correctamente"
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/LIQ_DERECHOS_DE_AUTO/report": {
+      "get": {
+        "tags": [
+          "Liq. Derechos de Autor"
+        ],
+        "summary": "Descarga un reporte asociado a una entidad",
+        "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "reportName",
+            "in": "query",
+            "description": "Nombre del reporte",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reporte encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo de reporte"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un reporte con ese nombre en la entidad"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": [ ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "Comisión por artículo",
+      "description": "Comisión por artículo"
+    },
+    {
+      "name": "Registro comisión por autor.",
+      "description": "Registro comisión por autor."
+    },
+    {
+      "name": "Det Liq Derechos de Autor",
+      "description": "Det Liq Derechos de Autor"
+    },
+    {
+      "name": "Liq. Derechos de Autor",
+      "description": "Liq. Derechos de Autor"
+    }
+  ]
+}

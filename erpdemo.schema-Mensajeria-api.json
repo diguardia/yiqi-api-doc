@@ -1,0 +1,2506 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "erpdemo.schema Mensajería",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.yiqi.com.ar/api/public"
+    }
+  ],
+  "paths": {
+    "/ADJUNTO": {
+      "post": {
+        "tags": [
+          "Adjunto"
+        ],
+        "summary": "Create a Adjunto.",
+        "description": "Creates a Adjunto",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "ADJU_FECHA": {
+                        "title": "Fecha",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "ADJU_ADJUNTO_FILE": {
+                        "title": "Adjunto",
+                        "type": "integer",
+                        "nullable": true
+                      },
+                      "ADJU_ADJUNTO_FILE_L": {
+                        "title": "Adjunto - File",
+                        "type": "integer",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/ADJUNTO/{id}": {
+      "get": {
+        "tags": [
+          "Adjunto"
+        ],
+        "description": "Get a Adjunto by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Adjunto id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Adjunto"
+        ],
+        "summary": "Update a Adjunto by id.",
+        "description": "Update a Adjunto",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Adjunto id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "ADJU_FECHA": {
+                        "title": "Fecha",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "ADJU_ADJUNTO_FILE": {
+                        "title": "Adjunto",
+                        "type": "integer",
+                        "nullable": true
+                      },
+                      "ADJU_ADJUNTO_FILE_L": {
+                        "title": "Adjunto - File",
+                        "type": "integer",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Adjunto"
+        ],
+        "summary": "Delete a Adjunto by id.",
+        "description": "Delete a Adjunto",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Adjunto id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance deleted successfully"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Entity or instance not found"
+          }
+        }
+      }
+    },
+    "/ADJUNTO/search": {
+      "get": {
+        "tags": [
+          "Adjunto"
+        ],
+        "summary": "Note: This endpoint returns 50 max instances of {e.title}.",
+        "description": "Search instances of Adjunto",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/ADJUNTO/smartie": {
+      "get": {
+        "tags": [
+          "Adjunto"
+        ],
+        "description": "Get a page of a smartie",
+        "parameters": [
+          {
+            "name": "smartieId",
+            "in": "query",
+            "description": "Smartie id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": " Page number (1-based)",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": " Search term",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/ADJUNTO/file": {
+      "get": {
+        "tags": [
+          "Adjunto"
+        ],
+        "summary": "Descarga un archivo de una entidad",
+        "description": "Devuelve el archivo cargado en un atributo de tipo archivo de una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "enum": [
+                "ADJUNTO_FILE",
+                "ADJUNTO_FILE_L"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archivo encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Adjunto"
+        ],
+        "summary": "Carga o reemplaza un archivo en una entidad",
+        "description": "Guarda el archivo en el atributo de tipo archivo de una instancia de entidad. Soporta dos formatos: multipart/form-data o binary directo (application/octet-stream, application/pdf, etc.).",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "enum": [
+                "ADJUNTO_FILE",
+                "ADJUNTO_FILE_L"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "description": "Tipo de contenido (MIME) del archivo (ej: application/pdf, image/png)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Nombre del archivo (opcional, se puede inferir del multipart)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Archivo a cargar. Puede enviarse como multipart/form-data o como binary directo.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "Contenido del archivo",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido binario del archivo enviado directamente",
+                "format": "binary"
+              }
+            },
+            "application/pdf": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido PDF enviado directamente",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Archivo guardado correctamente"
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/ADJUNTO/report": {
+      "get": {
+        "tags": [
+          "Adjunto"
+        ],
+        "summary": "Descarga un reporte asociado a una entidad",
+        "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "reportName",
+            "in": "query",
+            "description": "Nombre del reporte",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reporte encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo de reporte"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un reporte con ese nombre en la entidad"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/MENSAJE_DE_PEDIDO": {
+      "post": {
+        "tags": [
+          "Mensaje de Pedido"
+        ],
+        "summary": "Create a Mensaje de Pedido.",
+        "description": "Creates a Mensaje de Pedido",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "required": [
+                      "PEDI_ID_PEDI"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "PEDI_ID_PEDI": {
+                        "title": "Pedido",
+                        "type": "integer",
+                        "description": " This is a foreign key to Pedido. An id of Pedido is expected"
+                      },
+                      "MEDP_PROCEDENCIA": {
+                        "title": "Procedencia",
+                        "maxLength": 100,
+                        "type": "string",
+                        "default": "Cliente",
+                        "nullable": true
+                      },
+                      "MEDP_REMITENTE": {
+                        "title": "Remitente",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MEDP_MENSAJE": {
+                        "title": "Mensaje",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MEDP_FECHA": {
+                        "title": "Fecha",
+                        "type": "string",
+                        "default": "PARAM.PARA_HOY",
+                        "nullable": true
+                      },
+                      "Adjunto": {
+                        "title": "Adjunto",
+                        "type": "array",
+                        "items": {
+                          "title": "Adjunto",
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "title": "Instance unique identifier",
+                              "type": "integer",
+                              "description": "Instance identity. If ommited a new instance is created."
+                            },
+                            "ADJU_FECHA": {
+                              "title": "Fecha",
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "ADJU_ADJUNTO_FILE": {
+                              "title": "Adjunto",
+                              "type": "integer",
+                              "nullable": true
+                            },
+                            "ADJU_ADJUNTO_FILE_L": {
+                              "title": "Adjunto - File",
+                              "type": "integer",
+                              "nullable": true
+                            }
+                          },
+                          "description": "Child entity of Adjunto"
+                        },
+                        "description": "Array of child entities of Adjunto"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/MENSAJE_DE_PEDIDO/{id}": {
+      "get": {
+        "tags": [
+          "Mensaje de Pedido"
+        ],
+        "description": "Get a Mensaje de Pedido by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Mensaje de Pedido id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Mensaje de Pedido"
+        ],
+        "summary": "Update a Mensaje de Pedido by id.",
+        "description": "Update a Mensaje de Pedido",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Mensaje de Pedido id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "required": [
+                      "PEDI_ID_PEDI"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "PEDI_ID_PEDI": {
+                        "title": "Pedido",
+                        "type": "integer",
+                        "description": " This is a foreign key to Pedido. An id of Pedido is expected"
+                      },
+                      "MEDP_PROCEDENCIA": {
+                        "title": "Procedencia",
+                        "maxLength": 100,
+                        "type": "string",
+                        "default": "Cliente",
+                        "nullable": true
+                      },
+                      "MEDP_REMITENTE": {
+                        "title": "Remitente",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MEDP_MENSAJE": {
+                        "title": "Mensaje",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MEDP_FECHA": {
+                        "title": "Fecha",
+                        "type": "string",
+                        "default": "PARAM.PARA_HOY",
+                        "nullable": true
+                      },
+                      "Adjunto": {
+                        "title": "Adjunto",
+                        "type": "array",
+                        "items": {
+                          "title": "Adjunto",
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "title": "Instance unique identifier",
+                              "type": "integer",
+                              "description": "Instance identity. If ommited a new instance is created."
+                            },
+                            "ADJU_FECHA": {
+                              "title": "Fecha",
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "ADJU_ADJUNTO_FILE": {
+                              "title": "Adjunto",
+                              "type": "integer",
+                              "nullable": true
+                            },
+                            "ADJU_ADJUNTO_FILE_L": {
+                              "title": "Adjunto - File",
+                              "type": "integer",
+                              "nullable": true
+                            }
+                          },
+                          "description": "Child entity of Adjunto"
+                        },
+                        "description": "Array of child entities of Adjunto"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Mensaje de Pedido"
+        ],
+        "summary": "Delete a Mensaje de Pedido by id.",
+        "description": "Delete a Mensaje de Pedido",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Mensaje de Pedido id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance deleted successfully"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Entity or instance not found"
+          }
+        }
+      }
+    },
+    "/MENSAJE_DE_PEDIDO/search": {
+      "get": {
+        "tags": [
+          "Mensaje de Pedido"
+        ],
+        "summary": "Note: This endpoint returns 50 max instances of {e.title}.",
+        "description": "Search instances of Mensaje de Pedido",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "MEDP_PROCEDENCIA",
+            "in": "query",
+            "description": "Procedencia",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PEDI_ID_PEDI",
+            "in": "query",
+            "description": "Pedido",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/MENSAJE_DE_PEDIDO/smartie": {
+      "get": {
+        "tags": [
+          "Mensaje de Pedido"
+        ],
+        "description": "Get a page of a smartie",
+        "parameters": [
+          {
+            "name": "smartieId",
+            "in": "query",
+            "description": "Smartie id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": " Page number (1-based)",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": " Search term",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/MENSAJE_DE_PEDIDO/changestate": {
+      "post": {
+        "tags": [
+          "Mensaje de Pedido"
+        ],
+        "description": "Change an instance's state",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Instance id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Possibles values: <ul><li>Enviado</li>\n<li>Leído</li>\n<li>No leído</li>\n<li>Respondiendo</li>\n<li>Sincronizando</li></ul>",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/MENSAJE_DE_PEDIDO/file": {
+      "get": {
+        "tags": [
+          "Mensaje de Pedido"
+        ],
+        "summary": "Descarga un archivo de una entidad",
+        "description": "Devuelve el archivo cargado en un atributo de tipo archivo de una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archivo encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Mensaje de Pedido"
+        ],
+        "summary": "Carga o reemplaza un archivo en una entidad",
+        "description": "Guarda el archivo en el atributo de tipo archivo de una instancia de entidad. Soporta dos formatos: multipart/form-data o binary directo (application/octet-stream, application/pdf, etc.).",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "description": "Tipo de contenido (MIME) del archivo (ej: application/pdf, image/png)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Nombre del archivo (opcional, se puede inferir del multipart)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Archivo a cargar. Puede enviarse como multipart/form-data o como binary directo.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "Contenido del archivo",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido binario del archivo enviado directamente",
+                "format": "binary"
+              }
+            },
+            "application/pdf": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido PDF enviado directamente",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Archivo guardado correctamente"
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/MENSAJE_DE_PEDIDO/report": {
+      "get": {
+        "tags": [
+          "Mensaje de Pedido"
+        ],
+        "summary": "Descarga un reporte asociado a una entidad",
+        "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "reportName",
+            "in": "query",
+            "description": "Nombre del reporte",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reporte encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo de reporte"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un reporte con ese nombre en la entidad"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/MENSAJE_DE_TIENDA": {
+      "post": {
+        "tags": [
+          "Mensaje de tienda"
+        ],
+        "summary": "Create a Mensaje de tienda.",
+        "description": "Creates a Mensaje de tienda",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "required": [
+                      "MEDT_NUMERO",
+                      "MEDT_COD_TIPO_ORIGEN"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "MEDT_NUMERO": {
+                        "title": "Número",
+                        "maxLength": 100,
+                        "type": "string"
+                      },
+                      "MEDT_CLIENT_ID": {
+                        "title": "Client Id",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MEDT_COD_TIPO_ORIGEN": {
+                        "title": "Código de tipo de origen",
+                        "maxLength": 100,
+                        "enum": [
+                          "ML",
+                          "AM",
+                          "WC",
+                          "FV",
+                          " SP",
+                          " TN",
+                          " VT",
+                          " MT",
+                          " TO"
+                        ],
+                        "type": "string"
+                      },
+                      "MEDT_NRO_DE_PEDIDO": {
+                        "title": "Número de pedido",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MEDT_JSON": {
+                        "title": "JSON",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EXTE_ID_EXTE": {
+                        "title": "Origen de pedido",
+                        "type": "integer",
+                        "description": " This is a foreign key to Origen de Pedido. An id of Origen de Pedido is expected",
+                        "nullable": true
+                      },
+                      "MEDT_DATE_CREATED": {
+                        "title": "Fecha de creación en ML",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MEDT_DATE_CREATED_YQ": {
+                        "title": "Fecha de creación en esquema",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MEDT_DATE_RECEIVED_YQ": {
+                        "title": "Fecha de recepción",
+                        "type": "string",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/MENSAJE_DE_TIENDA/{id}": {
+      "get": {
+        "tags": [
+          "Mensaje de tienda"
+        ],
+        "description": "Get a Mensaje de tienda by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Mensaje de tienda id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Mensaje de tienda"
+        ],
+        "summary": "Update a Mensaje de tienda by id.",
+        "description": "Update a Mensaje de tienda",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Mensaje de tienda id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "required": [
+                      "MEDT_NUMERO",
+                      "MEDT_COD_TIPO_ORIGEN"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "MEDT_NUMERO": {
+                        "title": "Número",
+                        "maxLength": 100,
+                        "type": "string"
+                      },
+                      "MEDT_CLIENT_ID": {
+                        "title": "Client Id",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MEDT_COD_TIPO_ORIGEN": {
+                        "title": "Código de tipo de origen",
+                        "maxLength": 100,
+                        "enum": [
+                          "ML",
+                          "AM",
+                          "WC",
+                          "FV",
+                          " SP",
+                          " TN",
+                          " VT",
+                          " MT",
+                          " TO"
+                        ],
+                        "type": "string"
+                      },
+                      "MEDT_NRO_DE_PEDIDO": {
+                        "title": "Número de pedido",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MEDT_JSON": {
+                        "title": "JSON",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EXTE_ID_EXTE": {
+                        "title": "Origen de pedido",
+                        "type": "integer",
+                        "description": " This is a foreign key to Origen de Pedido. An id of Origen de Pedido is expected",
+                        "nullable": true
+                      },
+                      "MEDT_DATE_CREATED": {
+                        "title": "Fecha de creación en ML",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MEDT_DATE_CREATED_YQ": {
+                        "title": "Fecha de creación en esquema",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MEDT_DATE_RECEIVED_YQ": {
+                        "title": "Fecha de recepción",
+                        "type": "string",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Mensaje de tienda"
+        ],
+        "summary": "Delete a Mensaje de tienda by id.",
+        "description": "Delete a Mensaje de tienda",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Mensaje de tienda id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance deleted successfully"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Entity or instance not found"
+          }
+        }
+      }
+    },
+    "/MENSAJE_DE_TIENDA/search": {
+      "get": {
+        "tags": [
+          "Mensaje de tienda"
+        ],
+        "summary": "Note: This endpoint returns 50 max instances of {e.title}.",
+        "description": "Search instances of Mensaje de tienda",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "MEDT_NUMERO",
+            "in": "query",
+            "description": "Número",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "MEDT_COD_TIPO_ORIGEN",
+            "in": "query",
+            "description": "Código de tipo de origen",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/MENSAJE_DE_TIENDA/smartie": {
+      "get": {
+        "tags": [
+          "Mensaje de tienda"
+        ],
+        "description": "Get a page of a smartie",
+        "parameters": [
+          {
+            "name": "smartieId",
+            "in": "query",
+            "description": "Smartie id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": " Page number (1-based)",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": " Search term",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/MENSAJE_DE_TIENDA/changestate": {
+      "post": {
+        "tags": [
+          "Mensaje de tienda"
+        ],
+        "description": "Change an instance's state",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Instance id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Possibles values: <ul><li>En espera</li>\n<li>Error JSON</li>\n<li>Error Obteniendo Mensaje</li>\n<li>Mensaje Generado</li>\n<li>Mensaje obtenido</li>\n<li>Pendiente</li></ul>",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/MENSAJE_DE_TIENDA/file": {
+      "get": {
+        "tags": [
+          "Mensaje de tienda"
+        ],
+        "summary": "Descarga un archivo de una entidad",
+        "description": "Devuelve el archivo cargado en un atributo de tipo archivo de una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archivo encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Mensaje de tienda"
+        ],
+        "summary": "Carga o reemplaza un archivo en una entidad",
+        "description": "Guarda el archivo en el atributo de tipo archivo de una instancia de entidad. Soporta dos formatos: multipart/form-data o binary directo (application/octet-stream, application/pdf, etc.).",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "description": "Tipo de contenido (MIME) del archivo (ej: application/pdf, image/png)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Nombre del archivo (opcional, se puede inferir del multipart)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Archivo a cargar. Puede enviarse como multipart/form-data o como binary directo.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "Contenido del archivo",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido binario del archivo enviado directamente",
+                "format": "binary"
+              }
+            },
+            "application/pdf": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido PDF enviado directamente",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Archivo guardado correctamente"
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/MENSAJE_DE_TIENDA/report": {
+      "get": {
+        "tags": [
+          "Mensaje de tienda"
+        ],
+        "summary": "Descarga un reporte asociado a una entidad",
+        "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "reportName",
+            "in": "query",
+            "description": "Nombre del reporte",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reporte encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo de reporte"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un reporte con ese nombre en la entidad"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/MSJ_DE_PUBLI": {
+      "post": {
+        "tags": [
+          "Mensaje de Publicacion"
+        ],
+        "summary": "Create a Mensaje de Publicacion.",
+        "description": "Creates a Mensaje de Publicacion",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "PUBL_ID_PUBL": {
+                        "title": "Publicación",
+                        "type": "integer",
+                        "description": " This is a foreign key to Publicación. An id of Publicación is expected",
+                        "nullable": true
+                      },
+                      "MSDP_REMITENTE": {
+                        "title": "Remitente",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MSDP_Q_DELETE": {
+                        "title": "Pregunta eliminada",
+                        "type": "boolean",
+                        "description": "Si este check está marcado, significa que el usuario eliminó la pregunta.",
+                        "default": "N",
+                        "nullable": true
+                      },
+                      "MSDP_FECHA": {
+                        "title": "Fecha",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MSDP_MENSAJE": {
+                        "title": "Mensaje",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MSDP_RESPUESTA": {
+                        "title": "Respuesta",
+                        "type": "string",
+                        "description": " This attribute is mandatory when the instance is at state 'Crea mensaje'",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/MSJ_DE_PUBLI/{id}": {
+      "get": {
+        "tags": [
+          "Mensaje de Publicacion"
+        ],
+        "description": "Get a Mensaje de Publicacion by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Mensaje de Publicacion id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Mensaje de Publicacion"
+        ],
+        "summary": "Update a Mensaje de Publicacion by id.",
+        "description": "Update a Mensaje de Publicacion",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Mensaje de Publicacion id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "PUBL_ID_PUBL": {
+                        "title": "Publicación",
+                        "type": "integer",
+                        "description": " This is a foreign key to Publicación. An id of Publicación is expected",
+                        "nullable": true
+                      },
+                      "MSDP_REMITENTE": {
+                        "title": "Remitente",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MSDP_Q_DELETE": {
+                        "title": "Pregunta eliminada",
+                        "type": "boolean",
+                        "description": "Si este check está marcado, significa que el usuario eliminó la pregunta.",
+                        "default": "N",
+                        "nullable": true
+                      },
+                      "MSDP_FECHA": {
+                        "title": "Fecha",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MSDP_MENSAJE": {
+                        "title": "Mensaje",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "MSDP_RESPUESTA": {
+                        "title": "Respuesta",
+                        "type": "string",
+                        "description": " This attribute is mandatory when the instance is at state 'Crea mensaje'",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Mensaje de Publicacion"
+        ],
+        "summary": "Delete a Mensaje de Publicacion by id.",
+        "description": "Delete a Mensaje de Publicacion",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Mensaje de Publicacion id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance deleted successfully"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Entity or instance not found"
+          }
+        }
+      }
+    },
+    "/MSJ_DE_PUBLI/search": {
+      "get": {
+        "tags": [
+          "Mensaje de Publicacion"
+        ],
+        "summary": "Note: This endpoint returns 50 max instances of {e.title}.",
+        "description": "Search instances of Mensaje de Publicacion",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/MSJ_DE_PUBLI/smartie": {
+      "get": {
+        "tags": [
+          "Mensaje de Publicacion"
+        ],
+        "description": "Get a page of a smartie",
+        "parameters": [
+          {
+            "name": "smartieId",
+            "in": "query",
+            "description": "Smartie id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": " Page number (1-based)",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": " Search term",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/MSJ_DE_PUBLI/changestate": {
+      "post": {
+        "tags": [
+          "Mensaje de Publicacion"
+        ],
+        "description": "Change an instance's state",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Instance id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Possibles values: <ul><li>Crea mensaje</li>\n<li>Error al responder</li>\n<li>Pendiente</li>\n<li>Respondido</li></ul>",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/MSJ_DE_PUBLI/file": {
+      "get": {
+        "tags": [
+          "Mensaje de Publicacion"
+        ],
+        "summary": "Descarga un archivo de una entidad",
+        "description": "Devuelve el archivo cargado en un atributo de tipo archivo de una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archivo encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Mensaje de Publicacion"
+        ],
+        "summary": "Carga o reemplaza un archivo en una entidad",
+        "description": "Guarda el archivo en el atributo de tipo archivo de una instancia de entidad. Soporta dos formatos: multipart/form-data o binary directo (application/octet-stream, application/pdf, etc.).",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "description": "Tipo de contenido (MIME) del archivo (ej: application/pdf, image/png)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Nombre del archivo (opcional, se puede inferir del multipart)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Archivo a cargar. Puede enviarse como multipart/form-data o como binary directo.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "Contenido del archivo",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido binario del archivo enviado directamente",
+                "format": "binary"
+              }
+            },
+            "application/pdf": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido PDF enviado directamente",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Archivo guardado correctamente"
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/MSJ_DE_PUBLI/report": {
+      "get": {
+        "tags": [
+          "Mensaje de Publicacion"
+        ],
+        "summary": "Descarga un reporte asociado a una entidad",
+        "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "reportName",
+            "in": "query",
+            "description": "Nombre del reporte",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reporte encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo de reporte"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un reporte con ese nombre en la entidad"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": [ ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "Adjunto",
+      "description": "Adjunto"
+    },
+    {
+      "name": "Mensaje de Pedido",
+      "description": "Mensaje de Pedido"
+    },
+    {
+      "name": "Mensaje de tienda",
+      "description": "Mensaje de tienda"
+    },
+    {
+      "name": "Mensaje de Publicacion",
+      "description": "Mensaje de Publicacion"
+    }
+  ]
+}
