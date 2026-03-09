@@ -36,7 +36,7 @@
           <div class="search">
             <label for="search" class="sr-only">Buscar módulo o keyword</label>
             <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-            <input id="search" type="text" placeholder="Buscar módulo, keyword o dominio (ej: ventas, auth, tracking)" autocomplete="off" />
+            <input id="search" type="text" placeholder="Buscar módulo, keyword o dominio (ej: ventas, auth, stock)" autocomplete="off" />
           </div>
           <p id="result-count" class="result-count" aria-live="polite"></p>
         </div>
@@ -46,11 +46,14 @@
     <section class="container help">
       <div class="help__box">
         <h2><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Cómo usar esta documentación</h2>
+        <p><strong>Autenticación general:</strong> en <em>Seguridad</em> hay un único endpoint para obtener el token usando un usuario de YiQi. Ese token se reutiliza luego en el resto de los módulos enviándolo como <code>Bearer</code> en el header <code>Authorization</code>.</p>
         <ol>
-          <li>Elegí un módulo desde el índice.</li>
+          <li>Obtené el token desde el módulo <strong>Seguridad</strong>.</li>
+          <li>Elegí un módulo desde el índice y abrí su Swagger.</li>
           <li>Dentro del Swagger, expandí tags y operaciones.</li>
           <li>Validá parámetros obligatorios, cuerpos de request y respuestas.</li>
         </ol>
+        <p><strong>Estructura común de los Swagger:</strong> la mayoría de entidades siguen un formato homogéneo (operaciones list/get/create/update/delete, payloads con estructura repetida y respuestas paginadas o de detalle). Si entendés un módulo, la curva de adopción del resto suele ser mucho más rápida.</p>
         <p><strong>Para bots/agentes:</strong> consumí <a href="modules.json">modules.json</a> para descubrir el catálogo de specs de manera estructurada.</p>
       </div>
     </section>
