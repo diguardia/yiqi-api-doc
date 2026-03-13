@@ -1,128 +1,585 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>YiQi ERP · Índice de APIs</title>
-  <meta name="description" content="Índice completo de APIs de YiQi ERP con acceso por módulo, pensado para personas y agentes automatizados." />
-  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
-  <link rel="canonical" href="https://apidoc.yiqi.com.ar/" />
-  <link rel="stylesheet" href="index.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>YiQi ERP - API Docs</title>
+<meta name="description" content="Indice completo de APIs de YiQi ERP con acceso por modulo, pensado para personas y agentes automatizados."/>
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1"/>
+<link rel="canonical" href="https://apidoc.yiqi.com.ar/"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0b;
+  --bg-elev:#0f1013;
+  --bg-elev-2:#14161b;
+  --bg-soft:#181b21;
+  --line:rgba(255,255,255,.08);
+  --line-strong:rgba(255,255,255,.14);
+  --text:#f3f5f7;
+  --muted:#98a2b3;
+  --muted-2:#6f7785;
+  --cyan:#00ccff;
+  --cyan-soft:rgba(0,204,255,.10);
+  --cyan-soft-2:rgba(0,204,255,.16);
+  --green:#15d49c;
+  --amber:#ffb020;
+  --red:#ff637d;
+  --blue:#7ab7ff;
+  --shadow:0 0 0 1px rgba(0,204,255,.14) inset;
+  --topbar-h:54px;
+  --radius:14px;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+html[data-theme="light"]{
+  --bg:#eeece7;
+  --bg-elev:#f6f4ef;
+  --bg-elev-2:#ffffff;
+  --bg-soft:#ece9e2;
+  --line:rgba(0,0,0,.08);
+  --line-strong:rgba(0,0,0,.13);
+  --text:#17191c;
+  --muted:#586170;
+  --muted-2:#7f8896;
+  --cyan:#009fc7;
+  --cyan-soft:rgba(0,159,199,.10);
+  --cyan-soft-2:rgba(0,159,199,.14);
+  --green:#0c9b6d;
+  --amber:#c78000;
+  --red:#d4485e;
+  --blue:#347de6;
+  --shadow:0 0 0 1px rgba(0,159,199,.14) inset;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;min-height:100%}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);overflow-x:hidden;transition:background .2s,color .2s}
+button,input{font:inherit}
+svg{display:block}
+a{color:inherit;text-decoration:none}
+
+/* Topbar */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  height:var(--topbar-h);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;
+  background:var(--bg-elev);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(12px);
+}
+.topbar-left{display:flex;align-items:center;gap:0}
+.logo-wrap{display:flex;align-items:center;gap:10px;color:var(--text)}
+.logo-wrap svg.logo-full{width:76px;height:auto}
+.logo-divider{width:1px;height:18px;background:var(--line);margin:0 16px}
+.topbar-label{font:600 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.topbar-right{display:flex;align-items:center;gap:8px}
+
+.nav-links{display:flex;align-items:center;gap:4px;margin-right:12px}
+.nav-link{padding:7px 13px;border-radius:10px;font-size:13px;color:var(--muted);cursor:pointer;transition:.15s ease;border:none;background:none}
+.nav-link:hover{color:var(--text);background:var(--bg-soft)}
+.nav-link.active{color:var(--cyan);background:var(--cyan-soft);border:1px solid rgba(0,204,255,.18)}
+
+/* Theme toggle */
+.theme-toggle{display:flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--line);background:var(--bg-elev-2);border-radius:999px;cursor:pointer;transition:.18s ease}
+.theme-toggle:hover{border-color:var(--line-strong);background:var(--bg-soft)}
+.theme-toggle svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.theme-toggle .sun{color:var(--amber)}
+.theme-toggle .moon{color:var(--cyan)}
+.switch-track{width:32px;height:18px;border-radius:999px;background:var(--bg-soft);position:relative;border:1px solid var(--line)}
+.switch-thumb{position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:var(--cyan);transition:transform .2s ease,background .2s ease;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+html[data-theme="light"] .switch-thumb{transform:translateX(14px);background:var(--amber)}
+
+.user{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--cyan-soft);color:var(--cyan);border:1px solid rgba(0,204,255,.24);font:700 11px var(--mono)}
+
+/* Hero */
+.hero-band{
+  background:linear-gradient(180deg,rgba(0,204,255,.04) 0%,transparent 100%),var(--bg-elev);
+  border-bottom:1px solid var(--line);
+  padding:40px 28px 32px;
+}
+html[data-theme="light"] .hero-band{
+  background:linear-gradient(180deg,rgba(0,159,199,.04) 0%,transparent 100%),var(--bg-elev);
+}
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 11px;border-radius:999px;
+  border:1px solid rgba(0,204,255,.22);background:var(--cyan-soft);
+  color:var(--cyan);font:700 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  margin-bottom:16px;
+}
+.hero-kicker-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.hero-title{font-size:32px;letter-spacing:-.03em;font-weight:800;font-family:'Montserrat',var(--sans);line-height:1.1;margin-bottom:10px}
+.hero-title span{color:var(--cyan)}
+.hero-sub{color:var(--muted);font-size:14px;line-height:1.6;max-width:640px;margin-bottom:24px}
+.hero-sub strong{color:var(--text);font-weight:500}
+
+/* Search */
+.search-row{display:flex;align-items:center;gap:12px;max-width:600px}
+.search-wrap{flex:1;position:relative}
+.search-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted-2);fill:none;stroke-width:1.8;pointer-events:none}
+.search-wrap input{
+  width:100%;height:44px;border-radius:14px;
+  border:1px solid var(--line);background:var(--bg-elev-2);
+  padding:0 16px 0 44px;color:var(--text);outline:none;font-size:14px;
+  transition:border-color .18s,box-shadow .18s,background .18s;
+}
+.search-wrap input::placeholder{color:var(--muted-2)}
+.search-wrap input:focus{border-color:rgba(0,204,255,.32);box-shadow:var(--shadow);background:var(--bg-elev-2)}
+.count-badge{
+  flex-shrink:0;padding:6px 12px;border-radius:999px;
+  border:1px solid var(--line);background:var(--bg-elev-2);
+  font:700 11px var(--mono);color:var(--muted);
+  white-space:nowrap;
+}
+
+/* Content */
+.content{max-width:1100px;margin:0 auto;padding:32px 28px 60px}
+
+/* Info box */
+.info-box{
+  border:1px solid rgba(0,204,255,.35);
+  border-radius:18px;background:var(--bg-elev-2);
+  padding:20px 24px;margin-bottom:32px;
+  position:relative;overflow:hidden;
+  box-shadow:0 0 0 1px rgba(0,204,255,.08) inset, 0 4px 24px rgba(0,204,255,.06);
+}
+.info-box::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,204,255,.04) 0%,transparent 60%);
+  pointer-events:none;
+}
+.info-head{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.info-head svg{width:16px;height:16px;stroke:var(--cyan);fill:none;stroke-width:1.8;flex-shrink:0}
+.info-head-label{font-size:13px;font-weight:700;color:var(--cyan)}
+.info-body{font-size:13px;color:var(--muted);line-height:1.7}
+.info-body p + p{margin-top:10px}
+.info-body strong{color:var(--text);font-weight:600}
+.info-body em{font-style:italic}
+.info-body code{
+  font-family:var(--mono);font-size:11px;
+  background:var(--bg-soft);border:1px solid var(--line);
+  padding:2px 7px;border-radius:6px;color:var(--cyan);
+}
+.info-steps{margin:10px 0 10px 16px;list-style:decimal;color:var(--muted);line-height:2}
+.info-steps li strong{color:var(--text)}
+.info-link{
+  color:var(--cyan);text-decoration:underline;text-underline-offset:2px;
+  text-decoration-color:rgba(0,204,255,.35);font-family:var(--mono);font-size:12px;
+}
+.info-link:hover{text-decoration-color:var(--cyan)}
+
+/* Grid */
+.section-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;
+}
+.section-title{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);font-family:var(--mono)}
+.module-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:12px;
+}
+
+/* Module card */
+.mod-card{
+  display:flex;align-items:flex-start;gap:14px;
+  background:var(--bg-elev-2);border:1px solid var(--line);border-radius:18px;
+  padding:16px 18px;cursor:pointer;
+  transition:border-color .18s,background .18s,transform .15s,box-shadow .18s;
+  position:relative;overflow:hidden;
+}
+.mod-card::before{
+  content:"";position:absolute;inset:0;border-radius:18px;
+  background:linear-gradient(135deg,rgba(0,204,255,.03) 0%,transparent 60%);
+  opacity:0;transition:opacity .18s;pointer-events:none;
+}
+.mod-card:hover{border-color:rgba(0,204,255,.28);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.mod-card:hover::before{opacity:1}
+.mod-card.security{border-color:rgba(255,176,32,.18)}
+.mod-card.security:hover{border-color:rgba(255,176,32,.4)}
+
+.mod-icon{
+  width:38px;height:38px;border-radius:12px;flex-shrink:0;
+  display:grid;place-items:center;
+  background:var(--cyan-soft);border:1px solid rgba(0,204,255,.18);
+  color:var(--cyan);transition:background .18s,border-color .18s;
+}
+.mod-icon svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mod-card.security .mod-icon{background:rgba(255,176,32,.09);border-color:rgba(255,176,32,.22);color:var(--amber)}
+.mod-card:hover .mod-icon{background:var(--cyan-soft-2);border-color:rgba(0,204,255,.3)}
+.mod-card.security:hover .mod-icon{background:rgba(255,176,32,.15)}
+
+.mod-body{flex:1;min-width:0}
+.mod-name{font-size:13px;font-weight:700;margin-bottom:4px;color:var(--text)}
+.mod-desc{font-size:12px;color:var(--muted);line-height:1.5}
+
+.mod-action{display:inline-flex;align-items:center;text-decoration:none;
+  flex-shrink:0;align-self:center;
+  padding:6px 13px;border-radius:999px;
+  font:700 11px var(--mono);letter-spacing:.04em;
+  color:var(--cyan);background:var(--cyan-soft);
+  border:1px solid rgba(0,204,255,.2);
+  cursor:pointer;transition:.15s ease;white-space:nowrap;
+}
+.mod-action:hover{background:var(--cyan-soft-2);border-color:rgba(0,204,255,.35)}
+.mod-card.security .mod-action{display:inline-flex;align-items:center;text-decoration:none;color:var(--amber);background:rgba(255,176,32,.08);border-color:rgba(255,176,32,.22)}
+.mod-card.security .mod-action:hover{background:rgba(255,176,32,.14)}
+
+/* Footer */
+.page-footer{
+  border-top:1px solid var(--line);
+  padding:18px 28px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--bg-elev);
+}
+.footer-copy{font:400 12px var(--mono);color:var(--muted-2)}
+.footer-link{
+  font:600 12px var(--mono);color:var(--cyan);
+  text-decoration:underline;text-underline-offset:2px;
+  text-decoration-color:rgba(0,204,255,.3);
+}
+.footer-link:hover{text-decoration-color:var(--cyan)}
+
+/* Empty state on search */
+.empty-state{
+  display:none;grid-column:1/-1;
+  padding:40px 24px;text-align:center;color:var(--muted);
+  border:1px dashed var(--line);border-radius:18px;
+}
+.empty-state.show{display:block}
+
+/* Subtle entry animation */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.hero-band{animation:fadeUp .35s ease both}
+.info-box{animation:fadeUp .35s .07s ease both}
+.mod-card{animation:fadeUp .3s ease both}
+.mod-card:nth-child(1){animation-delay:.04s}.mod-card:nth-child(2){animation-delay:.07s}
+.mod-card:nth-child(3){animation-delay:.10s}.mod-card:nth-child(4){animation-delay:.13s}
+.mod-card:nth-child(5){animation-delay:.16s}.mod-card:nth-child(6){animation-delay:.19s}
+.mod-card:nth-child(7){animation-delay:.22s}.mod-card:nth-child(8){animation-delay:.25s}
+.mod-card:nth-child(9){animation-delay:.28s}.mod-card:nth-child(10){animation-delay:.31s}
+.mod-card:nth-child(11){animation-delay:.34s}.mod-card:nth-child(12){animation-delay:.37s}
+.mod-card:nth-child(13){animation-delay:.40s}.mod-card:nth-child(14){animation-delay:.43s}
+.mod-card:nth-child(15){animation-delay:.46s}.mod-card:nth-child(16){animation-delay:.49s}
+
+/* Responsive */
+@media (max-width: 980px){
+  .topbar{padding:0 16px}
+  .hero-band{padding:28px 16px 24px}
+  .content{padding:24px 16px 40px}
+  .page-footer{padding:16px;gap:8px;flex-direction:column;align-items:flex-start}
+  .nav-links{display:none}
+}
+
+@media (max-width: 640px){
+  .hero-title{font-size:26px}
+  .search-row{flex-direction:column;align-items:stretch}
+  .count-badge{text-align:center}
+  .module-grid{grid-template-columns:1fr}
+  .mod-card{padding:14px}
+  .theme-toggle{padding:6px 8px}
+}
+</style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="container topbar__inner">
-      <div class="brand">
-        <img class="brand__img" src="https://yiqi.com.ar/wp-content/uploads/2022/05/FM_logo_header-544x303-1-300x167.png" alt="YiQi ERP" />
-        <span class="brand__name">YiQi ERP</span>
-        <span class="brand__dot">•</span>
-        <span class="brand__section">API Docs</span>
-      </div>
-      <nav class="topbar__nav" aria-label="Navegación principal">
-        <a class="navlink" href="#" aria-current="page">Inicio</a>
-        <a class="navlink" href="view.html?url=Security.api.json">Probar Swagger</a>
-        <a class="navlink" href="modules.json">Listado JSON</a>
-      </nav>
+
+<header class="topbar">
+  <div class="topbar-left">
+    <a href="#" class="logo-wrap" aria-label="Inicio YiQi API Docs">
+      <svg class="logo-full" viewBox="0 0 100 65" xmlns="http://www.w3.org/2000/svg">
+        <rect fill="none" width="100" height="65"/>
+        <path fill="currentColor" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/>
+        <path fill="currentColor" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+        <path fill="#00ccff" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/>
+        <path fill="currentColor" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+      </svg>
+    </a>
+    <div class="logo-divider"></div>
+    <span class="topbar-label">API Docs</span>
+  </div>
+  <div class="topbar-right">
+    <nav class="nav-links">
+      <button class="nav-link active" onclick="setNav(this)">Inicio</button>
+      <a class="nav-link" href="view.html?url=Security.api.json" target="_blank" rel="noopener">Probar Swagger</a>
+      <a class="nav-link" href="modules.json" target="_blank" rel="noopener">Listado JSON</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+      <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/></svg>
+      <span class="switch-track"><span class="switch-thumb"></span></span>
+      <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+    </button>
+    <div class="user">SM</div>
+  </div>
+</header>
+
+<div class="hero-band">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="hero-kicker">
+      <span class="hero-kicker-dot"></span>
+      OpenAPI - REST - v2.5
     </div>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="container hero__inner">
-        <div class="hero__text">
-          <h1>Índice completo de APIs de YiQi ERP</h1>
-          <p>Este portal reúne los <strong>módulos funcionales</strong> y sus especificaciones OpenAPI. Podés buscar por tema y abrir el Swagger de cada módulo.</p>
-          <div class="search">
-            <label for="search" class="sr-only">Buscar módulo o keyword</label>
-            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-            <input id="search" type="text" placeholder="Buscar módulo, keyword o dominio (ej: ventas, auth, stock)" autocomplete="off" />
-          </div>
-          <p id="result-count" class="result-count" aria-live="polite"></p>
-        </div>
+    <h1 class="hero-title">Indice completo de APIs<br>de <span>YiQi ERP</span></h1>
+    <p class="hero-sub">
+      Este portal reune los <strong>modulos funcionales</strong> y sus especificaciones OpenAPI.
+      Podes buscar por tema y abrir el Swagger de cada modulo.
+    </p>
+    <div class="search-row">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.35-4.35"/></svg>
+        <input id="apiSearch" type="search" placeholder="Buscar modulo, keyword o dominio (ej: ventas, auth, stock)" oninput="filterCards(this.value)"/>
       </div>
-    </section>
-
-    <section class="container help">
-      <div class="help__box">
-        <h2><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Cómo usar esta documentación</h2>
-        <p><strong>Autenticación general:</strong> en <em>Seguridad</em> hay un único endpoint para obtener el token usando un usuario de YiQi. Ese token se reutiliza luego en el resto de los módulos enviándolo como <code>Bearer</code> en el header <code>Authorization</code>.</p>
-        <ol>
-          <li>Obtené el token desde el módulo <strong>Seguridad</strong>.</li>
-          <li>Elegí un módulo desde el índice y abrí su Swagger.</li>
-          <li>Dentro del Swagger, expandí tags y operaciones.</li>
-          <li>Validá parámetros obligatorios, cuerpos de request y respuestas.</li>
-        </ol>
-        <p><strong>Estructura común de los Swagger:</strong> la mayoría de entidades siguen un formato homogéneo (operaciones list/get/create/update/delete, payloads con estructura repetida y respuestas paginadas o de detalle). Si entendés un módulo, la curva de adopción del resto suele ser mucho más rápida.</p>
-        <p><strong>Para bots/agentes:</strong> consumí <a href="modules.json">modules.json</a> para descubrir el catálogo de specs de manera estructurada.</p>
-      </div>
-    </section>
-
-    <section id="module-grid" class="grid container" aria-label="Listado de módulos API"></section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer__inner">
-      <small>© <span id="year"></span> YiQi ERP — API Docs</small>
-      <small><a href="modules.json">Catálogo machine-readable (JSON)</a></small>
+      <div class="count-badge" id="countBadge">16 modulos</div>
     </div>
-  </footer>
+  </div>
+</div>
 
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "YiQi ERP API Docs",
-      "url": "https://apidoc.yiqi.com.ar/",
-      "inLanguage": "es"
-    }
-  </script>
+<main class="content">
 
-  <script>
-    const grid = document.getElementById('module-grid');
-    const input = document.getElementById('search');
-    const resultCount = document.getElementById('result-count');
-    const year = document.getElementById('year');
-    year.textContent = new Date().getFullYear();
+  <div class="info-box">
+    <div class="info-head">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <span class="info-head-label">Como usar esta documentacion</span>
+    </div>
+    <div class="info-body">
+      <p><strong>Autenticacion general:</strong> en <em>Seguridad</em> hay un unico endpoint para obtener el token usando un usuario de YiQi. Este token se reutiliza en el resto de los modulos enviandolo como <code>Bearer</code> en el header <code>Authorization</code>.</p>
+      <ol class="info-steps">
+        <li>Obtene el token desde el modulo <strong>Seguridad</strong>.</li>
+        <li>Elegi un modulo desde el indice y abri su Swagger.</li>
+        <li>Dentro del Swagger, expandi tags y operaciones.</li>
+        <li>Valida parametros obligatorios, cuerpos de request y respuestas.</li>
+      </ol>
+      <p><strong>Estructura comun de los Swagger:</strong> la mayoria de entidades siguen un formato homogeneo (operaciones list/get/create/update/delete, payloads con estructura repetida y respuestas paginadas o de detalle). Si entendes un modulo, la curva de adopcion del resto suele ser mucho mas rapida.</p>
+      <p style="margin-top:10px"><strong>Para bots/agentes:</strong> consumi <a class="info-link" href="modules.json" target="_blank" rel="noopener">modules.json</a> para descubrir el catalogo de specs de manera estructurada.</p>
+    </div>
+  </div>
 
-    let modules = [];
+  <div class="section-head">
+    <span class="section-title">Modulos disponibles</span>
+  </div>
 
-    function buildCard(mod) {
-      const queryUrl = encodeURIComponent(mod.spec);
-      const keywords = (mod.keywords || []).join(' ');
-      return `
-        <a class="card" data-name="${(mod.name + ' ' + keywords + ' ' + mod.description).toLowerCase()}" href="view.html?url=${queryUrl}">
-          <div class="card__icon"><i class="fa-solid ${mod.icon || 'fa-cube'}" aria-hidden="true"></i></div>
-          <div class="card__body">
-            <h3 class="card__title">${mod.name}</h3>
-            <p class="card__desc">${mod.description}</p>
-          </div>
-          <span class="card__cta" aria-hidden="true">Ver</span>
-        </a>`;
-    }
+  <div class="module-grid" id="moduleGrid">
 
-    function render(list) {
-      grid.innerHTML = list.map(buildCard).join('');
-      resultCount.textContent = `${list.length} módulo(s) visible(s).`;
-    }
+    <div class="mod-card security" data-search="seguridad autenticacion tokens oauth2 acceso">
+      <div class="mod-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="mod-body">
+        <div class="mod-name">Seguridad</div>
+        <div class="mod-desc">Autenticacion, tokens y control de acceso OAuth2.</div>
+      </div>
+      <a class="mod-action" href="view.html?url=Security.api.json" target="_blank" rel="noopener">Ver</a>
+    </div>
 
-    function filterModules() {
-      const q = input.value.trim().toLowerCase();
-      if (!q) return render(modules);
-      render(modules.filter((m) => `${m.name} ${(m.keywords || []).join(' ')} ${m.description}`.toLowerCase().includes(q)));
-    }
+    <div class="mod-card" data-search="ventas pedidos facturacion notas credito remitos">
+      <div class="mod-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h12M3 18h15"/></svg>
+      </div>
+      <div class="mod-body">
+        <div class="mod-name">Modulo Ventas</div>
+        <div class="mod-desc">Pedidos, facturacion, notas de credito y remitos.</div>
+      </div>
+      <a class="mod-action" href="view.html?url=erpdemo.schema-Ventas-api.json" target="_blank" rel="noopener">Ver</a>
+    </div>
 
-    fetch('modules.json')
-      .then((res) => res.json())
-      .then((data) => {
-        modules = data;
-        render(modules);
-      })
-      .catch(() => {
-        resultCount.textContent = 'No se pudo cargar el índice JSON.';
-      });
+    <div class="mod-card" data-search="stock depositos movimientos inventarios ajustes">
+      <div class="mod-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="12" width="6" height="9"/><rect x="9" y="7" width="6" height="14"/><rect x="15" y="3" width="6" height="18"/></svg>
+      </div>
+      <div class="mod-body">
+        <div class="mod-name">Modulo Stock</div>
+        <div class="mod-desc">Depositos, movimientos, inventarios y ajustes.</div>
+      </div>
+      <a class="mod-action" href="view.html?url=erpdemo.schema-Stock-api.json" target="_blank" rel="noopener">Ver</a>
+    </div>
 
-    input.addEventListener('input', filterModules);
-  </script>
+    <div class="mod-card" data-search="clientes proveedores terceros cuentas corrientes condiciones comerciales">
+      <div class="mod-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="mod-body">
+        <div class="mod-name">Clientes y Proveedores</div>
+        <div class="mod-desc">Maestro de terceros, cuentas corrientes y condiciones comerciales.</div>
+      </div>
+      <a class="mod-action" href="view.html?url=erpdemo.schema-Clientes_y_proveedor-api.json" target="_blank" rel="noopener">Ver</a>
+    </div>
+
+    <div class="mod-card" data-search="compras ordenes recepciones acuerdos precios">
+      <div class="mod-icon">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      </div>
+      <div class="mod-body">
+        <div class="mod-name">Modulo Compras</div>
+        <div class="mod-desc">Ordenes de compra, recepciones y acuerdos de precios.</div>
+      </div>
+      <a class="mod-action" href="view.html?url=erpdemo.schema-Compras-api.json" target="_blank" rel="noopener">Ver</a>
+    </div>
+
+    <div class="mod-card" data-search="contabilidad asientos mayores centros costo">
+      <div class="mod-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </div>
+      <div class="mod-body">
+        <div class="mod-name">Modulo Contabilidad</div>
+        <div class="mod-desc">Asientos, mayores y centros de costo.</div>
+      </div>
+      <a class="mod-action" href="view.html?url=erpdemo.schema-Contabilidad-api.json" target="_blank" rel="noopener">Ver</a>
+    </div>
+
+    <div class="mod-card" data-search="finanzas tesoreria bancos cobranzas pagos">
+      <div class="mod-icon">
+        <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/><circle cx="12" cy="15" r="2"/></svg>
+      </div>
+      <div class="mod-body">
+        <div class="mod-name">Modulo Finanzas</div>
+        <div class="mod-desc">Tesoreria, bancos, cobranzas y pagos.</div>
+      </div>
+      <a class="mod-action" href="view.html?url=erpdemo.schema-Finanzas-api.json" target="_blank" rel="noopener">Ver</a>
+    </div>
+
+    <div class="mod-card" data-search="gestion parametros generales catalogos maestros">
+      <div class="mod-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1 .6 1.65 1.65 0 0 0-.4 1V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-.4-1 1.65 1.65 0 0 0-1-.6 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-.6-1 1.65 1.65 0 0 0-1-.4H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1-.4 1.65 1.65 0 0 0 .6-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-.6 1.65 1.65 0 0 0 .4-1V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 .4 1 1.65 1.65 0 0 0 1 .6 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.23.31.37.68.4 1.06V10a1.65 1.65 0 0 0 1 .4H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1 .4 1.65 1.65 0 0 0-.6 1c-.06.38-.1.77-.1 1.06H19.4"/></svg>
+      </div>
+      <div class="mod-body">
+        <div class="mod-name">Modulo Gestion</div>
+        <div class="mod-desc">Parametros generales y catalogos maestros.</div>
+      </div>
+      <a class="mod-action" href="view.html?url=erpdemo.schema-Gestion-api.json" target="_blank" rel="noopener">Ver</a>
+    </div>
+
+    <div class="mod-card" data-search="produccion ordenes bom rutas materiales">
+      <div class="mod-icon">
+        <svg viewBox="0 0 24 24"><path d="M2 20h20M4 20V10l8-7 8 7v10"/><path d="M9 20v-6h6v6"/></svg>
+      </div>
+      <div class="mod-body">
+        <div class="mod-name">Modulo Produccion</div>
+        <div class="mod-desc">Ordenes de produccion, BOM y rutas.</div>
+      </div>
+      <a class="mod-action" href="view.html?url=erpdemo.schema-Produccion-api.json" target="_blank" rel="noopener">Ver</a>
+    </div>
+
+    <div class="mod-card" data-search="comercial crm oportunidades actividades pipeline">
+      <div class="mod-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      </div>
+      <div class="mod-body">
+        <div class="mod-name">Modulo Comercial / CRM</div>
+        <div class="mod-desc">Oportunidades, actividades y pipeline comercial.</div>
+      </div>
+      <a class="mod-action" href="view.html?url=erpdemo.schema-Comercial_CRM-api.json" target="_blank" rel="noopener">Ver</a>
+    </div>
+
+    <div class="mod-card" data-search="rrhh recursos humanos personal legajos novedades sueldos">
+      <div class="mod-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div class="mod-body">
+        <div class="mod-name">Modulo RRHH</div>
+        <div class="mod-desc">Gestion de personal, legajos y novedades.</div>
+      </div>
+      <a class="mod-action" href="view.html?url=erpdemo.schema-RRHH-api.json" target="_blank" rel="noopener">Ver</a>
+    </div>
+
+    <div class="mod-card" data-search="pos punto venta tickets cobranzas caja">
+      <div class="mod-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 9h20M7 15h.01M11 15h2"/></svg>
+      </div>
+      <div class="mod-body">
+        <div class="mod-name">Modulo POS</div>
+        <div class="mod-desc">Punto de venta, tickets y cobranzas en caja.</div>
+      </div>
+      <a class="mod-action" href="view.html?url=erpdemo.schema-POS-api.json" target="_blank" rel="noopener">Ver</a>
+    </div>
+
+    <div class="mod-card" data-search="calidad controles no conformidades acciones correctivas">
+      <div class="mod-icon">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div class="mod-body">
+        <div class="mod-name">Modulo Calidad</div>
+        <div class="mod-desc">Controles, no conformidades y acciones correctivas.</div>
+      </div>
+      <a class="mod-action" href="view.html?url=erpdemo.schema-Calidad-api.json" target="_blank" rel="noopener">Ver</a>
+    </div>
+
+    <div class="mod-card" data-search="editorial operaciones catalogos flujo publicaciones">
+      <div class="mod-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </div>
+      <div class="mod-body">
+        <div class="mod-name">Modulo Editorial</div>
+        <div class="mod-desc">Operaciones y catalogos del flujo editorial.</div>
+      </div>
+      <a class="mod-action" href="view.html?url=erpdemo.schema-Editorial-api.json" target="_blank" rel="noopener">Ver</a>
+    </div>
+
+    <div class="mod-card" data-search="mensajeria mensajes eventos envio trazabilidad notificaciones">
+      <div class="mod-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <div class="mod-body">
+        <div class="mod-name">Modulo Mensajeria</div>
+        <div class="mod-desc">Envio y trazabilidad de mensajes/eventos.</div>
+      </div>
+      <a class="mod-action" href="view.html?url=erpdemo.schema-Mensajeria-api.json" target="_blank" rel="noopener">Ver</a>
+    </div>
+
+    <div class="mod-card" data-search="parametros configuracion transversal valores sistema">
+      <div class="mod-icon">
+        <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="6" r="2" fill="var(--bg-elev-2)"/><circle cx="16" cy="12" r="2" fill="var(--bg-elev-2)"/><circle cx="10" cy="18" r="2" fill="var(--bg-elev-2)"/></svg>
+      </div>
+      <div class="mod-body">
+        <div class="mod-name">Modulo Parametros</div>
+        <div class="mod-desc">Configuracion transversal y valores del sistema.</div>
+      </div>
+      <a class="mod-action" href="view.html?url=erpdemo.schema-Parametros-api.json" target="_blank" rel="noopener">Ver</a>
+    </div>
+
+    <div class="empty-state" id="emptyState">
+      No hay modulos que coincidan con tu busqueda.
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="page-footer">
+  <span class="footer-copy">&copy; <span id="year"></span> YiQi ERP - API Docs</span>
+  <a href="modules.json" target="_blank" rel="noopener" class="footer-link">Catalogo machine-readable (JSON)</a>
+</footer>
+
+<script>
+const html = document.documentElement;
+document.getElementById('themeToggle').addEventListener('click', () => {
+  html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+function setNav(btn) {
+  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function filterCards(q) {
+  const term = q.toLowerCase().trim();
+  const cards = document.querySelectorAll('.mod-card[data-search]');
+  let visible = 0;
+  cards.forEach(c => {
+    const match = !term
+      || c.dataset.search.includes(term)
+      || c.querySelector('.mod-name').textContent.toLowerCase().includes(term);
+    c.style.display = match ? '' : 'none';
+    if (match) visible++;
+  });
+  document.getElementById('countBadge').textContent = visible + (visible === 1 ? ' modulo' : ' modulos');
+  document.getElementById('emptyState').classList.toggle('show', visible === 0);
+}
+
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
