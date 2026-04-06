@@ -208,6 +208,34 @@ html[data-theme="light"] .hero-band{
 .endpoint-notes ul{margin:0 0 0 18px;color:var(--muted);line-height:1.9}
 .endpoint-notes li strong{color:var(--text)}
 
+.practice-box,
+.risk-box{
+  margin-top:12px;
+  border-radius:12px;
+  padding:12px;
+}
+.practice-box{
+  border:1px solid rgba(21,212,156,.35);
+  background:rgba(21,212,156,.08);
+}
+.risk-box{
+  border:1px solid rgba(255,176,32,.35);
+  background:rgba(255,176,32,.09);
+}
+.practice-title,
+.risk-title{
+  font:700 11px var(--mono);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.practice-title{color:var(--green)}
+.risk-title{color:var(--amber)}
+.practice-box ul,
+.risk-box ul{margin:0 0 0 18px;color:var(--muted);line-height:1.9}
+.practice-box li strong,
+.risk-box li strong{color:var(--text)}
+
 /* Grid */
 .section-head{
   display:flex;align-items:center;justify-content:space-between;
@@ -442,12 +470,31 @@ html[data-theme="light"] .hero-band{
 
       <div class="endpoint-notes">
         <ul>
-          <li><strong>Smartie paginado:</strong> usar <code>smartieId</code>, <code>schemaId</code> y <code>page</code> (base 1). Empezar en <code>page=1</code> e incrementar de a 1 hasta que la respuesta no traiga más filas.</li>
+          <li><strong>Smartie paginado:</strong> usar <code>smartieId</code>, <code>schemaId</code> y <code>page</code> (base 1). Empezar en <code>page=1</code> e incrementar de a 1.</li>
           <li><strong>Filtro adicional en smartie:</strong> el parámetro <code>search</code> permite acotar resultados dentro de la vista.</li>
           <li><strong>Particularidad de búsqueda:</strong> en <code>/search</code> los filtros disponibles cambian por entidad y están tipados en el Swagger de cada módulo.</li>
           <li><strong>Particularidad de estados:</strong> no todas las entidades exponen <code>/changestate</code>; cuando existe, los estados válidos están listados en la operación.</li>
           <li><strong>Particularidad de archivos/reportes:</strong> los valores permitidos de <code>attributeName</code> y <code>reportName</code> varían por entidad.</li>
           <li><strong>schemaId:</strong> es obligatorio en casi todas las operaciones, ya sea por query o dentro del body según el endpoint.</li>
+        </ul>
+      </div>
+
+      <div class="practice-box">
+        <div class="practice-title">Buena práctica para consumir smarties</div>
+        <ul>
+          <li><strong>Orden recomendado:</strong> ordenar por <strong>fecha de modificación descendente</strong> para traer primero lo más reciente.</li>
+          <li><strong>Estrategia de paginado eficiente:</strong> paginar desde <code>page=1</code> y detenerse cuando se alcance la <strong>última fecha ya sincronizada</strong> por tu proceso.</li>
+          <li><strong>Objetivo:</strong> evitar paginado exhaustivo innecesario, reducir tráfico y proteger el rendimiento general del sistema.</li>
+        </ul>
+      </div>
+
+      <div class="risk-box">
+        <div class="risk-title">Uso responsable de la API</div>
+        <ul>
+          <li><strong>Responsabilidad de uso:</strong> el consumo de la API debe realizarse con criterios de eficiencia, control de volumen y frecuencia de llamadas.</li>
+          <li><strong>Riesgos operativos:</strong> un uso intensivo o sin límites puede saturar tráfico, degradar tiempos de respuesta y afectar a otros usuarios.</li>
+          <li><strong>Cuenta técnica recomendada:</strong> utilizar usuarios de API con el <strong>menor privilegio posible</strong>, otorgando solo permisos estrictamente necesarios.</li>
+          <li><strong>Riesgo asumido por el integrador:</strong> la implementación, su impacto operativo y los riesgos asociados son responsabilidad del usuario que consume la API.</li>
         </ul>
       </div>
     </div>
