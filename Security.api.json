@@ -64,6 +64,56 @@
           }
         }
       }
+    },
+    "/accountapi/GetLoginInformation": {
+      "summary": "Get current login information",
+      "get": {
+        "summary": "Get login information.",
+        "description": "Returns current user login information for the provided schema.",
+        "operationId": "GetLoginInformation",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "Schema identifier"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "userId": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "userName": {
+                      "type": "string"
+                    },
+                    "schemaName": {
+                      "type": "string"
+                    },
+                    "host": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
     }
   }
 }
