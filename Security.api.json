@@ -103,6 +103,48 @@
                     },
                     "host": {
                       "type": "string"
+                    },
+                    "schemaId": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/schemasapi/GetAvailable": {
+      "summary": "Get available schemas for current user",
+      "get": {
+        "summary": "Get available schemas.",
+        "description": "Returns schemas the logged-in user can access.",
+        "operationId": "GetAvailableSchemas",
+        "responses": {
+          "200": {
+            "description": "Available schemas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "imgName": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
