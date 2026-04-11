@@ -2925,6 +2925,15 @@
             }
           },
           {
+            "name": "CLIE_MAIL",
+            "in": "query",
+            "description": "Mail",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "PROV_ID_PROV",
             "in": "query",
             "description": "Provincia / Estado",
@@ -3007,6 +3016,371 @@
         }
       }
     },
+    "/CLIENTE/query": {
+      "post": {
+        "tags": [
+          "Empresa"
+        ],
+        "summary": "Execute dynamic query without persisted smartie",
+        "description": "Performs a dynamic query on Empresa instances with custom columns, filters, sorting, and aggregations. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dynamic query parameters including pagination, columns, filters, and search criteria",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "page"
+                ],
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Page number (1-based)",
+                    "default": 1
+                  },
+                  "pageSize": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Number of records per page",
+                    "default": 50
+                  },
+                  "search": {
+                    "type": "string",
+                    "description": "Fast search term to filter across all columns",
+                    "nullable": true
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "field"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "enum": [
+                            "CLIE_NOMBRE",
+                            "CLIE_RAZON_SOCIAL",
+                            "CLIE_CUIT",
+                            "CLIE_CODIGO",
+                            "CLIE_ISOLOGO",
+                            "CLIE_SALDOS_SEP",
+                            "CLIE_SALDO_DE_AJUSTES",
+                            "CLIE_SALDO_CLIENTE",
+                            "CLIE_SALDO_PROVEEDOR",
+                            "CLIE_DIFERENCIA_SALDOS",
+                            "CLIE_CLIENTE",
+                            "CLIE_ACTIVO",
+                            "CLIE_PROVEEDOR",
+                            "CLIE_ACTIVO_P",
+                            "CLIE_SOL_ACT_DATOS",
+                            "CLIE_OTROS_SEP",
+                            "CLIE_PASSWORD",
+                            "CLIE_OBSERVACIONES",
+                            "CLIE_INFO",
+                            "CLIE_CODIGO_DIARIO",
+                            "CLIE_PERMITIR_DUPLICAR_CU",
+                            "CLIE_GLN",
+                            "CLIE_LATITUD",
+                            "CLIE_LONGITUD",
+                            "CLIE_MAIL",
+                            "CLIE_NO_AJUSTAR_POR_TENEN",
+                            "CLIE_NO_USAR_WEB",
+                            "CLIE_ALERTA_FINANCIERA",
+                            "CLIE_NO_INCLU_REPO_PAGOS",
+                            "CLIE_INFOR_ALERTE",
+                            "CLIE_CODIGO_BANELCO",
+                            "CLIE_WEB",
+                            "CLIE_DOMICILIO",
+                            "CLIE_DOMICILIO_2",
+                            "CLIE_CP",
+                            "CLIE_LOCALIDAD",
+                            "CLIE_TE1",
+                            "CLIE_TE2",
+                            "CLIE_FAX",
+                            "CLIE_ARHC_ID_1093",
+                            "CLIE_DIA_FACTURACION",
+                            "CLIE_PLAZO_DIAS_DE_PAGO",
+                            "CLIE_DESCUENTO_PAGO_TEMP",
+                            "CLIE_SE_FACTURA_MES_VENCI",
+                            "CLIE_CONCEPTO_DE_SERVICIO",
+                            "CLIE_INICIO_SERVICIO",
+                            "CLIE_ANTIGUEDAD",
+                            "CLIE_NO_NOTIFICAR_VENCIMI",
+                            "CLIE_ID_INTEGRACION_ML",
+                            "CLIE_NICKNAME_ML",
+                            "CLIE_ID_INTEGRACION_TN",
+                            "CLIE_CREDITO_MAXIMO_COMO_",
+                            "CLIE_DIAS_PARA_FACTURACIO",
+                            "CLIE_ULTIMA_FECHA_FACT_RE",
+                            "CLIE_FIRMA_RECIBO",
+                            "CLIE_ATENCION_A_PROVEEDOR",
+                            "CLIE_PAGO_PROVEEDORES",
+                            "CLIE_HORARIO_DE_ENTREGA",
+                            "CLIE_TIPO_EMPRESA",
+                            "CLIE_CODIGO_COMPLETO",
+                            "CLIE_SEGMENTACION_ESPECIA",
+                            "CLIE_NRO_IIBB",
+                            "CLIE_INICIO_ACTIVIDADES",
+                            "CLIE_RETENCIONES",
+                            "CLIE_PERCEPCIONES",
+                            "CLIE_NO_CALCULAR_PERCEPCI",
+                            "CLIE_FECHA_DESDE",
+                            "CLIE_FECHA_HASTA",
+                            "CLIE_ENVIA_FC_A_KRIKOS",
+                            "CLIE_DESC_IMP_INTERNO",
+                            "CLIE_PRECIO_POR_UNIDAD",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Physical column name (required). Available columns from entity view."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Custom column title (optional)",
+                          "nullable": true
+                        },
+                        "sortDirection": {
+                          "enum": [
+                            "ASC",
+                            "DESC"
+                          ],
+                          "type": "string",
+                          "description": "Sort direction",
+                          "nullable": true
+                        },
+                        "order": {
+                          "type": "integer",
+                          "description": "Column display order (optional)",
+                          "nullable": true
+                        },
+                        "sortOrder": {
+                          "type": "integer",
+                          "description": "Sort priority order (optional)",
+                          "nullable": true
+                        },
+                        "aggregation": {
+                          "enum": [
+                            "SUM",
+                            "COUNT",
+                            "AVG",
+                            "MIN",
+                            "MAX"
+                          ],
+                          "type": "string",
+                          "description": "Aggregation function",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Column specifications. If null or empty, default header columns will be used",
+                    "nullable": true
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "columnName",
+                        "operator",
+                        "value"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "columnName": {
+                          "enum": [
+                            "CLIE_NOMBRE",
+                            "CLIE_RAZON_SOCIAL",
+                            "CLIE_CUIT",
+                            "CLIE_CODIGO",
+                            "CLIE_ISOLOGO",
+                            "CLIE_SALDOS_SEP",
+                            "CLIE_SALDO_DE_AJUSTES",
+                            "CLIE_SALDO_CLIENTE",
+                            "CLIE_SALDO_PROVEEDOR",
+                            "CLIE_DIFERENCIA_SALDOS",
+                            "CLIE_CLIENTE",
+                            "CLIE_ACTIVO",
+                            "CLIE_PROVEEDOR",
+                            "CLIE_ACTIVO_P",
+                            "CLIE_SOL_ACT_DATOS",
+                            "CLIE_OTROS_SEP",
+                            "CLIE_PASSWORD",
+                            "CLIE_OBSERVACIONES",
+                            "CLIE_INFO",
+                            "CLIE_CODIGO_DIARIO",
+                            "CLIE_PERMITIR_DUPLICAR_CU",
+                            "CLIE_GLN",
+                            "CLIE_LATITUD",
+                            "CLIE_LONGITUD",
+                            "CLIE_MAIL",
+                            "CLIE_NO_AJUSTAR_POR_TENEN",
+                            "CLIE_NO_USAR_WEB",
+                            "CLIE_ALERTA_FINANCIERA",
+                            "CLIE_NO_INCLU_REPO_PAGOS",
+                            "CLIE_INFOR_ALERTE",
+                            "CLIE_CODIGO_BANELCO",
+                            "CLIE_WEB",
+                            "CLIE_DOMICILIO",
+                            "CLIE_DOMICILIO_2",
+                            "CLIE_CP",
+                            "CLIE_LOCALIDAD",
+                            "CLIE_TE1",
+                            "CLIE_TE2",
+                            "CLIE_FAX",
+                            "CLIE_ARHC_ID_1093",
+                            "CLIE_DIA_FACTURACION",
+                            "CLIE_PLAZO_DIAS_DE_PAGO",
+                            "CLIE_DESCUENTO_PAGO_TEMP",
+                            "CLIE_SE_FACTURA_MES_VENCI",
+                            "CLIE_CONCEPTO_DE_SERVICIO",
+                            "CLIE_INICIO_SERVICIO",
+                            "CLIE_ANTIGUEDAD",
+                            "CLIE_NO_NOTIFICAR_VENCIMI",
+                            "CLIE_ID_INTEGRACION_ML",
+                            "CLIE_NICKNAME_ML",
+                            "CLIE_ID_INTEGRACION_TN",
+                            "CLIE_CREDITO_MAXIMO_COMO_",
+                            "CLIE_DIAS_PARA_FACTURACIO",
+                            "CLIE_ULTIMA_FECHA_FACT_RE",
+                            "CLIE_FIRMA_RECIBO",
+                            "CLIE_ATENCION_A_PROVEEDOR",
+                            "CLIE_PAGO_PROVEEDORES",
+                            "CLIE_HORARIO_DE_ENTREGA",
+                            "CLIE_TIPO_EMPRESA",
+                            "CLIE_CODIGO_COMPLETO",
+                            "CLIE_SEGMENTACION_ESPECIA",
+                            "CLIE_NRO_IIBB",
+                            "CLIE_INICIO_ACTIVIDADES",
+                            "CLIE_RETENCIONES",
+                            "CLIE_PERCEPCIONES",
+                            "CLIE_NO_CALCULAR_PERCEPCI",
+                            "CLIE_FECHA_DESDE",
+                            "CLIE_FECHA_HASTA",
+                            "CLIE_ENVIA_FC_A_KRIKOS",
+                            "CLIE_DESC_IMP_INTERNO",
+                            "CLIE_PRECIO_POR_UNIDAD",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Column name to filter (required). Available columns from entity view."
+                        },
+                        "operator": {
+                          "enum": [
+                            "=",
+                            "!=",
+                            ">",
+                            "<",
+                            ">=",
+                            "<=",
+                            "LIKE"
+                          ],
+                          "type": "string",
+                          "description": "Comparison operator"
+                        },
+                        "value": {
+                          "description": "Value to compare. Type should match column data type",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Filter specifications",
+                    "nullable": true
+                  }
+                }
+              },
+              "example": {
+                "page": 1,
+                "pageSize": 10,
+                "search": "",
+                "columns": [
+                  {
+                    "field": "COLUMN_NAME",
+                    "title": "Column Title",
+                    "sortDirection": "ASC",
+                    "sortOrder": 1
+                  }
+                ],
+                "filters": [
+                  {
+                    "columnName": "COLUMN_NAME",
+                    "operator": "=",
+                    "value": "value"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Array of records matching the query"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records (without pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Column definitions"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters or column names"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity"
+          },
+          "404": {
+            "description": "Entity not found"
+          }
+        }
+      }
+    },
     "/CLIENTE/changestate": {
       "post": {
         "tags": [
@@ -3040,6 +3414,50 @@
             "schema": {
               "type": "string"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/CLIENTE/changestatemultiple": {
+      "post": {
+        "tags": [
+          "Empresa"
+        ],
+        "description": "Change multiple instances' state",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Possibles values: <ul><li>Actualizando autom. fact.</li>\n<li>Envía CC a Contac. Cobra.</li>\n<li>Ingresada</li>\n<li>Unificando cont Clie/Prov</li></ul>",
+            "required": true,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "Comma separated ids",
+            "required": true,
+            "example": "100,101,102"
           }
         ],
         "responses": {
@@ -3893,6 +4311,275 @@
         }
       }
     },
+    "/CONTACTO/query": {
+      "post": {
+        "tags": [
+          "Contacto"
+        ],
+        "summary": "Execute dynamic query without persisted smartie",
+        "description": "Performs a dynamic query on Contacto instances with custom columns, filters, sorting, and aggregations. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dynamic query parameters including pagination, columns, filters, and search criteria",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "page"
+                ],
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Page number (1-based)",
+                    "default": 1
+                  },
+                  "pageSize": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Number of records per page",
+                    "default": 50
+                  },
+                  "search": {
+                    "type": "string",
+                    "description": "Fast search term to filter across all columns",
+                    "nullable": true
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "field"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "enum": [
+                            "CONT_NOMBRE",
+                            "CONT_PUESTO",
+                            "CONT_TELABORAL",
+                            "CONT_TEPARTIC",
+                            "CONT_CELULAR",
+                            "CONT_CONTACTOINT",
+                            "CONT_EMAIL",
+                            "CONT_ULTIMOCONT",
+                            "CONT_SEPA_EXTRAS",
+                            "CONT_SKYPE",
+                            "CONT_LINKEDINPROF",
+                            "CONT_IDIOMA_PRIM",
+                            "CONT_ARHC_ID_1135",
+                            "CONT_MATRICULA",
+                            "CONT_DNI",
+                            "CONT_PASSWORD_TICKETS",
+                            "CONT_FECHA_DE_NACIMIENTO",
+                            "CONT_DIAS_AL_CUMPLEAOS",
+                            "CONT_COMPORTAMIENTO",
+                            "CONT_CONTACTO_FACTURACION",
+                            "CONT_CONTACTO_COBRANZAS",
+                            "CONT_CONTACTO_DE_PAGOS",
+                            "CONT_CONTACTO_DE_COMPRAS",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Physical column name (required). Available columns from entity view."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Custom column title (optional)",
+                          "nullable": true
+                        },
+                        "sortDirection": {
+                          "enum": [
+                            "ASC",
+                            "DESC"
+                          ],
+                          "type": "string",
+                          "description": "Sort direction",
+                          "nullable": true
+                        },
+                        "order": {
+                          "type": "integer",
+                          "description": "Column display order (optional)",
+                          "nullable": true
+                        },
+                        "sortOrder": {
+                          "type": "integer",
+                          "description": "Sort priority order (optional)",
+                          "nullable": true
+                        },
+                        "aggregation": {
+                          "enum": [
+                            "SUM",
+                            "COUNT",
+                            "AVG",
+                            "MIN",
+                            "MAX"
+                          ],
+                          "type": "string",
+                          "description": "Aggregation function",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Column specifications. If null or empty, default header columns will be used",
+                    "nullable": true
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "columnName",
+                        "operator",
+                        "value"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "columnName": {
+                          "enum": [
+                            "CONT_NOMBRE",
+                            "CONT_PUESTO",
+                            "CONT_TELABORAL",
+                            "CONT_TEPARTIC",
+                            "CONT_CELULAR",
+                            "CONT_CONTACTOINT",
+                            "CONT_EMAIL",
+                            "CONT_ULTIMOCONT",
+                            "CONT_SEPA_EXTRAS",
+                            "CONT_SKYPE",
+                            "CONT_LINKEDINPROF",
+                            "CONT_IDIOMA_PRIM",
+                            "CONT_ARHC_ID_1135",
+                            "CONT_MATRICULA",
+                            "CONT_DNI",
+                            "CONT_PASSWORD_TICKETS",
+                            "CONT_FECHA_DE_NACIMIENTO",
+                            "CONT_DIAS_AL_CUMPLEAOS",
+                            "CONT_COMPORTAMIENTO",
+                            "CONT_CONTACTO_FACTURACION",
+                            "CONT_CONTACTO_COBRANZAS",
+                            "CONT_CONTACTO_DE_PAGOS",
+                            "CONT_CONTACTO_DE_COMPRAS",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Column name to filter (required). Available columns from entity view."
+                        },
+                        "operator": {
+                          "enum": [
+                            "=",
+                            "!=",
+                            ">",
+                            "<",
+                            ">=",
+                            "<=",
+                            "LIKE"
+                          ],
+                          "type": "string",
+                          "description": "Comparison operator"
+                        },
+                        "value": {
+                          "description": "Value to compare. Type should match column data type",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Filter specifications",
+                    "nullable": true
+                  }
+                }
+              },
+              "example": {
+                "page": 1,
+                "pageSize": 10,
+                "search": "",
+                "columns": [
+                  {
+                    "field": "COLUMN_NAME",
+                    "title": "Column Title",
+                    "sortDirection": "ASC",
+                    "sortOrder": 1
+                  }
+                ],
+                "filters": [
+                  {
+                    "columnName": "COLUMN_NAME",
+                    "operator": "=",
+                    "value": "value"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Array of records matching the query"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records (without pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Column definitions"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters or column names"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity"
+          },
+          "404": {
+            "description": "Entity not found"
+          }
+        }
+      }
+    },
     "/CONTACTO/changestate": {
       "post": {
         "tags": [
@@ -3926,6 +4613,50 @@
             "schema": {
               "type": "string"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/CONTACTO/changestatemultiple": {
+      "post": {
+        "tags": [
+          "Contacto"
+        ],
+        "description": "Change multiple instances' state",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Possibles values: <ul><li>Creando usuario para tickets</li>\n<li>Ingresado</li>\n<li>Notificando a usuario</li></ul>",
+            "required": true,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "Comma separated ids",
+            "required": true,
+            "example": "100,101,102"
           }
         ],
         "responses": {
@@ -4556,6 +5287,243 @@
         }
       }
     },
+    "/DOC_LEGAL_CL/query": {
+      "post": {
+        "tags": [
+          "Doc. Legal"
+        ],
+        "summary": "Execute dynamic query without persisted smartie",
+        "description": "Performs a dynamic query on Doc. Legal instances with custom columns, filters, sorting, and aggregations. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dynamic query parameters including pagination, columns, filters, and search criteria",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "page"
+                ],
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Page number (1-based)",
+                    "default": 1
+                  },
+                  "pageSize": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Number of records per page",
+                    "default": 50
+                  },
+                  "search": {
+                    "type": "string",
+                    "description": "Fast search term to filter across all columns",
+                    "nullable": true
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "field"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "enum": [
+                            "DLCL_TITULO",
+                            "DLCL_ARHC_ID_1926",
+                            "DLCL_FECHA_DE_FIN_DE_VIGE",
+                            "DLCL_DIAS_A_FIN_DE_CONTRA",
+                            "DLCL_DIAS_DE_PREAVISO",
+                            "DLCL_INICIO_DE_GESTION_ES",
+                            "DLCL_OBSERVACIONES",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Physical column name (required). Available columns from entity view."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Custom column title (optional)",
+                          "nullable": true
+                        },
+                        "sortDirection": {
+                          "enum": [
+                            "ASC",
+                            "DESC"
+                          ],
+                          "type": "string",
+                          "description": "Sort direction",
+                          "nullable": true
+                        },
+                        "order": {
+                          "type": "integer",
+                          "description": "Column display order (optional)",
+                          "nullable": true
+                        },
+                        "sortOrder": {
+                          "type": "integer",
+                          "description": "Sort priority order (optional)",
+                          "nullable": true
+                        },
+                        "aggregation": {
+                          "enum": [
+                            "SUM",
+                            "COUNT",
+                            "AVG",
+                            "MIN",
+                            "MAX"
+                          ],
+                          "type": "string",
+                          "description": "Aggregation function",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Column specifications. If null or empty, default header columns will be used",
+                    "nullable": true
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "columnName",
+                        "operator",
+                        "value"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "columnName": {
+                          "enum": [
+                            "DLCL_TITULO",
+                            "DLCL_ARHC_ID_1926",
+                            "DLCL_FECHA_DE_FIN_DE_VIGE",
+                            "DLCL_DIAS_A_FIN_DE_CONTRA",
+                            "DLCL_DIAS_DE_PREAVISO",
+                            "DLCL_INICIO_DE_GESTION_ES",
+                            "DLCL_OBSERVACIONES",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Column name to filter (required). Available columns from entity view."
+                        },
+                        "operator": {
+                          "enum": [
+                            "=",
+                            "!=",
+                            ">",
+                            "<",
+                            ">=",
+                            "<=",
+                            "LIKE"
+                          ],
+                          "type": "string",
+                          "description": "Comparison operator"
+                        },
+                        "value": {
+                          "description": "Value to compare. Type should match column data type",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Filter specifications",
+                    "nullable": true
+                  }
+                }
+              },
+              "example": {
+                "page": 1,
+                "pageSize": 10,
+                "search": "",
+                "columns": [
+                  {
+                    "field": "COLUMN_NAME",
+                    "title": "Column Title",
+                    "sortDirection": "ASC",
+                    "sortOrder": 1
+                  }
+                ],
+                "filters": [
+                  {
+                    "columnName": "COLUMN_NAME",
+                    "operator": "=",
+                    "value": "value"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Array of records matching the query"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records (without pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Column definitions"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters or column names"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity"
+          },
+          "404": {
+            "description": "Entity not found"
+          }
+        }
+      }
+    },
     "/DOC_LEGAL_CL/file": {
       "get": {
         "tags": [
@@ -5149,6 +6117,239 @@
           },
           "401": {
             "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/EMPRESA_ALICUOTA/query": {
+      "post": {
+        "tags": [
+          "Empresa Alicuota"
+        ],
+        "summary": "Execute dynamic query without persisted smartie",
+        "description": "Performs a dynamic query on Empresa Alicuota instances with custom columns, filters, sorting, and aggregations. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dynamic query parameters including pagination, columns, filters, and search criteria",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "page"
+                ],
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Page number (1-based)",
+                    "default": 1
+                  },
+                  "pageSize": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Number of records per page",
+                    "default": 50
+                  },
+                  "search": {
+                    "type": "string",
+                    "description": "Fast search term to filter across all columns",
+                    "nullable": true
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "field"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "enum": [
+                            "EMAL_EMAL_CUIT",
+                            "EMAL_EMAL_PERCEPCION",
+                            "EMAL_EMAL_RETENCION",
+                            "EMAL_EMAL_FECHA_DESDE",
+                            "EMAL_EMAL_FECHA_HASTA",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Physical column name (required). Available columns from entity view."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Custom column title (optional)",
+                          "nullable": true
+                        },
+                        "sortDirection": {
+                          "enum": [
+                            "ASC",
+                            "DESC"
+                          ],
+                          "type": "string",
+                          "description": "Sort direction",
+                          "nullable": true
+                        },
+                        "order": {
+                          "type": "integer",
+                          "description": "Column display order (optional)",
+                          "nullable": true
+                        },
+                        "sortOrder": {
+                          "type": "integer",
+                          "description": "Sort priority order (optional)",
+                          "nullable": true
+                        },
+                        "aggregation": {
+                          "enum": [
+                            "SUM",
+                            "COUNT",
+                            "AVG",
+                            "MIN",
+                            "MAX"
+                          ],
+                          "type": "string",
+                          "description": "Aggregation function",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Column specifications. If null or empty, default header columns will be used",
+                    "nullable": true
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "columnName",
+                        "operator",
+                        "value"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "columnName": {
+                          "enum": [
+                            "EMAL_EMAL_CUIT",
+                            "EMAL_EMAL_PERCEPCION",
+                            "EMAL_EMAL_RETENCION",
+                            "EMAL_EMAL_FECHA_DESDE",
+                            "EMAL_EMAL_FECHA_HASTA",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Column name to filter (required). Available columns from entity view."
+                        },
+                        "operator": {
+                          "enum": [
+                            "=",
+                            "!=",
+                            ">",
+                            "<",
+                            ">=",
+                            "<=",
+                            "LIKE"
+                          ],
+                          "type": "string",
+                          "description": "Comparison operator"
+                        },
+                        "value": {
+                          "description": "Value to compare. Type should match column data type",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Filter specifications",
+                    "nullable": true
+                  }
+                }
+              },
+              "example": {
+                "page": 1,
+                "pageSize": 10,
+                "search": "",
+                "columns": [
+                  {
+                    "field": "COLUMN_NAME",
+                    "title": "Column Title",
+                    "sortDirection": "ASC",
+                    "sortOrder": 1
+                  }
+                ],
+                "filters": [
+                  {
+                    "columnName": "COLUMN_NAME",
+                    "operator": "=",
+                    "value": "value"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Array of records matching the query"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records (without pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Column definitions"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters or column names"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity"
+          },
+          "404": {
+            "description": "Entity not found"
           }
         }
       }
@@ -6160,6 +7361,331 @@
         }
       }
     },
+    "/INFO_PROVEEDOR/query": {
+      "post": {
+        "tags": [
+          "Información del Proveedor"
+        ],
+        "summary": "Execute dynamic query without persisted smartie",
+        "description": "Performs a dynamic query on Información del Proveedor instances with custom columns, filters, sorting, and aggregations. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dynamic query parameters including pagination, columns, filters, and search criteria",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "page"
+                ],
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Page number (1-based)",
+                    "default": 1
+                  },
+                  "pageSize": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Number of records per page",
+                    "default": 50
+                  },
+                  "search": {
+                    "type": "string",
+                    "description": "Fast search term to filter across all columns",
+                    "nullable": true
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "field"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "enum": [
+                            "INFP_RAZON_SOCIAL",
+                            "INFP_RUBRO",
+                            "INFP_ACTIVIDAD_PROVEEDOR",
+                            "INFP_DIRECCION",
+                            "INFP_NUMERO",
+                            "INFP_CODIGO_POSTAL",
+                            "INFP_TELEFONO",
+                            "INFP_LOCALIDAD",
+                            "INFP_PROVINCIA",
+                            "INFP_CONTACTO_VENTAS",
+                            "INFP_EMAIL_AVISOS_PAGOS",
+                            "INFP_EMAIL_VENTAS",
+                            "INFP_EMAIL_DPTO_TECNICO",
+                            "INFP_EMAIL_RECLAMOS",
+                            "INFP_DATOS_PAGO_SEP",
+                            "INFP_PERSONA_CONTACTO",
+                            "INFP_EMITIR_CHEQUE_ORDEN",
+                            "INFP_ENTIDAD_BANCARIA",
+                            "INFP_SUCURSAL",
+                            "INFP_NRO_CUENTA",
+                            "INFP_TIPO_CUENTA",
+                            "INFP_CBU",
+                            "INFP_TITULAR_CUENTA",
+                            "INFP_DATOS_IMPO_SEP",
+                            "INFP_CUIT",
+                            "INFP_CERT_NO_RETENCION",
+                            "INFP_FECHA_CAD_EX",
+                            "INFP_PORC_NO_RETENCION",
+                            "INFP_IVA_SEP",
+                            "INFP_CONDICION_IVA",
+                            "INFP_AGENTE_RETENCION",
+                            "INFP_ES_EMPLEADOR",
+                            "INFP_FECHA_CAD_EX_IVA",
+                            "INFP_PORCENTAJE_EX_IVA",
+                            "INFP_INGRESOS_BRUTOS_SEP",
+                            "INFP_LOCAL",
+                            "INFP_CONV_MULTILATERAL",
+                            "INFP_FECHA_CAD_EX_IIBB",
+                            "INFP_PORCENTAJE_EX_IIBB",
+                            "INFP_LUGAR",
+                            "INFP_DATOS_INTERNOS_SEP",
+                            "INFP_FECHA",
+                            "INFP_NRO_PROVEEDOR_YIQI",
+                            "INFP_TIPO_SOLICITUD",
+                            "INFP_DPTO_SOLICITANTE",
+                            "INFP_MOTIVO_ALTA",
+                            "INFP_PROV_SIMILARES",
+                            "INFP_ES_SINGLE_SOURCE",
+                            "INFP_JUST_SINGLE_SOURCE",
+                            "INFP_AUTORIZADA_POR",
+                            "INFP_FIRMA_AUTORIZANTE",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Physical column name (required). Available columns from entity view."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Custom column title (optional)",
+                          "nullable": true
+                        },
+                        "sortDirection": {
+                          "enum": [
+                            "ASC",
+                            "DESC"
+                          ],
+                          "type": "string",
+                          "description": "Sort direction",
+                          "nullable": true
+                        },
+                        "order": {
+                          "type": "integer",
+                          "description": "Column display order (optional)",
+                          "nullable": true
+                        },
+                        "sortOrder": {
+                          "type": "integer",
+                          "description": "Sort priority order (optional)",
+                          "nullable": true
+                        },
+                        "aggregation": {
+                          "enum": [
+                            "SUM",
+                            "COUNT",
+                            "AVG",
+                            "MIN",
+                            "MAX"
+                          ],
+                          "type": "string",
+                          "description": "Aggregation function",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Column specifications. If null or empty, default header columns will be used",
+                    "nullable": true
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "columnName",
+                        "operator",
+                        "value"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "columnName": {
+                          "enum": [
+                            "INFP_RAZON_SOCIAL",
+                            "INFP_RUBRO",
+                            "INFP_ACTIVIDAD_PROVEEDOR",
+                            "INFP_DIRECCION",
+                            "INFP_NUMERO",
+                            "INFP_CODIGO_POSTAL",
+                            "INFP_TELEFONO",
+                            "INFP_LOCALIDAD",
+                            "INFP_PROVINCIA",
+                            "INFP_CONTACTO_VENTAS",
+                            "INFP_EMAIL_AVISOS_PAGOS",
+                            "INFP_EMAIL_VENTAS",
+                            "INFP_EMAIL_DPTO_TECNICO",
+                            "INFP_EMAIL_RECLAMOS",
+                            "INFP_DATOS_PAGO_SEP",
+                            "INFP_PERSONA_CONTACTO",
+                            "INFP_EMITIR_CHEQUE_ORDEN",
+                            "INFP_ENTIDAD_BANCARIA",
+                            "INFP_SUCURSAL",
+                            "INFP_NRO_CUENTA",
+                            "INFP_TIPO_CUENTA",
+                            "INFP_CBU",
+                            "INFP_TITULAR_CUENTA",
+                            "INFP_DATOS_IMPO_SEP",
+                            "INFP_CUIT",
+                            "INFP_CERT_NO_RETENCION",
+                            "INFP_FECHA_CAD_EX",
+                            "INFP_PORC_NO_RETENCION",
+                            "INFP_IVA_SEP",
+                            "INFP_CONDICION_IVA",
+                            "INFP_AGENTE_RETENCION",
+                            "INFP_ES_EMPLEADOR",
+                            "INFP_FECHA_CAD_EX_IVA",
+                            "INFP_PORCENTAJE_EX_IVA",
+                            "INFP_INGRESOS_BRUTOS_SEP",
+                            "INFP_LOCAL",
+                            "INFP_CONV_MULTILATERAL",
+                            "INFP_FECHA_CAD_EX_IIBB",
+                            "INFP_PORCENTAJE_EX_IIBB",
+                            "INFP_LUGAR",
+                            "INFP_DATOS_INTERNOS_SEP",
+                            "INFP_FECHA",
+                            "INFP_NRO_PROVEEDOR_YIQI",
+                            "INFP_TIPO_SOLICITUD",
+                            "INFP_DPTO_SOLICITANTE",
+                            "INFP_MOTIVO_ALTA",
+                            "INFP_PROV_SIMILARES",
+                            "INFP_ES_SINGLE_SOURCE",
+                            "INFP_JUST_SINGLE_SOURCE",
+                            "INFP_AUTORIZADA_POR",
+                            "INFP_FIRMA_AUTORIZANTE",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Column name to filter (required). Available columns from entity view."
+                        },
+                        "operator": {
+                          "enum": [
+                            "=",
+                            "!=",
+                            ">",
+                            "<",
+                            ">=",
+                            "<=",
+                            "LIKE"
+                          ],
+                          "type": "string",
+                          "description": "Comparison operator"
+                        },
+                        "value": {
+                          "description": "Value to compare. Type should match column data type",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Filter specifications",
+                    "nullable": true
+                  }
+                }
+              },
+              "example": {
+                "page": 1,
+                "pageSize": 10,
+                "search": "",
+                "columns": [
+                  {
+                    "field": "COLUMN_NAME",
+                    "title": "Column Title",
+                    "sortDirection": "ASC",
+                    "sortOrder": 1
+                  }
+                ],
+                "filters": [
+                  {
+                    "columnName": "COLUMN_NAME",
+                    "operator": "=",
+                    "value": "value"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Array of records matching the query"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records (without pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Column definitions"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters or column names"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity"
+          },
+          "404": {
+            "description": "Entity not found"
+          }
+        }
+      }
+    },
     "/INFO_PROVEEDOR/changestate": {
       "post": {
         "tags": [
@@ -6193,6 +7719,50 @@
             "schema": {
               "type": "string"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/INFO_PROVEEDOR/changestatemultiple": {
+      "post": {
+        "tags": [
+          "Información del Proveedor"
+        ],
+        "description": "Change multiple instances' state",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Possibles values: <ul><li>Ingresado</li>\n<li>Procesado</li></ul>",
+            "required": true,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "Comma separated ids",
+            "required": true,
+            "example": "100,101,102"
           }
         ],
         "responses": {
@@ -7687,6 +9257,249 @@
         }
       }
     },
+    "/SUCURSAL/query": {
+      "post": {
+        "tags": [
+          "Sucursal"
+        ],
+        "summary": "Execute dynamic query without persisted smartie",
+        "description": "Performs a dynamic query on Sucursal instances with custom columns, filters, sorting, and aggregations. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dynamic query parameters including pagination, columns, filters, and search criteria",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "page"
+                ],
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Page number (1-based)",
+                    "default": 1
+                  },
+                  "pageSize": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Number of records per page",
+                    "default": 50
+                  },
+                  "search": {
+                    "type": "string",
+                    "description": "Fast search term to filter across all columns",
+                    "nullable": true
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "field"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "enum": [
+                            "SUCU_NOMBRE",
+                            "SUCU_DIRECCION",
+                            "SUCU_PARTIDO",
+                            "SUCU_CODIGO_POSTAL",
+                            "SUCU_TELEFONO",
+                            "SUCU_GLN",
+                            "SUCU_LATITUD",
+                            "SUCU_LONGITUD",
+                            "SUCU_HORARIO_ENTREGA_DESD",
+                            "SUCU_HORARIO_ENTREGA_HAST",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Physical column name (required). Available columns from entity view."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Custom column title (optional)",
+                          "nullable": true
+                        },
+                        "sortDirection": {
+                          "enum": [
+                            "ASC",
+                            "DESC"
+                          ],
+                          "type": "string",
+                          "description": "Sort direction",
+                          "nullable": true
+                        },
+                        "order": {
+                          "type": "integer",
+                          "description": "Column display order (optional)",
+                          "nullable": true
+                        },
+                        "sortOrder": {
+                          "type": "integer",
+                          "description": "Sort priority order (optional)",
+                          "nullable": true
+                        },
+                        "aggregation": {
+                          "enum": [
+                            "SUM",
+                            "COUNT",
+                            "AVG",
+                            "MIN",
+                            "MAX"
+                          ],
+                          "type": "string",
+                          "description": "Aggregation function",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Column specifications. If null or empty, default header columns will be used",
+                    "nullable": true
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "columnName",
+                        "operator",
+                        "value"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "columnName": {
+                          "enum": [
+                            "SUCU_NOMBRE",
+                            "SUCU_DIRECCION",
+                            "SUCU_PARTIDO",
+                            "SUCU_CODIGO_POSTAL",
+                            "SUCU_TELEFONO",
+                            "SUCU_GLN",
+                            "SUCU_LATITUD",
+                            "SUCU_LONGITUD",
+                            "SUCU_HORARIO_ENTREGA_DESD",
+                            "SUCU_HORARIO_ENTREGA_HAST",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Column name to filter (required). Available columns from entity view."
+                        },
+                        "operator": {
+                          "enum": [
+                            "=",
+                            "!=",
+                            ">",
+                            "<",
+                            ">=",
+                            "<=",
+                            "LIKE"
+                          ],
+                          "type": "string",
+                          "description": "Comparison operator"
+                        },
+                        "value": {
+                          "description": "Value to compare. Type should match column data type",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Filter specifications",
+                    "nullable": true
+                  }
+                }
+              },
+              "example": {
+                "page": 1,
+                "pageSize": 10,
+                "search": "",
+                "columns": [
+                  {
+                    "field": "COLUMN_NAME",
+                    "title": "Column Title",
+                    "sortDirection": "ASC",
+                    "sortOrder": 1
+                  }
+                ],
+                "filters": [
+                  {
+                    "columnName": "COLUMN_NAME",
+                    "operator": "=",
+                    "value": "value"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Array of records matching the query"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records (without pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Column definitions"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters or column names"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity"
+          },
+          "404": {
+            "description": "Entity not found"
+          }
+        }
+      }
+    },
     "/SUCURSAL/file": {
       "get": {
         "tags": [
@@ -8246,6 +10059,237 @@
         }
       }
     },
+    "/ALICUOTAS_POR_CUIT/query": {
+      "post": {
+        "tags": [
+          "Más / Alícuotas por CUIT"
+        ],
+        "summary": "Execute dynamic query without persisted smartie",
+        "description": "Performs a dynamic query on Alícuotas por CUIT instances with custom columns, filters, sorting, and aggregations. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dynamic query parameters including pagination, columns, filters, and search criteria",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "page"
+                ],
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Page number (1-based)",
+                    "default": 1
+                  },
+                  "pageSize": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Number of records per page",
+                    "default": 50
+                  },
+                  "search": {
+                    "type": "string",
+                    "description": "Fast search term to filter across all columns",
+                    "nullable": true
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "field"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "enum": [
+                            "ALPC_CUIT",
+                            "ALPC_IMPUESTO",
+                            "ALPC_ALICUOTA_PER",
+                            "ALPC_ALICUOTA_RET",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Physical column name (required). Available columns from entity view."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Custom column title (optional)",
+                          "nullable": true
+                        },
+                        "sortDirection": {
+                          "enum": [
+                            "ASC",
+                            "DESC"
+                          ],
+                          "type": "string",
+                          "description": "Sort direction",
+                          "nullable": true
+                        },
+                        "order": {
+                          "type": "integer",
+                          "description": "Column display order (optional)",
+                          "nullable": true
+                        },
+                        "sortOrder": {
+                          "type": "integer",
+                          "description": "Sort priority order (optional)",
+                          "nullable": true
+                        },
+                        "aggregation": {
+                          "enum": [
+                            "SUM",
+                            "COUNT",
+                            "AVG",
+                            "MIN",
+                            "MAX"
+                          ],
+                          "type": "string",
+                          "description": "Aggregation function",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Column specifications. If null or empty, default header columns will be used",
+                    "nullable": true
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "columnName",
+                        "operator",
+                        "value"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "columnName": {
+                          "enum": [
+                            "ALPC_CUIT",
+                            "ALPC_IMPUESTO",
+                            "ALPC_ALICUOTA_PER",
+                            "ALPC_ALICUOTA_RET",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Column name to filter (required). Available columns from entity view."
+                        },
+                        "operator": {
+                          "enum": [
+                            "=",
+                            "!=",
+                            ">",
+                            "<",
+                            ">=",
+                            "<=",
+                            "LIKE"
+                          ],
+                          "type": "string",
+                          "description": "Comparison operator"
+                        },
+                        "value": {
+                          "description": "Value to compare. Type should match column data type",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Filter specifications",
+                    "nullable": true
+                  }
+                }
+              },
+              "example": {
+                "page": 1,
+                "pageSize": 10,
+                "search": "",
+                "columns": [
+                  {
+                    "field": "COLUMN_NAME",
+                    "title": "Column Title",
+                    "sortDirection": "ASC",
+                    "sortOrder": 1
+                  }
+                ],
+                "filters": [
+                  {
+                    "columnName": "COLUMN_NAME",
+                    "operator": "=",
+                    "value": "value"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Array of records matching the query"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records (without pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Column definitions"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters or column names"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity"
+          },
+          "404": {
+            "description": "Entity not found"
+          }
+        }
+      }
+    },
     "/ALICUOTAS_POR_CUIT/file": {
       "get": {
         "tags": [
@@ -8740,6 +10784,233 @@
         }
       }
     },
+    "/DETALLE_DE_CLIENTE/query": {
+      "post": {
+        "tags": [
+          "Más / Detalle del cliente"
+        ],
+        "summary": "Execute dynamic query without persisted smartie",
+        "description": "Performs a dynamic query on Detalle del cliente instances with custom columns, filters, sorting, and aggregations. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dynamic query parameters including pagination, columns, filters, and search criteria",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "page"
+                ],
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Page number (1-based)",
+                    "default": 1
+                  },
+                  "pageSize": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Number of records per page",
+                    "default": 50
+                  },
+                  "search": {
+                    "type": "string",
+                    "description": "Fast search term to filter across all columns",
+                    "nullable": true
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "field"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "enum": [
+                            "DTDC_FUNCIONALIDAD",
+                            "DTDC_LINK",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Physical column name (required). Available columns from entity view."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Custom column title (optional)",
+                          "nullable": true
+                        },
+                        "sortDirection": {
+                          "enum": [
+                            "ASC",
+                            "DESC"
+                          ],
+                          "type": "string",
+                          "description": "Sort direction",
+                          "nullable": true
+                        },
+                        "order": {
+                          "type": "integer",
+                          "description": "Column display order (optional)",
+                          "nullable": true
+                        },
+                        "sortOrder": {
+                          "type": "integer",
+                          "description": "Sort priority order (optional)",
+                          "nullable": true
+                        },
+                        "aggregation": {
+                          "enum": [
+                            "SUM",
+                            "COUNT",
+                            "AVG",
+                            "MIN",
+                            "MAX"
+                          ],
+                          "type": "string",
+                          "description": "Aggregation function",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Column specifications. If null or empty, default header columns will be used",
+                    "nullable": true
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "columnName",
+                        "operator",
+                        "value"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "columnName": {
+                          "enum": [
+                            "DTDC_FUNCIONALIDAD",
+                            "DTDC_LINK",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Column name to filter (required). Available columns from entity view."
+                        },
+                        "operator": {
+                          "enum": [
+                            "=",
+                            "!=",
+                            ">",
+                            "<",
+                            ">=",
+                            "<=",
+                            "LIKE"
+                          ],
+                          "type": "string",
+                          "description": "Comparison operator"
+                        },
+                        "value": {
+                          "description": "Value to compare. Type should match column data type",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Filter specifications",
+                    "nullable": true
+                  }
+                }
+              },
+              "example": {
+                "page": 1,
+                "pageSize": 10,
+                "search": "",
+                "columns": [
+                  {
+                    "field": "COLUMN_NAME",
+                    "title": "Column Title",
+                    "sortDirection": "ASC",
+                    "sortOrder": 1
+                  }
+                ],
+                "filters": [
+                  {
+                    "columnName": "COLUMN_NAME",
+                    "operator": "=",
+                    "value": "value"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Array of records matching the query"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records (without pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Column definitions"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters or column names"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity"
+          },
+          "404": {
+            "description": "Entity not found"
+          }
+        }
+      }
+    },
     "/DETALLE_DE_CLIENTE/changestate": {
       "post": {
         "tags": [
@@ -8773,6 +11044,50 @@
             "schema": {
               "type": "string"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/DETALLE_DE_CLIENTE/changestatemultiple": {
+      "post": {
+        "tags": [
+          "Más / Detalle del cliente"
+        ],
+        "description": "Change multiple instances' state",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Possibles values: <ul><li>Ingresado</li>\n<li>Revisado</li></ul>",
+            "required": true,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "Comma separated ids",
+            "required": true,
+            "example": "100,101,102"
           }
         ],
         "responses": {
@@ -9509,6 +11824,279 @@
         }
       }
     },
+    "/EVALUACION_PROVEEDOR/query": {
+      "post": {
+        "tags": [
+          "Más / Evaluación proveedor"
+        ],
+        "summary": "Execute dynamic query without persisted smartie",
+        "description": "Performs a dynamic query on Evaluación proveedor instances with custom columns, filters, sorting, and aggregations. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dynamic query parameters including pagination, columns, filters, and search criteria",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "page"
+                ],
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Page number (1-based)",
+                    "default": 1
+                  },
+                  "pageSize": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Number of records per page",
+                    "default": 50
+                  },
+                  "search": {
+                    "type": "string",
+                    "description": "Fast search term to filter across all columns",
+                    "nullable": true
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "field"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "enum": [
+                            "EVPR_FECHA",
+                            "EVPR_EVALUACION_INICIAL",
+                            "EVPR_ES_PROVEEDOR_UNICO",
+                            "EVPR_COMENTARIOS",
+                            "EVPR_PUNTAJE_EVALUACION_I",
+                            "EVPR_PUNTAJE_DE_EVALUACIO",
+                            "EVPR_DIAS_FALTANTES_A_EVA",
+                            "EVPR_EVALUACION_TERMINADA",
+                            "EVPR_SEP11",
+                            "EVPR_FORMA_DE_PAGO",
+                            "EVPR_EXPERIENCIA_CON_EL_P",
+                            "EVPR_SERVICIO_DE_POST_VEN",
+                            "EVPR_COMENTARIO",
+                            "EVPR_COMENTARIO_TECNICO",
+                            "EVPR_SERV_TEC",
+                            "EVPR_ESPECIFICACIONES_TEC",
+                            "EVPR_PREFERENCIAS_DEL_USU",
+                            "EVPR_FACILIDAD_EN_EL_MANT",
+                            "EVPR_CAPACITACION_OFRECID",
+                            "EVPR_CONFIABILIDAD_DE_PRO",
+                            "EVPR_SERVICIO_TECNICO_OFR",
+                            "EVPR_EXP_TEC",
+                            "EVPR_FORMA_PAGO_ER",
+                            "EVPR_CALIDAD_P_S_ER",
+                            "EVPR_TIEMPO_ENT_ER",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Physical column name (required). Available columns from entity view."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Custom column title (optional)",
+                          "nullable": true
+                        },
+                        "sortDirection": {
+                          "enum": [
+                            "ASC",
+                            "DESC"
+                          ],
+                          "type": "string",
+                          "description": "Sort direction",
+                          "nullable": true
+                        },
+                        "order": {
+                          "type": "integer",
+                          "description": "Column display order (optional)",
+                          "nullable": true
+                        },
+                        "sortOrder": {
+                          "type": "integer",
+                          "description": "Sort priority order (optional)",
+                          "nullable": true
+                        },
+                        "aggregation": {
+                          "enum": [
+                            "SUM",
+                            "COUNT",
+                            "AVG",
+                            "MIN",
+                            "MAX"
+                          ],
+                          "type": "string",
+                          "description": "Aggregation function",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Column specifications. If null or empty, default header columns will be used",
+                    "nullable": true
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "columnName",
+                        "operator",
+                        "value"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "columnName": {
+                          "enum": [
+                            "EVPR_FECHA",
+                            "EVPR_EVALUACION_INICIAL",
+                            "EVPR_ES_PROVEEDOR_UNICO",
+                            "EVPR_COMENTARIOS",
+                            "EVPR_PUNTAJE_EVALUACION_I",
+                            "EVPR_PUNTAJE_DE_EVALUACIO",
+                            "EVPR_DIAS_FALTANTES_A_EVA",
+                            "EVPR_EVALUACION_TERMINADA",
+                            "EVPR_SEP11",
+                            "EVPR_FORMA_DE_PAGO",
+                            "EVPR_EXPERIENCIA_CON_EL_P",
+                            "EVPR_SERVICIO_DE_POST_VEN",
+                            "EVPR_COMENTARIO",
+                            "EVPR_COMENTARIO_TECNICO",
+                            "EVPR_SERV_TEC",
+                            "EVPR_ESPECIFICACIONES_TEC",
+                            "EVPR_PREFERENCIAS_DEL_USU",
+                            "EVPR_FACILIDAD_EN_EL_MANT",
+                            "EVPR_CAPACITACION_OFRECID",
+                            "EVPR_CONFIABILIDAD_DE_PRO",
+                            "EVPR_SERVICIO_TECNICO_OFR",
+                            "EVPR_EXP_TEC",
+                            "EVPR_FORMA_PAGO_ER",
+                            "EVPR_CALIDAD_P_S_ER",
+                            "EVPR_TIEMPO_ENT_ER",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Column name to filter (required). Available columns from entity view."
+                        },
+                        "operator": {
+                          "enum": [
+                            "=",
+                            "!=",
+                            ">",
+                            "<",
+                            ">=",
+                            "<=",
+                            "LIKE"
+                          ],
+                          "type": "string",
+                          "description": "Comparison operator"
+                        },
+                        "value": {
+                          "description": "Value to compare. Type should match column data type",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Filter specifications",
+                    "nullable": true
+                  }
+                }
+              },
+              "example": {
+                "page": 1,
+                "pageSize": 10,
+                "search": "",
+                "columns": [
+                  {
+                    "field": "COLUMN_NAME",
+                    "title": "Column Title",
+                    "sortDirection": "ASC",
+                    "sortOrder": 1
+                  }
+                ],
+                "filters": [
+                  {
+                    "columnName": "COLUMN_NAME",
+                    "operator": "=",
+                    "value": "value"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Array of records matching the query"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records (without pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Column definitions"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters or column names"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity"
+          },
+          "404": {
+            "description": "Entity not found"
+          }
+        }
+      }
+    },
     "/EVALUACION_PROVEEDOR/changestate": {
       "post": {
         "tags": [
@@ -9542,6 +12130,50 @@
             "schema": {
               "type": "string"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/EVALUACION_PROVEEDOR/changestatemultiple": {
+      "post": {
+        "tags": [
+          "Más / Evaluación proveedor"
+        ],
+        "description": "Change multiple instances' state",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Possibles values: <ul><li>En Curso</li>\n<li>No satisfactoria</li>\n<li>Satisfactoria</li></ul>",
+            "required": true,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "Comma separated ids",
+            "required": true,
+            "example": "100,101,102"
           }
         ],
         "responses": {
@@ -10104,6 +12736,231 @@
         }
       }
     },
+    "/UNIFICAR_CLIENTES/query": {
+      "post": {
+        "tags": [
+          "Más / Unificar cliente"
+        ],
+        "summary": "Execute dynamic query without persisted smartie",
+        "description": "Performs a dynamic query on Unificar cliente instances with custom columns, filters, sorting, and aggregations. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dynamic query parameters including pagination, columns, filters, and search criteria",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "page"
+                ],
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Page number (1-based)",
+                    "default": 1
+                  },
+                  "pageSize": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Number of records per page",
+                    "default": 50
+                  },
+                  "search": {
+                    "type": "string",
+                    "description": "Fast search term to filter across all columns",
+                    "nullable": true
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "field"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "enum": [
+                            "UNCL_INFO",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Physical column name (required). Available columns from entity view."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Custom column title (optional)",
+                          "nullable": true
+                        },
+                        "sortDirection": {
+                          "enum": [
+                            "ASC",
+                            "DESC"
+                          ],
+                          "type": "string",
+                          "description": "Sort direction",
+                          "nullable": true
+                        },
+                        "order": {
+                          "type": "integer",
+                          "description": "Column display order (optional)",
+                          "nullable": true
+                        },
+                        "sortOrder": {
+                          "type": "integer",
+                          "description": "Sort priority order (optional)",
+                          "nullable": true
+                        },
+                        "aggregation": {
+                          "enum": [
+                            "SUM",
+                            "COUNT",
+                            "AVG",
+                            "MIN",
+                            "MAX"
+                          ],
+                          "type": "string",
+                          "description": "Aggregation function",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Column specifications. If null or empty, default header columns will be used",
+                    "nullable": true
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "columnName",
+                        "operator",
+                        "value"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "columnName": {
+                          "enum": [
+                            "UNCL_INFO",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Column name to filter (required). Available columns from entity view."
+                        },
+                        "operator": {
+                          "enum": [
+                            "=",
+                            "!=",
+                            ">",
+                            "<",
+                            ">=",
+                            "<=",
+                            "LIKE"
+                          ],
+                          "type": "string",
+                          "description": "Comparison operator"
+                        },
+                        "value": {
+                          "description": "Value to compare. Type should match column data type",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Filter specifications",
+                    "nullable": true
+                  }
+                }
+              },
+              "example": {
+                "page": 1,
+                "pageSize": 10,
+                "search": "",
+                "columns": [
+                  {
+                    "field": "COLUMN_NAME",
+                    "title": "Column Title",
+                    "sortDirection": "ASC",
+                    "sortOrder": 1
+                  }
+                ],
+                "filters": [
+                  {
+                    "columnName": "COLUMN_NAME",
+                    "operator": "=",
+                    "value": "value"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Array of records matching the query"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records (without pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Column definitions"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters or column names"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity"
+          },
+          "404": {
+            "description": "Entity not found"
+          }
+        }
+      }
+    },
     "/UNIFICAR_CLIENTES/changestate": {
       "post": {
         "tags": [
@@ -10137,6 +12994,50 @@
             "schema": {
               "type": "string"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/UNIFICAR_CLIENTES/changestatemultiple": {
+      "post": {
+        "tags": [
+          "Más / Unificar cliente"
+        ],
+        "description": "Change multiple instances' state",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Possibles values: <ul><li>Ingresado</li>\n<li>Revision de Origen</li>\n<li>Unificado</li></ul>",
+            "required": true,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "Comma separated ids",
+            "required": true,
+            "example": "100,101,102"
           }
         ],
         "responses": {
