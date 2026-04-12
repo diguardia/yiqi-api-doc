@@ -16,7 +16,7 @@
           "Ajuste de artículos requeridos"
         ],
         "summary": "Create a Ajuste de artículos requeridos.",
-        "description": "Creates a Ajuste de artículos requeridos",
+        "description": "Creates a new instance of Ajuste de artículos requeridos.\n\n**Key Attributes (Unique):** `ORDP_ID_ORDP` (Orden de producción), `MATE_ID_MATE` (Artículo)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -76,7 +76,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (ORDP_ID_ORDP, MATE_ID_MATE) must be unique across all instances."
                   }
                 }
               }
@@ -86,10 +87,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: ORDP_ID_ORDP, MATE_ID_MATE"
           }
         }
       }
@@ -922,7 +945,7 @@
           "Art. Req. OP"
         ],
         "summary": "Create a Art. Req. OP.",
-        "description": "Creates a Art. Req. OP",
+        "description": "Creates a new instance of Art. Req. OP.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -982,7 +1005,8 @@
                         "type": "number",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -992,10 +1016,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -1885,7 +1931,7 @@
           "Detalle Modelo OP"
         ],
         "summary": "Create a Detalle Modelo OP.",
-        "description": "Creates a Detalle Modelo OP",
+        "description": "Creates a new instance of Detalle Modelo OP.\n\n**Key Attributes (Unique):** `MOOP_ID_MOOP` (Modelo OP), `MATE_ID_MATE` (Artículo)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1922,7 +1968,8 @@
                         "title": "Cantidad",
                         "type": "number"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (MOOP_ID_MOOP, MATE_ID_MATE) must be unique across all instances."
                   }
                 }
               }
@@ -1932,10 +1979,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: MOOP_ID_MOOP, MATE_ID_MATE"
           }
         }
       }
@@ -2746,7 +2815,7 @@
           "Modelo OP"
         ],
         "summary": "Create a Modelo OP.",
-        "description": "Creates a Modelo OP",
+        "description": "Creates a new instance of Modelo OP.\n\n**Key Attributes (Unique):** `MOOP_NOMBRE` (Nombre)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -2834,7 +2903,8 @@
                         },
                         "description": "Array of child entities of Sobrantes"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (MOOP_NOMBRE) must be unique across all instances."
                   }
                 }
               }
@@ -2844,10 +2914,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: MOOP_NOMBRE"
           }
         }
       }
@@ -3696,7 +3788,7 @@
           "Operación de O.Prod"
         ],
         "summary": "Create a Operación de O.Prod.",
-        "description": "Creates a Operación de O.Prod",
+        "description": "Creates a new instance of Operación de O.Prod.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -3774,7 +3866,8 @@
                         "description": " This attribute is mandatory when the instance is at state 'Devolviendo fallas'",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -3784,10 +3877,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -4649,7 +4764,7 @@
           "Orden de producción"
         ],
         "summary": "Create a Orden de producción.",
-        "description": "Creates a Orden de producción",
+        "description": "Creates a new instance of Orden de producción.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -5431,7 +5546,8 @@
                         },
                         "description": "Array of child entities of Sobrantes"
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -5441,10 +5557,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -7059,7 +7197,7 @@
           "PMP"
         ],
         "summary": "Create a PMP.",
-        "description": "Creates a PMP",
+        "description": "Creates a new instance of PMP.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -7343,7 +7481,8 @@
                         },
                         "description": "Array of child entities of Ordenes"
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -7353,10 +7492,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -8420,7 +8581,7 @@
           "BOMs / BOM"
         ],
         "summary": "Create a BOM.",
-        "description": "Creates a BOM",
+        "description": "Creates a new instance of BOM.\n\n**Key Attributes (Unique):** `MATE_ID_MATE` (Artículo resultante)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -8544,7 +8705,8 @@
                         },
                         "description": "Array of child entities of Operaciones"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (MATE_ID_MATE) must be unique across all instances."
                   }
                 }
               }
@@ -8554,10 +8716,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: MATE_ID_MATE"
           }
         }
       }
@@ -9458,7 +9642,7 @@
           "BOMs / Detalle BOM"
         ],
         "summary": "Create a Detalle BOM.",
-        "description": "Creates a Detalle BOM",
+        "description": "Creates a new instance of Detalle BOM.\n\n**Key Attributes (Unique):** `BOM0_ID_BOM0` (BOM), `MATE_ID_MATE` (Artículo)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -9508,7 +9692,8 @@
                         "description": "El precio del combo (artículo resultante) se puede calcular como el precio de sus partes, si es que todas tienen un precio de venta.\nEn ese caso, se puede establecer un DTO para que un ítem de la BOM no se sume completamente.\nPor ejemplo, si el \"KIT X\" se forma con\n- 2 A \n- 1 B (50%)\n\nA tiene un precio de venta de $100 y B de $200, entonces el precio del combo será $300 (2 x $100 + 1 x $200 x 0.5)",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (BOM0_ID_BOM0, MATE_ID_MATE) must be unique across all instances."
                   }
                 }
               }
@@ -9518,10 +9703,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: BOM0_ID_BOM0, MATE_ID_MATE"
           }
         }
       }
@@ -10355,7 +10562,7 @@
           "BOMs / Operación de BOM"
         ],
         "summary": "Create a Operación de BOM.",
-        "description": "Creates a Operación de BOM",
+        "description": "Creates a new instance of Operación de BOM.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -10408,7 +10615,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -10418,10 +10626,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -11138,7 +11368,7 @@
           "Reportes / Reporte de OP"
         ],
         "summary": "Create a Reporte de OP.",
-        "description": "Creates a Reporte de OP",
+        "description": "Creates a new instance of Reporte de OP.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -11274,7 +11504,8 @@
                         "type": "integer",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -11284,10 +11515,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }

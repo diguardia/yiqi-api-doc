@@ -16,7 +16,7 @@
           "Articulo POS"
         ],
         "summary": "Create a Articulo POS.",
-        "description": "Creates a Articulo POS",
+        "description": "Creates a new instance of Articulo POS.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -141,7 +141,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -151,10 +152,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -1092,7 +1115,7 @@
           "Cierre de caja POS"
         ],
         "summary": "Create a Cierre de caja POS.",
-        "description": "Creates a Cierre de caja POS",
+        "description": "Creates a new instance of Cierre de caja POS.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1231,7 +1254,8 @@
                         },
                         "description": "Array of child entities of Tarjetas"
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -1241,10 +1265,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -2166,7 +2212,7 @@
           "Cliente POS"
         ],
         "summary": "Create a Cliente POS.",
-        "description": "Creates a Cliente POS",
+        "description": "Creates a new instance of Cliente POS.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -2276,7 +2322,8 @@
                         "type": "number",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -2286,10 +2333,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -3125,7 +3194,7 @@
           "Control POS"
         ],
         "summary": "Create a Control POS.",
-        "description": "Creates a Control POS",
+        "description": "Creates a new instance of Control POS.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -3250,7 +3319,8 @@
                         "type": "number",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -3260,10 +3330,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -4275,7 +4367,7 @@
           "Depósito o Retiro"
         ],
         "summary": "Create a Depósito o Retiro.",
-        "description": "Creates a Depósito o Retiro",
+        "description": "Creates a new instance of Depósito o Retiro.\n\n**Key Attributes (Unique):** `DEOR_GUID` (GUID)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -4343,7 +4435,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (DEOR_GUID) must be unique across all instances."
                   }
                 }
               }
@@ -4353,10 +4446,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: DEOR_GUID"
           }
         }
       }
@@ -5192,7 +5307,7 @@
           "Orden de venta"
         ],
         "summary": "Create a Orden de venta.",
-        "description": "Creates a Orden de venta",
+        "description": "Creates a new instance of Orden de venta.\n\n**Key Attributes (Unique):** `ORDV_GUID` (GUID)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -6123,7 +6238,8 @@
                         },
                         "description": "Array of child entities of Percepciones"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (ORDV_GUID) must be unique across all instances."
                   }
                 }
               }
@@ -6133,10 +6249,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: ORDV_GUID"
           }
         }
       }
@@ -7960,7 +8098,7 @@
           "POS Log Entry"
         ],
         "summary": "Create a POS Log Entry.",
-        "description": "Creates a POS Log Entry",
+        "description": "Creates a new instance of POS Log Entry.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -8012,7 +8150,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -8022,10 +8161,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }

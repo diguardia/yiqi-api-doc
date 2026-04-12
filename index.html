@@ -411,8 +411,11 @@ html[data-theme="light"] .hero-band{
     </div>
     <div class="info-body">
       <p><strong>Autenticación general:</strong> en <em>Seguridad</em> hay un único endpoint para obtener el token usando un usuario de YiQi. Este token se reutiliza en el resto de los módulos enviándolo como <code>Bearer</code> en el header <code>Authorization</code>.</p>
+      <p><strong>Política de sesión:</strong> actualmente no hay refresh token. Cuando el token expira, se debe volver a autenticar con <code>/token</code>.</p>
       <ol class="info-steps">
         <li>Obtené el token desde el módulo <strong>Seguridad</strong>.</li>
+        <li>Ejecutá <strong>GetLoginInformation</strong> como healthcheck canónico post-login.</li>
+        <li>Tomá <strong>schemaId</strong> desde esa respuesta (método primario).</li>
         <li>Elegí un módulo desde el índice y abrí su Swagger.</li>
         <li>Dentro del Swagger, expandí tags y operaciones.</li>
         <li>Validá parámetros obligatorios, cuerpos de request y respuestas.</li>
@@ -476,6 +479,7 @@ html[data-theme="light"] .hero-band{
           <li><strong>Particularidad de estados:</strong> no todas las entidades exponen <code>/changestate</code>; cuando existe, los estados válidos están listados en la operación.</li>
           <li><strong>Particularidad de archivos/reportes:</strong> los valores permitidos de <code>attributeName</code> y <code>reportName</code> varían por entidad.</li>
           <li><strong>schemaId:</strong> es obligatorio en casi todas las operaciones, ya sea por query o dentro del body según el endpoint.</li>
+          <li><strong>Regla recomendada para integraciones:</strong> obtener <code>schemaId</code> primero desde <code>GetLoginInformation</code>; usar <code>GetAvailableSchemas</code> como complemento cuando el usuario tenga acceso a más de un esquema.</li>
         </ul>
       </div>
 

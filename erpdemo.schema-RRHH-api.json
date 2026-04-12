@@ -16,7 +16,7 @@
           "Det Gestión de Herramientas"
         ],
         "summary": "Create a Det Gestión de Herramientas.",
-        "description": "Creates a Det Gestión de Herramientas",
+        "description": "Creates a new instance of Det Gestión de Herramientas.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -71,7 +71,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -81,10 +82,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -921,7 +944,7 @@
           "Empleado"
         ],
         "summary": "Create a Empleado.",
-        "description": "Creates a Empleado",
+        "description": "Creates a new instance of Empleado.\n\n**Key Attributes (Unique):** `EMPL_DNI` (DNI)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -2703,7 +2726,8 @@
                         },
                         "description": "Array of child entities of Contratación previa"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (EMPL_DNI) must be unique across all instances."
                   }
                 }
               }
@@ -2713,10 +2737,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: EMPL_DNI"
           }
         }
       }
@@ -5528,7 +5574,7 @@
           "Gestión de Herramientas"
         ],
         "summary": "Create a Gestión de Herramientas.",
-        "description": "Creates a Gestión de Herramientas",
+        "description": "Creates a new instance of Gestión de Herramientas.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -5645,7 +5691,8 @@
                         },
                         "description": "Array of child entities of Herramientas"
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -5655,10 +5702,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -6585,7 +6654,7 @@
           "Notificación"
         ],
         "summary": "Create a Notificación.",
-        "description": "Creates a Notificación",
+        "description": "Creates a new instance of Notificación.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -6630,7 +6699,8 @@
                         "type": "integer",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -6640,10 +6710,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -7354,7 +7446,7 @@
           "Parametro_Y"
         ],
         "summary": "Create a Parametro_Y.",
-        "description": "Creates a Parametro_Y",
+        "description": "Creates a new instance of Parametro_Y.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -7393,7 +7485,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -7403,10 +7496,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -8109,7 +8224,7 @@
           "Registro mensual EMP"
         ],
         "summary": "Create a Registro mensual EMP.",
-        "description": "Creates a Registro mensual EMP",
+        "description": "Creates a new instance of Registro mensual EMP.\n\n**Key Attributes (Unique):** `REMY_PERIODO` (Período)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -8160,7 +8275,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (REMY_PERIODO) must be unique across all instances."
                   }
                 }
               }
@@ -8170,10 +8286,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: REMY_PERIODO"
           }
         }
       }
@@ -8903,7 +9041,7 @@
           "Registro_Y"
         ],
         "summary": "Create a Registro_Y.",
-        "description": "Creates a Registro_Y",
+        "description": "Creates a new instance of Registro_Y.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -8933,7 +9071,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -8943,10 +9082,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -9634,7 +9795,7 @@
           "Usuario de notif."
         ],
         "summary": "Create a Usuario de notif..",
-        "description": "Creates a Usuario de notif.",
+        "description": "Creates a new instance of Usuario de notif..",
         "requestBody": {
           "content": {
             "application/json": {
@@ -9663,7 +9824,8 @@
                         "description": " This is a foreign key to Notificación. An id of Notificación is expected",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -9673,10 +9835,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -10372,7 +10556,7 @@
           "Búsquedas / Búsqueda de Personal"
         ],
         "summary": "Create a Búsqueda de Personal.",
-        "description": "Creates a Búsqueda de Personal",
+        "description": "Creates a new instance of Búsqueda de Personal.\n\n**Key Attributes (Unique):** `BUPE_CODIGO` (Código de búsqueda), `BUPE_REFERENCIA` (Descripción)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -10708,7 +10892,8 @@
                         },
                         "description": "Array of child entities of Candidatos"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (BUPE_CODIGO, BUPE_REFERENCIA) must be unique across all instances."
                   }
                 }
               }
@@ -10718,10 +10903,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: BUPE_CODIGO, BUPE_REFERENCIA"
           }
         }
       }
@@ -11865,7 +12072,7 @@
           "Búsquedas / Candidato"
         ],
         "summary": "Create a Candidato.",
-        "description": "Creates a Candidato",
+        "description": "Creates a new instance of Candidato.\n\n**Key Attributes (Unique):** `CAND_EMAIL` (email)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -12148,7 +12355,8 @@
                         },
                         "description": "Array of child entities of Entrevistas"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (CAND_EMAIL) must be unique across all instances."
                   }
                 }
               }
@@ -12158,10 +12366,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: CAND_EMAIL"
           }
         }
       }
@@ -13301,7 +13531,7 @@
           "Búsquedas / Entrevista"
         ],
         "summary": "Create a Entrevista.",
-        "description": "Creates a Entrevista",
+        "description": "Creates a new instance of Entrevista.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -13353,7 +13583,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -13363,10 +13594,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -14127,7 +14380,7 @@
           "Capacitaciones / Capacit. de Empleado"
         ],
         "summary": "Create a Capacit. de Empleado.",
-        "description": "Creates a Capacit. de Empleado",
+        "description": "Creates a new instance of Capacit. de Empleado.\n\n**Key Attributes (Unique):** `EMPL_ID_EMPL` (Empleado), `CAPA_ID_CAPA` (Capacitación), `CAEM_FECHA` (Fecha)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -14177,7 +14430,8 @@
                         "type": "integer",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (EMPL_ID_EMPL, CAPA_ID_CAPA, CAEM_FECHA) must be unique across all instances."
                   }
                 }
               }
@@ -14187,10 +14441,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: EMPL_ID_EMPL, CAPA_ID_CAPA, CAEM_FECHA"
           }
         }
       }
@@ -14937,7 +15213,7 @@
           "Capacitaciones / Capacitación"
         ],
         "summary": "Create a Capacitación.",
-        "description": "Creates a Capacitación",
+        "description": "Creates a new instance of Capacitación.\n\n**Key Attributes (Unique):** `CAPA_NOMBRE` (Nombre), `CAPA_LUGAR_DICTADO` (Lugar de dictado), `CLIE_ID_CLIE` (Proveedor), `CAPA_FECHA_INICIO` (Fecha inicio)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -15121,7 +15397,8 @@
                         },
                         "description": "Array of child entities of Empleados"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (CAPA_NOMBRE, CAPA_LUGAR_DICTADO, CLIE_ID_CLIE, CAPA_FECHA_INICIO) must be unique across all instances."
                   }
                 }
               }
@@ -15131,10 +15408,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: CAPA_NOMBRE, CAPA_LUGAR_DICTADO, CLIE_ID_CLIE, CAPA_FECHA_INICIO"
           }
         }
       }
@@ -16176,7 +16475,7 @@
           "Capacitaciones / Curso"
         ],
         "summary": "Create a Curso.",
-        "description": "Creates a Curso",
+        "description": "Creates a new instance of Curso.\n\n**Key Attributes (Unique):** `CURS_TITULO` (Título)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -16296,7 +16595,8 @@
                         },
                         "description": "Array of child entities of Actividades"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (CURS_TITULO) must be unique across all instances."
                   }
                 }
               }
@@ -16306,10 +16606,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: CURS_TITULO"
           }
         }
       }
@@ -17114,7 +17436,7 @@
           "Capacitaciones / Lugar Capacitación"
         ],
         "summary": "Create a Lugar Capacitación.",
-        "description": "Creates a Lugar Capacitación",
+        "description": "Creates a new instance of Lugar Capacitación.\n\n**Key Attributes (Unique):** `LUCA_DESCRIPCION` (Descripción)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -17140,7 +17462,8 @@
                         "maxLength": 100,
                         "type": "string"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (LUCA_DESCRIPCION) must be unique across all instances."
                   }
                 }
               }
@@ -17150,10 +17473,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: LUCA_DESCRIPCION"
           }
         }
       }
@@ -17846,7 +18191,7 @@
           "Capacitaciones / Solic. Formación"
         ],
         "summary": "Create a Solic. Formación.",
-        "description": "Creates a Solic. Formación",
+        "description": "Creates a new instance of Solic. Formación.\n\n**Key Attributes (Unique):** `SOFO_ASUNTO` (Asunto), `SOFO_FECHA_SOLICITADA` (Fecha solicitada), `SOFO_SOLICITANTE` (Solicitante)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -17958,7 +18303,8 @@
                         },
                         "description": "Array of child entities of Empleados a capacitar"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (SOFO_ASUNTO, SOFO_FECHA_SOLICITADA, SOFO_SOLICITANTE) must be unique across all instances."
                   }
                 }
               }
@@ -17968,10 +18314,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: SOFO_ASUNTO, SOFO_FECHA_SOLICITADA, SOFO_SOLICITANTE"
           }
         }
       }
@@ -18900,7 +19268,7 @@
           "Config 2 / Idioma Puesto"
         ],
         "summary": "Create a Idioma Puesto.",
-        "description": "Creates a Idioma Puesto",
+        "description": "Creates a new instance of Idioma Puesto.\n\n**Key Attributes (Unique):** `PUES_ID_PUES` (Puesto), `IDIO_ID_IDIO` (Idioma)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -18938,7 +19306,8 @@
                         "description": " This is a foreign key to Nivel. An id of Nivel is expected",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (PUES_ID_PUES, IDIO_ID_IDIO) must be unique across all instances."
                   }
                 }
               }
@@ -18948,10 +19317,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: PUES_ID_PUES, IDIO_ID_IDIO"
           }
         }
       }
@@ -19672,7 +20063,7 @@
           "Config 2 / Sexo puesto"
         ],
         "summary": "Create a Sexo puesto.",
-        "description": "Creates a Sexo puesto",
+        "description": "Creates a new instance of Sexo puesto.\n\n**Key Attributes (Unique):** `SEPU_DESCRIPCION` (Descripción)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -19698,7 +20089,8 @@
                         "maxLength": 100,
                         "type": "string"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (SEPU_DESCRIPCION) must be unique across all instances."
                   }
                 }
               }
@@ -19708,10 +20100,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: SEPU_DESCRIPCION"
           }
         }
       }
@@ -20404,7 +20818,7 @@
           "Config / Estado Civil"
         ],
         "summary": "Create a Estado Civil.",
-        "description": "Creates a Estado Civil",
+        "description": "Creates a new instance of Estado Civil.\n\n**Key Attributes (Unique):** `ESCI_ESTADO_CIVIL` (Estado Civil)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -20430,7 +20844,8 @@
                         "maxLength": 100,
                         "type": "string"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (ESCI_ESTADO_CIVIL) must be unique across all instances."
                   }
                 }
               }
@@ -20440,10 +20855,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: ESCI_ESTADO_CIVIL"
           }
         }
       }
@@ -21136,7 +21573,7 @@
           "Config / Modo Contratación"
         ],
         "summary": "Create a Modo Contratación.",
-        "description": "Creates a Modo Contratación",
+        "description": "Creates a new instance of Modo Contratación.\n\n**Key Attributes (Unique):** `MOCO_MODO_CONTRATACION` (Modo de contratación)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -21162,7 +21599,8 @@
                         "maxLength": 100,
                         "type": "string"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (MOCO_MODO_CONTRATACION) must be unique across all instances."
                   }
                 }
               }
@@ -21172,10 +21610,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: MOCO_MODO_CONTRATACION"
           }
         }
       }
@@ -21868,7 +22328,7 @@
           "Config / Usuario Empresa"
         ],
         "summary": "Create a Usuario Empresa.",
-        "description": "Creates a Usuario Empresa",
+        "description": "Creates a new instance of Usuario Empresa.\n\n**Key Attributes (Unique):** `USEM_USUARIO` (Usuario)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -21899,7 +22359,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (USEM_USUARIO) must be unique across all instances."
                   }
                 }
               }
@@ -21909,10 +22370,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: USEM_USUARIO"
           }
         }
       }
@@ -22612,7 +23095,7 @@
           "Empleados / Categoría Empleado"
         ],
         "summary": "Create a Categoría Empleado.",
-        "description": "Creates a Categoría Empleado",
+        "description": "Creates a new instance of Categoría Empleado.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -22664,7 +23147,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -22674,10 +23158,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -23454,7 +23960,7 @@
           "Gestión de RRHH / Ausencia Programada"
         ],
         "summary": "Create a Ausencia Programada.",
-        "description": "Creates a Ausencia Programada",
+        "description": "Creates a new instance of Ausencia Programada.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -23509,7 +24015,8 @@
                         "type": "integer",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -23519,10 +24026,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -24377,7 +24906,7 @@
           "Gestión de RRHH / Com. Legal"
         ],
         "summary": "Create a Com. Legal.",
-        "description": "Creates a Com. Legal",
+        "description": "Creates a new instance of Com. Legal.\n\n**Key Attributes (Unique):** `EMPL_ID_EMPL` (Legajo), `COLE_FECHA` (Fecha), `TIEN_ID_TIEN` (Tipo envío)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -24446,7 +24975,8 @@
                         "type": "integer",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (EMPL_ID_EMPL, COLE_FECHA, TIEN_ID_TIEN) must be unique across all instances."
                   }
                 }
               }
@@ -24456,10 +24986,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: EMPL_ID_EMPL, COLE_FECHA, TIEN_ID_TIEN"
           }
         }
       }
@@ -25247,7 +25799,7 @@
           "Gestión de RRHH / Delegado RRHH"
         ],
         "summary": "Create a Delegado RRHH.",
-        "description": "Creates a Delegado RRHH",
+        "description": "Creates a new instance of Delegado RRHH.\n\n**Key Attributes (Unique):** `ZONA_ID_ZONA` (Zona / Delegación)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -25279,7 +25831,8 @@
                         "description": " This is a foreign key to Empleado. An id of Empleado is expected",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (ZONA_ID_ZONA) must be unique across all instances."
                   }
                 }
               }
@@ -25289,10 +25842,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: ZONA_ID_ZONA"
           }
         }
       }
@@ -25989,7 +26564,7 @@
           "Gestión de RRHH / Domicilio de empleado"
         ],
         "summary": "Create a Domicilio de empleado.",
-        "description": "Creates a Domicilio de empleado",
+        "description": "Creates a new instance of Domicilio de empleado.\n\n**Key Attributes (Unique):** `EMPL_ID_EMPL` (Legajo), `DOMI_DIRECCION` (Dirección), `DOMI_CP` (CP), `DOMI_LOCALIDAD` (Localidad), `PAIS_ID_PAIS` (País), `PROV_ID_PROV` (Provincia), `DOMI_FECHA` (Fecha)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -26053,7 +26628,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (EMPL_ID_EMPL, DOMI_DIRECCION, DOMI_CP, DOMI_LOCALIDAD, PAIS_ID_PAIS, PROV_ID_PROV, DOMI_FECHA) must be unique across all instances."
                   }
                 }
               }
@@ -26063,10 +26639,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: EMPL_ID_EMPL, DOMI_DIRECCION, DOMI_CP, DOMI_LOCALIDAD, PAIS_ID_PAIS, PROV_ID_PROV, DOMI_FECHA"
           }
         }
       }
@@ -26963,7 +27561,7 @@
           "Gestión de RRHH / Entrega de EPP"
         ],
         "summary": "Create a Entrega de EPP.",
-        "description": "Creates a Entrega de EPP",
+        "description": "Creates a new instance of Entrega de EPP.\n\n**Key Attributes (Unique):** `ENEP_FECHA` (Fecha), `EMPL_ID_EMPL` (Documento de empleado), `ENEP_COMENTARIO` (Descripción de la entrega)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -27005,7 +27603,8 @@
                         "maxLength": 100,
                         "type": "string"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (ENEP_FECHA, EMPL_ID_EMPL, ENEP_COMENTARIO) must be unique across all instances."
                   }
                 }
               }
@@ -27015,10 +27614,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: ENEP_FECHA, EMPL_ID_EMPL, ENEP_COMENTARIO"
           }
         }
       }
@@ -27755,7 +28376,7 @@
           "Gestión de RRHH / Examen Médico"
         ],
         "summary": "Create a Examen Médico.",
-        "description": "Creates a Examen Médico",
+        "description": "Creates a new instance of Examen Médico.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -27811,7 +28432,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -27821,10 +28443,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -28579,7 +29223,7 @@
           "Gestión de RRHH / Licencia habilitante"
         ],
         "summary": "Create a Licencia habilitante.",
-        "description": "Creates a Licencia habilitante",
+        "description": "Creates a new instance of Licencia habilitante.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -28630,7 +29274,8 @@
                         "type": "integer",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -28640,10 +29285,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -29397,7 +30064,7 @@
           "Gestión de RRHH / Licencia tomada"
         ],
         "summary": "Create a Licencia tomada.",
-        "description": "Creates a Licencia tomada",
+        "description": "Creates a new instance of Licencia tomada.\n\n**Key Attributes (Unique):** `EMPL_ID_EMPL` (Legajo), `TILE_ID_TILE` (Tipo de Licencia), `LITO_DIA_DESDE` (Día desde), `LITO_DIA_HASTA` (Día hasta)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -29465,7 +30132,8 @@
                         "type": "boolean",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (EMPL_ID_EMPL, TILE_ID_TILE, LITO_DIA_DESDE, LITO_DIA_HASTA) must be unique across all instances."
                   }
                 }
               }
@@ -29475,10 +30143,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: EMPL_ID_EMPL, TILE_ID_TILE, LITO_DIA_DESDE, LITO_DIA_HASTA"
           }
         }
       }
@@ -30367,7 +31057,7 @@
           "Gestión de RRHH / Sanción"
         ],
         "summary": "Create a Sanción.",
-        "description": "Creates a Sanción",
+        "description": "Creates a new instance of Sanción.\n\n**Key Attributes (Unique):** `EMPL_ID_EMPL` (Legajo), `TISA_ID_TISA` (Tipo de Sanción), `SANC_FECHA` (Fecha)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -30435,7 +31125,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (EMPL_ID_EMPL, TISA_ID_TISA, SANC_FECHA) must be unique across all instances."
                   }
                 }
               }
@@ -30445,10 +31136,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: EMPL_ID_EMPL, TISA_ID_TISA, SANC_FECHA"
           }
         }
       }
@@ -31246,7 +31959,7 @@
           "Gestión de RRHH / Solicitud de Alta "
         ],
         "summary": "Create a Solicitud de Alta .",
-        "description": "Creates a Solicitud de Alta ",
+        "description": "Creates a new instance of Solicitud de Alta .\n\n**Key Attributes (Unique):** `SOAL_NOMBRE_Y_APELLIDO` (Nombre y Apellido), `SOAL_SOLICITANTE` (Solicitante)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -31449,7 +32162,8 @@
                         "description": " This is a foreign key to Centro de costos. An id of Centro de costos is expected",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (SOAL_NOMBRE_Y_APELLIDO, SOAL_SOLICITANTE) must be unique across all instances."
                   }
                 }
               }
@@ -31459,10 +32173,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: SOAL_NOMBRE_Y_APELLIDO, SOAL_SOLICITANTE"
           }
         }
       }
@@ -32500,7 +33236,7 @@
           "Gestión de RRHH / Solicitud de baja"
         ],
         "summary": "Create a Solicitud de baja.",
-        "description": "Creates a Solicitud de baja",
+        "description": "Creates a new instance of Solicitud de baja.\n\n**Key Attributes (Unique):** `SOBA_SOLICITANTE` (Solicitante), `EMPL_ID_EMPL` (Legajo)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -32569,7 +33305,8 @@
                         "description": " This is a foreign key to Tipo de doc. respald. An id of Tipo de doc. respald is expected",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (SOBA_SOLICITANTE, EMPL_ID_EMPL) must be unique across all instances."
                   }
                 }
               }
@@ -32579,10 +33316,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: SOBA_SOLICITANTE, EMPL_ID_EMPL"
           }
         }
       }
@@ -33432,7 +34191,7 @@
           "Gestión de RRHH / Pedido de Vacaciones"
         ],
         "summary": "Create a Pedido de Vacaciones.",
-        "description": "Creates a Pedido de Vacaciones",
+        "description": "Creates a new instance of Pedido de Vacaciones.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -33494,7 +34253,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -33504,10 +34264,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -34348,7 +35130,7 @@
           "Sueldos / Exportación de Conceptos de Sueldo"
         ],
         "summary": "Create a Exportación de Conceptos de Sueldo.",
-        "description": "Creates a Exportación de Conceptos de Sueldo",
+        "description": "Creates a new instance of Exportación de Conceptos de Sueldo.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -34373,7 +35155,8 @@
                         "title": "Fecha",
                         "type": "string"
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -34383,10 +35166,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -35177,7 +35982,7 @@
           "Sueldos / Honorarios Socios"
         ],
         "summary": "Create a Honorarios Socios.",
-        "description": "Creates a Honorarios Socios",
+        "description": "Creates a new instance of Honorarios Socios.\n\n**Key Attributes (Unique):** `HOSO_PERIODO` (Período), `EMPL_ID_EMPL` (Socio)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -35419,7 +36224,8 @@
                         },
                         "description": "Array of child entities of Adicionales"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (HOSO_PERIODO, EMPL_ID_EMPL) must be unique across all instances."
                   }
                 }
               }
@@ -35429,10 +36235,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: HOSO_PERIODO, EMPL_ID_EMPL"
           }
         }
       }
@@ -36367,7 +37195,7 @@
           "Sueldos / Libro Sueldos Digital"
         ],
         "summary": "Create a Libro Sueldos Digital.",
-        "description": "Creates a Libro Sueldos Digital",
+        "description": "Creates a new instance of Libro Sueldos Digital.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -36410,7 +37238,8 @@
                         "description": "Archivo que puede subir un usuario por si quiere dejar registrado modificaciones que realizó al archivo original.",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -36420,10 +37249,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -37255,7 +38106,7 @@
           "Sueldos / Liquidación de sueldo por empleado"
         ],
         "summary": "Create a Liquidación de sueldo por empleado.",
-        "description": "Creates a Liquidación de sueldo por empleado",
+        "description": "Creates a new instance of Liquidación de sueldo por empleado.\n\n**Key Attributes (Unique):** `PASU_ID_PASU` (Pago Sueldos ), `EMPL_ID_EMPL` (Empleado)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -37473,7 +38324,8 @@
                         },
                         "description": "Array of child entities of Detalle"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (PASU_ID_PASU, EMPL_ID_EMPL) must be unique across all instances."
                   }
                 }
               }
@@ -37483,10 +38335,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: PASU_ID_PASU, EMPL_ID_EMPL"
           }
         }
       }
@@ -38534,7 +39408,7 @@
           "Sueldos / Liquidación de sueldos"
         ],
         "summary": "Create a Liquidación de sueldos.",
-        "description": "Creates a Liquidación de sueldos",
+        "description": "Creates a new instance of Liquidación de sueldos.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -38864,7 +39738,8 @@
                         },
                         "description": "Array of child entities of Novedades"
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -38874,10 +39749,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -40020,7 +40917,7 @@
           "Sueldos / Novedades para liq de sueldos"
         ],
         "summary": "Create a Novedades para liq de sueldos.",
-        "description": "Creates a Novedades para liq de sueldos",
+        "description": "Creates a new instance of Novedades para liq de sueldos.\n\n**Key Attributes (Unique):** `PASU_ID_PASU` (Liquidación), `EMPL_ID_EMPL` (Empleado)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -40212,7 +41109,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (PASU_ID_PASU, EMPL_ID_EMPL) must be unique across all instances."
                   }
                 }
               }
@@ -40222,10 +41120,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: PASU_ID_PASU, EMPL_ID_EMPL"
           }
         }
       }
@@ -41167,7 +42087,7 @@
           "Sueldos / Solicitud de Adelanto"
         ],
         "summary": "Create a Solicitud de Adelanto.",
-        "description": "Creates a Solicitud de Adelanto",
+        "description": "Creates a new instance of Solicitud de Adelanto.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -41209,7 +42129,8 @@
                         "description": " This is a foreign key to Concepto de sueldo. An id of Concepto de sueldo is expected",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -41219,10 +42140,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }

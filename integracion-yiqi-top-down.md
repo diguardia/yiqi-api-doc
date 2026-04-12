@@ -44,6 +44,7 @@ Esta cobertura es amplia y suficiente para diseñar integraciones horizontales (
 - El spec de Seguridad (`Security.api.json`) define `/token`, pero no declara `securitySchemes`.
 - Parte de los metadatos de operaciones están incompletos (descripciones/operationId vacíos en algunos casos).
 - Falta una receta de onboarding técnico en formato “copiar y pegar” para empezar rápido.
+- Falta explicitar en todos los documentos la regla operativa oficial para `schemaId` y healthcheck post-login.
 
 ## 4) Nivel de autenticación y sesión
 
@@ -51,19 +52,25 @@ Hay un flujo explícito de obtención de token via `POST /token` con `applicatio
 
 Esto es suficiente para implementar login en integraciones server-to-server o backend-for-frontend.
 
+Definiciones operativas vigentes:
+- No hay refresh token: cuando expira la sesión, se debe reloguear.
+- Healthcheck canónico: `GET /accountapi/GetLoginInformation`.
+- `schemaId` primario: tomarlo de `GetLoginInformation`.
+- `schemaId` complementario: usar `GET /schemasapi/GetAvailable` cuando el usuario tenga acceso a múltiples esquemas.
+
 Mejoras recomendadas para reducir errores de implementación:
-- Documentar renovación/refresh en forma explícita (si aplica).
+- Documentar claramente que no existe refresh token y que el recambio es por relogin.
 - Estandarizar dónde enviar el bearer (header `Authorization`).
-- Incluir ejemplos de errores 401/403 y estrategia de reintento/relogin.
+- Incluir ejemplos de errores 401/403 y estrategia de relogin automático.
 
 ## 5) Nivel de implementación (MVP real)
 
 Un MVP de integración es totalmente factible con este orden:
-1. Autenticación (Seguridad).
-2. Lectura de maestros (Clientes, Productos, Depósitos).
-3. Consulta de stock.
-4. Creación de pedido de venta.
-5. Confirmación de impacto financiero/contable.
+1. Autenticación en Seguridad (`POST /token`).
+2. Healthcheck y contexto con `GET /accountapi/GetLoginInformation`.
+3. Resolver `schemaId` (desde login info y, si hace falta, `GetAvailableSchemas`).
+4. Consulta de disponibilidad de stock (flujo priorizado).
+5. Continuar con caso de uso extendido (clientes, pedido, cobranza, etc.) según precondiciones.
 
 Este flujo ya está alineado con la guía `ai-integration-playbook.md`.
 

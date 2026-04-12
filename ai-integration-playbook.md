@@ -12,7 +12,7 @@ Hoy el portal ya tiene los OpenAPI por módulo y un índice (`modules.json`). Pa
 
 2. **Contrato de autenticación y sesión más explícito**
    - Dónde va el `Bearer token` exactamente.
-   - Tiempo de expiración del token y cómo renovarlo.
+   - Tiempo de expiración del token y política de recambio.
    - Errores típicos de auth (`401/403`) y recuperación.
 
 3. **Convenciones transversales documentadas en un único lugar**
@@ -38,13 +38,44 @@ Hoy el portal ya tiene los OpenAPI por módulo y un índice (`modules.json`). Pa
 7. **Plantilla de prompt recomendada para usuarios no técnicos**
    - Un prompt base para pedirle a la IA una app funcional y segura.
 
-## 2) Prompt recomendado para pasarle a la IA
+## 2) Definiciones oficiales para integradores (abril 2026)
+
+Estas reglas deben considerarse fuente de verdad al construir recetas para bots:
+
+1. **Base URL**
+   - URL única de API: `https://api.yiqi.com.ar`.
+   - Pueden existir esquemas de test por cliente, pero no cambia la URL base.
+
+2. **Autenticación**
+   - Obtener token con `POST /token` en `Security.api.json`.
+   - Enviar token como `Authorization: Bearer <token>`.
+   - **No hay refresh token**: al vencer, se debe reloguear.
+
+3. **Healthcheck canónico post-login**
+   - Endpoint oficial: `GET /accountapi/GetLoginInformation`.
+   - Se usa para validar sesión y recuperar contexto (`userName`, `schemaId`, etc.).
+
+4. **Regla oficial de `schemaId`**
+   - Método primario: usar `schemaId` devuelto por `GetLoginInformation` (último esquema usado por el usuario).
+   - Método complementario: `GET /schemasapi/GetAvailable` para listar esquemas habilitados si hay más de uno.
+   - Referencia operativa alternativa: el `schemaId` también aparece en URLs del frontend YiQi.
+
+5. **Usuario de integración**
+   - Recomendado (y próximo a obligatorio): usar usuario no interactivo por integración, marcado como **INTEGRADOR**.
+   - Evitar compartir usuario humano entre frontend y procesos automáticos.
+
+6. **Datos demo**
+   - No existe dataset demo estable oficial. Las recetas deben declarar precondiciones mínimas.
+
+## 3) Prompt recomendado para pasarle a la IA
 
 Usar algo como:
 
 > "Quiero que construyas una app [web/móvil/backend] que se conecte a YiQi ERP. Usa `modules.json` para descubrir módulos y las specs OpenAPI para generar cliente API tipado. Implementa autenticación con bearer token, manejo de refresh/login, reintentos con backoff, logging y validaciones. Empezá con este flujo: login, obtener clientes, consultar stock de un SKU y crear un pedido de venta. Mostrame estructura de carpetas, variables de entorno, scripts de arranque y tests de integración con mocks." 
 
-## 3) Aplicaciones externas posibles (y validación conceptual)
+> "Quiero que construyas una app [web/móvil/backend] que se conecte a YiQi ERP. Usa `modules.json` para descubrir módulos y las specs OpenAPI para generar cliente API tipado. Implementa autenticación con bearer token (sin refresh token: si vence, reloguear), healthcheck con `GetLoginInformation`, resolución de `schemaId` desde ese endpoint y fallback con `GetAvailableSchemas`. Empezá con este flujo: login, healthcheck, consultar disponibilidad de stock de un SKU. Mostrame estructura de carpetas, variables de entorno, scripts de arranque y tests de integración con mocks." 
+
+## 4) Aplicaciones externas posibles (y validación conceptual)
 
 ### A. E-commerce conectado a ERP
 - **Objetivo:** sincronizar catálogo, stock y pedidos.
@@ -81,16 +112,16 @@ Usar algo como:
 - **Riesgo principal:** reglas de negocio incompletas (mínimos, lead time).
 - **Mitigación:** etapa 1 de recomendación, etapa 2 de aprobación humana.
 
-## 4) Flujo mínimo sugerido para validar una integración
+## 5) Flujo mínimo sugerido para validar una integración
 
-1. Autenticar en Seguridad y guardar token.
-2. Leer maestros básicos (clientes, productos, depósitos).
-3. Consultar disponibilidad de stock.
-4. Simular creación de documento comercial (pedido/remito/factura según flujo).
-5. Confirmar impacto contable/financiero si corresponde.
-6. Registrar trazabilidad (request/response + IDs funcionales).
+1. Autenticar en Seguridad (`POST /token`) y guardar token.
+2. Ejecutar healthcheck (`GET /accountapi/GetLoginInformation`) y tomar `schemaId`.
+3. Si hay múltiples esquemas posibles, confirmar con `GET /schemasapi/GetAvailable`.
+4. Consultar disponibilidad de stock (flujo priorizado).
+5. Continuar con el caso de uso (clientes, pedido, cobranza, etc.) segun precondiciones del cliente.
+6. Registrar trazabilidad (request/response + IDs funcionales) y manejo de 401 con relogin.
 
-## 5) Criterios de "listo para usar con IA"
+## 6) Criterios de "listo para usar con IA"
 
 Una integración está madura cuando:
 - existe un ejemplo funcional de punta a punta;
@@ -98,12 +129,12 @@ Una integración está madura cuando:
 - la IA puede inferir el flujo completo sin adivinar campos críticos;
 - hay datos demo reproducibles para pruebas.
 
-## 6) Siguiente mejora recomendada del sitio
+## 7) Siguiente mejora recomendada del sitio
 
 Publicar una sección "Recetas" con 5 flujos estándar:
 1. Login + healthcheck.
-2. ABM de clientes.
-3. Consulta y ajuste de stock.
+2. Consulta de disponibilidad de stock (prioridad actual).
+3. ABM de clientes.
 4. Pedido de venta completo.
 5. Cobranza/pago básico.
 

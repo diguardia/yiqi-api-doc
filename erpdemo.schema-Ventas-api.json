@@ -16,7 +16,7 @@
           "Recibo"
         ],
         "summary": "Create a Recibo.",
-        "description": "Creates a Recibo",
+        "description": "Creates a new instance of Recibo.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -678,7 +678,8 @@
                         },
                         "description": "Array of child entities of Relaciones Pagos"
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -688,10 +689,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -2262,7 +2285,7 @@
           "Control Facturas Online"
         ],
         "summary": "Create a Control Facturas Online.",
-        "description": "Creates a Control Facturas Online",
+        "description": "Creates a new instance of Control Facturas Online.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -2323,7 +2346,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -2333,10 +2357,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -3141,7 +3187,7 @@
           "Factura"
         ],
         "summary": "Create a Factura.",
-        "description": "Creates a Factura",
+        "description": "Creates a new instance of Factura.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -4079,7 +4125,8 @@
                         },
                         "description": "Array of child entities of Relación de pagos"
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -4089,10 +4136,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -6017,7 +6086,7 @@
           "Liq. de comisiones"
         ],
         "summary": "Create a Liq. de comisiones.",
-        "description": "Creates a Liq. de comisiones",
+        "description": "Creates a new instance of Liq. de comisiones.\n\n**Key Attributes (Unique):** `LIDC_PERIODO` (Período), `VEHA_ID_VEHA` (Vendedor)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -6121,7 +6190,8 @@
                         },
                         "description": "Array of child entities of Detalle"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (LIDC_PERIODO, VEHA_ID_VEHA) must be unique across all instances."
                   }
                 }
               }
@@ -6131,10 +6201,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: LIDC_PERIODO, VEHA_ID_VEHA"
           }
         }
       }
@@ -7017,7 +7109,7 @@
           "Pedido"
         ],
         "summary": "Create a Pedido.",
-        "description": "Creates a Pedido",
+        "description": "Creates a new instance of Pedido.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -9503,7 +9595,8 @@
                         },
                         "description": "Array of child entities of Mensajes"
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -9513,10 +9606,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -13164,7 +13279,7 @@
           "Carga resumida / Carga resumida de Venta"
         ],
         "summary": "Create a Carga resumida de Venta.",
-        "description": "Creates a Carga resumida de Venta",
+        "description": "Creates a new instance of Carga resumida de Venta.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -13280,7 +13395,8 @@
                         "default": "1",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -13290,10 +13406,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -14253,7 +14391,7 @@
           "Carga resumida / Carga resumida de Recibos V2"
         ],
         "summary": "Create a Carga resumida de Recibos V2.",
-        "description": "Creates a Carga resumida de Recibos V2",
+        "description": "Creates a new instance of Carga resumida de Recibos V2.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -14459,7 +14597,8 @@
                         },
                         "description": "Array of child entities of Resultado"
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -14469,10 +14608,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -15433,7 +15594,7 @@
           "Carga resumida / Carga resumida de Recibos"
         ],
         "summary": "Create a Carga resumida de Recibos.",
-        "description": "Creates a Carga resumida de Recibos",
+        "description": "Creates a new instance of Carga resumida de Recibos.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -15510,7 +15671,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -15520,10 +15682,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -16368,7 +16552,7 @@
           "Cobros / Acción de cobranzas"
         ],
         "summary": "Create a Acción de cobranzas.",
-        "description": "Creates a Acción de cobranzas",
+        "description": "Creates a new instance of Acción de cobranzas.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -16425,7 +16609,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -16435,10 +16620,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -17315,7 +17522,7 @@
           "Cobros / Cheque Recibido"
         ],
         "summary": "Create a Cheque Recibido.",
-        "description": "Creates a Cheque Recibido",
+        "description": "Creates a new instance of Cheque Recibido.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -17479,7 +17686,8 @@
                         "description": " This attribute is mandatory when the instance is at state 'Vendido'",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -17489,10 +17697,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -18481,7 +18711,7 @@
           "Cobros / Cobro de Pedido"
         ],
         "summary": "Create a Cobro de Pedido.",
-        "description": "Creates a Cobro de Pedido",
+        "description": "Creates a new instance of Cobro de Pedido.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -18603,7 +18833,8 @@
                         "default": "N",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -18613,10 +18844,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -19562,7 +19815,7 @@
           "Cobros / Cobro electrónico"
         ],
         "summary": "Create a Cobro electrónico.",
-        "description": "Creates a Cobro electrónico",
+        "description": "Creates a new instance of Cobro electrónico.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -19624,7 +19877,8 @@
                         "description": " This is a foreign key to Liquidación de Cobro electrónico. An id of Liquidación de Cobro electrónico is expected",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -19634,10 +19888,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -20483,7 +20759,7 @@
           "Cobros / Cobro MP"
         ],
         "summary": "Create a Cobro MP.",
-        "description": "Creates a Cobro MP",
+        "description": "Creates a new instance of Cobro MP.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -20512,7 +20788,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -20522,10 +20799,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -21214,7 +21513,7 @@
           "Cobros / Cupón MP"
         ],
         "summary": "Create a Cupón MP.",
-        "description": "Creates a Cupón MP",
+        "description": "Creates a new instance of Cupón MP.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -21268,7 +21567,8 @@
                         "type": "number",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -21278,10 +21578,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -22099,7 +22421,7 @@
           "Cobros / Depósito bancario"
         ],
         "summary": "Create a Depósito bancario.",
-        "description": "Creates a Depósito bancario",
+        "description": "Creates a new instance of Depósito bancario.\n\n**Key Attributes (Unique):** `COBR_ID_COBR` (Recibo), `DEBA_IMPORTE` (Importe), `CUDE_ID_CUDE` (Cuenta bancaria), `DEBA_REFERENCIA` (Referencia), `DEBA_FECHA` (Fecha)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -22154,7 +22476,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (COBR_ID_COBR, DEBA_IMPORTE, CUDE_ID_CUDE, DEBA_REFERENCIA, DEBA_FECHA) must be unique across all instances."
                   }
                 }
               }
@@ -22164,10 +22487,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: COBR_ID_COBR, DEBA_IMPORTE, CUDE_ID_CUDE, DEBA_REFERENCIA, DEBA_FECHA"
           }
         }
       }
@@ -23024,7 +23369,7 @@
           "Cobros / Cobro en Efectivo"
         ],
         "summary": "Create a Cobro en Efectivo.",
-        "description": "Creates a Cobro en Efectivo",
+        "description": "Creates a new instance of Cobro en Efectivo.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -23074,7 +23419,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -23084,10 +23430,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -23917,7 +24285,7 @@
           "Cobros / Pago informado"
         ],
         "summary": "Create a Pago informado.",
-        "description": "Creates a Pago informado",
+        "description": "Creates a new instance of Pago informado.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -23997,7 +24365,8 @@
                         "description": " This is a foreign key to Factura. An id of Factura is expected",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -24007,10 +24376,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -24772,7 +25163,7 @@
           "Cobros / Relaciones Cobros"
         ],
         "summary": "Create a Relaciones Cobros.",
-        "description": "Creates a Relaciones Cobros",
+        "description": "Creates a new instance of Relaciones Cobros.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -24852,7 +25243,8 @@
                         "description": "Ejemplo: 1USD= 17ARS.\nCompletar: 17",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -24862,10 +25254,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -25722,7 +26136,7 @@
           "Cobros / Transferencia Recibida"
         ],
         "summary": "Create a Transferencia Recibida.",
-        "description": "Creates a Transferencia Recibida",
+        "description": "Creates a new instance of Transferencia Recibida.\n\n**Key Attributes (Unique):** `COBR_ID_COBR` (Recibo), `CLIE_ID_CLIE` (Cliente), `TRRE_FECHA` (Fecha), `TRRE_IMPORTE` (Importe), `TRRE_REFERENCIA` (Referencia)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -25799,7 +26213,8 @@
                         "description": " This is a foreign key to Transferencia. An id of Transferencia is expected",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (COBR_ID_COBR, CLIE_ID_CLIE, TRRE_FECHA, TRRE_IMPORTE, TRRE_REFERENCIA) must be unique across all instances."
                   }
                 }
               }
@@ -25809,10 +26224,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: COBR_ID_COBR, CLIE_ID_CLIE, TRRE_FECHA, TRRE_IMPORTE, TRRE_REFERENCIA"
           }
         }
       }
@@ -26700,7 +27137,7 @@
           "Integraciones / Novedad Fact. Detalle"
         ],
         "summary": "Create a Novedad Fact. Detalle.",
-        "description": "Creates a Novedad Fact. Detalle",
+        "description": "Creates a new instance of Novedad Fact. Detalle.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -26800,7 +27237,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -26810,10 +27248,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -27688,7 +28148,7 @@
           "Integraciones / Novedad Factura"
         ],
         "summary": "Create a Novedad Factura.",
-        "description": "Creates a Novedad Factura",
+        "description": "Creates a new instance of Novedad Factura.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -27966,7 +28426,8 @@
                         "description": "ESTÁ BIEN QUE SEA DESC. ES SÓLO INFORMATIVO.",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -27976,10 +28437,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -29092,7 +29575,7 @@
           "Integraciones / Novedad NC"
         ],
         "summary": "Create a Novedad NC.",
-        "description": "Creates a Novedad NC",
+        "description": "Creates a new instance of Novedad NC.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -29270,7 +29753,8 @@
                         "description": "ESTÁ BIEN QUE SEA DESC. ES SÓLO INFORMATIVO.",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -29280,10 +29764,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -30262,7 +30768,7 @@
           "Integraciones / Novedad Recibo"
         ],
         "summary": "Create a Novedad Recibo.",
-        "description": "Creates a Novedad Recibo",
+        "description": "Creates a new instance of Novedad Recibo.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -30377,7 +30883,8 @@
                         "type": "integer",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -30387,10 +30894,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -31286,7 +31815,7 @@
           "Más / Consulta de comprobante ARCA"
         ],
         "summary": "Create a Consulta de comprobante ARCA.",
-        "description": "Creates a Consulta de comprobante ARCA",
+        "description": "Creates a new instance of Consulta de comprobante ARCA.\n\n**Key Attributes (Unique):** `PUVE_ID_PUVE` (Punto de venta), `CDCA_NUMERO` (Nro), `CDCA_CODIGO_DE_TIPO_DE_CO` (Código de tipo de comprobante)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -31322,7 +31851,8 @@
                         "title": "Código de tipo de comprobante",
                         "type": "integer"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (PUVE_ID_PUVE, CDCA_NUMERO, CDCA_CODIGO_DE_TIPO_DE_CO) must be unique across all instances."
                   }
                 }
               }
@@ -31332,10 +31862,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: PUVE_ID_PUVE, CDCA_NUMERO, CDCA_CODIGO_DE_TIPO_DE_CO"
           }
         }
       }
@@ -32070,7 +32622,7 @@
           "Más / Desbloquear numeración ARCA"
         ],
         "summary": "Create a Desbloquear numeración ARCA.",
-        "description": "Creates a Desbloquear numeración ARCA",
+        "description": "Creates a new instance of Desbloquear numeración ARCA.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -32117,7 +32669,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -32127,10 +32680,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -32936,7 +33511,7 @@
           "Más / Retenciones de pedido"
         ],
         "summary": "Create a Retenciones de pedido.",
-        "description": "Creates a Retenciones de pedido",
+        "description": "Creates a new instance of Retenciones de pedido.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -32977,7 +33552,8 @@
                         "type": "number",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -32987,10 +33563,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -33691,7 +34289,7 @@
           "Notas de Venta / Nota de Crédito (V)"
         ],
         "summary": "Create a Nota de Crédito (V).",
-        "description": "Creates a Nota de Crédito (V)",
+        "description": "Creates a new instance of Nota de Crédito (V).",
         "requestBody": {
           "content": {
             "application/json": {
@@ -34096,7 +34694,8 @@
                         },
                         "description": "Array of child entities of Ajuste"
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -34106,10 +34705,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -35460,7 +36081,7 @@
           "Notas de Venta / Nota de Débito (V)"
         ],
         "summary": "Create a Nota de Débito (V).",
-        "description": "Creates a Nota de Débito (V)",
+        "description": "Creates a new instance of Nota de Débito (V).",
         "requestBody": {
           "content": {
             "application/json": {
@@ -36023,7 +36644,8 @@
                         },
                         "description": "Array of child entities of Percepciones"
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -36033,10 +36655,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -37536,7 +38180,7 @@
           "Precios / Actual. precios de venta p/ Art. Base"
         ],
         "summary": "Create a Actual. precios de venta p/ Art. Base.",
-        "description": "Creates a Actual. precios de venta p/ Art. Base",
+        "description": "Creates a new instance of Actual. precios de venta p/ Art. Base.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -37596,7 +38240,8 @@
                         "type": "number",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -37606,10 +38251,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -38440,7 +39107,7 @@
           "Precios / Lista de precios de venta"
         ],
         "summary": "Create a Lista de precios de venta.",
-        "description": "Creates a Lista de precios de venta",
+        "description": "Creates a new instance of Lista de precios de venta.\n\n**Key Attributes (Unique):** `LIDP_NOMBRE` (Nombre)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -39120,7 +39787,8 @@
                         },
                         "description": "Array of child entities of Márgenes por política"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (LIDP_NOMBRE) must be unique across all instances."
                   }
                 }
               }
@@ -39130,10 +39798,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: LIDP_NOMBRE"
           }
         }
       }
@@ -40638,7 +41328,7 @@
           "Precios / Oferta"
         ],
         "summary": "Create a Oferta.",
-        "description": "Creates a Oferta",
+        "description": "Creates a new instance of Oferta.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -40838,7 +41528,8 @@
                         },
                         "description": "Array of child entities of Detalle"
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -40848,10 +41539,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -41863,7 +42576,7 @@
           "Precios / Precio artículo de venta"
         ],
         "summary": "Create a Precio artículo de venta.",
-        "description": "Creates a Precio artículo de venta",
+        "description": "Creates a new instance of Precio artículo de venta.\n\n**Key Attributes (Unique):** `LIDP_ID_LIDP` (Lista), `MATE_ID_MATE` (Artículo)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -41927,7 +42640,8 @@
                         "type": "number",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (LIDP_ID_LIDP, MATE_ID_MATE) must be unique across all instances."
                   }
                 }
               }
@@ -41937,10 +42651,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: LIDP_ID_LIDP, MATE_ID_MATE"
           }
         }
       }
@@ -42809,7 +43545,7 @@
           "Precios / Precio Servicio por lista"
         ],
         "summary": "Create a Precio Servicio por lista.",
-        "description": "Creates a Precio Servicio por lista",
+        "description": "Creates a new instance of Precio Servicio por lista.\n\n**Key Attributes (Unique):** `LIDP_ID_LIDP` (Lista de Precio), `SEYI_ID_SEYI` (Servicio)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -42858,7 +43594,8 @@
                         "default": "PARAM.MONE_ID_MONE",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (LIDP_ID_LIDP, SEYI_ID_SEYI) must be unique across all instances."
                   }
                 }
               }
@@ -42868,10 +43605,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: LIDP_ID_LIDP, SEYI_ID_SEYI"
           }
         }
       }
@@ -43600,7 +44359,7 @@
           "Reportes / Cancelación"
         ],
         "summary": "Create a Cancelación.",
-        "description": "Creates a Cancelación",
+        "description": "Creates a new instance of Cancelación.\n\n**Key Attributes (Unique):** `CLIE_ID_CLIE` (Cliente), `COBR_ID_COBR` (Recibo), `FACT_ID_FACT` (Factura), `NODE_ID_NODE` (Nota de Débito)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -43649,7 +44408,8 @@
                         "type": "number",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (CLIE_ID_CLIE, COBR_ID_COBR, FACT_ID_FACT, NODE_ID_NODE) must be unique across all instances."
                   }
                 }
               }
@@ -43659,10 +44419,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: CLIE_ID_CLIE, COBR_ID_COBR, FACT_ID_FACT, NODE_ID_NODE"
           }
         }
       }
@@ -44533,7 +45315,7 @@
           "Reportes / Control contable clientes"
         ],
         "summary": "Create a Control contable clientes.",
-        "description": "Creates a Control contable clientes",
+        "description": "Creates a new instance of Control contable clientes.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -44712,7 +45494,8 @@
                         "type": "number",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -44722,10 +45505,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -45620,7 +46425,7 @@
           "Reportes / Control de Pedidos"
         ],
         "summary": "Create a Control de Pedidos.",
-        "description": "Creates a Control de Pedidos",
+        "description": "Creates a new instance of Control de Pedidos.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -45863,7 +46668,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -45873,10 +46679,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -46947,7 +47775,7 @@
           "Reportes / Proyección de Facturación Recurrente"
         ],
         "summary": "Create a Proyección de Facturación Recurrente.",
-        "description": "Creates a Proyección de Facturación Recurrente",
+        "description": "Creates a new instance of Proyección de Facturación Recurrente.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -47007,7 +47835,8 @@
                         },
                         "description": "Array of child entities of Clientes"
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -47017,10 +47846,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -47839,7 +48690,7 @@
           "Reportes / Errores en Facturas Recurrentes"
         ],
         "summary": "Create a Errores en Facturas Recurrentes.",
-        "description": "Creates a Errores en Facturas Recurrentes",
+        "description": "Creates a new instance of Errores en Facturas Recurrentes.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -47893,7 +48744,8 @@
                         "type": "integer",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -47903,10 +48755,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -48630,7 +49504,7 @@
           "Reportes / Facturación Mensual"
         ],
         "summary": "Create a Facturación Mensual.",
-        "description": "Creates a Facturación Mensual",
+        "description": "Creates a new instance of Facturación Mensual.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -48668,7 +49542,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -48678,10 +49553,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -49410,7 +50307,7 @@
           "Reportes / Importar Pago Mis Cuentas"
         ],
         "summary": "Create a Importar Pago Mis Cuentas.",
-        "description": "Creates a Importar Pago Mis Cuentas",
+        "description": "Creates a new instance of Importar Pago Mis Cuentas.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -49440,7 +50337,8 @@
                         "title": "Archivo",
                         "type": "integer"
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -49450,10 +50348,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -50251,7 +51171,7 @@
           "Reportes / Impresión Múltiple"
         ],
         "summary": "Create a Impresión Múltiple.",
-        "description": "Creates a Impresión Múltiple",
+        "description": "Creates a new instance of Impresión Múltiple.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -50286,7 +51206,8 @@
                         "type": "integer",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -50296,10 +51217,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -51006,7 +51949,7 @@
           "Reportes / Movimientos de clientes"
         ],
         "summary": "Create a Movimientos de clientes.",
-        "description": "Creates a Movimientos de clientes",
+        "description": "Creates a new instance of Movimientos de clientes.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -51177,7 +52120,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -51187,10 +52131,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -52253,7 +53219,7 @@
           "Reportes / Exportar Pago Mis Cuentas"
         ],
         "summary": "Create a Exportar Pago Mis Cuentas.",
-        "description": "Creates a Exportar Pago Mis Cuentas",
+        "description": "Creates a new instance of Exportar Pago Mis Cuentas.\n\n**Key Attributes (Unique):** `PAMC_DIA` (Día)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -52304,7 +53270,8 @@
                         "default": "S",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (PAMC_DIA) must be unique across all instances."
                   }
                 }
               }
@@ -52314,10 +53281,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: PAMC_DIA"
           }
         }
       }
@@ -53146,7 +54135,7 @@
           "Reportes / Reporte de Ventas Detallado"
         ],
         "summary": "Create a Reporte de Ventas Detallado.",
-        "description": "Creates a Reporte de Ventas Detallado",
+        "description": "Creates a new instance of Reporte de Ventas Detallado.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -53297,7 +54286,8 @@
                         "type": "number",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -53307,10 +54297,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -54381,7 +55393,7 @@
           "Reportes / Reporte de Ventas y Stock"
         ],
         "summary": "Create a Reporte de Ventas y Stock.",
-        "description": "Creates a Reporte de Ventas y Stock",
+        "description": "Creates a new instance of Reporte de Ventas y Stock.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -54415,7 +55427,8 @@
                         "description": " This is a foreign key to Ubicación de stock. An id of Ubicación de stock is expected",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -54425,10 +55438,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -55126,7 +56161,7 @@
           "Reportes / Reporte de rentabilidad por cliente"
         ],
         "summary": "Create a Reporte de rentabilidad por cliente.",
-        "description": "Creates a Reporte de rentabilidad por cliente",
+        "description": "Creates a new instance of Reporte de rentabilidad por cliente.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -55201,7 +56236,8 @@
                         "type": "integer",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -55211,10 +56247,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -55967,7 +57025,7 @@
           "Reportes / Reporte de Cobranza "
         ],
         "summary": "Create a Reporte de Cobranza .",
-        "description": "Creates a Reporte de Cobranza ",
+        "description": "Creates a new instance of Reporte de Cobranza .",
         "requestBody": {
           "content": {
             "application/json": {
@@ -55997,7 +57055,8 @@
                         "description": " This is a foreign key to Empresa. An id of Empresa is expected",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -56007,10 +57066,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -56790,7 +57871,7 @@
           "Reportes / Reporte CRM"
         ],
         "summary": "Create a Reporte CRM.",
-        "description": "Creates a Reporte CRM",
+        "description": "Creates a new instance of Reporte CRM.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -56864,7 +57945,8 @@
                         "type": "number",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -56874,10 +57956,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -57629,7 +58733,7 @@
           "Reportes / Reporte de clientes"
         ],
         "summary": "Create a Reporte de clientes.",
-        "description": "Creates a Reporte de clientes",
+        "description": "Creates a new instance of Reporte de clientes.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -57808,7 +58912,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -57818,10 +58923,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -58802,7 +59929,7 @@
           "Reportes / Reporte de Cobros"
         ],
         "summary": "Create a Reporte de Cobros.",
-        "description": "Creates a Reporte de Cobros",
+        "description": "Creates a new instance of Reporte de Cobros.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -58900,7 +60027,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -58910,10 +60038,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -59821,7 +60971,7 @@
           "Reportes / Reporte de facturación recurrente"
         ],
         "summary": "Create a Reporte de facturación recurrente.",
-        "description": "Creates a Reporte de facturación recurrente",
+        "description": "Creates a new instance of Reporte de facturación recurrente.\n\n**Key Attributes (Unique):** `RDFR_DESDE` (Desde), `RDFR_HASTA` (Hasta)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -59877,7 +61027,8 @@
                         },
                         "description": "Array of child entities of Períodos"
                       }
-                    }
+                    },
+                    "description": "Instance data. Key attributes (RDFR_DESDE, RDFR_HASTA) must be unique across all instances."
                   }
                 }
               }
@@ -59887,10 +61038,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: RDFR_DESDE, RDFR_HASTA"
           }
         }
       }
@@ -60629,7 +61802,7 @@
           "Reportes / Reporte de pedidos"
         ],
         "summary": "Create a Reporte de pedidos.",
-        "description": "Creates a Reporte de pedidos",
+        "description": "Creates a new instance of Reporte de pedidos.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -61435,7 +62608,8 @@
                         "description": "Margen / Total Cobrado",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -61445,10 +62619,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -63603,7 +64799,7 @@
           "Reportes / Reporte de Pedidos Detallado"
         ],
         "summary": "Create a Reporte de Pedidos Detallado.",
-        "description": "Creates a Reporte de Pedidos Detallado",
+        "description": "Creates a new instance of Reporte de Pedidos Detallado.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -63820,7 +65016,8 @@
                         "type": "integer",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -63830,10 +65027,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -64794,7 +66013,7 @@
           "Reportes / Reporte de Ventas"
         ],
         "summary": "Create a Reporte de Ventas.",
-        "description": "Creates a Reporte de Ventas",
+        "description": "Creates a new instance of Reporte de Ventas.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -65388,7 +66607,8 @@
                         "type": "integer",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -65398,10 +66618,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }
@@ -67291,7 +68533,7 @@
           "Reportes / Reporte de ventas resumido"
         ],
         "summary": "Create a Reporte de ventas resumido.",
-        "description": "Creates a Reporte de ventas resumido",
+        "description": "Creates a new instance of Reporte de ventas resumido.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -67577,7 +68819,8 @@
                         "type": "string",
                         "nullable": true
                       }
-                    }
+                    },
+                    "description": "Instance data"
                   }
                 }
               }
@@ -67587,10 +68830,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
           }
         }
       }

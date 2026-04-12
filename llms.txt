@@ -27,3 +27,20 @@ Specs disponibles:
 
 Guías para asistentes de IA:
 - /ai-integration-playbook.md
+
+Reglas operativas para agentes (fuente rapida):
+- Base URL unica: https://api.yiqi.com.ar
+- Login: POST /token (Security.api.json)
+- Header de autenticacion: Authorization: Bearer <token>
+- Politica de sesion: no hay refresh token; al vencer, relogin
+- Healthcheck canonico: GET /accountapi/GetLoginInformation
+- Regla de schemaId: usar schemaId de GetLoginInformation como metodo primario
+- Fallback de schemaId: GET /schemasapi/GetAvailable
+- Usuario recomendado para integracion: usuario no interactivo con check INTEGRADOR
+- Datos demo estables: no disponibles
+
+Quickstart oficial para bots (prioridad actual):
+1) Login con /token
+2) Healthcheck con /accountapi/GetLoginInformation
+3) Tomar schemaId de la respuesta
+4) Consultar disponibilidad de stock
