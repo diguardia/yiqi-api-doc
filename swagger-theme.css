@@ -7,16 +7,45 @@
   --line-strong: rgba(255, 255, 255, 0.14);
   --text: #f3f5f7;
   --muted: #98a2b3;
-  --muted-2: #6f7785;
+  --muted-2: #8b95a5;
   --cyan: #00ccff;
   --cyan-soft: rgba(0, 204, 255, 0.1);
   --cyan-soft-2: rgba(0, 204, 255, 0.16);
   --green: #15d49c;
   --amber: #ffb020;
   --red: #ff637d;
+  --blue: #7ab7ff;
+  --purple: #a78bfa;
+  --glow: 0 0 0 1px rgba(0, 204, 255, 0.14) inset;
+  --radius-xs: 6px;
+  --radius-sm: 10px;
   --radius: 14px;
-  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+html[data-theme="light"] {
+  --bg: #eeece7;
+  --bg-elev: #f6f4ef;
+  --bg-elev-2: #ffffff;
+  --bg-soft: #ece9e2;
+  --line: rgba(0, 0, 0, 0.08);
+  --line-strong: rgba(0, 0, 0, 0.13);
+  --text: #17191c;
+  --muted: #586170;
+  --muted-2: #6f7785;
+  --cyan: #009fc7;
+  --cyan-soft: rgba(0, 159, 199, 0.10);
+  --cyan-soft-2: rgba(0, 159, 199, 0.14);
+  --green: #0c9b6d;
+  --amber: #c78000;
+  --red: #d4485e;
+  --blue: #347de6;
+  --purple: #7c3aed;
+  --glow: 0 0 0 1px rgba(0, 159, 199, 0.14) inset;
 }
 
 html,
@@ -92,10 +121,10 @@ body {
 
 .swagger-ui .info {
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   background: var(--bg-elev-2);
   padding: 20px 22px;
-  box-shadow: 0 0 0 1px rgba(0, 204, 255, 0.1) inset;
+  box-shadow: var(--glow);
 }
 
 .swagger-ui .info .title {
@@ -235,7 +264,7 @@ body {
 .swagger-ui textarea:focus,
 .swagger-ui select:focus {
   border-color: rgba(0, 204, 255, 0.36);
-  box-shadow: 0 0 0 1px rgba(0, 204, 255, 0.22) inset;
+  box-shadow: var(--glow);
 }
 
 .swagger-ui .btn {
@@ -275,6 +304,174 @@ body {
 .swagger-ui .property,
 .swagger-ui .prop-type {
   color: var(--text);
+}
+
+/* ── Opblock body ────────────────────────────────────── */
+.swagger-ui .opblock-body {
+  background: var(--bg-elev-2);
+}
+
+.swagger-ui .opblock-body pre.microlight,
+.swagger-ui .highlight-code > .microlight {
+  background: var(--bg-soft);
+  color: var(--text);
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Code / JSON highlight ───────────────────────────── */
+.swagger-ui .highlight-code {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+}
+
+.swagger-ui .model-box {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+}
+
+/* ── Schemas (Models) section ────────────────────────── */
+.swagger-ui section.models {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elev-2);
+}
+
+.swagger-ui section.models h4 {
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 700;
+  border-bottom: 1px solid var(--line);
+}
+
+.swagger-ui section.models .model-container {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin: 8px 0;
+}
+
+/* ── Parameter type / format labels ─────────────────── */
+.swagger-ui .parameter__type,
+.swagger-ui .prop-format,
+.swagger-ui .prop-name {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+/* ── Labels ──────────────────────────────────────────── */
+.swagger-ui label {
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 13px;
+}
+
+/* ── Tabs (Example Value / Schema) ───────────────────── */
+.swagger-ui .tab {
+  border-bottom: 1px solid var(--line);
+}
+
+.swagger-ui .tab li,
+.swagger-ui .tab li button {
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 13px;
+  background: transparent;
+}
+
+.swagger-ui .tab li.tabitem.active button,
+.swagger-ui .tab li button:hover {
+  color: var(--cyan);
+  border-bottom: 2px solid var(--cyan);
+}
+
+/* ── Response body ───────────────────────────────────── */
+.swagger-ui .responses-inner {
+  background: var(--bg-elev-2);
+}
+
+.swagger-ui .responses-inner h4,
+.swagger-ui .responses-inner h5 {
+  color: var(--text);
+}
+
+.swagger-ui .curl-command {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+/* ── Auth / Authorize modal ──────────────────────────── */
+.swagger-ui .dialog-ux .modal-ux,
+.swagger-ui .auth-container {
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  color: var(--text);
+}
+
+.swagger-ui .dialog-ux .modal-ux-header {
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--line);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.swagger-ui .dialog-ux .modal-ux-header h3 {
+  color: var(--text);
+}
+
+/* ── Authorize button ────────────────────────────────── */
+.swagger-ui .auth-btn-wrapper .authorize {
+  border-color: rgba(0, 204, 255, 0.3);
+  background: linear-gradient(180deg, rgba(0, 204, 255, 0.22), rgba(0, 204, 255, 0.12));
+  color: var(--cyan);
+}
+
+/* ── Server selector ─────────────────────────────────── */
+.swagger-ui .servers > label {
+  color: var(--muted);
+}
+
+.swagger-ui .servers > label select {
+  border: 1px solid var(--line-strong);
+  background: var(--bg-soft);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+}
+
+/* ── Response status code ────────────────────────────── */
+.swagger-ui .response-col_status {
+  color: var(--text);
+  font-family: var(--mono);
+  font-weight: 700;
+}
+
+/* ── Live response url ───────────────────────────────── */
+.swagger-ui .request-url pre {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 10px 14px;
+}
+
+/* ── Loading container ───────────────────────────────── */
+.swagger-ui .loading-container {
+  background: var(--bg);
+}
+
+/* ── Errors wrapper ──────────────────────────────────── */
+.swagger-ui .errors-wrapper {
+  background: rgba(255, 99, 125, 0.1);
+  border: 1px solid rgba(255, 99, 125, 0.3);
+  border-radius: var(--radius);
+  color: var(--red);
 }
 
 @media (max-width: 920px) {
