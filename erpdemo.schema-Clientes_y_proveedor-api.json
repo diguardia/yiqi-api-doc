@@ -1428,14 +1428,1575 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "CLIE_NOMBRE": {
+                      "title": "Nombre",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_RAZON_SOCIAL": {
+                      "title": "Razón Social",
+                      "type": "string"
+                    },
+                    "TIDD_ID_TIDD": {
+                      "title": "Tipo de documento",
+                      "type": "integer",
+                      "description": "Foreign key to Tipo de Documento",
+                      "nullable": true
+                    },
+                    "CLIE_CUIT": {
+                      "title": "CUIT/Documento",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_CODIGO": {
+                      "title": "Código",
+                      "type": "string",
+                      "description": "Código interno opcional para identificar a la empresa",
+                      "nullable": true
+                    },
+                    "CLIE_ISOLOGO": {
+                      "title": "Isologo",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "CLIE_SALDO_DE_AJUSTES": {
+                      "title": "Saldo no imputado de ajustes",
+                      "type": "number",
+                      "description": "Campo en desuso.",
+                      "nullable": true
+                    },
+                    "CLIE_SALDO_CLIENTE": {
+                      "title": "Saldo no imputado  de Cliente",
+                      "type": "number",
+                      "description": ">0: Dinero de más que se le cobró al cliente",
+                      "nullable": true
+                    },
+                    "CLIE_SALDO_PROVEEDOR": {
+                      "title": "Saldo no imputado  de Proveedor",
+                      "type": "number",
+                      "description": ">0: Dinero de más que se le pagó al proveedor.",
+                      "nullable": true
+                    },
+                    "CLIE_DIFERENCIA_SALDOS": {
+                      "title": "Diferencia Saldos",
+                      "type": "number",
+                      "description": "Saldo Cliente - Saldo Proveedor",
+                      "nullable": true
+                    },
+                    "CLIE_ACTIVO": {
+                      "title": "Activo (cliente)",
+                      "type": "boolean",
+                      "description": "Un cliente está Activo, si se le puede facturar",
+                      "nullable": true
+                    },
+                    "CUCO_ID_CUCO": {
+                      "title": "Cuenta contable (como cliente)",
+                      "type": "integer",
+                      "description": "Foreign key to Cuenta contable",
+                      "nullable": true
+                    },
+                    "CLIE_ACTIVO_P": {
+                      "title": "Activo (Proveedor)",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "CUCO_ID_CUPR": {
+                      "title": "Cuenta contable (como proveedor)",
+                      "type": "integer",
+                      "description": "Foreign key to Cuenta contable",
+                      "nullable": true
+                    },
+                    "CLIE_SOL_ACT_DATOS": {
+                      "title": "Solicitar actualización de datos",
+                      "type": "boolean",
+                      "description": "Si se marca este campo se le pedirá al proveedor que actualice sus datos en el Frontend de Proveedores.",
+                      "nullable": true
+                    },
+                    "CUCO_ID_CUGA": {
+                      "title": "Cuenta de Gastos Default",
+                      "type": "integer",
+                      "description": "Foreign key to Cuenta contable",
+                      "nullable": true
+                    },
+                    "LIDP_ID_LIDP": {
+                      "title": "Lista de Precio",
+                      "type": "integer",
+                      "description": "Foreign key to Lista de precios de venta",
+                      "nullable": true
+                    },
+                    "COVE_ID_COVE": {
+                      "title": "Condición de Venta",
+                      "type": "integer",
+                      "description": "Foreign key to Condición de venta",
+                      "nullable": true
+                    },
+                    "COIV_ID_COIV": {
+                      "title": "Condición IVA",
+                      "type": "integer",
+                      "description": "Foreign key to Condición de impuesto",
+                      "nullable": true
+                    },
+                    "VEHA_ID_VEHA": {
+                      "title": "Vendedor",
+                      "type": "integer",
+                      "description": "Foreign key to Vendedor",
+                      "nullable": true
+                    },
+                    "TRLO_ID_TRLO": {
+                      "title": "Transp. Logistico",
+                      "type": "integer",
+                      "description": "Foreign key to Transport. Logística",
+                      "nullable": true
+                    },
+                    "TIDC_ID_TIDC": {
+                      "title": "Tipo de Cliente",
+                      "type": "integer",
+                      "description": "Foreign key to Tipo de Cliente",
+                      "nullable": true
+                    },
+                    "CLIE_PASSWORD": {
+                      "title": "Password",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_OBSERVACIONES": {
+                      "title": "Observaciones",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_INFO": {
+                      "title": "Info",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_CODIGO_DIARIO": {
+                      "title": "Código Diario",
+                      "type": "string",
+                      "description": "D - Es día pero no hay tarifas activas\nN - No es día\nP - Pendiente de facturación\nF - Facturado",
+                      "nullable": true
+                    },
+                    "CLIE_PERMITIR_DUPLICAR_CU": {
+                      "title": "Permitir duplicar CUIT",
+                      "type": "boolean",
+                      "description": "Si se marca esta opción, se permitirá cargar dos empresas con distinto nombre pero con el mismo CUIT",
+                      "nullable": true
+                    },
+                    "CLIE_GLN": {
+                      "title": "GLN",
+                      "type": "string",
+                      "description": "Para más información: http://www.gs1.org.ar",
+                      "nullable": true
+                    },
+                    "CLIE_LATITUD": {
+                      "title": "Latitud",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CLIE_LONGITUD": {
+                      "title": "Longitud",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CLIE_MAIL": {
+                      "title": "Mail",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_NO_AJUSTAR_POR_TENEN": {
+                      "title": "No ajustar por tenencia",
+                      "type": "boolean",
+                      "description": "Si está marcado, no se contempla para el Ajuste por tenencia.",
+                      "nullable": true
+                    },
+                    "CLIE_NO_USAR_WEB": {
+                      "title": "No utilizar en ventas e-commerce",
+                      "type": "boolean",
+                      "description": "Si está marcado, no se usará este cliente para las ventas que bajen de la web. Se creará otro análogo con un \"(web)\" al final.",
+                      "nullable": true
+                    },
+                    "CLIE_ALERTA_FINANCIERA": {
+                      "title": "Alerta Financiera",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_NO_INCLU_REPO_PAGOS": {
+                      "title": "No incluir en el reporte de pagos",
+                      "type": "boolean",
+                      "description": "Si está marcado, no se incluirá este cliente en el reporte de pagos.",
+                      "nullable": true
+                    },
+                    "CLIE_INFOR_ALERTE": {
+                      "title": "Infor Alerte",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "SUCU_ID_SUCU": {
+                      "title": "Sucursal Propia",
+                      "type": "integer",
+                      "description": "Foreign key to Sucursal",
+                      "nullable": true
+                    },
+                    "CLIE_CODIGO_BANELCO": {
+                      "title": "Código Banelco",
+                      "type": "integer",
+                      "description": "Código usado para el reporte de Pago Mis Cuentas",
+                      "nullable": true
+                    },
+                    "CLIE_WEB": {
+                      "title": "Web",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_DOMICILIO": {
+                      "title": "Domicilio",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_DOMICILIO_2": {
+                      "title": "Domicilio Secundario",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_CP": {
+                      "title": "CP",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PAIS_ID_PAIS": {
+                      "title": "País",
+                      "type": "integer",
+                      "description": "Foreign key to País",
+                      "nullable": true
+                    },
+                    "PROV_ID_PROV": {
+                      "title": "Provincia / Estado",
+                      "type": "integer",
+                      "description": "Foreign key to Provincia",
+                      "nullable": true
+                    },
+                    "CLIE_LOCALIDAD": {
+                      "title": "Localidad",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_TE1": {
+                      "title": "TE 1",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_TE2": {
+                      "title": "TE 2",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_FAX": {
+                      "title": "FAX",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_ARHC_ID_1093": {
+                      "title": "Adjunto",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "CLIE_DIA_FACTURACION": {
+                      "title": "Día de facturación",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "SEYI_ID_SEYI": {
+                      "title": "Servicio",
+                      "type": "integer",
+                      "description": "Foreign key to Servicio",
+                      "nullable": true
+                    },
+                    "CLIE_PLAZO_DIAS_DE_PAGO": {
+                      "title": "Plazo días de pago",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "CLIE_DESCUENTO_PAGO_TEMP": {
+                      "title": "% Descuento por pago temprano",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CLIE_SE_FACTURA_MES_VENCI": {
+                      "title": "Se factura mes vencido",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "CLIE_CONCEPTO_DE_SERVICIO": {
+                      "title": "Concepto de servicio",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_INICIO_SERVICIO": {
+                      "title": "Inicio de servicio",
+                      "type": "string",
+                      "description": "Es la fecha en la cual se inicia el primer servicio con el cliente.-",
+                      "nullable": true
+                    },
+                    "CLIE_ANTIGUEDAD": {
+                      "title": "Antigüedad (años)",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CLIE_NO_NOTIFICAR_VENCIMI": {
+                      "title": "No notificar vencimientos a este mail",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "CLIE_ID_INTEGRACION_ML": {
+                      "title": "Id integración ML",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_NICKNAME_ML": {
+                      "title": "NickName ML",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_ID_INTEGRACION_TN": {
+                      "title": "Id integración TN",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "CLIE_CREDITO_MAXIMO_COMO_": {
+                      "title": "Crédito máximo como cliente",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CLIE_DIAS_PARA_FACTURACIO": {
+                      "title": "Días para facturación",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "CLIE_ULTIMA_FECHA_FACT_RE": {
+                      "title": "Última fecha fact. recurrente",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORCO_ID_ORCO": {
+                      "title": "Origen del Contacto",
+                      "type": "integer",
+                      "description": "Foreign key to Origen del Contacto",
+                      "nullable": true
+                    },
+                    "CLIE_FIRMA_RECIBO": {
+                      "title": "Firma Recibo",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "CLIE_ATENCION_A_PROVEEDOR": {
+                      "title": "Atención a proveedores",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_PAGO_PROVEEDORES": {
+                      "title": "Pago proveedores",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_HORARIO_DE_ENTREGA": {
+                      "title": "Horario de entrega",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CAMP_ID_CAMP": {
+                      "title": "Campaña",
+                      "type": "integer",
+                      "description": "Foreign key to Campaña",
+                      "nullable": true
+                    },
+                    "CLIE_TIPO_EMPRESA": {
+                      "title": "Tipo empresa",
+                      "type": "string",
+                      "description": "0 - Administración Pública 1-Decreto 814/01, Art2 Inc.B 2-Servicios Eventuales, Art2 Inc.B 4-Decreto 814/01, Art2 Inc.A 5-Servicios Eventuales, Art2 Inc.A 7-Enseñanza Privada 8-Decreto 1212/03 - AFA Clubes",
+                      "nullable": true
+                    },
+                    "CLIE_CODIGO_COMPLETO": {
+                      "title": "Código Completo",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "RUBR_ID_RUBR": {
+                      "title": "Rubro",
+                      "type": "integer",
+                      "description": "Foreign key to Rubro",
+                      "nullable": true
+                    },
+                    "SUBR_ID_SUBR": {
+                      "title": "Subrubro",
+                      "type": "integer",
+                      "description": "Foreign key to Subrubro",
+                      "nullable": true
+                    },
+                    "CLIE_SEGMENTACION_ESPECIA": {
+                      "title": "Segmentación Especial",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_NRO_IIBB": {
+                      "title": "Nro Ingresos Brutos",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_INICIO_ACTIVIDADES": {
+                      "title": "Inicio de Actividades",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "SURE_ID_SURE": {
+                      "title": "Subconcepto de gananacias",
+                      "type": "integer",
+                      "description": "De elegirse un subconcepto, se calculará la retención de ganancias en la Orden de Pago\nForeign key to Subconcepto Retención",
+                      "nullable": true
+                    },
+                    "CLIE_NO_CALCULAR_PERCEPCI": {
+                      "title": "No calcular Percepciones",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "CLIE_FECHA_DESDE": {
+                      "title": "Fecha desde",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_FECHA_HASTA": {
+                      "title": "Fecha hasta",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_TOKEN": {
+                      "title": "token",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_NOMBRE_RAZON_SOCIAL": {
+                      "title": "Nombre - RZ",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_ENVIA_FC_A_KRIKOS": {
+                      "title": "Envía Facturas y Notas de Crédito a Krikos",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "CLIE_DESC_IMP_INTERNO": {
+                      "title": "Descuenta Impuesto Interno en órdenes",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "CLIE_PRECIO_POR_UNIDAD": {
+                      "title": "Informa precio por bulto",
+                      "type": "boolean",
+                      "description": "Si está marcado se multiplica el precio por la cantidad de componentes del bulto.",
+                      "nullable": true
+                    },
+                    "CENTROSDECOSTOS": {
+                      "title": "Centros de costos",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "PROY_CODIGO": {
+                            "title": "Código",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROY_NOMBRE": {
+                            "title": "Nombre",
+                            "type": "string"
+                          },
+                          "CLIE_ID_CLIE": {
+                            "title": "Cliente",
+                            "type": "integer"
+                          },
+                          "SUCU_ID_SUCU": {
+                            "title": "Sucursal",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROY_FECHA_INICIO": {
+                            "title": "Fecha inicio",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROY_FECHA_FIN": {
+                            "title": "Fecha Fin estimada",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROY_FECHA_FINALIZACION": {
+                            "title": "Fecha finalización",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROY_DESCRIPCION": {
+                            "title": "Descripción",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROY_OBS_ADIC_IMPLEM": {
+                            "title": "Obs. Adicional p/Implementador",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROY_PORC_AVANCE": {
+                            "title": "% Avance",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PROY_SEMANA_INICIAL": {
+                            "title": "Semana inicial",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROY_SEMANA_ACTUAL": {
+                            "title": "Semana Actual",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROY_SEMANAS_TRANSCURRIDA": {
+                            "title": "Semanas transcurridas",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PROY_PLAZO_DIAS_DE_PAGO": {
+                            "title": "Plazo de días de pago",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROY_ES_PRORRATEABLE": {
+                            "title": "Es prorrateable",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "CEDI_ID_CEDI": {
+                            "title": "Ubicación de Stock",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROY_CICLO": {
+                            "title": "Ciclo",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROY_PRESUPUESTO_NETO": {
+                            "title": "Total Cotizado",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PROY_HORAS_ESTIMADAS": {
+                            "title": "Horas estimadas",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PROY_RENTABILIDAD_ESPERAD": {
+                            "title": "Margen directo esperado",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "CTPP_ID_CTPP": {
+                            "title": "Total Facturas de Compras",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROY_HORAS_INSUMIDAS": {
+                            "title": "Horas insumidas",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PROY_DESVIO_HORAS": {
+                            "title": "Desvio horas",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PROY_COSTO_HORAS": {
+                            "title": "Total Costo horas",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PROY_COSTOS_ADICIONALES": {
+                            "title": "Costos adicionales",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PROY_COSTO_TOTAL": {
+                            "title": "Costo total Directo",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PROY_COSTOS_INDIRECTOS": {
+                            "title": "Costos Total indirectos",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PROY_DIRECTO_INDIRECTO": {
+                            "title": "Costo Directo + Indirecto",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "VTPP_ID_VTPP": {
+                            "title": "Total Facturas de Ventas",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROY_RESULTADO_DIRECTO": {
+                            "title": "Resultado directo",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PROY_MARGEN_DIRECTO": {
+                            "title": "Margen directo",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PROY_RENTABILIDAD_C": {
+                            "title": "RD Color",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROY_RESULTADO_INDIRECTO": {
+                            "title": "Resultado indirecto",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PROY_MARGEN_INDIRECTO": {
+                            "title": "Margen indirecto",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PROY_RI_COLOR": {
+                            "title": "RI Color",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROY_MARKUP": {
+                            "title": "Markup",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PROY_COSTO_NETO": {
+                            "title": "Costo Neto",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PROY_TOTAL_FACTURAS_X_VEN": {
+                            "title": "Total Facturas x venta",
+                            "type": "number",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Centros de costos (included when includeChildren=true)"
+                    },
+                    "CONTACTOS": {
+                      "title": "Contactos",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "CLIE_ID_CLIE": {
+                            "title": "Empresa",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CONT_NOMBRE": {
+                            "title": "Nombre y apellido",
+                            "type": "string"
+                          },
+                          "CONT_PUESTO": {
+                            "title": "Puesto del contacto",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CONT_TELABORAL": {
+                            "title": "Teléfono laboral",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CONT_TEPARTIC": {
+                            "title": "Teléfono particular",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CONT_CELULAR": {
+                            "title": "Teléfono celular",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORCO_ID_ORCO": {
+                            "title": "Origen del Contacto",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CONT_CONTACTOINT": {
+                            "title": "Contacto Interno",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CONT_EMAIL": {
+                            "title": "Correo electrónico",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CONT_ULTIMOCONT": {
+                            "title": "Fecha último contacto",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CONT_SKYPE": {
+                            "title": "Skype",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CONT_LINKEDINPROF": {
+                            "title": "Linkedin Profile",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CONT_IDIOMA_PRIM": {
+                            "title": "Idioma primario",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CONT_ARHC_ID_1135": {
+                            "title": "Foto",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CONT_MATRICULA": {
+                            "title": "Matricula",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CONT_DNI": {
+                            "title": "DNI",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CONT_PASSWORD_TICKETS": {
+                            "title": "Password tickets",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CONT_FECHA_DE_NACIMIENTO": {
+                            "title": "Fecha de Nacimiento",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CONT_DIAS_AL_CUMPLEAOS": {
+                            "title": "Días al cumpleaños",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PAIS_ID_PAIS": {
+                            "title": "País",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROV_ID_PROV": {
+                            "title": "Provincia",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "TIDD_ID_TIDC": {
+                            "title": "Tipo de documento",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CONT_CONTACTO_FACTURACION": {
+                            "title": "Contacto de facturación",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "CONT_CONTACTO_COBRANZAS": {
+                            "title": "Contacto de cobranzas",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "CONT_CONTACTO_DE_PAGOS": {
+                            "title": "Contacto de pagos",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "CONT_CONTACTO_DE_COMPRAS": {
+                            "title": "Contacto de compras",
+                            "type": "boolean",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Contactos (included when includeChildren=true)"
+                    },
+                    "LEGALES": {
+                      "title": "Legales",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "CLIE_ID_CLIE": {
+                            "title": "Cliente",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DLCL_TITULO": {
+                            "title": "Título",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "DLCL_ARHC_ID_1926": {
+                            "title": "Documento",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DLCL_FECHA_DE_FIN_DE_VIGE": {
+                            "title": "Fecha de fin de vigencia",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "DLCL_DIAS_A_FIN_DE_CONTRA": {
+                            "title": "Días a fin de contrato",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DLCL_DIAS_DE_PREAVISO": {
+                            "title": "Días de preaviso",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "SEYI_ID_SEYI": {
+                            "title": "Tipo de servicio",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DLCL_INICIO_DE_GESTION_ES": {
+                            "title": "Inicio de gestión estimada",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "DLCL_OBSERVACIONES": {
+                            "title": "Observaciones",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Legales (included when includeChildren=true)"
+                    },
+                    "TARIFAS": {
+                      "title": "Tarifas",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "CLIE_ID_CLIE": {
+                            "title": "Cliente",
+                            "type": "integer"
+                          },
+                          "SEYI_ID_SEYI": {
+                            "title": "Servicio",
+                            "type": "integer"
+                          },
+                          "PROY_ID_PROY": {
+                            "title": "Centro de costos",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PRSE_ID_PRSE": {
+                            "title": "Producto / Servicio",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MONE_ID_MONE": {
+                            "title": "Moneda",
+                            "type": "integer"
+                          },
+                          "TARI_TARIFA": {
+                            "title": "Precio Unitario",
+                            "type": "number"
+                          },
+                          "TARI_DESCUENTO": {
+                            "title": "Descuento",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "TARI_CANTIDAD": {
+                            "title": "Cantidad",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "TARI_NETO": {
+                            "title": "Neto",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "TARI_FINAL": {
+                            "title": "Final",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "TARI_FECHA_DESDE": {
+                            "title": "Fecha desde",
+                            "type": "string"
+                          },
+                          "TARI_FECHA_HASTA": {
+                            "title": "Fecha hasta",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "TARI_FECHA_DE_REVISION_DE": {
+                            "title": "Fecha de revisión",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "TARI_DIAS_FALTANTES": {
+                            "title": "Días faltantes",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "TARI_RE_NEGOCIADA": {
+                            "title": "Re negociada",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "TARI_CONCEPTO": {
+                            "title": "Concepto",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "TARI_COMENTARIO": {
+                            "title": "Comentario",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "TARI_ES_FACTURACION_R": {
+                            "title": "Es facturación recurrente",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "TARI_DIAS_A_FACTURACION_R": {
+                            "title": "Días a facturación recurrente",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PUVE_ID_PUVE": {
+                            "title": "Punto de venta",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "TIFA_ID_TIFA": {
+                            "title": "Tipo de Factura",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "TARI_ERROR_DE_FACTURACION": {
+                            "title": "Error de facturación recurrente",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "TARI_FACTURADO": {
+                            "title": "Facturado",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "TARI_TEXTO_ADICIONAL": {
+                            "title": "Texto adicional",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "TARI_DESCRIPCION": {
+                            "title": "Descripción",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "TARI_INFO": {
+                            "title": "Info",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "TARI_VIGENTE": {
+                            "title": "Vigente",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "TARI_VIGENCIA": {
+                            "title": "Vigencia",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "TARI_FECHA_HASTA_CIERRE": {
+                            "title": "Fecha hasta",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Tarifas (included when includeChildren=true)"
+                    },
+                    "CUENTASBANCARIAS": {
+                      "title": "Cuentas bancarias",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "CUDE_PISAR_CUENTA_INTER": {
+                            "title": "Pisar Cuenta Interbanking",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "CLIE_ID_CLIE": {
+                            "title": "Empresa",
+                            "type": "integer"
+                          },
+                          "CUDE_DESCRIPCION": {
+                            "title": "Descripcion",
+                            "type": "string"
+                          },
+                          "CUDE_ES_CUENTA_BANCARIA_P": {
+                            "title": "Es cuenta bancaria propia",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "CUDE_SOLO_ADMINISTRADOR": {
+                            "title": "Vista únicamente por Administrador",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "CUCO_ID_CUCO": {
+                            "title": "Cta contable (activo)",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CUCO_ID_DEBI": {
+                            "title": "Cta Valores a Debitar",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CUDE_ACTIVAR_INTER_B": {
+                            "title": "Activar Interbanking",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "CUDE_NROCUENTAINTER": {
+                            "title": "Nro Cuenta InterBanking",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "MONE_ID_MONE": {
+                            "title": "Moneda",
+                            "type": "integer"
+                          },
+                          "BANC_ID_BANC": {
+                            "title": "Banco",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "TCUE_ID_TCUE": {
+                            "title": "Tipo de cuenta",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CUDE_NROCUENTA": {
+                            "title": "Nro Cuenta",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CUDE_ALIAS": {
+                            "title": "Alias",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CUDE_CBU": {
+                            "title": "CBU",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CUDE_ULTIMO_SALDO": {
+                            "title": "Ultimo Saldo Manual",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "CUDE_SALDO_INICIAL_DEL_ME": {
+                            "title": "Saldo inicial del mes (M)",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "CUDE_SALDO_AJUSTADO": {
+                            "title": "Saldo ajustado",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "CUDE_SALDO_EXTRACTO": {
+                            "title": "Saldo de extracto",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "CUDE_FECHA_SALDO_E": {
+                            "title": "Fecha saldo extracto",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Cuentas bancarias (included when includeChildren=true)"
+                    },
+                    "EVALUACIONESDEPROVEEDOR": {
+                      "title": "Evaluaciones de proveedor",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "CLIE_ID_CLIE": {
+                            "title": "Proveedor",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "EVPR_FECHA": {
+                            "title": "Fecha",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "EVPR_EVALUACION_INICIAL": {
+                            "title": "Evaluación inicial",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "EVPR_ES_PROVEEDOR_UNICO": {
+                            "title": "Es proveedor único",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "EVPR_COMENTARIOS": {
+                            "title": "Comentarios",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "EVPR_PUNTAJE_EVALUACION_I": {
+                            "title": "Puntaje evaluación inicial",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "EVPR_PUNTAJE_DE_EVALUACIO": {
+                            "title": "Puntaje de evaluación regular",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "EVPR_DIAS_FALTANTES_A_EVA": {
+                            "title": "Días faltantes a evaluación",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "EVPR_EVALUACION_TERMINADA": {
+                            "title": "Evaluación terminada",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "EVPR_FORMA_DE_PAGO": {
+                            "title": "Plazo de pago",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "EVPR_EXPERIENCIA_CON_EL_P": {
+                            "title": "Experiencia con el proveedor",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "EVPR_SERVICIO_DE_POST_VEN": {
+                            "title": "Servicio de post venta",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "EVPR_COMENTARIO": {
+                            "title": "Comentario",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "EVPR_COMENTARIO_TECNICO": {
+                            "title": "Comentario técnico",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "EVPR_SERV_TEC": {
+                            "title": "Servicio post venta",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "EVPR_ESPECIFICACIONES_TEC": {
+                            "title": "Especificaciones técnicas",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "EVPR_PREFERENCIAS_DEL_USU": {
+                            "title": "Preferencias del usuario principal del producto",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "EVPR_FACILIDAD_EN_EL_MANT": {
+                            "title": "Facilidad en el mantenimiento",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "EVPR_CAPACITACION_OFRECID": {
+                            "title": "Capacitación ofrecida por el proveedor",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "EVPR_CONFIABILIDAD_DE_PRO": {
+                            "title": "Confiabilidad de producto",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "EVPR_SERVICIO_TECNICO_OFR": {
+                            "title": "Servicio técnico ofrecido",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "EVPR_EXP_TEC": {
+                            "title": "Experiencia con el proveedor",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "EVPR_FORMA_PAGO_ER": {
+                            "title": "Forma de pago (ER)",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "EVPR_CALIDAD_P_S_ER": {
+                            "title": "Calidad de producto / servicio (ER)",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "EVPR_TIEMPO_ENT_ER": {
+                            "title": "Tiempo de entrega (ER)",
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Evaluaciones de proveedor (included when includeChildren=true)"
+                    },
+                    "AJUSTES": {
+                      "title": "Ajustes",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "AJUS_NRO_AJUSTE": {
+                            "title": "Nro Ajuste",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CLIE_ID_CLIE": {
+                            "title": "Cliente",
+                            "type": "integer"
+                          },
+                          "AJUS_DEBITO": {
+                            "title": "Débito",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "AJUS_CREDITO": {
+                            "title": "Crédito",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "AJUS_SALDO": {
+                            "title": "Saldo",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "AJUS_FECHA": {
+                            "title": "Fecha",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "COBR_ID_COB1": {
+                            "title": "Recibo origen",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "OBLI_ID_OBLI": {
+                            "title": "Orden Pago",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCR_ID_NOCR": {
+                            "title": "Nota de crédito (V)",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCC_ID_NOCC": {
+                            "title": "Nota de crédito (C)",
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Ajustes (included when includeChildren=true)"
+                    },
+                    "SUCURSALES": {
+                      "title": "Sucursales",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "CLIE_ID_CLIE": {
+                            "title": "Empresa",
+                            "type": "integer"
+                          },
+                          "SUCU_NOMBRE": {
+                            "title": "Nombre",
+                            "type": "string"
+                          },
+                          "SUCU_DIRECCION": {
+                            "title": "Dirección",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "SUCU_PARTIDO": {
+                            "title": "Partido",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PAIS_ID_PAIS": {
+                            "title": "Pais",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROV_ID_PROV": {
+                            "title": "Provincia",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "LOBA_ID_LOBA": {
+                            "title": "Localidad",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "SUCU_CODIGO_POSTAL": {
+                            "title": "Código Postal",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "SUCU_TELEFONO": {
+                            "title": "Teléfono",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CEDI_ID_CEDI": {
+                            "title": "Ubicación de Origen",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "SUCU_GLN": {
+                            "title": "GLN",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "SUCU_LATITUD": {
+                            "title": "Latitud",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "SUCU_LONGITUD": {
+                            "title": "Longitud",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "SUCU_HORARIO_ENTREGA_DESD": {
+                            "title": "Horario entrega desde",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "SUCU_HORARIO_ENTREGA_HAST": {
+                            "title": "Horario entrega hasta",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "VEHA_ID_VEHA": {
+                            "title": "Vendedor",
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Sucursales (included when includeChildren=true)"
+                    },
+                    "CUPONESMERCADOPAGO": {
+                      "title": "Cupones MercadoPago",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "CUMP_CUPON_MP_ID": {
+                            "title": "Cupón MP Id",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CUMP_CUPON_MP_EXTERNAL_RE": {
+                            "title": "Cupón MP External Reference",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CUMP_CUPON_MP_DESCRIPTION": {
+                            "title": "Cupón MP Description",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CUMP_JSON": {
+                            "title": "JSON",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CLIE_ID_CLIE": {
+                            "title": "Cliente",
+                            "type": "integer"
+                          },
+                          "CUMP_TOTAL": {
+                            "title": "Total",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "CUMP_FRONTEND": {
+                            "title": "Frontend",
+                            "type": "boolean",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Cupones MercadoPago (included when includeChildren=true)"
+                    },
+                    "CERTIFICADOSDEEXCLUSIÓN": {
+                      "title": "Certificados de Exclusión",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "CLIE_ID_CLIE": {
+                            "title": "Cliente",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "IMPU_ID_IMPU": {
+                            "title": "Impuesto",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "EXDI_DESDE": {
+                            "title": "Desde",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "EXDI_HASTA": {
+                            "title": "Hasta",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "EXDI_ALICUOTA_PERCEPCION": {
+                            "title": "Alícuota Percepción",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "EXDI_ALICUOTA_RETENCION": {
+                            "title": "Alícuota Retención",
+                            "type": "number",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Certificados de Exclusión (included when includeChildren=true)"
+                    },
+                    "PADRÓNALÍCUOTAS": {
+                      "title": "Padrón Alícuotas",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ALPC_CUIT": {
+                            "title": "CUIT",
+                            "type": "string"
+                          },
+                          "ALPC_IMPUESTO": {
+                            "title": "Impuesto",
+                            "type": "string"
+                          },
+                          "ALPC_ALICUOTA_PER": {
+                            "title": "Alícuota PER",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ALPC_ALICUOTA_RET": {
+                            "title": "Alícuota RET",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "CLIE_ID_CLIE": {
+                            "title": "Cliente",
+                            "type": "integer"
+                          }
+                        }
+                      },
+                      "description": "Child entities of Padrón Alícuotas (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -3432,7 +4993,7 @@
           {
             "name": "state",
             "in": "query",
-            "description": "Possibles values: <ul><li>Actualizando autom. fact.</li>\n<li>Envía CC a Contac. Cobra.</li>\n<li>Ingresada</li>\n<li>Unificando cont Clie/Prov</li></ul>",
+            "description": "Possibles values: <ul><li>Actualizando autom. fact.</li>\n<li>Envía CC a Contac. Cobra.</li>\n<li>Ingresada</li>\n<li>Recalculando ajuste</li>\n<li>Unificando cont Clie/Prov</li></ul>",
             "allowEmptyValue": true,
             "schema": {
               "type": "string"
@@ -3468,7 +5029,7 @@
           {
             "name": "state",
             "in": "query",
-            "description": "Possibles values: <ul><li>Actualizando autom. fact.</li>\n<li>Envía CC a Contac. Cobra.</li>\n<li>Ingresada</li>\n<li>Unificando cont Clie/Prov</li></ul>",
+            "description": "Possibles values: <ul><li>Actualizando autom. fact.</li>\n<li>Envía CC a Contac. Cobra.</li>\n<li>Ingresada</li>\n<li>Recalculando ajuste</li>\n<li>Unificando cont Clie/Prov</li></ul>",
             "required": true,
             "allowEmptyValue": true,
             "schema": {
@@ -3963,14 +5524,201 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "CLIE_ID_CLIE": {
+                      "title": "Empresa",
+                      "type": "integer",
+                      "description": "Foreign key to Empresa",
+                      "nullable": true
+                    },
+                    "CONT_NOMBRE": {
+                      "title": "Nombre y apellido",
+                      "type": "string"
+                    },
+                    "CONT_PUESTO": {
+                      "title": "Puesto del contacto",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CONT_TELABORAL": {
+                      "title": "Teléfono laboral",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CONT_TEPARTIC": {
+                      "title": "Teléfono particular",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CONT_CELULAR": {
+                      "title": "Teléfono celular",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORCO_ID_ORCO": {
+                      "title": "Origen del Contacto",
+                      "type": "integer",
+                      "description": "Foreign key to Origen del Contacto",
+                      "nullable": true
+                    },
+                    "CONT_CONTACTOINT": {
+                      "title": "Contacto Interno",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "CONT_EMAIL": {
+                      "title": "Correo electrónico",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CONT_ULTIMOCONT": {
+                      "title": "Fecha último contacto",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CONT_SKYPE": {
+                      "title": "Skype",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CONT_LINKEDINPROF": {
+                      "title": "Linkedin Profile",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CONT_IDIOMA_PRIM": {
+                      "title": "Idioma primario",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CONT_ARHC_ID_1135": {
+                      "title": "Foto",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "CONT_MATRICULA": {
+                      "title": "Matricula",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CONT_DNI": {
+                      "title": "DNI",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CONT_PASSWORD_TICKETS": {
+                      "title": "Password tickets",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CONT_FECHA_DE_NACIMIENTO": {
+                      "title": "Fecha de Nacimiento",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CONT_DIAS_AL_CUMPLEAOS": {
+                      "title": "Días al cumpleaños",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "PAIS_ID_PAIS": {
+                      "title": "País",
+                      "type": "integer",
+                      "description": "Foreign key to País",
+                      "nullable": true
+                    },
+                    "PROV_ID_PROV": {
+                      "title": "Provincia",
+                      "type": "integer",
+                      "description": "Foreign key to Provincia",
+                      "nullable": true
+                    },
+                    "TIDD_ID_TIDC": {
+                      "title": "Tipo de documento",
+                      "type": "integer",
+                      "description": "Foreign key to Tipo de Documento",
+                      "nullable": true
+                    },
+                    "CONT_CONTACTO_FACTURACION": {
+                      "title": "Contacto de facturación",
+                      "type": "boolean",
+                      "description": "Si está marcado, se le enviarán las facturas emitidas por mail a este contacto",
+                      "nullable": true
+                    },
+                    "CONT_CONTACTO_COBRANZAS": {
+                      "title": "Contacto de cobranzas",
+                      "type": "boolean",
+                      "description": "Si está marcado, se le enviarán los recibos emitidos por mail a este contacto",
+                      "nullable": true
+                    },
+                    "CONT_CONTACTO_DE_PAGOS": {
+                      "title": "Contacto de pagos",
+                      "type": "boolean",
+                      "description": "Si está marcado, se le enviarán las órdenes de pago emitidas por mail a este contacto",
+                      "nullable": true
+                    },
+                    "CONT_CONTACTO_DE_COMPRAS": {
+                      "title": "Contacto de compras",
+                      "type": "boolean",
+                      "description": "Si está marcado, se le enviarán las ordenes de compra por mail a este contacto.",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -5081,14 +6829,110 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "CLIE_ID_CLIE": {
+                      "title": "Cliente",
+                      "type": "integer",
+                      "description": "Foreign key to Empresa",
+                      "nullable": true
+                    },
+                    "DLCL_TITULO": {
+                      "title": "Título",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "DLCL_ARHC_ID_1926": {
+                      "title": "Documento",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "DLCL_FECHA_DE_FIN_DE_VIGE": {
+                      "title": "Fecha de fin de vigencia",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "DLCL_DIAS_A_FIN_DE_CONTRA": {
+                      "title": "Días a fin de contrato",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "DLCL_DIAS_DE_PREAVISO": {
+                      "title": "Días de preaviso",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "SEYI_ID_SEYI": {
+                      "title": "Tipo de servicio",
+                      "type": "integer",
+                      "description": "Foreign key to Servicio",
+                      "nullable": true
+                    },
+                    "DLCL_INICIO_DE_GESTION_ES": {
+                      "title": "Inicio de gestión estimada",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "DLCL_OBSERVACIONES": {
+                      "title": "Observaciones",
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -5953,14 +7797,94 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "IMPU_ID_IMPU": {
+                      "title": "Impuesto",
+                      "type": "integer",
+                      "description": "Foreign key to Impuesto",
+                      "nullable": true
+                    },
+                    "EMAL_EMAL_CUIT": {
+                      "title": "CUIT",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EMAL_EMAL_PERCEPCION": {
+                      "title": "Alícuota Percepción",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "EMAL_EMAL_RETENCION": {
+                      "title": "Alícuota Retención",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "EMAL_EMAL_FECHA_DESDE": {
+                      "title": "Fecha Desde",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EMAL_EMAL_FECHA_HASTA": {
+                      "title": "Fecha Hasta",
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -7026,14 +8950,292 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "INFP_RAZON_SOCIAL": {
+                      "title": "Razón Social",
+                      "type": "string"
+                    },
+                    "INFP_RUBRO": {
+                      "title": "Rubro",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_ACTIVIDAD_PROVEEDOR": {
+                      "title": "Actividad del Proveedor",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_DIRECCION": {
+                      "title": "Dirección",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_NUMERO": {
+                      "title": "Nro",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_CODIGO_POSTAL": {
+                      "title": "Código Postal",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_TELEFONO": {
+                      "title": "Teléfono",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_LOCALIDAD": {
+                      "title": "Localidad",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_PROVINCIA": {
+                      "title": "Provincia",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_CONTACTO_VENTAS": {
+                      "title": "Contacto Ventas",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_EMAIL_AVISOS_PAGOS": {
+                      "title": "E-Mail Avisos de Pagos",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_EMAIL_VENTAS": {
+                      "title": "E-Mail Ventas",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_EMAIL_DPTO_TECNICO": {
+                      "title": "E-Mail Dpto. Técnico",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_EMAIL_RECLAMOS": {
+                      "title": "E-Mail Reclamos",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_PERSONA_CONTACTO": {
+                      "title": "Persona de Contacto",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_EMITIR_CHEQUE_ORDEN": {
+                      "title": "Emitir Cheque a la Orden de",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_ENTIDAD_BANCARIA": {
+                      "title": "Entidad Bancaria",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_SUCURSAL": {
+                      "title": "Sucursal",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_NRO_CUENTA": {
+                      "title": "Nro de Cuenta",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_TIPO_CUENTA": {
+                      "title": "Tipo de Cuenta",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_CBU": {
+                      "title": "CBU",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_TITULAR_CUENTA": {
+                      "title": "Titular de Cuenta",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_CUIT": {
+                      "title": "CUIT",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_CERT_NO_RETENCION": {
+                      "title": "Certificado de No Retención",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "INFP_FECHA_CAD_EX": {
+                      "title": "Fecha de Caducidad Exención",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_PORC_NO_RETENCION": {
+                      "title": "Porcentaje de No Retención",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "INFP_CONDICION_IVA": {
+                      "title": "Condición IVA",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_AGENTE_RETENCION": {
+                      "title": "Agente de Retención",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "INFP_ES_EMPLEADOR": {
+                      "title": "Es Empleador",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "INFP_FECHA_CAD_EX_IVA": {
+                      "title": "Fecha de Caducidad Exención",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_PORCENTAJE_EX_IVA": {
+                      "title": "Porcentaje de Exención",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "INFP_LOCAL": {
+                      "title": "Local",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_CONV_MULTILATERAL": {
+                      "title": "Conv. Multilateral",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_FECHA_CAD_EX_IIBB": {
+                      "title": "Fecha de Caducidad Exención",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_PORCENTAJE_EX_IIBB": {
+                      "title": "Porcentaje de Exención",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "INFP_LUGAR": {
+                      "title": "Lugar",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_FECHA": {
+                      "title": "Fecha",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_NRO_PROVEEDOR_YIQI": {
+                      "title": "Nro Proveedor YiQi",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_TIPO_SOLICITUD": {
+                      "title": "Tipo de Solicitud",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_DPTO_SOLICITANTE": {
+                      "title": "Dpto. Solicitante",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_MOTIVO_ALTA": {
+                      "title": "Motivo del Alta",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_PROV_SIMILARES": {
+                      "title": "Contamos con Proveedores Similares",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "INFP_ES_SINGLE_SOURCE": {
+                      "title": "Es Single Source",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "INFP_JUST_SINGLE_SOURCE": {
+                      "title": "Justificación del Single Source",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_AUTORIZADA_POR": {
+                      "title": "Autorizada por",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INFP_FIRMA_AUTORIZANTE": {
+                      "title": "Firma Autorizante Solicitud",
+                      "type": "integer",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -8706,14 +10908,572 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "CLIE_ID_CLIE": {
+                      "title": "Empresa",
+                      "type": "integer",
+                      "description": "Foreign key to Empresa"
+                    },
+                    "SUCU_NOMBRE": {
+                      "title": "Nombre",
+                      "type": "string"
+                    },
+                    "SUCU_DIRECCION": {
+                      "title": "Dirección",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "SUCU_PARTIDO": {
+                      "title": "Partido",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PAIS_ID_PAIS": {
+                      "title": "Pais",
+                      "type": "integer",
+                      "description": "Foreign key to País",
+                      "nullable": true
+                    },
+                    "PROV_ID_PROV": {
+                      "title": "Provincia",
+                      "type": "integer",
+                      "description": "Foreign key to Provincia",
+                      "nullable": true
+                    },
+                    "LOBA_ID_LOBA": {
+                      "title": "Localidad",
+                      "type": "integer",
+                      "description": "Foreign key to Localidad/Barrio",
+                      "nullable": true
+                    },
+                    "SUCU_CODIGO_POSTAL": {
+                      "title": "Código Postal",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "SUCU_TELEFONO": {
+                      "title": "Teléfono",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CEDI_ID_CEDI": {
+                      "title": "Ubicación de Origen",
+                      "type": "integer",
+                      "description": "Foreign key to Ubicación de stock",
+                      "nullable": true
+                    },
+                    "SUCU_GLN": {
+                      "title": "GLN",
+                      "type": "string",
+                      "description": "Para más información: http://www.gs1.org.ar",
+                      "nullable": true
+                    },
+                    "SUCU_LATITUD": {
+                      "title": "Latitud",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "SUCU_LONGITUD": {
+                      "title": "Longitud",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "SUCU_HORARIO_ENTREGA_DESD": {
+                      "title": "Horario entrega desde",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "SUCU_HORARIO_ENTREGA_HAST": {
+                      "title": "Horario entrega hasta",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "VEHA_ID_VEHA": {
+                      "title": "Vendedor",
+                      "type": "integer",
+                      "description": "Foreign key to Vendedor",
+                      "nullable": true
+                    },
+                    "CAJAS": {
+                      "title": "Cajas",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "CAJA_DESCRIPCION": {
+                            "title": "Nombre",
+                            "type": "string"
+                          },
+                          "CAJA_RESPONSABLE": {
+                            "title": "Responsable",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "SUCU_ID_SUCU": {
+                            "title": "Sucursal",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CUCO_ID_CUCO": {
+                            "title": "Cuenta contable",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CAJA_AUTOAPROBACION_COBRO": {
+                            "title": "Autoaprobación cobro de pedido",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "CAJA_DIAS_SIN_CIERRE": {
+                            "title": "Días sin cierre",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CAJA_ULTIMO_SALDO": {
+                            "title": "Último saldo (arqueos)",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "CAJA_FECHA_ULTIMO_SALDO": {
+                            "title": "Fecha último saldo",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CAJA_SALDO": {
+                            "title": "Saldo ",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "CAJA_CERRADA": {
+                            "title": "Cerrada",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "MONE_ID_MONE": {
+                            "title": "Moneda",
+                            "type": "integer"
+                          },
+                          "CAJA_FECHA_DEL_SALDO": {
+                            "title": "Fecha del saldo",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CAJA_NUEVO_SALDO": {
+                            "title": "Nuevo saldo",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PUPO_ID_PUPO": {
+                            "title": "Puesto POS",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CAJA_MONTO_A_TRANSFERIR": {
+                            "title": "Monto a Transferir",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "CAJA_ID_CADE": {
+                            "title": "Caja destino",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CAJA_COMENTARIO": {
+                            "title": "Comentario",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Cajas (included when includeChildren=true)"
+                    },
+                    "PUNTODEVENTA": {
+                      "title": "Punto de venta",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "PUVE_NOMBRE": {
+                            "title": "Nombre",
+                            "type": "string"
+                          },
+                          "PUVE_NUMERO": {
+                            "title": "Nro",
+                            "type": "integer"
+                          },
+                          "PUVE_ELECTRONICO": {
+                            "title": "Electrónico",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "SUCU_ID_SUCU": {
+                            "title": "Sucursal",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CUCO_ID_VENT": {
+                            "title": "Cta Ventas",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PUVE_ULTIMO_NUMERO_RECIBO": {
+                            "title": "Último Nro de Recibo",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PUVE_ULTIMO_NUMERO_REMITO": {
+                            "title": "Último Nro de Remito",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PUVE_ID_REMI": {
+                            "title": "Punto de venta de Remito",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PUVE_ID_PUNTO_VENTA_REMIT": {
+                            "title": "Id Punto venta remito",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PUVE_DOMICILIO": {
+                            "title": "Domicilio",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PUVE_TELEFONO": {
+                            "title": "Telefono",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROV_ID_PROV": {
+                            "title": "Provincia",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PUVE_OBSERVACIONES": {
+                            "title": "Observaciones",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PUVE_ISOLOGO": {
+                            "title": "Isologo",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PUVE_WEB": {
+                            "title": "Web",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PUVE_MAIL": {
+                            "title": "Mail",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PUVE_LEYENDA_FRANQ": {
+                            "title": "Leyenda franquicia",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Punto de venta (included when includeChildren=true)"
+                    },
+                    "VENDEDORESHABITUALES": {
+                      "title": "Vendedores Habituales",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "VEHA_NOMBRE": {
+                            "title": "Nombre",
+                            "type": "string"
+                          },
+                          "VEHA_USUARIO_DE_YIQI": {
+                            "title": "Usuario de YiQi",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "SUCU_ID_SUCU": {
+                            "title": "Sucursal",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "TIDV_ID_TIDV": {
+                            "title": "Tipo de Vendedor",
+                            "type": "integer"
+                          },
+                          "VEHA_ULTIMO_TRIMESTRE": {
+                            "title": "Último trimestre",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "VEHA_ANTERIOR": {
+                            "title": "Anterior",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "VEHA_CODIGO": {
+                            "title": "Codigo",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "VEHA_DESHABILITADO": {
+                            "title": "Deshabilitado",
+                            "type": "boolean",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Vendedores Habituales (included when includeChildren=true)"
+                    },
+                    "UBICACIÓNPORSUCURSAL": {
+                      "title": "Ubicación por sucursal",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "SUCU_ID_SUCU": {
+                            "title": "Sucursal",
+                            "type": "integer"
+                          },
+                          "CEDI_ID_CEDI": {
+                            "title": "Ubicación de Stock",
+                            "type": "integer"
+                          },
+                          "UBPS_SUCURSAL_NOMBRE": {
+                            "title": "Sucursal Nombre",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Ubicación por sucursal (included when includeChildren=true)"
+                    },
+                    "CONCEPTOSDECOBRO": {
+                      "title": "Conceptos de cobro",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "SUCU_ID_SUCU": {
+                            "title": "Sucursal",
+                            "type": "integer"
+                          },
+                          "CDCE_ID_CDCE": {
+                            "title": "Concepto de cobro",
+                            "type": "integer"
+                          },
+                          "BANC_ID_BANC": {
+                            "title": "Banco",
+                            "type": "integer"
+                          },
+                          "DETA_1": {
+                            "title": "1",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_2": {
+                            "title": "2",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_3": {
+                            "title": "3",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_4": {
+                            "title": "4",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_5": {
+                            "title": "5",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_6": {
+                            "title": "6",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_7": {
+                            "title": "7",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_8": {
+                            "title": "8",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_9": {
+                            "title": "9",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_10": {
+                            "title": "10",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_11": {
+                            "title": "11",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_12": {
+                            "title": "12",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_13": {
+                            "title": "13",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_14": {
+                            "title": "14",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_15": {
+                            "title": "15",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_16": {
+                            "title": "16",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_17": {
+                            "title": "17",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_18": {
+                            "title": "18",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_19": {
+                            "title": "19",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_20": {
+                            "title": "20",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_21": {
+                            "title": "21",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_22": {
+                            "title": "22",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_23": {
+                            "title": "23",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_24": {
+                            "title": "24",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DETA_50": {
+                            "title": "50",
+                            "type": "number",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Conceptos de cobro (included when includeChildren=true)"
+                    },
+                    "DESCUENTOS/RECARGOS": {
+                      "title": "Descuentos/Recargos",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "SUCU_ID_SUCU": {
+                            "title": "Sucursal",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DYRE_PORCENTAJE": {
+                            "title": "Porcentaje",
+                            "type": "number",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Descuentos/Recargos (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -9985,14 +12745,86 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "ALPC_CUIT": {
+                      "title": "CUIT",
+                      "type": "string"
+                    },
+                    "ALPC_IMPUESTO": {
+                      "title": "Impuesto",
+                      "type": "string"
+                    },
+                    "ALPC_ALICUOTA_PER": {
+                      "title": "Alícuota PER",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ALPC_ALICUOTA_RET": {
+                      "title": "Alícuota RET",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CLIE_ID_CLIE": {
+                      "title": "Cliente",
+                      "type": "integer",
+                      "description": "Foreign key to Empresa"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -10779,14 +13611,84 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "UNCL_ID_UNCL": {
+                      "title": "Unificar cliente",
+                      "type": "integer",
+                      "description": "Foreign key to Unificar cliente",
+                      "nullable": true
+                    },
+                    "DTDC_FUNCIONALIDAD": {
+                      "title": "Funcionalidad",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "DTDC_LINK": {
+                      "title": "Link",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "DTDC_QUERYS": {
+                      "title": "Querys",
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -11727,14 +14629,195 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "CLIE_ID_CLIE": {
+                      "title": "Proveedor",
+                      "type": "integer",
+                      "description": "Empresa de tipo proveedor a evaluar.-\nForeign key to Empresa",
+                      "nullable": true
+                    },
+                    "EVPR_FECHA": {
+                      "title": "Fecha",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EVPR_EVALUACION_INICIAL": {
+                      "title": "Evaluación inicial",
+                      "type": "boolean",
+                      "description": "Completar en caso de que sea la primera evaluación al proveedor.-",
+                      "nullable": true
+                    },
+                    "EVPR_ES_PROVEEDOR_UNICO": {
+                      "title": "Es proveedor único",
+                      "type": "boolean",
+                      "description": "Aquellos con los que la empresa debe trabajar obligatoriamente, porque es un requisito del cliente o bien porque no existe alternativa en el mercado.",
+                      "nullable": true
+                    },
+                    "EVPR_COMENTARIOS": {
+                      "title": "Comentarios",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EVPR_PUNTAJE_EVALUACION_I": {
+                      "title": "Puntaje evaluación inicial",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "EVPR_PUNTAJE_DE_EVALUACIO": {
+                      "title": "Puntaje de evaluación regular",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "EVPR_DIAS_FALTANTES_A_EVA": {
+                      "title": "Días faltantes a evaluación",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "EVPR_EVALUACION_TERMINADA": {
+                      "title": "Evaluación terminada",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "EVPR_FORMA_DE_PAGO": {
+                      "title": "Plazo de pago",
+                      "type": "integer",
+                      "description": "Ingresar la cantidad de días.-",
+                      "nullable": true
+                    },
+                    "EVPR_EXPERIENCIA_CON_EL_P": {
+                      "title": "Experiencia con el proveedor",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EVPR_SERVICIO_DE_POST_VEN": {
+                      "title": "Servicio de post venta",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "EVPR_COMENTARIO": {
+                      "title": "Comentario",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EVPR_COMENTARIO_TECNICO": {
+                      "title": "Comentario técnico",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EVPR_SERV_TEC": {
+                      "title": "Servicio post venta",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "EVPR_ESPECIFICACIONES_TEC": {
+                      "title": "Especificaciones técnicas",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EVPR_PREFERENCIAS_DEL_USU": {
+                      "title": "Preferencias del usuario principal del producto",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EVPR_FACILIDAD_EN_EL_MANT": {
+                      "title": "Facilidad en el mantenimiento",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EVPR_CAPACITACION_OFRECID": {
+                      "title": "Capacitación ofrecida por el proveedor",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "EVPR_CONFIABILIDAD_DE_PRO": {
+                      "title": "Confiabilidad de producto",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EVPR_SERVICIO_TECNICO_OFR": {
+                      "title": "Servicio técnico ofrecido",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "EVPR_EXP_TEC": {
+                      "title": "Experiencia con el proveedor",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "EVPR_FORMA_PAGO_ER": {
+                      "title": "Forma de pago (ER)",
+                      "type": "integer",
+                      "description": "Completar con 1, 2 ó 3 - Ponderación: 20%",
+                      "nullable": true
+                    },
+                    "EVPR_CALIDAD_P_S_ER": {
+                      "title": "Calidad de producto / servicio (ER)",
+                      "type": "integer",
+                      "description": "Completar con 1, 2 ó 3 -  Ponderación: 50%",
+                      "nullable": true
+                    },
+                    "EVPR_TIEMPO_ENT_ER": {
+                      "title": "Tiempo de entrega (ER)",
+                      "type": "integer",
+                      "description": "Completar con 1, 2 ó 3 -  Ponderación: 30%",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -12749,14 +15832,115 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "CLIE_ID_CLIE": {
+                      "title": "Cliente original",
+                      "type": "integer",
+                      "description": "Este campo sirve para fijar cual sera el cliente que esta correctamente cargado en el sistema.\nForeign key to Empresa",
+                      "nullable": true
+                    },
+                    "CLIE_ID_CLI1": {
+                      "title": "Cliente duplicado",
+                      "type": "integer",
+                      "description": "Este campo sirve para fijar cual sera el cliente que no esta correctamente cargado en el sistema.\nForeign key to Empresa",
+                      "nullable": true
+                    },
+                    "UNCL_INFO": {
+                      "title": "Info",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "UNCL_LOG_DETAIL": {
+                      "title": "Log",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "DETALLES": {
+                      "title": "Detalles",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "UNCL_ID_UNCL": {
+                            "title": "Unificar cliente",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DTDC_FUNCIONALIDAD": {
+                            "title": "Funcionalidad",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "DTDC_LINK": {
+                            "title": "Link",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "DTDC_QUERYS": {
+                            "title": "Querys",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Detalles (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },

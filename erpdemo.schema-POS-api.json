@@ -206,14 +206,163 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "MATE_ID": {
+                      "title": "MATE_ID",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "MATE_CODIGO_DE_BARRA": {
+                      "title": "MATE_CODIGO_DE_BARRA",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MATE_NOMBRE": {
+                      "title": "Artículo - Nombre",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "SUMA_ID_SUMA": {
+                      "title": "SUMA_ID_SUMA",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "GRMA_ID_GRMA": {
+                      "title": "GRMA_ID_GRMA",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ALIV_ID_ALIV": {
+                      "title": "ALIV_ID_ALIV",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "MATE_PRECIO_DE_VENTA": {
+                      "title": "Precio Neto 1",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "PAPL_PRECIO_FINAL": {
+                      "title": "Precio Final 1",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "PAPL_PRECIO_TACHADO": {
+                      "title": "Precio Final Tachado 1",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "MATE_PRECIO_DE_VENT2": {
+                      "title": "Precio Neto 2",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "PAPL_PRECIO_FINAL2": {
+                      "title": "Precio Final 2",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "PAPL_PRECIO_TACHADO2": {
+                      "title": "Precio Final Tachado 2",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "MATE_PROV_CODIGO": {
+                      "title": "MATE_PROV_CODIGO",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MATE_COD_PROV_2": {
+                      "title": "MATE_COD_PROV_2",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MARC_ID_MARC": {
+                      "title": "MARC_ID_MARC",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MATE_NO_SE_INCLUYE": {
+                      "title": "MATE_NO_SE_INCLUYE",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "MATE_ES_GENERICO": {
+                      "title": "MATE_ES_GENERICO",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "IMAGEN": {
+                      "title": "IMAGEN",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "IMPUESTO_INTERNO": {
+                      "title": "IMPUESTO_INTERNO",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ID_UNIVERSAL": {
+                      "title": "ID_UNIVERSAL",
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -1319,14 +1468,239 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "CIDC_NRO": {
+                      "title": "Nro",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "CIDC_USUARIO": {
+                      "title": "Usuario",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "CIDC_FECHA_HORA": {
+                      "title": "Fecha hora",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CAJA_ID_CAJA": {
+                      "title": "Caja",
+                      "type": "integer",
+                      "description": "Foreign key to Caja"
+                    },
+                    "CIDC_LOGIN": {
+                      "title": "Login",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CIDC_CERRADA": {
+                      "title": "Cerrada",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "CIDC_TIPO_DE_ACCION": {
+                      "title": "Tipo de Acción",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CIDC_TOTAL_BILLETES": {
+                      "title": "Importe efectivo arqueo",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CIDC_TOTAL_TARJETAS": {
+                      "title": "Importe tarjetas arqueo",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CIDC_IMPORTE_EFECTIVO_SIS": {
+                      "title": "Importe efectivo sistema",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CIDC_IMPORTE_TARJETAS_SIS": {
+                      "title": "Importe tarjetas sistema",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CIDC_DIF_EFECTIVO": {
+                      "title": "Diferencia efectivo",
+                      "type": "number",
+                      "description": "Si el saldo es negativo, el importe auditado es menor que el del sistema. Caso contrario el importe auditado será mayor.",
+                      "nullable": true
+                    },
+                    "CIDC_DIFERENCIA_TARJETA": {
+                      "title": "Diferencia tarjeta",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CIDC_DIF_REAL_VS_REPORT": {
+                      "title": "Diferencia entre saldo real y reportado",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CIDC_SALDO_EN_MONEDAS": {
+                      "title": "Saldo en Monedas",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CIDC_VENTAS": {
+                      "title": "Ventas",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CIDC_EFECTIVO": {
+                      "title": "Efectivo",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CIDC_COBRO_ELECTRONICO": {
+                      "title": "Cobro electrónico",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CIDC_RETIROS": {
+                      "title": "Retiros",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CIDC_DEPOSITO": {
+                      "title": "Depósito",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CIDC_FECHA_ULTIMO_CIERRE": {
+                      "title": "Fecha último cierre",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CIDC_GUID": {
+                      "title": "GUID",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "BILLETES": {
+                      "title": "Billetes",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "CIDC_ID_CIDC": {
+                            "title": "Cierre",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "BIDC_CANTIDAD": {
+                            "title": "Cantidad",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "BIDC_DENOMINACION": {
+                            "title": "Denominación",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "MONE_ID_MONE": {
+                            "title": "Moneda",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "BIDC_OBSERVACION": {
+                            "title": "Observación",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Billetes (included when includeChildren=true)"
+                    },
+                    "TARJETAS": {
+                      "title": "Tarjetas",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "CIDC_ID_CIDC": {
+                            "title": "Cierre",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "COTA_IMPORTE": {
+                            "title": "Importe",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "COTA_OBSERVACION": {
+                            "title": "Observación",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CDCE_ID_CDCE": {
+                            "title": "Concepto de Cobro Electrónico",
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Tarjetas (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -2387,14 +2761,148 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "CLIE_ID": {
+                      "title": "CLIE_ID",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "CLIE_NOMBRE": {
+                      "title": "CLIE_NOMBRE",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_CUIT": {
+                      "title": "CLIE_CUIT",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_DOMICILIO": {
+                      "title": "CLIE_DOMICILIO",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_TE1": {
+                      "title": "CLIE_TE1",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_MAIL": {
+                      "title": "CLIE_MAIL",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "TIDD_ID_TIDD": {
+                      "title": "TIDD_ID_TIDD",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "PAIS_ID_PAIS": {
+                      "title": "PAIS_ID_PAIS",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "PROV_ID_PROV": {
+                      "title": "PROV_ID_PROV",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "CLIE_CP": {
+                      "title": "CLIE_CP",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_LOCALIDAD": {
+                      "title": "CLIE_LOCALIDAD",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "COIV_ID_COIV": {
+                      "title": "COIV_ID_COIV",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "CLIE_CODIGO": {
+                      "title": "CLIE_CODIGO",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "COVE_ID_COVE": {
+                      "title": "COVE_ID_COVE",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "CLIE_ALIC_PER_CABA": {
+                      "title": "CLIE_ALIC_PER_CABA",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CLIE_ALIC_PER_BA": {
+                      "title": "CLIE_ALIC_PER_BA",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "DESCUENTO": {
+                      "title": "DESCUENTO",
+                      "type": "number",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -3384,14 +3892,168 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "ORDV_NRO_ORDEN": {
+                      "title": "Nro de OV",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "PUVE_NUMERO": {
+                      "title": "Punto de venta",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "SUCU_NOMBRE": {
+                      "title": "Sucursal",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDV_FECHA": {
+                      "title": "Fecha",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "NETO_FACTURAS": {
+                      "title": "Neto Facturas",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "TOTAL_FACTURAS": {
+                      "title": "Total Facturas",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "TOTAL_NCS": {
+                      "title": "Total NCs",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "TOTAL_TICKETS": {
+                      "title": "Total Tickets",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "TOTAL_PERCEPCIONES": {
+                      "title": "Total Percepciones",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "CANTIDAD_COBROS": {
+                      "title": "# cobros",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ITEMS_REMITO": {
+                      "title": "Items de remito",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ITEMS_OV": {
+                      "title": "Items de OV",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ITEMS_MOV_STOCK": {
+                      "title": "Items Mov Stock",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "DIF_TICKET_FACTURA": {
+                      "title": "Dif Ticket/Factura",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "DIF_ITEMS": {
+                      "title": "Diferencia Items",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "COBROS_EFECTIVO": {
+                      "title": "Cobros en efectivo",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "COBROS_TARJETA": {
+                      "title": "Cobros con tarjeta",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "TOTAL_RECIBO": {
+                      "title": "Total Recibo",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "DIF_COBROS_RECIBO": {
+                      "title": "Dif Cobros - Recibo",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ORDEN_ESTADO": {
+                      "title": "ORDEN_ESTADO",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "DEVOLUCION": {
+                      "title": "DEVOLUCION",
+                      "type": "number",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -4500,14 +5162,121 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "DEOR_MONTO": {
+                      "title": "Monto",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "DEOR_FECHA": {
+                      "title": "Fecha",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CAJA_ID_CAJA": {
+                      "title": "Caja",
+                      "type": "integer",
+                      "description": "Foreign key to Caja",
+                      "nullable": true
+                    },
+                    "DEOR_OBSERVACIONES": {
+                      "title": "Observaciones",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "DEOR_TIPO": {
+                      "title": "Tipo",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "DEOR_RETIRO_DE_TICKETS": {
+                      "title": "Retiro de tickets",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "DEOR_USUARIO": {
+                      "title": "Usuario",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "CAJA_ID_CADE": {
+                      "title": "Caja Destino",
+                      "type": "integer",
+                      "description": "Foreign key to Caja",
+                      "nullable": true
+                    },
+                    "DEOR_LOGIN": {
+                      "title": "Login",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ASIE_ID_ASIE": {
+                      "title": "Asiento",
+                      "type": "integer",
+                      "description": "Foreign key to Asiento",
+                      "nullable": true
+                    },
+                    "DEOR_GUID": {
+                      "title": "GUID",
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -6303,14 +7072,1362 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "ORDV_NRO_ORDEN": {
+                      "title": "Nro orden",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "VEHA_ID_VEHA": {
+                      "title": "Vendedor",
+                      "type": "integer",
+                      "description": "Foreign key to Vendedor",
+                      "nullable": true
+                    },
+                    "SUCU_ID_SUCU": {
+                      "title": "Sucursal",
+                      "type": "integer",
+                      "description": "Foreign key to Sucursal",
+                      "nullable": true
+                    },
+                    "ORCO_ID_ORCO": {
+                      "title": "Origen del Contacto",
+                      "type": "integer",
+                      "description": "Foreign key to Origen del Contacto",
+                      "nullable": true
+                    },
+                    "CAMP_ID_CAMP": {
+                      "title": "Campaña",
+                      "type": "integer",
+                      "description": "Foreign key to Campaña",
+                      "nullable": true
+                    },
+                    "ORDV_FECHA": {
+                      "title": "Fecha",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_ID_CLIE": {
+                      "title": "Cliente",
+                      "type": "integer",
+                      "description": "Foreign key to Empresa",
+                      "nullable": true
+                    },
+                    "COVE_ID_COVE": {
+                      "title": "Condición de venta",
+                      "type": "integer",
+                      "description": "Foreign key to Condición de venta",
+                      "nullable": true
+                    },
+                    "ORDV_NETO": {
+                      "title": "Neto s/ dto",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ORDV_IVA": {
+                      "title": "IVA s/ dto",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ORDV_IMPUESTO_INTERNO": {
+                      "title": "Impuesto Interno",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ORDV_SUBTOTAL": {
+                      "title": "Total s/ dtos",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ORDV_RECARGOS_DESCUENTOS": {
+                      "title": "Recargos/Descuentos",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ORDV_TOTAL_CON_DESCUENTOS": {
+                      "title": "Total c/ dtos",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ORDV_TOTAL_COBRADO": {
+                      "title": "Total Cobrado",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ORDV_TOTAL_FACT": {
+                      "title": "Total Facturado",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ORDV_TOTAL_NC": {
+                      "title": "Total Notas de Crédito",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ORDV_PENDIENTE_FACTURA": {
+                      "title": "Pendiente de Facturación",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ORDV_PENDIENTE_COBRO": {
+                      "title": "Pendiente de Cobro",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ORDV_PENDIENTES_REMITIR": {
+                      "title": "Pendientes a remitir",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "FACT_ID_FACT": {
+                      "title": "Factura de venta",
+                      "type": "integer",
+                      "description": "Foreign key to Factura",
+                      "nullable": true
+                    },
+                    "TIFA_ID_TIFA": {
+                      "title": "Tipo de factura",
+                      "type": "integer",
+                      "description": "Foreign key to Tipo de factura"
+                    },
+                    "PUVE_ID_PUVE": {
+                      "title": "Punto de venta",
+                      "type": "integer",
+                      "description": "Foreign key to Punto de venta"
+                    },
+                    "COBR_ID_COBR": {
+                      "title": "Recibo",
+                      "type": "integer",
+                      "description": "Foreign key to Recibo",
+                      "nullable": true
+                    },
+                    "MOST_ID_MOST": {
+                      "title": "Movimiento de stock",
+                      "type": "integer",
+                      "description": "Foreign key to Movimiento de Stock",
+                      "nullable": true
+                    },
+                    "CONT_ID_CONT": {
+                      "title": "Contacto - DNI",
+                      "type": "integer",
+                      "description": "Foreign key to Contacto",
+                      "nullable": true
+                    },
+                    "ORDV_IMPRIME_REMITO": {
+                      "title": "Imprime Remito",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "ORDV_NRO_REMITO": {
+                      "title": "Nro Remito",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "LIDP_ID_LIDP": {
+                      "title": "Lista",
+                      "type": "integer",
+                      "description": "Foreign key to Lista de precios de venta",
+                      "nullable": true
+                    },
+                    "CAJA_ID_CAJA": {
+                      "title": "Caja",
+                      "type": "integer",
+                      "description": "Foreign key to Caja",
+                      "nullable": true
+                    },
+                    "ORDV_NRO_FACTURA": {
+                      "title": "Nro Factura",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ORDV_NRO_NC": {
+                      "title": "Nro NC devolución",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ORDV_OBSERVACION": {
+                      "title": "Observación",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDV_FECHA_DE_ENTREGA": {
+                      "title": "Fecha de entrega",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDV_RANGO_HORARIO": {
+                      "title": "Rango Horario",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDV_ANULADA": {
+                      "title": "Anulada",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "ORDV_MONTO_PENDIENTE_DE_F": {
+                      "title": "Monto pendiente de facturación",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ORDV_TOTAL_CANCELADO": {
+                      "title": "Total Cancelado",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ORDV_ERROR": {
+                      "title": "Error",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "ORDV_CANTIDAD_DE_DEVOLUCI": {
+                      "title": "# devoluciones",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ORDV_CODIGO_POS": {
+                      "title": "Código POS",
+                      "type": "integer",
+                      "description": "SEÑAR = 1\nFACTURAR TODO = 2\nNO FACTURAR = 3 \nFACTURAR REMITO = 4\nRESERVADO DESDE VENDEDOR = 5"
+                    },
+                    "ORDV_NRO_FACTURA_ANUL": {
+                      "title": "Nro Factura anulación",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ORDV_NRO_NC_ANUL": {
+                      "title": "Nro NC anulación",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ORDV_DESPACHAR_REMITO": {
+                      "title": "Despachar Remito",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "ORDV_CLIE_NOMBRE": {
+                      "title": "Nombre",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDV_CLIE_CUIT": {
+                      "title": "CUIT",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "TIDD_ID_TIDD": {
+                      "title": "Tipo de documento",
+                      "type": "integer",
+                      "description": "Foreign key to Tipo de Documento",
+                      "nullable": true
+                    },
+                    "ORDV_CLIE_DOMICILIO": {
+                      "title": "Domicilio",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDV_CLIE_TE1": {
+                      "title": "te1",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDV_CLIE_MAIL": {
+                      "title": "Mail",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDV_CLIE_ID": {
+                      "title": "Clie Id",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ORDV_ACTUALIZA_DATOS_CLIE": {
+                      "title": "Actualiza datos Cliente",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "ORDV_CODIGO_POSTAL": {
+                      "title": "Código Postal",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDV_LOCALIDAD": {
+                      "title": "Localidad",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PAIS_ID_PAIS": {
+                      "title": "País",
+                      "type": "integer",
+                      "description": "Foreign key to País",
+                      "nullable": true
+                    },
+                    "PROV_ID_PROV": {
+                      "title": "Provincia",
+                      "type": "integer",
+                      "description": "Foreign key to Provincia",
+                      "nullable": true
+                    },
+                    "COIV_ID_COIV": {
+                      "title": "Condición de IVA",
+                      "type": "integer",
+                      "description": "Foreign key to Condición de impuesto",
+                      "nullable": true
+                    },
+                    "ORDV_CLIE_CODIGO": {
+                      "title": "Codigo",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDV_TOTAL": {
+                      "title": "Total",
+                      "type": "number",
+                      "description": "Se usa en el script que genera factura para calcular el %",
+                      "nullable": true
+                    },
+                    "ORDV_TOTAL_FACTURADO": {
+                      "title": "Total Facturado",
+                      "type": "number",
+                      "description": "Se usa en el script que genera factura para calcular el %",
+                      "nullable": true
+                    },
+                    "ORDV_POS": {
+                      "title": "POS",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "ORDV_GUID": {
+                      "title": "GUID",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDV_SENA_CARGADA": {
+                      "title": "Seña cargada",
+                      "type": "boolean",
+                      "description": "Cuando se carga la factura por la seña se marca como Verdadero.\nLa siguiente ejecución lo veo y sabe que se trata de la factura final. Esto sirve para impactar en el reporte de ventas.",
+                      "nullable": true
+                    },
+                    "ORDENDEPRODUCCIÓN": {
+                      "title": "Orden de Producción",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ORDP_NRO": {
+                            "title": "Nro",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_RESPONSABLE": {
+                            "title": "Responsable",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PUDP_ID_PUDP": {
+                            "title": "Punto de producción",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MOOP_ID_MOOP": {
+                            "title": "Modelo OP",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_FACTOR_DE_MULTIPLICA": {
+                            "title": "Factor de multiplicación",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_LOTE_OP": {
+                            "title": "Lote",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_FECHA_DE_INICIO": {
+                            "title": "Fecha de Inicio",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_FECHA_DE_EMISION": {
+                            "title": "Fecha de emisión",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_FECHA_EN_PROCESO": {
+                            "title": "Fecha En Proceso",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_FECHA_TERMINADA": {
+                            "title": "Fecha Terminada",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_HORAS_ENTRE_PROCESO_": {
+                            "title": "Tiempo Proceso (Horas)",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_TIEMPO_PROCESO_TO": {
+                            "title": "Tiempo de proceso total",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_FECHA_DE_ENTREGA_EST": {
+                            "title": "Fecha de entrega estimada",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_DIAS_FALTANTES": {
+                            "title": "Días faltantes",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CEDI_ID_UBIO": {
+                            "title": "Ubicación de origen",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CEDI_ID_UBID": {
+                            "title": "Ubicación destino",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CEDI_ID_UBIR": {
+                            "title": "Ubicación de reserva",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CLIE_ID_CLIE": {
+                            "title": "Cliente",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_COLECCION": {
+                            "title": "Versión",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PEDI_ID_PEDI": {
+                            "title": "Pedido",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDV_ID_ORDV": {
+                            "title": "Orden de Venta",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PMP0_ID_PMP0": {
+                            "title": "PMP",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_INSTRUCCIONES_ESPECI": {
+                            "title": "Instrucciones especiales",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_CALCULAR_ARTICULOS": {
+                            "title": "Calcular Artículos Requeridos",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "EXTE_ID_EXTE": {
+                            "title": "Origen de la OP",
+                            "type": "integer"
+                          },
+                          "ORDP_COSTO_MATERIALES": {
+                            "title": "Costo Materiales",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ORDP_COSTO_OPERACIONES": {
+                            "title": "Costo Operaciones",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ORDP_TOTAL_COSTO_PRODUCCI": {
+                            "title": "Total Costo Producción",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ORDP_LOCAL": {
+                            "title": "Local",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_ID_ORIG": {
+                            "title": "OP origen",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_DISPONIBILIDAD_TOTAL": {
+                            "title": "Disponibilidad total",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "TEET_ID_TEET": {
+                            "title": "Template etiqueta",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_ETIQUETA_ADJUNTO": {
+                            "title": "Etiqueta adjunto",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_INFORMACION": {
+                            "title": "Información",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_TIPO_DE_LOGISTICA": {
+                            "title": "Tipo de logística",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_PEDIDO": {
+                            "title": "Pedido",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "ORDP_RESERVADO": {
+                            "title": "Reservado",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "ORDP_OP_AUTO": {
+                            "title": "OP Automatica",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "ORDP_SOLICITUD_GENERADA": {
+                            "title": "Solicitud generada",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "ORDP_ULTIMO_ESTADO": {
+                            "title": "Último estado",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_SEMIELABORADO": {
+                            "title": "Semielaborado",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Orden de Producción (included when includeChildren=true)"
+                    },
+                    "DETALLE": {
+                      "title": "Detalle",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ORDV_ID_ORDV": {
+                            "title": "Orden de venta",
+                            "type": "integer"
+                          },
+                          "MATE_ID_MATE": {
+                            "title": "Artículo",
+                            "type": "integer"
+                          },
+                          "DEDO_ARTICULO_CODIGO_BARR": {
+                            "title": "Artículo Código Barra",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "DEDO_PRECIO_UNITARIO": {
+                            "title": "Precio unitario",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DEDO_PRECIO_UNITARIO_FINA": {
+                            "title": "Precio unitario final",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DEDO_CANTIDAD": {
+                            "title": "Cantidad",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DEDO_CANTIDAD_ORIGEN": {
+                            "title": "# en Origen",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DEDO_SUBTOTAL": {
+                            "title": "Neto",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DEDO_PORCENTAJE_DE_DESCUE": {
+                            "title": "Porcentaje de descuento",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DEDO_IVA": {
+                            "title": "IVA",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DEDO_IMPUESTO_INTERNO": {
+                            "title": "Impuesto Interno",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DEDO_TOTAL": {
+                            "title": "Total",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "CEDI_ID_CEDI": {
+                            "title": "Ubicación de Origen",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DEDO_ASIGNAR_A_REMITO": {
+                            "title": "Asignar a Remito",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "REDV_ID_REDV": {
+                            "title": "Remito",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DEDO_FACTURAR": {
+                            "title": "Facturar",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "FACT_ID_FACT": {
+                            "title": "Factura Asociada",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DEDO_TEXTO_ADICIONAL": {
+                            "title": "Texto adicional",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "DEDO_RESERVADO": {
+                            "title": "Reservado",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "DEDO_ASIGNADA_A_REMITO": {
+                            "title": "Asignada a Remito",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "DEDO_GUID": {
+                            "title": "GUID",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Detalle (included when includeChildren=true)"
+                    },
+                    "REMITODEVENTA": {
+                      "title": "Remito de Venta",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "PUVE_ID_PUVE": {
+                            "title": "Punto de venta",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDV_NRO": {
+                            "title": "Nro",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDV_DESCRIPCION": {
+                            "title": "Descripción",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_FECHA_DE_DESPACHO": {
+                            "title": "Fecha de Despacho",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CLIE_ID_CLIE": {
+                            "title": "Cliente",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDV_USUARIO_DESPACHANTE": {
+                            "title": "Usuario despachante",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDV_OBSERVACIONES": {
+                            "title": "Observaciones",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CEDI_ID_CEDI": {
+                            "title": "Origen",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CEDI_ID_DEST": {
+                            "title": "Destino",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MOST_ID_MOST": {
+                            "title": "Movimiento Stock",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDV_VALOR_DE_LA_MERCADER": {
+                            "title": "Valor de la mercadería",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "MONE_ID_MONE": {
+                            "title": "Moneda",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDV_BULTOS": {
+                            "title": "Bultos",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PEDI_ID_PEDI": {
+                            "title": "Pedido",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDS_ID_ORDS": {
+                            "title": "Orden de servicio",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDV_PICKING_LIST": {
+                            "title": "Picking List",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDV_ID_ORDV": {
+                            "title": "Orden de venta",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDV_TOTAL_CANTIDAD": {
+                            "title": "Total Cantidad",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "REDV_PESO": {
+                            "title": "Peso (Kg)",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "REDV_VOLUMEN": {
+                            "title": "Volumen (cm3)",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ASIE_ID_ASIE": {
+                            "title": "Asiento",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDV_ORIGEN_DE_PEDIDO": {
+                            "title": "Origen de Pedido",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_ADJUNTO": {
+                            "title": "Adjunto",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDV_CLIENTE___NOMBRE": {
+                            "title": "Cliente - Vendedor",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_CLIENTE_TIPO": {
+                            "title": "Tipo de Cliente - Nombre",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_CAI": {
+                            "title": "CAI",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_RTA_INTEGRACION": {
+                            "title": "Rta Integración",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_ESTADO_DE_ENTREGA": {
+                            "title": "Estado de Entrega",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_INFO_DE_STOCK": {
+                            "title": "Info de Stock",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_PEDIDO___METODO_DE_E": {
+                            "title": "Pedido - Método de Envío",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_PEDIDO___CONDICION_D": {
+                            "title": "Pedido - Condición de Venta",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_PEDI_CANT_ENTREGAR": {
+                            "title": "Pedido - Cant. artículos",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDV_CLIE_IDEN": {
+                            "title": "Cliente - Identificador",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDV_GENERADO": {
+                            "title": "Generado",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "REDV_LOCAL": {
+                            "title": "Local",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_SUCURSAL_DE_RETIRO": {
+                            "title": "Sucursal de Retiro",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "SUCU_ID_SUCU": {
+                            "title": "Sucursal Cliente",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDV_DIRECCION_DE_ENVIO": {
+                            "title": "Dirección de envio",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_CODIGO_POSTAL": {
+                            "title": "Código postal",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_LOCALIDAD_DE_ENVIO": {
+                            "title": "Localidad de envio",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_CIUDAD_DE_ENVIO": {
+                            "title": "Ciudad de envio",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_PROVINCIA_DE_ENVIO": {
+                            "title": "Provincia de envio",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_PAIS_DE_ENVIO": {
+                            "title": "País de envio",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_PARTIDO": {
+                            "title": "Partido",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_PISO_DE_ENVIO": {
+                            "title": "Piso de Envio",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_FECHA_DE_ENTREGA": {
+                            "title": "Fecha de entrega",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_RANGO_HORARIO": {
+                            "title": "Rango Horario",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_HORARIO_ENTREGA_DESD": {
+                            "title": "Horario entrega desde",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_HORARIO_ENTREGA_HAST": {
+                            "title": "Horario entrega hasta",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_FECHA_DE_ENTREGA_PED": {
+                            "title": "Fecha de entrega pedido",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_TRACKING_CODE": {
+                            "title": "Tracking Code",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "TRLO_ID_TRLO": {
+                            "title": "Transportista",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MOVI_ID_MOVI": {
+                            "title": "Vehículo",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "SETR_ID_SETR": {
+                            "title": "Servicio",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROV_ID_PROV": {
+                            "title": "Provincia",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDV_RETIRA_EN_LOCAL": {
+                            "title": "Retira en local",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "REDV_FORMA_DE_ENTREGA": {
+                            "title": "Forma de Entrega",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_LATITUD": {
+                            "title": "Latitud",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_LONGITUD": {
+                            "title": "Longitud",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_PRIORIDAD_DE_ENTREGA": {
+                            "title": "Prioridad de Entrega",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDV_TRANS_LOCALI": {
+                            "title": "Transportista - Localidad",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_HORARIO_DE_ENTREGA": {
+                            "title": "Horario de entrega DISNCONTINUADO",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_FECHA": {
+                            "title": "Fecha",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_OPERATIONID": {
+                            "title": "OperationId",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_ID_SUCURSAL_ANTERIOR": {
+                            "title": "Id Sucursal anterior",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDV_LOG_KRIKOS": {
+                            "title": "Log",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDV_FC_ENVIADA_A_KRIKOS": {
+                            "title": "Factura enviada",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "REDV_INTENTOS_KRIKOS": {
+                            "title": "Intentos de Envío",
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Remito de Venta (included when includeChildren=true)"
+                    },
+                    "COBROS": {
+                      "title": "Cobros",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ORDV_ID_ORDV": {
+                            "title": "Orden de Venta",
+                            "type": "integer"
+                          },
+                          "COBR_FECHA": {
+                            "title": "Fecha",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "COBR_ID_RECI": {
+                            "title": "Recibo",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "COBR_NRO_DE_OPERACION": {
+                            "title": "Nro de operación",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "SUCU_ID_SUCU": {
+                            "title": "Sucursal",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "COBR_EFECTIVO": {
+                            "title": "\tMonto Efectivo",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "COBR_R_D_EFECTIVO": {
+                            "title": "R/D Efectivo",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "COBR_SUBTOTAL_EFECTIVO": {
+                            "title": "Subtotal Efectivo",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "CAJA_ID_CAJA": {
+                            "title": "Caja",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "COBR_TARJETA": {
+                            "title": "Monto Tarjeta",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "COBR_CUOTAS": {
+                            "title": "Cuotas",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "BANC_ID_BANC": {
+                            "title": "Banco",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CDCE_ID_CDCE": {
+                            "title": "Concepto Electrónico",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "COBR_CONCEPTO_ELECTRONICO": {
+                            "title": "Concepto Electrónico Nombre",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "COBR_R_D_TARJETA": {
+                            "title": "R/D Tarjeta",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "COBR_SUBTOTAL_TARJETA": {
+                            "title": "Subtotal Tarjeta",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "COBR_NRO_RECIBO": {
+                            "title": "Nro Recibo",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MONE_ID_MONE": {
+                            "title": "Moneda",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "COBR_COTIZACION": {
+                            "title": "Tipo de cambio",
+                            "type": "number",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Cobros (included when includeChildren=true)"
+                    },
+                    "FACTURAS": {
+                      "title": "Facturas",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "FACT_ID_FACT": {
+                            "title": "Facturas",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDV_ID_ORDV": {
+                            "title": "Orden de Venta",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "FATT_IMPORTE": {
+                            "title": "Importe",
+                            "type": "number",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Facturas (included when includeChildren=true)"
+                    },
+                    "DEVOLUCIONES": {
+                      "title": "Devoluciones",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ORDV_ID_ORDV": {
+                            "title": "Orden de Venta",
+                            "type": "integer"
+                          },
+                          "MATE_ID_MATE": {
+                            "title": "Artículo",
+                            "type": "integer"
+                          },
+                          "DEVO_PRECIO_UNITARIO": {
+                            "title": "Precio unitario",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DEVO_PRECIO_UNITARIO_FINA": {
+                            "title": "Precio unitario final",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DEVO_CANTIDAD": {
+                            "title": "Cantidad",
+                            "type": "number"
+                          },
+                          "DEVO_NETO": {
+                            "title": "Neto",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DEVO_PORCENTAJE_DE_DESCUE": {
+                            "title": "Porcentaje de descuento",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DEVO_IVA": {
+                            "title": "IVA",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DEVO_TOTAL": {
+                            "title": "Total",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "CEDI_ID_CEDI": {
+                            "title": "Ubicación de Destino",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCR_ID_NOCR": {
+                            "title": "Nota de Crédito",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DEVO_IMPUESTO_INTERNO": {
+                            "title": "Impuesto Interno",
+                            "type": "number",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Devoluciones (included when includeChildren=true)"
+                    },
+                    "NOTASDECRÉDITO": {
+                      "title": "Notas de Crédito",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ORDV_ID_ORDV": {
+                            "title": "Orden de Venta",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCR_ID_NOCR": {
+                            "title": "Nota de Crédito",
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Notas de Crédito (included when includeChildren=true)"
+                    },
+                    "TICKET": {
+                      "title": "Ticket",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ORDV_ID_ORDV": {
+                            "title": "ORDV_ID_ORDV",
+                            "type": "integer"
+                          },
+                          "TIDO_NRO_FACTURA": {
+                            "title": "NRO_FACTURA",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "TIDO_TOTAL": {
+                            "title": "TOTAL",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "FACT_ID_FACT": {
+                            "title": "Factura",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "TIDO_FECHA": {
+                            "title": "Fecha",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "TIDO_GUID": {
+                            "title": "GUID",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Ticket (included when includeChildren=true)"
+                    },
+                    "PERCEPCIONES": {
+                      "title": "Percepciones",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "PEDO_IMPORTE": {
+                            "title": "Importe",
+                            "type": "number"
+                          },
+                          "PEDO_IMPUESTO": {
+                            "title": "Impuesto Código",
+                            "type": "string"
+                          },
+                          "PERE_ID_PERE": {
+                            "title": "Percepción Realizada",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDV_ID_ORDV": {
+                            "title": "Orden de Venta",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "IMPU_ID_IMPU": {
+                            "title": "Impuesto ",
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Percepciones (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -8215,14 +10332,93 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "POLE_DATE": {
+                      "title": "Date",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "POLE_LEVEL": {
+                      "title": "Level",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "POLE_MESSAGE": {
+                      "title": "Message",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "POLE_HOST": {
+                      "title": "Host",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "POLE_WINDOWS_USER": {
+                      "title": "Windows User",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "POLE_POS_VERSION": {
+                      "title": "POS Version",
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },

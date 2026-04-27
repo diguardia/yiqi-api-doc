@@ -114,14 +114,84 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "MEDP_ID_MEDP": {
+                      "title": "Mensaje de Pedido",
+                      "type": "integer",
+                      "description": "Foreign key to Mensaje de Pedido",
+                      "nullable": true
+                    },
+                    "ADJU_FECHA": {
+                      "title": "Fecha",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ADJU_ADJUNTO_FILE": {
+                      "title": "Adjunto",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ADJU_ADJUNTO_FILE_L": {
+                      "title": "Adjunto - File",
+                      "type": "integer",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -935,14 +1005,158 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "PEDI_ID_PEDI": {
+                      "title": "Pedido",
+                      "type": "integer",
+                      "description": "Foreign key to Pedido"
+                    },
+                    "MEDP_PROCEDENCIA": {
+                      "title": "Procedencia",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDP_REMITENTE": {
+                      "title": "Remitente",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDP_MENSAJE": {
+                      "title": "Mensaje",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDP_FECHA": {
+                      "title": "Fecha",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDP_SKU": {
+                      "title": "SKUs del pedido",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDP_P_PEDIDO": {
+                      "title": "Productos del pedido",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDP_ID_MSJ": {
+                      "title": "Identificador del mensaje",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDP_TIENE_ADJUNTO": {
+                      "title": "Tiene adjunto",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "MEDP_INFO": {
+                      "title": "Info",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDP_MENSAJE_VEND": {
+                      "title": "Mensaje",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDP_LEIDO_ML": {
+                      "title": "Leído ML",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "MEDP_ID_ML": {
+                      "title": "ID_ML",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ADJUNTO": {
+                      "title": "Adjunto",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "MEDP_ID_MEDP": {
+                            "title": "Mensaje de Pedido",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ADJU_FECHA": {
+                            "title": "Fecha",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ADJU_ADJUNTO_FILE": {
+                            "title": "Adjunto",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ADJU_ADJUNTO_FILE_L": {
+                            "title": "Adjunto - File",
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Adjunto (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -1915,14 +2129,156 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "MEDT_NUMERO": {
+                      "title": "Número",
+                      "type": "string"
+                    },
+                    "MEDT_CLIENT_ID": {
+                      "title": "Client Id",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDT_COD_TIPO_ORIGEN": {
+                      "title": "Código de tipo de origen",
+                      "enum": [
+                        "ML",
+                        "AM",
+                        "WC",
+                        "FV",
+                        " SP",
+                        " TN",
+                        " VT",
+                        " MT",
+                        " TO"
+                      ],
+                      "type": "string"
+                    },
+                    "MEDT_NRO_DE_PEDIDO": {
+                      "title": "Número de pedido",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDT_JSON": {
+                      "title": "JSON",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EXTE_ID_EXTE": {
+                      "title": "Origen de pedido",
+                      "type": "integer",
+                      "description": "Foreign key to Origen de Pedido",
+                      "nullable": true
+                    },
+                    "PEDI_ID_PEDI": {
+                      "title": "Pedido",
+                      "type": "integer",
+                      "description": "Foreign key to Pedido",
+                      "nullable": true
+                    },
+                    "MEDT_GENERADO": {
+                      "title": "Generador",
+                      "type": "boolean",
+                      "description": "Marca si creó el mensaje en el Pedido",
+                      "nullable": true
+                    },
+                    "MEDT_TIPO_CONSULTA": {
+                      "title": "Tipo de consulta",
+                      "enum": [
+                        "questions",
+                        "messages"
+                      ],
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDP_ID_MEDP": {
+                      "title": "Mensaje de pedido",
+                      "type": "integer",
+                      "description": "Foreign key to Mensaje de Pedido",
+                      "nullable": true
+                    },
+                    "MSDP_ID_MSDP": {
+                      "title": "Mensaje de publicación",
+                      "type": "integer",
+                      "description": "Foreign key to Mensaje de Publicacion",
+                      "nullable": true
+                    },
+                    "MEDT_DATE_CREATED": {
+                      "title": "Fecha de creación en ML",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDT_DATE_CREATED_YQ": {
+                      "title": "Fecha de creación en esquema",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDT_DATE_RECEIVED_YQ": {
+                      "title": "Fecha de recepción",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDT_DATE_DIFF": {
+                      "title": "Diferencia",
+                      "type": "number",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -2870,14 +3226,126 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "PUBL_ID_PUBL": {
+                      "title": "Publicación",
+                      "type": "integer",
+                      "description": "Foreign key to Publicación",
+                      "nullable": true
+                    },
+                    "MSDP_REMITENTE": {
+                      "title": "Remitente",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MSDP_Q_DELETE": {
+                      "title": "Pregunta eliminada",
+                      "type": "boolean",
+                      "description": "Si este check está marcado, significa que el usuario eliminó la pregunta.",
+                      "nullable": true
+                    },
+                    "MSDP_FECHA": {
+                      "title": "Fecha",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MSDP_MENSAJE": {
+                      "title": "Mensaje",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MSDP_RESPUESTA": {
+                      "title": "Respuesta",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MSDP_USUA_QUE_RES": {
+                      "title": "Usuario que respondió el mensaje",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "MSDP_LINK_PUBLICACION": {
+                      "title": "Link de la publicación",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MSDP_TIPO_LOGISTICA": {
+                      "title": "Tipo de Logística",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MATE_ID_MATE": {
+                      "title": "Artículo de la publicación",
+                      "type": "integer",
+                      "description": "Foreign key to Artículo",
+                      "nullable": true
+                    },
+                    "MSDP_INFO_ERROR_RTA": {
+                      "title": "Error respuesta",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MSDP_JSON_RESPONSE": {
+                      "title": "JSON response",
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },

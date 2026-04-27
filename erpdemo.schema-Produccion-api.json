@@ -141,14 +141,104 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "ORDP_ID_ORDP": {
+                      "title": "Orden de producción",
+                      "type": "integer",
+                      "description": "Foreign key to Orden de producción"
+                    },
+                    "MATE_ID_MATE": {
+                      "title": "Artículo",
+                      "type": "integer",
+                      "description": "Foreign key to Artículo"
+                    },
+                    "ADAR_TIPO_DE_ARTICULO": {
+                      "title": "Tipo de artículo",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ADAR_USO": {
+                      "title": "Uso",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ADAR_DEVOLUCION": {
+                      "title": "Devolución",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ADAR_NRO_DE_SERIE": {
+                      "title": "Nro de Serie",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CEDI_ID_CEDI": {
+                      "title": "Ubicación de Origen",
+                      "type": "integer",
+                      "description": "Si no se completa se utiliza la ubicación de la OP.\nForeign key to Ubicación de stock",
+                      "nullable": true
+                    },
+                    "ADAR_COMENTARIO": {
+                      "title": "Comentario",
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -1070,14 +1160,160 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "ORDP_ID_ORDP": {
+                      "title": "Orden de Producción",
+                      "type": "integer",
+                      "description": "Foreign key to Orden de producción",
+                      "nullable": true
+                    },
+                    "MATE_ID_MATE": {
+                      "title": "Artículo",
+                      "type": "integer",
+                      "description": "Foreign key to Artículo"
+                    },
+                    "ARRE_NRO_SERIE": {
+                      "title": "Nro Serie",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ARRE_ARTICULO_NOMBRE": {
+                      "title": "Artículo Nombre",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CEDI_ID_CEDI": {
+                      "title": "Ubicación",
+                      "type": "integer",
+                      "description": "Foreign key to Ubicación de stock",
+                      "nullable": true
+                    },
+                    "TIUN_ID_TIUN": {
+                      "title": "Tipo Unidad",
+                      "type": "integer",
+                      "description": "Foreign key to Tipo de unidad",
+                      "nullable": true
+                    },
+                    "ARRE_CANTIDAD": {
+                      "title": "Cantidad",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ARRE_CANT_DISP_ORIGEN": {
+                      "title": "Cant. Disp. Origen",
+                      "type": "number",
+                      "description": "Cantidad disponible del artículo en ubicación Origen.-",
+                      "nullable": true
+                    },
+                    "ARRE_DISPONIBLE_EN_ORIGEN": {
+                      "title": "Disponible en origen",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "ARRE_DIFERENCIA": {
+                      "title": "Diferencia",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ARRE_RESERVADO": {
+                      "title": "Reservado",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ARRE_ESTADO": {
+                      "title": "Estado",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "TIMA_ID_TIMA": {
+                      "title": "Tipo de Artículo",
+                      "type": "integer",
+                      "description": "Foreign key to Tipo de Artículo",
+                      "nullable": true
+                    },
+                    "MATE_ID_MAT1": {
+                      "title": "Art. a producir",
+                      "type": "integer",
+                      "description": "Foreign key to Artículo",
+                      "nullable": true
+                    },
+                    "ARRE_PRODUCCION_MAX": {
+                      "title": "Producción máx.",
+                      "type": "number",
+                      "description": "Máximo de producción posible teniendo en cuenta cantidades de BOM.- ",
+                      "nullable": true
+                    },
+                    "ARRE_COSTO_PRODUCCION": {
+                      "title": "Costo Producción",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ARRE_NRO_PEDIDO": {
+                      "title": "Nro Pedido",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ARRE_NRO_SERIE_2": {
+                      "title": "Nro de Serie",
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -2033,14 +2269,77 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "MOOP_ID_MOOP": {
+                      "title": "Modelo OP",
+                      "type": "integer",
+                      "description": "Foreign key to Modelo OP"
+                    },
+                    "MATE_ID_MATE": {
+                      "title": "Artículo",
+                      "type": "integer",
+                      "description": "Foreign key to Artículo"
+                    },
+                    "DEMO_CANTIDAD": {
+                      "title": "Cantidad",
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -2968,14 +3267,121 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "MOOP_NOMBRE": {
+                      "title": "Nombre",
+                      "type": "string"
+                    },
+                    "MOOP_OBSERVACIONES": {
+                      "title": "Observaciónes",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "DETALLE": {
+                      "title": "Detalle",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "MOOP_ID_MOOP": {
+                            "title": "Modelo OP",
+                            "type": "integer"
+                          },
+                          "MATE_ID_MATE": {
+                            "title": "Artículo",
+                            "type": "integer"
+                          },
+                          "DEMO_CANTIDAD": {
+                            "title": "Cantidad",
+                            "type": "number"
+                          }
+                        }
+                      },
+                      "description": "Child entities of Detalle (included when includeChildren=true)"
+                    },
+                    "SOBRANTES": {
+                      "title": "Sobrantes",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "MOOP_ID_MOOP": {
+                            "title": "Modelo op",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MATE_ID_MATE": {
+                            "title": "Material",
+                            "type": "integer"
+                          },
+                          "TIUN_ID_TIUN": {
+                            "title": "Tipo de unidad",
+                            "type": "integer"
+                          },
+                          "SDMO_CANTIDAD": {
+                            "title": "Cantidad",
+                            "type": "number"
+                          }
+                        }
+                      },
+                      "description": "Child entities of Sobrantes (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -3931,14 +4337,161 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "ORDP_ID_ORDP": {
+                      "title": "Orden de producción",
+                      "type": "integer",
+                      "description": "Foreign key to Orden de producción"
+                    },
+                    "OPDO_ARTICULO": {
+                      "title": "Artículo",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "OPDO_PEDIDO": {
+                      "title": "Pedido",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "OPER_ID_OPER": {
+                      "title": "Operación",
+                      "type": "integer",
+                      "description": "Foreign key to Operación",
+                      "nullable": true
+                    },
+                    "OPDO_CANTIDAD": {
+                      "title": "Cantidad",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "PUDP_ID_PUDP": {
+                      "title": "Punto de producción",
+                      "type": "integer",
+                      "description": "Foreign key to Punto de producción",
+                      "nullable": true
+                    },
+                    "OPDO_ENTREGA_ESTIMADA": {
+                      "title": "Entrega estimada",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "OPDO_TIEMPO": {
+                      "title": "Tiempo",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "OPDO_COSTO_HORA": {
+                      "title": "Costo hora",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "OPDO_COSTO": {
+                      "title": "Costo",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "OPDO_INGRESOS": {
+                      "title": "Ingresos",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "OPDO_EGRESOS": {
+                      "title": "Egresos",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "OPDO_TOTAL_INGRESOS": {
+                      "title": "Total Ingresos",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "OPDO_TOTAL_EGRESOS": {
+                      "title": "Total Egresos",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "OPDO_DEVOLUCION": {
+                      "title": "Devolución",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "OPDO_ORDEN": {
+                      "title": "Orden",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "OPDO_OPERACION_ANTERIOR": {
+                      "title": "Operación anterior",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "OPDO_OP_ESTADO": {
+                      "title": "Orden de producción - Estado",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "DEOP_ID_DEOP": {
+                      "title": "Detalle",
+                      "type": "integer",
+                      "description": "Foreign key to Detalle OP",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -5611,14 +6164,1091 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "ORDP_NRO": {
+                      "title": "Nro",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ORDP_RESPONSABLE": {
+                      "title": "Responsable",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "PUDP_ID_PUDP": {
+                      "title": "Punto de producción",
+                      "type": "integer",
+                      "description": "Foreign key to Punto de producción",
+                      "nullable": true
+                    },
+                    "MOOP_ID_MOOP": {
+                      "title": "Modelo OP",
+                      "type": "integer",
+                      "description": "Foreign key to Modelo OP",
+                      "nullable": true
+                    },
+                    "ORDP_FACTOR_DE_MULTIPLICA": {
+                      "title": "Factor de multiplicación",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ORDP_LOTE_OP": {
+                      "title": "Lote",
+                      "type": "string",
+                      "description": "Si se completa este campo, se contemplará para la creación de lote de todos los detalles.",
+                      "nullable": true
+                    },
+                    "ORDP_FECHA_DE_INICIO": {
+                      "title": "Fecha de Inicio",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDP_FECHA_DE_EMISION": {
+                      "title": "Fecha de emisión",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDP_FECHA_EN_PROCESO": {
+                      "title": "Fecha En Proceso",
+                      "type": "string",
+                      "description": "Fecha y hora desde la última vez que la OP pasó a \"En proceso\".",
+                      "nullable": true
+                    },
+                    "ORDP_FECHA_TERMINADA": {
+                      "title": "Fecha Terminada",
+                      "type": "string",
+                      "description": "Fecha y hora desde la última vez que la OP pasó a \"Terminada\".",
+                      "nullable": true
+                    },
+                    "ORDP_HORAS_ENTRE_PROCESO_": {
+                      "title": "Tiempo Proceso (Horas)",
+                      "type": "integer",
+                      "description": "Muestra las horas entre la \"Fecha en Proceso\" y \"Fecha Terminada\".",
+                      "nullable": true
+                    },
+                    "ORDP_TIEMPO_PROCESO_TO": {
+                      "title": "Tiempo de proceso total",
+                      "type": "string",
+                      "description": "Muestra las horas(H:) y minutos (M:) entre la \"Fecha en Proceso\" y \"Fecha Terminada\".",
+                      "nullable": true
+                    },
+                    "ORDP_FECHA_DE_ENTREGA_EST": {
+                      "title": "Fecha de entrega estimada",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDP_DIAS_FALTANTES": {
+                      "title": "Días faltantes",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "CEDI_ID_UBIO": {
+                      "title": "Ubicación de origen",
+                      "type": "integer",
+                      "description": "Es la ubicación desde la cual se extraerá o reservarán los artículos para la producción.-\nForeign key to Ubicación de stock",
+                      "nullable": true
+                    },
+                    "CEDI_ID_UBID": {
+                      "title": "Ubicación destino",
+                      "type": "integer",
+                      "description": "Es la ubicación a donde se enviarán los artículos producidos en la OP.-\nForeign key to Ubicación de stock",
+                      "nullable": true
+                    },
+                    "CEDI_ID_UBIR": {
+                      "title": "Ubicación de reserva",
+                      "type": "integer",
+                      "description": "Es la ubicación utilizada para reservar artículos para la orden de producción\nForeign key to Ubicación de stock",
+                      "nullable": true
+                    },
+                    "CLIE_ID_CLIE": {
+                      "title": "Cliente",
+                      "type": "integer",
+                      "description": "Foreign key to Empresa",
+                      "nullable": true
+                    },
+                    "ORDP_COLECCION": {
+                      "title": "Versión",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PEDI_ID_PEDI": {
+                      "title": "Pedido",
+                      "type": "integer",
+                      "description": "Foreign key to Pedido",
+                      "nullable": true
+                    },
+                    "ORDV_ID_ORDV": {
+                      "title": "Orden de Venta",
+                      "type": "integer",
+                      "description": "Foreign key to Orden de venta",
+                      "nullable": true
+                    },
+                    "PMP0_ID_PMP0": {
+                      "title": "PMP",
+                      "type": "integer",
+                      "description": "Foreign key to PMP",
+                      "nullable": true
+                    },
+                    "ORDP_INSTRUCCIONES_ESPECI": {
+                      "title": "Instrucciones especiales",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDP_CALCULAR_ARTICULOS": {
+                      "title": "Calcular Artículos Requeridos",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "EXTE_ID_EXTE": {
+                      "title": "Origen de la OP",
+                      "type": "integer",
+                      "description": "Foreign key to Origen de Pedido"
+                    },
+                    "ORDP_COSTO_MATERIALES": {
+                      "title": "Costo Materiales",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ORDP_COSTO_OPERACIONES": {
+                      "title": "Costo Operaciones",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ORDP_TOTAL_COSTO_PRODUCCI": {
+                      "title": "Total Costo Producción",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ORDP_LOCAL": {
+                      "title": "Local",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDP_ID_ORIG": {
+                      "title": "OP origen",
+                      "type": "integer",
+                      "description": "Foreign key to Orden de producción",
+                      "nullable": true
+                    },
+                    "ORDP_DISPONIBILIDAD_TOTAL": {
+                      "title": "Disponibilidad total",
+                      "type": "boolean",
+                      "description": "Este atributo se marca en caso de :\n* Tener detalle de OP de BOM sin artículos requeridos\n* Tener detalle de OP de BOM con artículos requeridos y esos artículos tienen ubicación de stock asignada.",
+                      "nullable": true
+                    },
+                    "TEET_ID_TEET": {
+                      "title": "Template etiqueta",
+                      "type": "integer",
+                      "description": "Foreign key to Template etiqueta",
+                      "nullable": true
+                    },
+                    "ORDP_ETIQUETA_ADJUNTO": {
+                      "title": "Etiqueta adjunto",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ORDP_INFORMACION": {
+                      "title": "Información",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDP_TIPO_DE_LOGISTICA": {
+                      "title": "Tipo de logística",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDP_PEDIDO": {
+                      "title": "Pedido",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "ORDP_RESERVADO": {
+                      "title": "Reservado",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "ORDP_OP_AUTO": {
+                      "title": "OP Automatica",
+                      "type": "boolean",
+                      "description": "Bool para automatización desde el Pedido.",
+                      "nullable": true
+                    },
+                    "ORDP_SOLICITUD_GENERADA": {
+                      "title": "Solicitud generada",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "ORDP_ULTIMO_ESTADO": {
+                      "title": "Último estado",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ORDP_SEMIELABORADO": {
+                      "title": "Semielaborado",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "SOLICITUDESDECOMPRA": {
+                      "title": "Solicitudes de Compra",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ORCO_FECHA_DE_SOLICITUD": {
+                            "title": "Fecha de solicitud",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PMP0_ID_PMP0": {
+                            "title": "PMP",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORCO_NRO_ORDEN": {
+                            "title": "Nro SC",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORCO_REF_INTERNA": {
+                            "title": "Ref. Interna",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORCO_USUARIO_SOLICITANTE": {
+                            "title": "Usuario solicitante",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORCO_PRODUCTO_SERVICIO_S": {
+                            "title": "Productos/Servicios solicitados",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "SECT_ID_SECT": {
+                            "title": "Sector",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORCO_ARHC_ID_3796": {
+                            "title": "Presupuesto",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORCO_ARHC_ID_3797": {
+                            "title": "Presupuesto alternativo",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORCO_TOTAL": {
+                            "title": "Total",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ORCO_RAZON_DE_RECHAZO_DE_": {
+                            "title": "Razón de rechazo de compra",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORCO_DEFINICION_APROBADA_": {
+                            "title": "Definición aprobada de la compra",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CLIE_ID_CLI1": {
+                            "title": "Proveedor",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROY_ID_PROY": {
+                            "title": "Centro de costos",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REMI_ID_REMI": {
+                            "title": "Remito de compra generado",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PEDI_ID_PEDI": {
+                            "title": "Pedido",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORCO_AUTORIZADA_POR": {
+                            "title": "Autorizada por",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDV_ID_ORDV": {
+                            "title": "Orden de Venta",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_ID_ORDP": {
+                            "title": "Orden de producción",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDC_ID_ORDC": {
+                            "title": "OC generada",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORCO_FECHA_DE_APROBACION": {
+                            "title": "Fecha de aprobación",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORCO_ULTIMA_OPERACION": {
+                            "title": "Última operación realizada por",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORCO_OPERATIONID": {
+                            "title": "OperationID",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Solicitudes de Compra (included when includeChildren=true)"
+                    },
+                    "SEMIELABORADOS": {
+                      "title": "Semielaborados",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ORDP_NRO": {
+                            "title": "Nro",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_RESPONSABLE": {
+                            "title": "Responsable",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PUDP_ID_PUDP": {
+                            "title": "Punto de producción",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MOOP_ID_MOOP": {
+                            "title": "Modelo OP",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_FACTOR_DE_MULTIPLICA": {
+                            "title": "Factor de multiplicación",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_LOTE_OP": {
+                            "title": "Lote",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_FECHA_DE_INICIO": {
+                            "title": "Fecha de Inicio",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_FECHA_DE_EMISION": {
+                            "title": "Fecha de emisión",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_FECHA_EN_PROCESO": {
+                            "title": "Fecha En Proceso",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_FECHA_TERMINADA": {
+                            "title": "Fecha Terminada",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_HORAS_ENTRE_PROCESO_": {
+                            "title": "Tiempo Proceso (Horas)",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_TIEMPO_PROCESO_TO": {
+                            "title": "Tiempo de proceso total",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_FECHA_DE_ENTREGA_EST": {
+                            "title": "Fecha de entrega estimada",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_DIAS_FALTANTES": {
+                            "title": "Días faltantes",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CEDI_ID_UBIO": {
+                            "title": "Ubicación de origen",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CEDI_ID_UBID": {
+                            "title": "Ubicación destino",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CEDI_ID_UBIR": {
+                            "title": "Ubicación de reserva",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CLIE_ID_CLIE": {
+                            "title": "Cliente",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_COLECCION": {
+                            "title": "Versión",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PEDI_ID_PEDI": {
+                            "title": "Pedido",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDV_ID_ORDV": {
+                            "title": "Orden de Venta",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PMP0_ID_PMP0": {
+                            "title": "PMP",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_INSTRUCCIONES_ESPECI": {
+                            "title": "Instrucciones especiales",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_CALCULAR_ARTICULOS": {
+                            "title": "Calcular Artículos Requeridos",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "EXTE_ID_EXTE": {
+                            "title": "Origen de la OP",
+                            "type": "integer"
+                          },
+                          "ORDP_COSTO_MATERIALES": {
+                            "title": "Costo Materiales",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ORDP_COSTO_OPERACIONES": {
+                            "title": "Costo Operaciones",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ORDP_TOTAL_COSTO_PRODUCCI": {
+                            "title": "Total Costo Producción",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ORDP_LOCAL": {
+                            "title": "Local",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_ID_ORIG": {
+                            "title": "OP origen",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_DISPONIBILIDAD_TOTAL": {
+                            "title": "Disponibilidad total",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "TEET_ID_TEET": {
+                            "title": "Template etiqueta",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_ETIQUETA_ADJUNTO": {
+                            "title": "Etiqueta adjunto",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_INFORMACION": {
+                            "title": "Información",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_TIPO_DE_LOGISTICA": {
+                            "title": "Tipo de logística",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_PEDIDO": {
+                            "title": "Pedido",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "ORDP_RESERVADO": {
+                            "title": "Reservado",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "ORDP_OP_AUTO": {
+                            "title": "OP Automatica",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "ORDP_SOLICITUD_GENERADA": {
+                            "title": "Solicitud generada",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "ORDP_ULTIMO_ESTADO": {
+                            "title": "Último estado",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_SEMIELABORADO": {
+                            "title": "Semielaborado",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Semielaborados (included when includeChildren=true)"
+                    },
+                    "DETALLE": {
+                      "title": "Detalle",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ORDP_ID_ORDP": {
+                            "title": "Orden de producción",
+                            "type": "integer"
+                          },
+                          "MATE_ID_MATE": {
+                            "title": "Artículo",
+                            "type": "integer"
+                          },
+                          "DEOP_ARTICULO_NOMBRE": {
+                            "title": "Artículo Nombre",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "DEOP_CANTIDAD": {
+                            "title": "Cantidad",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DEOP_CANTIDAD_PRODUCIDA_R": {
+                            "title": "Cantidad producida real",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "TIUN_ID_TIUN": {
+                            "title": "Tipo de unidad",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "TIMA_ID_TIMA": {
+                            "title": "Tipo de artículo",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DEOP_NRO_SERIE": {
+                            "title": "Nro Serie",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "DEOP_LOTE": {
+                            "title": "Lote",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "DEOP_ETAPA": {
+                            "title": "Etapa",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DEOP_INICIO_OPERACION": {
+                            "title": "Inicio",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "DEOP_FIN_OPERACION": {
+                            "title": "Fin",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "DEOP_TIEMPO_UTILIZADO": {
+                            "title": "Tiempo utilizado (min)",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DEOP_CANT_MAXIMA": {
+                            "title": "Cant. maxima",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "REDP_ID_REDP": {
+                            "title": "Remito de producción",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "BOM0_ID_BOM0": {
+                            "title": "BOM",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DEOP_MERMA_REALIZADA": {
+                            "title": "Merma realizada",
+                            "type": "boolean",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Detalle (included when includeChildren=true)"
+                    },
+                    "ARTÍCULOSREQUERIDOS": {
+                      "title": "Artículos requeridos",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ORDP_ID_ORDP": {
+                            "title": "Orden de Producción",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MATE_ID_MATE": {
+                            "title": "Artículo",
+                            "type": "integer"
+                          },
+                          "ARRE_NRO_SERIE": {
+                            "title": "Nro Serie",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ARRE_ARTICULO_NOMBRE": {
+                            "title": "Artículo Nombre",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CEDI_ID_CEDI": {
+                            "title": "Ubicación",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "TIUN_ID_TIUN": {
+                            "title": "Tipo Unidad",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ARRE_CANTIDAD": {
+                            "title": "Cantidad",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ARRE_CANT_DISP_ORIGEN": {
+                            "title": "Cant. Disp. Origen",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ARRE_DISPONIBLE_EN_ORIGEN": {
+                            "title": "Disponible en origen",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "ARRE_DIFERENCIA": {
+                            "title": "Diferencia",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ARRE_RESERVADO": {
+                            "title": "Reservado",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ARRE_ESTADO": {
+                            "title": "Estado",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "TIMA_ID_TIMA": {
+                            "title": "Tipo de Artículo",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MATE_ID_MAT1": {
+                            "title": "Art. a producir",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ARRE_PRODUCCION_MAX": {
+                            "title": "Producción máx.",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ARRE_COSTO_PRODUCCION": {
+                            "title": "Costo Producción",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ARRE_NRO_PEDIDO": {
+                            "title": "Nro Pedido",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ARRE_NRO_SERIE_2": {
+                            "title": "Nro de Serie",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Artículos requeridos (included when includeChildren=true)"
+                    },
+                    "REMITOS": {
+                      "title": "Remitos",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "REDP_NRO": {
+                            "title": "Nro",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDP_FECHA": {
+                            "title": "Fecha",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "REDP_RESPONSABLE": {
+                            "title": "Responsable",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CEDI_ID_ORIG": {
+                            "title": "Ubicación origen",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CEDI_ID_DEST": {
+                            "title": "Ubicación destino",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDP_OBSERVACIONES": {
+                            "title": "Observaciones",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_ID_ORDP": {
+                            "title": "Orden de producción",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REDP_ETAPA_ORIGEN": {
+                            "title": "Etapa origen",
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Remitos (included when includeChildren=true)"
+                    },
+                    "OPERACIONES": {
+                      "title": "Operaciones",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ORDP_ID_ORDP": {
+                            "title": "Orden de producción",
+                            "type": "integer"
+                          },
+                          "OPDO_ARTICULO": {
+                            "title": "Artículo",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "OPDO_PEDIDO": {
+                            "title": "Pedido",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "OPER_ID_OPER": {
+                            "title": "Operación",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "OPDO_CANTIDAD": {
+                            "title": "Cantidad",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PUDP_ID_PUDP": {
+                            "title": "Punto de producción",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "OPDO_ENTREGA_ESTIMADA": {
+                            "title": "Entrega estimada",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "OPDO_TIEMPO": {
+                            "title": "Tiempo",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "OPDO_COSTO_HORA": {
+                            "title": "Costo hora",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "OPDO_COSTO": {
+                            "title": "Costo",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "OPDO_INGRESOS": {
+                            "title": "Ingresos",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "OPDO_EGRESOS": {
+                            "title": "Egresos",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "OPDO_TOTAL_INGRESOS": {
+                            "title": "Total Ingresos",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "OPDO_TOTAL_EGRESOS": {
+                            "title": "Total Egresos",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "OPDO_DEVOLUCION": {
+                            "title": "Devolución",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "OPDO_ORDEN": {
+                            "title": "Orden",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "OPDO_OPERACION_ANTERIOR": {
+                            "title": "Operación anterior",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "OPDO_OP_ESTADO": {
+                            "title": "Orden de producción - Estado",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "DEOP_ID_DEOP": {
+                            "title": "Detalle",
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Operaciones (included when includeChildren=true)"
+                    },
+                    "MOVIMIENTOS": {
+                      "title": "Movimientos",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ORDP_ID_ORDP": {
+                            "title": "Orden de producción",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MOPR_FECHA": {
+                            "title": "Fecha",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "OPER_ID_OPER": {
+                            "title": "Operación",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MOPR_INGRESOS": {
+                            "title": "Ingresos",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MOPR_EGRESOS": {
+                            "title": "Egresos",
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Movimientos (included when includeChildren=true)"
+                    },
+                    "AJUSTESDEARTÍCULOSREQUERIDOS": {
+                      "title": "Ajustes de artículos requeridos",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ORDP_ID_ORDP": {
+                            "title": "Orden de producción",
+                            "type": "integer"
+                          },
+                          "MATE_ID_MATE": {
+                            "title": "Artículo",
+                            "type": "integer"
+                          },
+                          "ADAR_TIPO_DE_ARTICULO": {
+                            "title": "Tipo de artículo",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ADAR_USO": {
+                            "title": "Uso",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ADAR_DEVOLUCION": {
+                            "title": "Devolución",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ADAR_NRO_DE_SERIE": {
+                            "title": "Nro de Serie",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CEDI_ID_CEDI": {
+                            "title": "Ubicación de Origen",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ADAR_COMENTARIO": {
+                            "title": "Comentario",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Ajustes de artículos requeridos (included when includeChildren=true)"
+                    },
+                    "SOBRANTES": {
+                      "title": "Sobrantes",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ORDP_ID_ORDP": {
+                            "title": "Orden de producción",
+                            "type": "integer"
+                          },
+                          "MATE_ID_MATE": {
+                            "title": "Artículo",
+                            "type": "integer"
+                          },
+                          "SODO_CANTIDAD": {
+                            "title": "Cantidad",
+                            "type": "number"
+                          },
+                          "TIUN_ID_TIUN": {
+                            "title": "Tipo de unidad",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MOST_ID_MOST": {
+                            "title": "Movimiento de stock",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "SODO_OBSERVACION": {
+                            "title": "Observacion",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Sobrantes (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -7546,14 +9176,419 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "PMP0_NRO": {
+                      "title": "Nro",
+                      "type": "integer"
+                    },
+                    "PMP0_FECHA_DESDE": {
+                      "title": "Fecha desde",
+                      "type": "string"
+                    },
+                    "PMP0_FECHA_HASTA": {
+                      "title": "Fecha hasta",
+                      "type": "string"
+                    },
+                    "PMP0_COMENTARIO": {
+                      "title": "Comentario",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "SOLICITUDES": {
+                      "title": "Solicitudes",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ORCO_FECHA_DE_SOLICITUD": {
+                            "title": "Fecha de solicitud",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PMP0_ID_PMP0": {
+                            "title": "PMP",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORCO_NRO_ORDEN": {
+                            "title": "Nro SC",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORCO_REF_INTERNA": {
+                            "title": "Ref. Interna",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORCO_USUARIO_SOLICITANTE": {
+                            "title": "Usuario solicitante",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORCO_PRODUCTO_SERVICIO_S": {
+                            "title": "Productos/Servicios solicitados",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "SECT_ID_SECT": {
+                            "title": "Sector",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORCO_ARHC_ID_3796": {
+                            "title": "Presupuesto",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORCO_ARHC_ID_3797": {
+                            "title": "Presupuesto alternativo",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORCO_TOTAL": {
+                            "title": "Total",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ORCO_RAZON_DE_RECHAZO_DE_": {
+                            "title": "Razón de rechazo de compra",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORCO_DEFINICION_APROBADA_": {
+                            "title": "Definición aprobada de la compra",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CLIE_ID_CLI1": {
+                            "title": "Proveedor",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROY_ID_PROY": {
+                            "title": "Centro de costos",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REMI_ID_REMI": {
+                            "title": "Remito de compra generado",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PEDI_ID_PEDI": {
+                            "title": "Pedido",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORCO_AUTORIZADA_POR": {
+                            "title": "Autorizada por",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDV_ID_ORDV": {
+                            "title": "Orden de Venta",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_ID_ORDP": {
+                            "title": "Orden de producción",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDC_ID_ORDC": {
+                            "title": "OC generada",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORCO_FECHA_DE_APROBACION": {
+                            "title": "Fecha de aprobación",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORCO_ULTIMA_OPERACION": {
+                            "title": "Última operación realizada por",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORCO_OPERATIONID": {
+                            "title": "OperationID",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Solicitudes (included when includeChildren=true)"
+                    },
+                    "ORDENES": {
+                      "title": "Ordenes",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ORDP_NRO": {
+                            "title": "Nro",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_RESPONSABLE": {
+                            "title": "Responsable",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PUDP_ID_PUDP": {
+                            "title": "Punto de producción",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MOOP_ID_MOOP": {
+                            "title": "Modelo OP",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_FACTOR_DE_MULTIPLICA": {
+                            "title": "Factor de multiplicación",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_LOTE_OP": {
+                            "title": "Lote",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_FECHA_DE_INICIO": {
+                            "title": "Fecha de Inicio",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_FECHA_DE_EMISION": {
+                            "title": "Fecha de emisión",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_FECHA_EN_PROCESO": {
+                            "title": "Fecha En Proceso",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_FECHA_TERMINADA": {
+                            "title": "Fecha Terminada",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_HORAS_ENTRE_PROCESO_": {
+                            "title": "Tiempo Proceso (Horas)",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_TIEMPO_PROCESO_TO": {
+                            "title": "Tiempo de proceso total",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_FECHA_DE_ENTREGA_EST": {
+                            "title": "Fecha de entrega estimada",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_DIAS_FALTANTES": {
+                            "title": "Días faltantes",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CEDI_ID_UBIO": {
+                            "title": "Ubicación de origen",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CEDI_ID_UBID": {
+                            "title": "Ubicación destino",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CEDI_ID_UBIR": {
+                            "title": "Ubicación de reserva",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CLIE_ID_CLIE": {
+                            "title": "Cliente",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_COLECCION": {
+                            "title": "Versión",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PEDI_ID_PEDI": {
+                            "title": "Pedido",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDV_ID_ORDV": {
+                            "title": "Orden de Venta",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PMP0_ID_PMP0": {
+                            "title": "PMP",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_INSTRUCCIONES_ESPECI": {
+                            "title": "Instrucciones especiales",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_CALCULAR_ARTICULOS": {
+                            "title": "Calcular Artículos Requeridos",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "EXTE_ID_EXTE": {
+                            "title": "Origen de la OP",
+                            "type": "integer"
+                          },
+                          "ORDP_COSTO_MATERIALES": {
+                            "title": "Costo Materiales",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ORDP_COSTO_OPERACIONES": {
+                            "title": "Costo Operaciones",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ORDP_TOTAL_COSTO_PRODUCCI": {
+                            "title": "Total Costo Producción",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ORDP_LOCAL": {
+                            "title": "Local",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_ID_ORIG": {
+                            "title": "OP origen",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_DISPONIBILIDAD_TOTAL": {
+                            "title": "Disponibilidad total",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "TEET_ID_TEET": {
+                            "title": "Template etiqueta",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_ETIQUETA_ADJUNTO": {
+                            "title": "Etiqueta adjunto",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ORDP_INFORMACION": {
+                            "title": "Información",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_TIPO_DE_LOGISTICA": {
+                            "title": "Tipo de logística",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_PEDIDO": {
+                            "title": "Pedido",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "ORDP_RESERVADO": {
+                            "title": "Reservado",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "ORDP_OP_AUTO": {
+                            "title": "OP Automatica",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "ORDP_SOLICITUD_GENERADA": {
+                            "title": "Solicitud generada",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "ORDP_ULTIMO_ESTADO": {
+                            "title": "Último estado",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ORDP_SEMIELABORADO": {
+                            "title": "Semielaborado",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Ordenes (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -8770,14 +10805,219 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "BOM0_NRO": {
+                      "title": "Descripción",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MATE_ID_MATE": {
+                      "title": "Artículo resultante",
+                      "type": "integer",
+                      "description": "Foreign key to Artículo"
+                    },
+                    "BOM0_CANTIDAD_DETALLES": {
+                      "title": "# Detalles",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "BOM0_CANTIDAD_OPERACIONES": {
+                      "title": "# Operaciones",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "BOM0_OMITIR_PRODUCCION": {
+                      "title": "Omitir producción en Pedido",
+                      "type": "boolean",
+                      "description": "Si se lo marca, al momento de reservar pedido si no se tiene stock no se genera OP.",
+                      "nullable": true
+                    },
+                    "BOM0_TOTAL_DE_BOMS": {
+                      "title": "Costo total",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "BOM0_DESCUENTO_POR_COMBO": {
+                      "title": "Descuento por combo",
+                      "type": "boolean",
+                      "description": "Si está marcado es porque hay algún detalle que tiene descuento agregado.",
+                      "nullable": true
+                    },
+                    "BOM0_APERTURA_DE_BOMS": {
+                      "title": "Devolución por Componentes",
+                      "type": "boolean",
+                      "description": "Si está marcado al generar una devolución en el Pedido, los componentes recuperarán el Stock.",
+                      "nullable": true
+                    },
+                    "MATE_ID_NUEV": {
+                      "title": "Artículo resultante",
+                      "type": "integer",
+                      "description": "Foreign key to Artículo",
+                      "nullable": true
+                    },
+                    "DETALLE": {
+                      "title": "Detalle",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "BOM0_ID_BOM0": {
+                            "title": "BOM",
+                            "type": "integer"
+                          },
+                          "MATE_ID_MATE": {
+                            "title": "Artículo",
+                            "type": "integer"
+                          },
+                          "DEBO_ARTICULO_NOMBRE": {
+                            "title": "Artículo Nombre",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "DEBO_CANTIDAD": {
+                            "title": "Cantidad",
+                            "type": "number"
+                          },
+                          "TIUN_ID_TIUN": {
+                            "title": "Tipo de unidad",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DEBO_CANTIDAD_EN_STOCK": {
+                            "title": "# en Stock",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DEBO_PORC_PRECIO_COMBO": {
+                            "title": "% Dto p/precio combo",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "MATE_ID_MBOM": {
+                            "title": "Artículo BOM",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DEBO_CU_NETO": {
+                            "title": "CU Neto",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DEBO_SUBTOTAL_COSTO": {
+                            "title": "Subtotal Costo",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DEBO_CONVERSION": {
+                            "title": "Conversión",
+                            "type": "number",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Detalle (included when includeChildren=true)"
+                    },
+                    "OPERACIONES": {
+                      "title": "Operaciones",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "BOM0_ID_BOM0": {
+                            "title": "BOM",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "OPER_ID_OPER": {
+                            "title": "Operación",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PUDP_ID_PUDP": {
+                            "title": "Punto de producción",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "OPDB_TIEMPO": {
+                            "title": "Tiempo",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "OPDB_COSTO": {
+                            "title": "Costo",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "OPDB_ORDEN": {
+                            "title": "Orden",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "OPDB_NRO_PEDIDO": {
+                            "title": "Nro Pedido",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Operaciones (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -9757,14 +11997,120 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "BOM0_ID_BOM0": {
+                      "title": "BOM",
+                      "type": "integer",
+                      "description": "Foreign key to BOM"
+                    },
+                    "MATE_ID_MATE": {
+                      "title": "Artículo",
+                      "type": "integer",
+                      "description": "Foreign key to Artículo"
+                    },
+                    "DEBO_ARTICULO_NOMBRE": {
+                      "title": "Artículo Nombre",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "DEBO_CANTIDAD": {
+                      "title": "Cantidad",
+                      "type": "number"
+                    },
+                    "TIUN_ID_TIUN": {
+                      "title": "Tipo de unidad",
+                      "type": "integer",
+                      "description": "Foreign key to Tipo de unidad",
+                      "nullable": true
+                    },
+                    "DEBO_CANTIDAD_EN_STOCK": {
+                      "title": "# en Stock",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "DEBO_PORC_PRECIO_COMBO": {
+                      "title": "% Dto p/precio combo",
+                      "type": "number",
+                      "description": "El precio del combo (artículo resultante) se puede calcular como el precio de sus partes, si es que todas tienen un precio de venta.\nEn ese caso, se puede establecer un DTO para que un ítem de la BOM no se sume completamente.\nPor ejemplo, si el \"KIT X\" se forma con\n- 2 A \n- 1 B (50%)\n\nA tiene un precio de venta de $100 y B de $200, entonces el precio del combo será $300 (2 x $100 + 1 x $200 x 0.5)",
+                      "nullable": true
+                    },
+                    "MATE_ID_MBOM": {
+                      "title": "Artículo BOM",
+                      "type": "integer",
+                      "description": "Foreign key to Artículo",
+                      "nullable": true
+                    },
+                    "DEBO_CU_NETO": {
+                      "title": "CU Neto",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "DEBO_SUBTOTAL_COSTO": {
+                      "title": "Subtotal Costo",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "DEBO_CONVERSION": {
+                      "title": "Conversión",
+                      "type": "number",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -10680,14 +13026,102 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "BOM0_ID_BOM0": {
+                      "title": "BOM",
+                      "type": "integer",
+                      "description": "Foreign key to BOM",
+                      "nullable": true
+                    },
+                    "OPER_ID_OPER": {
+                      "title": "Operación",
+                      "type": "integer",
+                      "description": "Foreign key to Operación",
+                      "nullable": true
+                    },
+                    "PUDP_ID_PUDP": {
+                      "title": "Punto de producción",
+                      "type": "integer",
+                      "description": "Foreign key to Punto de producción",
+                      "nullable": true
+                    },
+                    "OPDB_TIEMPO": {
+                      "title": "Tiempo",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "OPDB_COSTO": {
+                      "title": "Costo",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "OPDB_ORDEN": {
+                      "title": "Orden",
+                      "type": "integer",
+                      "description": "Lo levanta automáticamente de la Operación cuando se crea, pero es editable.",
+                      "nullable": true
+                    },
+                    "OPDB_NRO_PEDIDO": {
+                      "title": "Nro Pedido",
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -11569,14 +14003,173 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "ORDP_NRO": {
+                      "title": "Orden de Producción - Nro",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "SKU": {
+                      "title": "SKU",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MATE_NOMBRE": {
+                      "title": "Artículo - Nombre",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CANTIDAD": {
+                      "title": "Cantidad",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "FECHA_ORDEN": {
+                      "title": "Orden de Producción - Fecha Inicio",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "FECHA_DETALLE": {
+                      "title": "Detalle Fecha",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PUNTO_PRODUCCION": {
+                      "title": "Punto de producción - Nombre",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "FECHA_EN_PROCESO": {
+                      "title": "Fecha En Proceso",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "FECHA_DE_ENTREGA_EST": {
+                      "title": "Fecha de entrega estimada",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "FECHA_TERMINADA": {
+                      "title": "Fecha Terminada",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "OP_ESTADO": {
+                      "title": "Orden de Producción - Descripción Estado",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "SKU_COMPO": {
+                      "title": "Art Req - SKU",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MATE_NOMBRE_COMPO": {
+                      "title": "Art Req - Artículo Nombre",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ART_REQ_CANTI": {
+                      "title": "Art Req - Cantidad",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ART_DISP_ORI": {
+                      "title": "Art Req - Disponible en origen",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "ART_DISP_DIFEREN": {
+                      "title": "Art Req - Diferencia",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "ART_DISP_RESER": {
+                      "title": "Art Req - Reservado",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "PEDI_ID": {
+                      "title": "Pedido - Identificador",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "PEDI_NUMERO": {
+                      "title": "Pedido - Número",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_PEDI_NOMBRE": {
+                      "title": "Cliente - Nombre",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_PEDI_ID": {
+                      "title": "Cliente - ID",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "MATE_ID_COMPO": {
+                      "title": "Art Req - ID",
+                      "type": "integer",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },

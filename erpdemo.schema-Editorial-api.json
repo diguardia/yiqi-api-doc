@@ -157,14 +157,120 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "COPA_DESDE": {
+                      "title": "Desde",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "COPA_HASTA": {
+                      "title": "Hasta",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MATE_ID_MATE": {
+                      "title": "Artículo",
+                      "type": "integer",
+                      "description": "Foreign key to Artículo",
+                      "nullable": true
+                    },
+                    "CLIE_ID_CLIE": {
+                      "title": "Autor",
+                      "type": "integer",
+                      "description": "Foreign key to Empresa",
+                      "nullable": true
+                    },
+                    "COPA_PORC_NACIONAL": {
+                      "title": "Nacional %",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "COPA_NACIONAL_SOBRE_PVP": {
+                      "title": "Nacional sobre PVP",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "COPA_PORC_INSTITUCIONAL": {
+                      "title": "Institucional %",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "COPA_INSTITUCIONAL_SOBRE_": {
+                      "title": "Institucional sobre PVP",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "COPA_PORC_INTERNACIONAL": {
+                      "title": "Internacional %",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "COPA_INTERNACIONAL_SOBRE_": {
+                      "title": "Internacional sobre PVP",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "COPA_ROL": {
+                      "title": "Rol",
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -1043,14 +1149,148 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "LDDA_ID_LDDA": {
+                      "title": "Liquidación",
+                      "type": "integer",
+                      "description": "Foreign key to Liq. Derechos de Autor",
+                      "nullable": true
+                    },
+                    "CLIE_ID_CLIE": {
+                      "title": "Autor",
+                      "type": "integer",
+                      "description": "Foreign key to Empresa",
+                      "nullable": true
+                    },
+                    "MATE_ID_MATE": {
+                      "title": "Libro",
+                      "type": "integer",
+                      "description": "Foreign key to Artículo",
+                      "nullable": true
+                    },
+                    "COPA_DOCUMENTO": {
+                      "title": "Documento",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "COPA_MONTO_ORIGINAL": {
+                      "title": "Monto original",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "COPA_PORCENTAJE": {
+                      "title": "Porcentaje",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "COPA_COMISION": {
+                      "title": "Comisión",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "COPA_CATEGORIA": {
+                      "title": "Categoría",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "COPA_CANTIDAD": {
+                      "title": "Cantidad",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "FACT_ID_FACT": {
+                      "title": "Factura",
+                      "type": "integer",
+                      "description": "Foreign key to Factura",
+                      "nullable": true
+                    },
+                    "NOCR_ID_NOCR": {
+                      "title": "Nota",
+                      "type": "integer",
+                      "description": "Foreign key to Nota de Crédito (V)",
+                      "nullable": true
+                    },
+                    "COPA_FECHA_DEL_DOCUMENTO": {
+                      "title": "Fecha del documento",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "COPA_NACIONAL": {
+                      "title": "Nacional",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "COPA_INSTITUCIONAL": {
+                      "title": "Institucional",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "COPA_INTERNACIONAL": {
+                      "title": "Internacional",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "COPA_PVP": {
+                      "title": "PVP",
+                      "type": "number",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -1907,14 +2147,100 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "LDDA_ID_LDDA": {
+                      "title": "Liquidación",
+                      "type": "integer",
+                      "description": "Foreign key to Liq. Derechos de Autor",
+                      "nullable": true
+                    },
+                    "CLIE_ID_CLIE": {
+                      "title": "Autor",
+                      "type": "integer",
+                      "description": "Foreign key to Empresa",
+                      "nullable": true
+                    },
+                    "DLDD_NACIONAL": {
+                      "title": "Nacional",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "DLDD_INSTITUCIONAL": {
+                      "title": "Institucional",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "DLDD_INTERNACIONAL": {
+                      "title": "Internacional",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "DLDD_TOTAL": {
+                      "title": "Total",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "DLDD_PVP": {
+                      "title": "PVP",
+                      "type": "number",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -2823,14 +3149,143 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "LDDA_FECHA_DESDE": {
+                      "title": "Fecha Desde",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "LDDA_FECHA_HASTA": {
+                      "title": "Fecha Hasta",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "LDDA_CANT_VENTAS_REG": {
+                      "title": "# Ventas registradas",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "LDDA_CANT_NC_REGISTRADAS": {
+                      "title": "# Notas registradas",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "LDDA_COMISIONES_NO_CARGAD": {
+                      "title": "Comisiones no cargadas",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "LDDA_INFO": {
+                      "title": "Info",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "LDDA_NUMERO": {
+                      "title": "Número",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "DETALLES": {
+                      "title": "Detalles",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "LDDA_ID_LDDA": {
+                            "title": "Liquidación",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CLIE_ID_CLIE": {
+                            "title": "Autor",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DLDD_NACIONAL": {
+                            "title": "Nacional",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DLDD_INSTITUCIONAL": {
+                            "title": "Institucional",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DLDD_INTERNACIONAL": {
+                            "title": "Internacional",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DLDD_TOTAL": {
+                            "title": "Total",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DLDD_PVP": {
+                            "title": "PVP",
+                            "type": "number",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Detalles (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },

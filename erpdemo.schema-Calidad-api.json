@@ -150,14 +150,157 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "ACDA_NRO": {
+                      "title": "Nro",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ACDA_TITULO": {
+                      "title": "Medida",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "AVDR_ID_AVDR": {
+                      "title": "Aviso de Riesgo",
+                      "type": "integer",
+                      "description": "Foreign key to Aviso de riesgo",
+                      "nullable": true
+                    },
+                    "SECT_ID_SECT": {
+                      "title": "Gerencia",
+                      "type": "integer",
+                      "description": "Foreign key to Gerencia",
+                      "nullable": true
+                    },
+                    "CLIE_ID_CLIE": {
+                      "title": "Cliente del sector",
+                      "type": "integer",
+                      "description": "Foreign key to Empresa",
+                      "nullable": true
+                    },
+                    "ACDA_RESPONSABLE": {
+                      "title": "Responsable",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "TIDA_ID_TIDA": {
+                      "title": "Tipo de acción",
+                      "type": "integer",
+                      "description": "Foreign key to Tipo de acción",
+                      "nullable": true
+                    },
+                    "ACDA_FECHA_ACORDADA": {
+                      "title": "Fecha acordada",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ACDA_FECHA_DE_CIERRE": {
+                      "title": "Fecha de cierre",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ACDA_DESVIO": {
+                      "title": "Desvío",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ACDA_FECHA_OBLIGATORIA": {
+                      "title": "Fecha de confirmación obligatoria",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ACDA_DIAS_A_CONFIRMACION": {
+                      "title": "Días a confirmación",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ACDA_ESTADO_AC": {
+                      "title": "Situación de acción",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ACDA_ESTADO_VENCIDA": {
+                      "title": "Estado vencida",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ACDA_OPERACION_DE_AR": {
+                      "title": "Operación de AR",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ACDA_BASE_OPERATIVA": {
+                      "title": "Base Operativa",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ACDA_PROXIMO_NUMERO": {
+                      "title": "Proximo Nro",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ACDA_DIAS_A_VENCIMIENTO": {
+                      "title": "Días a vencimiento",
+                      "type": "integer",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -1328,14 +1471,303 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AVDR_ID_AVDR": {
+                      "title": "AR",
+                      "type": "integer",
+                      "description": "Foreign key to Aviso de riesgo"
+                    },
+                    "ANDC_AFECTADOS_INVOL": {
+                      "title": "Afectados / Involucrados",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_SUPERIOR_DIRECTO": {
+                      "title": "Superior directo",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_EFECTIVO": {
+                      "title": "Efectivo",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "ANDC_EVENTUAL": {
+                      "title": "Eventual",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "ANDC_TERCERO": {
+                      "title": "Tercero",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "ANDC_EMPRESA": {
+                      "title": "En Empresa",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ANDC_PUESTO": {
+                      "title": "En Puesto",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ANDC_EQUIPOS_VEHICULOS_I": {
+                      "title": "Equipos / Vehículos involucrados",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_TIPO_DE_LESION": {
+                      "title": "Tipo de lesión",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_PARTE_AFECTADA": {
+                      "title": "Parte afectada",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_DANOS_PRODUCTOS": {
+                      "title": "Daños Productos/ Estructuras/ Equipamientos",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_DAOS_AMBIENTE": {
+                      "title": "Daños Ambiente",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_DESVIOS_DE_CALIDAD": {
+                      "title": "Desvíos de calidad",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_DESCRIPCION___OBSERV": {
+                      "title": "Descripción / Observación",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_UBICACION": {
+                      "title": "Ubicación / Lugar de ocurrencia",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_PROBLEMA": {
+                      "title": "Problema",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_POR_QUE_1": {
+                      "title": "¿Por qué? (1)",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_POR_QUE_2": {
+                      "title": "¿Por qué? (2)",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_POR_QUE_3": {
+                      "title": "¿Por qué? (3)",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_POR_QUE_4": {
+                      "title": "¿Por qué? (4)",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_POR_QUE_5": {
+                      "title": "¿Por qué? (5)",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_CAUSA_MA_A": {
+                      "title": "Causa A",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_CAUSA_ME_A": {
+                      "title": "Causa A",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_PORQUE_MA_A": {
+                      "title": "¿Por qué?",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_PORQUE_ME_A": {
+                      "title": "¿Por qué ?",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_CAUSA_MA_B": {
+                      "title": "Causa B",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_CAUSA_ME_B": {
+                      "title": "Causa B",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_PORQUE_MA_B": {
+                      "title": "¿Por qué?",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_PORQUE_ME_B": {
+                      "title": "¿Por qué?",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_CAUSA_MD_A": {
+                      "title": "Causa A",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_CAUSA_MP_A": {
+                      "title": "Causa A",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_PORQUE_MD_A": {
+                      "title": "¿Por qué?",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_PORQUE_MP_A": {
+                      "title": "¿Por qué?",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_CAUSA_MD_B": {
+                      "title": "Causa B",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_CAUSA_MP_B": {
+                      "title": "Causa B",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_PORQUE_MD_B": {
+                      "title": "¿Por qué?",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_PORQUE_MP_B": {
+                      "title": "¿Por qué?",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_CAUSA_MB_A": {
+                      "title": "Causa A",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_CAUSA_OT_A": {
+                      "title": "Causa A",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_PORQUE_MB_A": {
+                      "title": "¿Por qué?",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_PORQUE_OT_A": {
+                      "title": "¿Por qué?",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_CAUSA_MB_B": {
+                      "title": "Causa B",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_CAUSA_OT_B": {
+                      "title": "Causa B",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_PORQUE_MB_B": {
+                      "title": "¿Por qué?",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_PORQUE_OT_B": {
+                      "title": "¿Por qué?",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_CAUSA": {
+                      "title": "Causa raíz",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANDC_CAUSAS_CONTRIBUYENTE": {
+                      "title": "Factores Contribuyentes",
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -2932,14 +3364,579 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AVDR_TITULO": {
+                      "title": "Título",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "AVDR_NRO": {
+                      "title": "Nro",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AVDR_FECHA_HORA": {
+                      "title": "Fecha hora",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "AVDR_PREPARADO_POR": {
+                      "title": "Preparado por",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "SECT_ID_SECT": {
+                      "title": "Gerencia Operación",
+                      "type": "integer",
+                      "description": "Foreign key to Gerencia",
+                      "nullable": true
+                    },
+                    "CLIE_ID_CLIE": {
+                      "title": "Cliente del sector",
+                      "type": "integer",
+                      "description": "Foreign key to Empresa",
+                      "nullable": true
+                    },
+                    "AVDR_RESP_IMPL": {
+                      "title": "Resp. Impl.",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "BAOP_ID_BAOP": {
+                      "title": "Base operativa",
+                      "type": "integer",
+                      "description": "Foreign key to Base operativa",
+                      "nullable": true
+                    },
+                    "TIDA_ID_TIDA": {
+                      "title": "Tipo",
+                      "type": "integer",
+                      "description": "Foreign key to Tipo de AR"
+                    },
+                    "CLDA_ID_CLDA": {
+                      "title": "Clasificación",
+                      "type": "integer",
+                      "description": "Foreign key to Clasificación de AR"
+                    },
+                    "AVDR_CALIFICACION": {
+                      "title": "Calificación",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "CADA_ID_CADA": {
+                      "title": "Origen",
+                      "type": "integer",
+                      "description": "Foreign key to Origen de AR",
+                      "nullable": true
+                    },
+                    "PRDA_ID_PRDA": {
+                      "title": "Probabilidad",
+                      "type": "integer",
+                      "description": "Foreign key to Probabilidad de AR",
+                      "nullable": true
+                    },
+                    "SEDA_ID_SEDA": {
+                      "title": "Severidad",
+                      "type": "integer",
+                      "description": "Foreign key to Severidad de AR",
+                      "nullable": true
+                    },
+                    "TIDR_ID_TIDR": {
+                      "title": "Tipo de riesgo",
+                      "type": "integer",
+                      "description": "Foreign key to Tipo de riesgo",
+                      "nullable": true
+                    },
+                    "AVDR_PRIORIDAD": {
+                      "title": "Prioridad (días)",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AVDR_ANALISIS_DE_CAUSA": {
+                      "title": "Análisis de causa",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "AVDR_ARHC_ID_202": {
+                      "title": "Formulario de análisis",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AVDR_OBSERVACION": {
+                      "title": "Observación",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "AVDR_LISTADO_DE_ACCIONES": {
+                      "title": "Listado de acciones",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "AVDR_ACCIONES_VENCIDAS_2": {
+                      "title": "Acciones vencidas",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AVDR_DIAS_DE_VENTANA": {
+                      "title": "Días de ventana",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AVDR_ESTADO_DE_AR": {
+                      "title": "Situación del AR",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "AVDR_FECHA_DE_CIERRE_DE_A": {
+                      "title": "Fecha de cierre de AR",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "AVDR_FECHA_COMPROMETIDA": {
+                      "title": "Fecha comprometida",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "AVDR_FECHA_DE_VERIFICACIO": {
+                      "title": "Fecha de verificación",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "AVDR_DIAS_A_VENCIMIENTO": {
+                      "title": "Días a vencimiento",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ACCIONES": {
+                      "title": "Acciones",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ACDA_NRO": {
+                            "title": "Nro",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ACDA_TITULO": {
+                            "title": "Medida",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "AVDR_ID_AVDR": {
+                            "title": "Aviso de Riesgo",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "SECT_ID_SECT": {
+                            "title": "Gerencia",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CLIE_ID_CLIE": {
+                            "title": "Cliente del sector",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ACDA_RESPONSABLE": {
+                            "title": "Responsable",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "TIDA_ID_TIDA": {
+                            "title": "Tipo de acción",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ACDA_FECHA_ACORDADA": {
+                            "title": "Fecha acordada",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ACDA_FECHA_DE_CIERRE": {
+                            "title": "Fecha de cierre",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ACDA_DESVIO": {
+                            "title": "Desvío",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ACDA_FECHA_OBLIGATORIA": {
+                            "title": "Fecha de confirmación obligatoria",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ACDA_DIAS_A_CONFIRMACION": {
+                            "title": "Días a confirmación",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ACDA_ESTADO_AC": {
+                            "title": "Situación de acción",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ACDA_ESTADO_VENCIDA": {
+                            "title": "Estado vencida",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ACDA_OPERACION_DE_AR": {
+                            "title": "Operación de AR",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ACDA_BASE_OPERATIVA": {
+                            "title": "Base Operativa",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ACDA_PROXIMO_NUMERO": {
+                            "title": "Proximo Nro",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ACDA_DIAS_A_VENCIMIENTO": {
+                            "title": "Días a vencimiento",
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Acciones (included when includeChildren=true)"
+                    },
+                    "ANÁLISISDECAUSA": {
+                      "title": "Análisis de causa",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "AVDR_ID_AVDR": {
+                            "title": "AR",
+                            "type": "integer"
+                          },
+                          "ANDC_AFECTADOS_INVOL": {
+                            "title": "Afectados / Involucrados",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_SUPERIOR_DIRECTO": {
+                            "title": "Superior directo",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_EFECTIVO": {
+                            "title": "Efectivo",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "ANDC_EVENTUAL": {
+                            "title": "Eventual",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "ANDC_TERCERO": {
+                            "title": "Tercero",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "ANDC_EMPRESA": {
+                            "title": "En Empresa",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ANDC_PUESTO": {
+                            "title": "En Puesto",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ANDC_EQUIPOS_VEHICULOS_I": {
+                            "title": "Equipos / Vehículos involucrados",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_TIPO_DE_LESION": {
+                            "title": "Tipo de lesión",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_PARTE_AFECTADA": {
+                            "title": "Parte afectada",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_DANOS_PRODUCTOS": {
+                            "title": "Daños Productos/ Estructuras/ Equipamientos",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_DAOS_AMBIENTE": {
+                            "title": "Daños Ambiente",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_DESVIOS_DE_CALIDAD": {
+                            "title": "Desvíos de calidad",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_DESCRIPCION___OBSERV": {
+                            "title": "Descripción / Observación",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_UBICACION": {
+                            "title": "Ubicación / Lugar de ocurrencia",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_PROBLEMA": {
+                            "title": "Problema",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_POR_QUE_1": {
+                            "title": "¿Por qué? (1)",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_POR_QUE_2": {
+                            "title": "¿Por qué? (2)",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_POR_QUE_3": {
+                            "title": "¿Por qué? (3)",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_POR_QUE_4": {
+                            "title": "¿Por qué? (4)",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_POR_QUE_5": {
+                            "title": "¿Por qué? (5)",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_CAUSA_MA_A": {
+                            "title": "Causa A",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_CAUSA_ME_A": {
+                            "title": "Causa A",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_PORQUE_MA_A": {
+                            "title": "¿Por qué?",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_PORQUE_ME_A": {
+                            "title": "¿Por qué ?",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_CAUSA_MA_B": {
+                            "title": "Causa B",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_CAUSA_ME_B": {
+                            "title": "Causa B",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_PORQUE_MA_B": {
+                            "title": "¿Por qué?",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_PORQUE_ME_B": {
+                            "title": "¿Por qué?",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_CAUSA_MD_A": {
+                            "title": "Causa A",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_CAUSA_MP_A": {
+                            "title": "Causa A",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_PORQUE_MD_A": {
+                            "title": "¿Por qué?",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_PORQUE_MP_A": {
+                            "title": "¿Por qué?",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_CAUSA_MD_B": {
+                            "title": "Causa B",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_CAUSA_MP_B": {
+                            "title": "Causa B",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_PORQUE_MD_B": {
+                            "title": "¿Por qué?",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_PORQUE_MP_B": {
+                            "title": "¿Por qué?",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_CAUSA_MB_A": {
+                            "title": "Causa A",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_CAUSA_OT_A": {
+                            "title": "Causa A",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_PORQUE_MB_A": {
+                            "title": "¿Por qué?",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_PORQUE_OT_A": {
+                            "title": "¿Por qué?",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_CAUSA_MB_B": {
+                            "title": "Causa B",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_CAUSA_OT_B": {
+                            "title": "Causa B",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_PORQUE_MB_B": {
+                            "title": "¿Por qué?",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_PORQUE_OT_B": {
+                            "title": "¿Por qué?",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_CAUSA": {
+                            "title": "Causa raíz",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ANDC_CAUSAS_CONTRIBUYENTE": {
+                            "title": "Factores Contribuyentes",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Análisis de causa (included when includeChildren=true)"
+                    },
+                    "DOCUMENTOS": {
+                      "title": "Documentos",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "AVDR_ID_AVDR": {
+                            "title": "AR",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DODA_DOCUMENTO": {
+                            "title": "Documento",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "DODA_COMENTARIO": {
+                            "title": "Comentario",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Documentos (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -4339,14 +5336,109 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AVDR_ID_AVDR": {
+                      "title": "Aviso de riesgo",
+                      "type": "integer",
+                      "description": "Foreign key to Aviso de riesgo",
+                      "nullable": true
+                    },
+                    "MEDI_TIPO_DE_MEDIDA": {
+                      "title": "Tipo de Medida",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDI_TITULO": {
+                      "title": "Título",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDI_OBSERVACIONES": {
+                      "title": "Observaciones",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDI_RESPONSABLE": {
+                      "title": "Responsable",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "MEDI_FECHA": {
+                      "title": "Fecha",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDI_FECHA_DE_CREACION": {
+                      "title": "Fecha de creación",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDI_FECHA_DE_FINALIZACIO": {
+                      "title": "Fecha de finalización",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDI_DESVIO_AL_FINALIZAR": {
+                      "title": "Desvío al finalizar",
+                      "type": "integer",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -5196,14 +6288,134 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "PROD_ID_PROD": {
+                      "title": "Procedimiento de origen",
+                      "type": "integer",
+                      "description": "Foreign key to Procedimiento",
+                      "nullable": true
+                    },
+                    "PRCS_ID_PRCS": {
+                      "title": "Proceso",
+                      "type": "integer",
+                      "description": "Foreign key to Proceso",
+                      "nullable": true
+                    },
+                    "ANEX_TITULO": {
+                      "title": "Título",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "TIAN_ID_TIAN": {
+                      "title": "Tipo de anexo",
+                      "type": "integer",
+                      "description": "Foreign key to Tipo de anexo",
+                      "nullable": true
+                    },
+                    "ANEX_ARHC_ID_269": {
+                      "title": "Modelo",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ANEX_FECHA_DE_CADUCIDAD": {
+                      "title": "Fecha de caducidad",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANEX_TIEMPO_ARCHIVO": {
+                      "title": "Tiempo de archivo (años)",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ZONA_ID_ZONA": {
+                      "title": "Zona en donde aplica",
+                      "type": "integer",
+                      "description": "Foreign key to Zona",
+                      "nullable": true
+                    },
+                    "ZONA_ID_ZON1": {
+                      "title": "Zona de archivo",
+                      "type": "integer",
+                      "description": "Foreign key to Zona",
+                      "nullable": true
+                    },
+                    "ARCH_ID_ARCH": {
+                      "title": "Archivo",
+                      "type": "integer",
+                      "description": "Foreign key to Archivo",
+                      "nullable": true
+                    },
+                    "ANEX_RESPONSABLE_DE_ARCHI": {
+                      "title": "Responsable de archivo",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ANEX_PROCEDIMIENTO___VERS": {
+                      "title": "Procedimiento - Versión",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ANEX_VERSION": {
+                      "title": "Versión",
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -6299,14 +7511,259 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUEX_NRO_AUDITORIA": {
+                      "title": "Nro Auditoría",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUEX_FECHA": {
+                      "title": "Fecha",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "AUEX_A_CARGO_DE_": {
+                      "title": "A cargo de ",
+                      "type": "string",
+                      "description": "Detallar empresa que audita y auditores participantes.-",
+                      "nullable": true
+                    },
+                    "AUEX_RESP_INTERNO_1": {
+                      "title": "Responsable interno 1",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUEX_RESP_INTERNO_2": {
+                      "title": "Responsable interno 2",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUEX_ARHC_ID_367": {
+                      "title": "Plan de auditoría",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUEX_ARHC_ID_366": {
+                      "title": "Ajunto resultado de auditoría",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUEX_OBSERVACION_GENERAL_": {
+                      "title": "Observación general interna",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "NOCONFORMIDADESGENERADAS": {
+                      "title": "No conformidades generadas",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "NOCO_NRO_DE_NO_CONFORMIDA": {
+                            "title": "Nro de No Conformidad",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCO_TITULO": {
+                            "title": "Título",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "SECT_ID_SECT": {
+                            "title": "Gerencia",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PRCS_ID_PRCS": {
+                            "title": "Proceso sugerido",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCO_FECHA_DE_ALTA": {
+                            "title": "Fecha de alta",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "NOCO_OBSERVACION_GENERAL": {
+                            "title": "Observación general",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "NOCO_USUARIO_GENERADOR": {
+                            "title": "Usuario generador",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCO_POTENCIAL": {
+                            "title": "Potencial (no se ha producido pero es posible)",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "CRIT_ID_CRIT": {
+                            "title": "Criticidad",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCO_ARHC_ID_120": {
+                            "title": "Adjunto 1",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCO_ARHC_ID_121": {
+                            "title": "Adjunto 2",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCO_ARHC_ID_122": {
+                            "title": "Adjunto 3",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCO_RESPONSABLE": {
+                            "title": "Responsable de Proceso",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCO_RESPONSABLE_SECTOR": {
+                            "title": "Responsable Sector",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCO_DIAS_TRANSCURRIDOS": {
+                            "title": "Días Transcurridos",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCO_ANALISIS_DE_CAUSA": {
+                            "title": "Análisis de Causa",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "NOCO_PORQUE2": {
+                            "title": "Porque",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "NOCO_RAZON_DE_LA_DESESTIM": {
+                            "title": "Razón de la desestimación",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "NOCO_DERIVADO_A": {
+                            "title": "Derivado a",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "NOCO_RAZON_DE_LA_DERIVACI": {
+                            "title": "Razón de la derivación",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "NOCO_COMENTARIO_GENERAL": {
+                            "title": "Comentario general",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "NOCO_FECHA_DE_CIERRE": {
+                            "title": "Fecha de cierre",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "NOCO_DIAS_TRANSCURRIDOS_A": {
+                            "title": "Días transcurridos a hoy",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCO_DIAS_DEL_CICLO_COMPL": {
+                            "title": "Días del ciclo completo",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCO_DESTINATARIO": {
+                            "title": "Destinatario",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCO_COMENTARIO": {
+                            "title": "Comentario",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "AUEX_ID_AUEX": {
+                            "title": "Auditoría externa relacionada",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROB_ID_PROB": {
+                            "title": "Nro Problema",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCO_DESCRIPCION_DEL_PROB": {
+                            "title": "Descripción del problema a publicar",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of No conformidades generadas (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -7578,14 +9035,354 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "PROD_CODIGO": {
+                      "title": "Código",
+                      "type": "string"
+                    },
+                    "PROD_VERSION_DEL_DOCUMENT": {
+                      "title": "Versión del documento",
+                      "type": "string"
+                    },
+                    "PROD_COD_VERS": {
+                      "title": "Codigo - Version",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PROD_TITULO": {
+                      "title": "Título",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PROD_DESCRIPCION_CONTEXTO": {
+                      "title": "Descripción de contexto",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PRCS_ID_PRCS": {
+                      "title": "Proceso afectado",
+                      "type": "integer",
+                      "description": "Foreign key to Proceso",
+                      "nullable": true
+                    },
+                    "PROD_TAGS": {
+                      "title": "Tags (etiquetas)",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PROD_PROPUESTO": {
+                      "title": "Propuesto",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PROD_APROBADO": {
+                      "title": "Aprobado",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PROD_CADUCIDAD": {
+                      "title": "Caducidad",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PROD_DIAS_A_CADUCIDAD": {
+                      "title": "Dias a caducidad",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "PROD_TIEMPO_DE_ARCHIVO": {
+                      "title": "Tiempo de Archivo",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "ZONA_ID_ZONA": {
+                      "title": "Zona",
+                      "type": "integer",
+                      "description": "Foreign key to Zona",
+                      "nullable": true
+                    },
+                    "ARCH_ID_ARCH": {
+                      "title": "Archivo",
+                      "type": "integer",
+                      "description": "Foreign key to Archivo",
+                      "nullable": true
+                    },
+                    "PROD_RESPONSABLE_DE_ARCHI": {
+                      "title": "Responsable de archivo",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "PROD_ARHC_ID_249": {
+                      "title": "Flujograma",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "TIDP_ID_TIDP": {
+                      "title": "Tipo de procedimiento",
+                      "type": "integer",
+                      "description": "Foreign key to Tipo de procedimiento",
+                      "nullable": true
+                    },
+                    "PROD_RAZON_DE_DESESTIMACI": {
+                      "title": "Razón de Desestimación",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PROD_EXPURGO": {
+                      "title": "Expurgo",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PROD_ULTIMA_VERSION": {
+                      "title": "Última versión",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "PROD_MOTIVO": {
+                      "title": "Motivo",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PROD_MODIFICACION_REALIZA": {
+                      "title": "Modificación Realizada",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PASOS": {
+                      "title": "Pasos",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "PASO_NRO": {
+                            "title": "Nro",
+                            "type": "integer"
+                          },
+                          "PASO_DESCRIPCION": {
+                            "title": "Descripción",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROD_ID_PROD": {
+                            "title": "Procedimiento",
+                            "type": "integer"
+                          }
+                        }
+                      },
+                      "description": "Child entities of Pasos (included when includeChildren=true)"
+                    },
+                    "ANEXOS": {
+                      "title": "Anexos",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "PROD_ID_PROD": {
+                            "title": "Procedimiento",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ANEX_ID_ANEX": {
+                            "title": "Anexo",
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Anexos (included when includeChildren=true)"
+                    },
+                    "PROCESOSAFECTADOS": {
+                      "title": "Procesos afectados",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "PRCS_ID_PRCS": {
+                            "title": "Proceso",
+                            "type": "integer"
+                          },
+                          "PRAF_COMENTARIO": {
+                            "title": "Comentario",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROD_ID_PROD": {
+                            "title": "Procedimiento",
+                            "type": "integer"
+                          }
+                        }
+                      },
+                      "description": "Child entities of Procesos afectados (included when includeChildren=true)"
+                    },
+                    "PUESTOSAFECTADOS": {
+                      "title": "Puestos afectados",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "PROD_ID_PROD": {
+                            "title": "Procedimiento",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PUES_ID_PUES": {
+                            "title": "Puesto funcional",
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Puestos afectados (included when includeChildren=true)"
+                    },
+                    "ZONASAFECTADAS": {
+                      "title": "Zonas afectadas",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ZONA_ID_ZONA": {
+                            "title": "Zona",
+                            "type": "integer"
+                          },
+                          "PROD_ID_PROD": {
+                            "title": "Procedimiento",
+                            "type": "integer"
+                          }
+                        }
+                      },
+                      "description": "Child entities of Zonas afectadas (included when includeChildren=true)"
+                    },
+                    "LOGDECAMBIOS": {
+                      "title": "Log de cambios",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "PROD_ID_PROD": {
+                            "title": "Procedimiento",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "LODC_VERSION": {
+                            "title": "Versión",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "LODC_CAMBIO": {
+                            "title": "Cambio",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "LODC_USUARIO": {
+                            "title": "Usuario",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "LODC_FECHA": {
+                            "title": "Fecha",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "LODC_PROPUESTO": {
+                            "title": "Propuesto",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "LODC_APROBADO": {
+                            "title": "Aprobado",
+                            "type": "boolean",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Log de cambios (included when includeChildren=true)"
+                    },
+                    "VUELTAAEDICIÓN": {
+                      "title": "Vuelta a edición",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "PROD_ID_PROD": {
+                            "title": "Procedimiento",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "VUAE_MOTIVO": {
+                            "title": "Motivo",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "VUAE_FECHA": {
+                            "title": "Fecha",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "VUAE_USUARIO": {
+                            "title": "Usuario",
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Vuelta a edición (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -8852,14 +10649,195 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "SECT_ID_SECT": {
+                      "title": "Gerencia",
+                      "type": "integer",
+                      "description": "Foreign key to Gerencia",
+                      "nullable": true
+                    },
+                    "PRCS_NOMBRE": {
+                      "title": "Nombre",
+                      "type": "string"
+                    },
+                    "PRCS_RESPONSABLE": {
+                      "title": "Responsable",
+                      "type": "integer"
+                    },
+                    "PROCEDIMIENTOS": {
+                      "title": "Procedimientos",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "PROD_CODIGO": {
+                            "title": "Código",
+                            "type": "string"
+                          },
+                          "PROD_VERSION_DEL_DOCUMENT": {
+                            "title": "Versión del documento",
+                            "type": "string"
+                          },
+                          "PROD_COD_VERS": {
+                            "title": "Codigo - Version",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROD_TITULO": {
+                            "title": "Título",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROD_DESCRIPCION_CONTEXTO": {
+                            "title": "Descripción de contexto",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PRCS_ID_PRCS": {
+                            "title": "Proceso afectado",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROD_TAGS": {
+                            "title": "Tags (etiquetas)",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROD_PROPUESTO": {
+                            "title": "Propuesto",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROD_APROBADO": {
+                            "title": "Aprobado",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROD_CADUCIDAD": {
+                            "title": "Caducidad",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROD_DIAS_A_CADUCIDAD": {
+                            "title": "Dias a caducidad",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROD_TIEMPO_DE_ARCHIVO": {
+                            "title": "Tiempo de Archivo",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ZONA_ID_ZONA": {
+                            "title": "Zona",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ARCH_ID_ARCH": {
+                            "title": "Archivo",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROD_RESPONSABLE_DE_ARCHI": {
+                            "title": "Responsable de archivo",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROD_ARHC_ID_249": {
+                            "title": "Flujograma",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "TIDP_ID_TIDP": {
+                            "title": "Tipo de procedimiento",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROD_RAZON_DE_DESESTIMACI": {
+                            "title": "Razón de Desestimación",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROD_EXPURGO": {
+                            "title": "Expurgo",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROD_ULTIMA_VERSION": {
+                            "title": "Última versión",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROD_MOTIVO": {
+                            "title": "Motivo",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PROD_MODIFICACION_REALIZA": {
+                            "title": "Modificación Realizada",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Procedimientos (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -9757,14 +11735,116 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "COMU_NRO_COMUNICACION": {
+                      "title": "Nro Comunicación",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "TICO_ID_TICO": {
+                      "title": "Tipo",
+                      "type": "integer",
+                      "description": "Foreign key to Tipo de comunicación",
+                      "nullable": true
+                    },
+                    "COMU_FECHA": {
+                      "title": "Fecha",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ENDE_ID_ENDE": {
+                      "title": "Entidad destino",
+                      "type": "integer",
+                      "description": "Foreign key to Entidad destino",
+                      "nullable": true
+                    },
+                    "COMU_REFERENCIA": {
+                      "title": "Referencia",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "COMU_DESTINATARIO_INTERNO": {
+                      "title": "Destinatario interno",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "COMU_ARHC_ID_387": {
+                      "title": "Documento enviado/recibido",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "COMU_CREADO_POR": {
+                      "title": "Creado por",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "COMU_NOTIFICAR_A_DESTINAT": {
+                      "title": "Notificar a destinatario",
+                      "type": "boolean",
+                      "description": "Envía mail al destinatario interno.-",
+                      "nullable": true
+                    },
+                    "COMU_APLICA_A_MEDIO_AMBIE": {
+                      "title": "Aplica a Medio Ambiente",
+                      "type": "boolean",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -10558,14 +12638,67 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "ENDE_NOMBRE": {
+                      "title": "Nombre",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -11515,14 +13648,334 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "NOCO_NRO_DE_NO_CONFORMIDA": {
+                      "title": "Nro de No Conformidad",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "NOCO_TITULO": {
+                      "title": "Título",
+                      "type": "string",
+                      "description": "es el título de la No comformidad",
+                      "nullable": true
+                    },
+                    "SECT_ID_SECT": {
+                      "title": "Gerencia",
+                      "type": "integer",
+                      "description": "Foreign key to Gerencia",
+                      "nullable": true
+                    },
+                    "PRCS_ID_PRCS": {
+                      "title": "Proceso sugerido",
+                      "type": "integer",
+                      "description": "es el sector o proceso a quien se asume pertenece la NC\nForeign key to Proceso",
+                      "nullable": true
+                    },
+                    "NOCO_FECHA_DE_ALTA": {
+                      "title": "Fecha de alta",
+                      "type": "string",
+                      "description": "es la fecha automática de creación de la NC",
+                      "nullable": true
+                    },
+                    "NOCO_OBSERVACION_GENERAL": {
+                      "title": "Observación general",
+                      "type": "string",
+                      "description": "es el detalle o ampliación del título de la NC",
+                      "nullable": true
+                    },
+                    "NOCO_USUARIO_GENERADOR": {
+                      "title": "Usuario generador",
+                      "type": "integer",
+                      "description": "es el usuario que da crea la NC",
+                      "nullable": true
+                    },
+                    "NOCO_POTENCIAL": {
+                      "title": "Potencial (no se ha producido pero es posible)",
+                      "type": "boolean",
+                      "description": "es verdadero si la NC no ha sucedido",
+                      "nullable": true
+                    },
+                    "CRIT_ID_CRIT": {
+                      "title": "Criticidad",
+                      "type": "integer",
+                      "description": "es el nivel de urgencia e importancia que infiere el creador de la NC (Alta, Media, Baja)\nForeign key to Criticidad",
+                      "nullable": true
+                    },
+                    "NOCO_ARHC_ID_120": {
+                      "title": "Adjunto 1",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "NOCO_ARHC_ID_121": {
+                      "title": "Adjunto 2",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "NOCO_ARHC_ID_122": {
+                      "title": "Adjunto 3",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "NOCO_RESPONSABLE": {
+                      "title": "Responsable de Proceso",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "NOCO_RESPONSABLE_SECTOR": {
+                      "title": "Responsable Sector",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "NOCO_DIAS_TRANSCURRIDOS": {
+                      "title": "Días Transcurridos",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "NOCO_ANALISIS_DE_CAUSA": {
+                      "title": "Análisis de Causa",
+                      "type": "string",
+                      "description": "es un posible análisis de la causa de la NC interpretada por el responsable de proceso",
+                      "nullable": true
+                    },
+                    "NOCO_PORQUE2": {
+                      "title": "Porque",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "NOCO_RAZON_DE_LA_DESESTIM": {
+                      "title": "Razón de la desestimación",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "NOCO_DERIVADO_A": {
+                      "title": "Derivado a",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "NOCO_RAZON_DE_LA_DERIVACI": {
+                      "title": "Razón de la derivación",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "NOCO_COMENTARIO_GENERAL": {
+                      "title": "Comentario general",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "NOCO_FECHA_DE_CIERRE": {
+                      "title": "Fecha de cierre",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "NOCO_DIAS_TRANSCURRIDOS_A": {
+                      "title": "Días transcurridos a hoy",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "NOCO_DIAS_DEL_CICLO_COMPL": {
+                      "title": "Días del ciclo completo",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "NOCO_DESTINATARIO": {
+                      "title": "Destinatario",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "NOCO_COMENTARIO": {
+                      "title": "Comentario",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "AUEX_ID_AUEX": {
+                      "title": "Auditoría externa relacionada",
+                      "type": "integer",
+                      "description": "Foreign key to Auditoría externa",
+                      "nullable": true
+                    },
+                    "PROB_ID_PROB": {
+                      "title": "Nro Problema",
+                      "type": "integer",
+                      "description": "Foreign key to Problema",
+                      "nullable": true
+                    },
+                    "NOCO_DESCRIPCION_DEL_PROB": {
+                      "title": "Descripción del problema a publicar",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ACTIVIDADES": {
+                      "title": "Actividades",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "CLIE_ID_CLIE": {
+                            "title": "Cliente",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PROY_ID_PROY": {
+                            "title": "Centro de costos",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ACTI_TITULO": {
+                            "title": "Título",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ACTI_RESPONSABLE": {
+                            "title": "Responsable",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ACTI_CODIGO": {
+                            "title": "Código",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ACTI_NUMERO": {
+                            "title": "Nro",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ACTI_DESCRIPCION": {
+                            "title": "Descripción",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "TIDA_ID_TIDA": {
+                            "title": "Tipo de Actividad",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CRIT_ID_CRIT": {
+                            "title": "Criticidad",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ACTI_SOLICITADO_POR": {
+                            "title": "Solicitado por",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ACTI_SEMANA_DESDE_I": {
+                            "title": "Semana desde inicio",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ACTI_DURACION_ESTIMADA": {
+                            "title": "Duración estimada (días)",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ACTI_ARHC_ID_964": {
+                            "title": "Adjunto",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ACTI_FECHA_INICIO": {
+                            "title": "Fecha inicio",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ACTI_FECHA_FIN": {
+                            "title": "Fecha fin",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ACTI_FECHA_LIMITE": {
+                            "title": "Fecha Límite",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ACTI_DIAS_FALTANTES_PARA_": {
+                            "title": "Días faltantes para inicio",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ACTI_CRITICIDAD": {
+                            "title": "Prioridad",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "REUN_ID_REUN": {
+                            "title": "Reunión",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ACTI_NRO_ACTIVIDAD": {
+                            "title": "Nro de actividad",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCO_ID_NOCO": {
+                            "title": "No conformidad",
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Actividades (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -12688,14 +15141,118 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "PROB_NRO_PROBLEMA": {
+                      "title": "Nro Problema",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "PROB_FECHA": {
+                      "title": "Fecha",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PROB_DESCRIPCION": {
+                      "title": "Descripción",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PROB_SOLUCION_FINAL_DE_LA": {
+                      "title": "Solución final de la NC",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "POSIBLESSOLUCIONESPROPUESTAS": {
+                      "title": "Posibles soluciones propuestas",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "PROB_ID_PROB": {
+                            "title": "Problema",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "POSO_FECHA": {
+                            "title": "Fecha",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "POSO_DESCRIPCION_DE_LA_PR": {
+                            "title": "Descripción de la propuesta",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "POSO_USUARIO_QUE_PROPONE": {
+                            "title": "Usuario que propone",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "POSO_USUARIO": {
+                            "title": "Usuario",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Posibles soluciones propuestas (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -13593,14 +16150,99 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "INDI_ID_INDI": {
+                      "title": "Indicador",
+                      "type": "integer",
+                      "description": "Foreign key to Indicador",
+                      "nullable": true
+                    },
+                    "MEDI_FECHA": {
+                      "title": "Fecha",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDI_VALOR": {
+                      "title": "Valor",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "MEDI_OBSERVACION": {
+                      "title": "Observación",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDI_NRO_MEDICION": {
+                      "title": "Nro Medición",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "MEDI_USUARIO_RESPONSABLE": {
+                      "title": "Usuario responsable",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "MEDI_DIMENSION_ADICIONAL": {
+                      "title": "Dimensión adicional",
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -14595,14 +17237,202 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "INDI_NOMBRE": {
+                      "title": "Titulo",
+                      "type": "string"
+                    },
+                    "INDI_CODIGO": {
+                      "title": "Código",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INDI_MODULO": {
+                      "title": "Modulo",
+                      "type": "string"
+                    },
+                    "INDI_TIPO": {
+                      "title": "Tipo",
+                      "enum": [
+                        "M",
+                        "S",
+                        "O",
+                        "Q"
+                      ],
+                      "type": "string"
+                    },
+                    "INDI_FRECUENCIA": {
+                      "title": "Frecuencia",
+                      "enum": [
+                        "D",
+                        "M"
+                      ],
+                      "type": "string"
+                    },
+                    "INDI_USUARIO_CREADOR": {
+                      "title": "Usuario creador",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "INDI_ID_SMARTIE": {
+                      "title": "Id Smartie",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "INDI_NOMBRE_DE_LA_SMARTIE": {
+                      "title": "Nombre de la smartie",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INDI_TABLA": {
+                      "title": "Tabla",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INDI_ES_PRIVADA": {
+                      "title": "Es privada",
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "INDI_ID_OPE1": {
+                      "title": "Operando 1",
+                      "type": "integer",
+                      "description": "Foreign key to Indicador",
+                      "nullable": true
+                    },
+                    "INDI_OPERACION": {
+                      "title": "Operación",
+                      "enum": [
+                        "+",
+                        "-",
+                        "*",
+                        "/"
+                      ],
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INDI_ID_OPE2": {
+                      "title": "Operando 2",
+                      "type": "integer",
+                      "description": "Foreign key to Indicador",
+                      "nullable": true
+                    },
+                    "INDI_EFECTO_CRECIMIENTO": {
+                      "title": "Efecto crecimiento",
+                      "enum": [
+                        "F",
+                        "D"
+                      ],
+                      "type": "string",
+                      "description": "Si es Favorable, al crecer el indicador se mostrará un ícono positivo. Por ejemplo, si aumentan las ventas con respecto al día anterior\n\nSi es Desfavorable, al crecer el indicador se mostrará un ícono negativo. Por ejemplo, si aumentan los cambios con respecto al día anterior",
+                      "nullable": true
+                    },
+                    "INDI_SQL": {
+                      "title": "SQL",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "HECHOS": {
+                      "title": "Hechos",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "INDI_ID_INDI": {
+                            "title": "Indicador",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MEDI_FECHA": {
+                            "title": "Fecha",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "MEDI_VALOR": {
+                            "title": "Valor",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "MEDI_OBSERVACION": {
+                            "title": "Observación",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "MEDI_NRO_MEDICION": {
+                            "title": "Nro Medición",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MEDI_USUARIO_RESPONSABLE": {
+                            "title": "Usuario responsable",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MEDI_DIMENSION_ADICIONAL": {
+                            "title": "Dimensión adicional",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Hechos (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -15639,14 +18469,94 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "DAME_ID_DAME": {
+                      "title": "Dato ",
+                      "type": "integer",
+                      "description": "Foreign key to Dato a Medir (obsoleto)",
+                      "nullable": true
+                    },
+                    "MEDI_FECHA": {
+                      "title": "Fecha",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDI_VALOR": {
+                      "title": "Valor",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "MEDI_NRO_MEDICION": {
+                      "title": "Nro. Medición",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "MEDI_DIAS_FALTANTES_PARA_": {
+                      "title": "Días faltantes para medición",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "MEDI_USUARIO_RESPONSABLE": {
+                      "title": "Usuario responsable",
+                      "type": "integer",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -16537,14 +19447,97 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "INDI_ID_INDI": {
+                      "title": "Indicador",
+                      "type": "integer",
+                      "description": "Foreign key to Indicador",
+                      "nullable": true
+                    },
+                    "MEIN_FECHA": {
+                      "title": "Fecha",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "MEDI_ID_NUME": {
+                      "title": "Numerador",
+                      "type": "integer",
+                      "description": "Foreign key to Hecho",
+                      "nullable": true
+                    },
+                    "MEDI_ID_DENO": {
+                      "title": "Denominador",
+                      "type": "integer",
+                      "description": "Foreign key to Hecho",
+                      "nullable": true
+                    },
+                    "MEIN_RESULTADO": {
+                      "title": "Resultado",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "META_ID_META": {
+                      "title": "Meta",
+                      "type": "integer",
+                      "description": "Foreign key to Meta",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -17400,14 +20393,142 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "META_NRO_META": {
+                      "title": "Nro Meta",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "PRCS_ID_PRCS": {
+                      "title": "Proceso",
+                      "type": "integer",
+                      "description": "Proceso al que pertenece la meta\nForeign key to Proceso",
+                      "nullable": true
+                    },
+                    "OBJE_ID_OBJE": {
+                      "title": "Objetivo que origina",
+                      "type": "integer",
+                      "description": "Objetivo relacionado con la Meta\nForeign key to Objetivo",
+                      "nullable": true
+                    },
+                    "META_DESCRIPCION": {
+                      "title": "Descripción",
+                      "type": "string",
+                      "description": "Descripción de la meta",
+                      "nullable": true
+                    },
+                    "META_TACTICAS": {
+                      "title": "Tácticas",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "INDI_ID_INDI": {
+                      "title": "Indicador",
+                      "type": "integer",
+                      "description": "Indicador de la Meta\nForeign key to Indicador",
+                      "nullable": true
+                    },
+                    "META_MAYOR_QUE": {
+                      "title": "Mayor igual que",
+                      "type": "number",
+                      "description": "Parámetro para la medición de desvíos o resultados",
+                      "nullable": true
+                    },
+                    "META_DESVIO_MENOR_IGUAL": {
+                      "title": "Desvío menor igual",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "META_MENOR_QUE": {
+                      "title": "Menor igual que",
+                      "type": "number",
+                      "description": "Parámetro para la medición de desvíos o resultados",
+                      "nullable": true
+                    },
+                    "META_DESVIO_MAYOR_IGUAL": {
+                      "title": "Desvío mayor igual",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "META_FECHA_EVALUACION": {
+                      "title": "Fecha Evaluación",
+                      "type": "string",
+                      "description": "Fecha en la que será evaluada la Meta",
+                      "nullable": true
+                    },
+                    "META_DIAS_A_EVALUACION": {
+                      "title": "Días a evaluación",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "META_RESPONSABLE": {
+                      "title": "Responsable",
+                      "type": "integer",
+                      "description": "Responsable de la meta",
+                      "nullable": true
+                    },
+                    "META_RESULTADO_DEFINITIVO": {
+                      "title": "Resultado definitivo",
+                      "type": "number",
+                      "description": "Resultado definitivo al momento de resolver el estado de la Meta (Lograda / No lograda)",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
@@ -18465,14 +21586,187 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "OBJE_NRO_OBJETIVO": {
+                      "title": "Nro Objetivo",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "OBJE_TITULO": {
+                      "title": "Titulo",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "PRCS_ID_PRCS": {
+                      "title": "Proceso (si aplica)",
+                      "type": "integer",
+                      "description": "Proceso de la empresa. Sólo se completa si es un proceso sólo.\nForeign key to Proceso",
+                      "nullable": true
+                    },
+                    "OBJE_DESCRIPCION_DEL_OBJE": {
+                      "title": "Descripción del objetivo",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "OBJE_ESTRATEGIAS": {
+                      "title": "Estrategias",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "OBJE_USUARIO_GENERADOR": {
+                      "title": "Usuario generador",
+                      "type": "integer",
+                      "description": "Usuario generador del Objetivo",
+                      "nullable": true
+                    },
+                    "OBJE_CANTIDAD_DE_METAS": {
+                      "title": "# metas",
+                      "type": "integer",
+                      "description": "Fórmula que cuenta la cantidad de metas relacionadas con el objetivo",
+                      "nullable": true
+                    },
+                    "SECT_ID_SECT": {
+                      "title": "Gerencia",
+                      "type": "integer",
+                      "description": "Foreign key to Gerencia",
+                      "nullable": true
+                    },
+                    "METAS": {
+                      "title": "Metas",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "META_NRO_META": {
+                            "title": "Nro Meta",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PRCS_ID_PRCS": {
+                            "title": "Proceso",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "OBJE_ID_OBJE": {
+                            "title": "Objetivo que origina",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "META_DESCRIPCION": {
+                            "title": "Descripción",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "META_TACTICAS": {
+                            "title": "Tácticas",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "INDI_ID_INDI": {
+                            "title": "Indicador",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "META_MAYOR_QUE": {
+                            "title": "Mayor igual que",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "META_DESVIO_MENOR_IGUAL": {
+                            "title": "Desvío menor igual",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "META_MENOR_QUE": {
+                            "title": "Menor igual que",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "META_DESVIO_MAYOR_IGUAL": {
+                            "title": "Desvío mayor igual",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "META_FECHA_EVALUACION": {
+                            "title": "Fecha Evaluación",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "META_DIAS_A_EVALUACION": {
+                            "title": "Días a evaluación",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "META_RESPONSABLE": {
+                            "title": "Responsable",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "META_RESULTADO_DEFINITIVO": {
+                            "title": "Resultado definitivo",
+                            "type": "number",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Metas (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
           }
         }
       },
