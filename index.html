@@ -208,6 +208,39 @@ html[data-theme="light"] .hero-band{
 .endpoint-notes ul{margin:0 0 0 18px;color:var(--muted);line-height:1.9}
 .endpoint-notes li strong{color:var(--text)}
 
+.decision-box{
+  margin-top:12px;
+  border:1px solid rgba(0,204,255,.26);
+  border-radius:12px;
+  background:var(--bg-soft);
+  padding:12px;
+}
+.decision-title{
+  font:700 11px var(--mono);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--cyan);
+  margin-bottom:8px;
+}
+.decision-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:10px;
+}
+.decision-col{
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--bg-elev-2);
+  padding:10px;
+}
+.decision-col h4{
+  margin:0 0 6px;
+  font:700 11px var(--mono);
+  color:var(--text);
+}
+.decision-col ul{margin:0 0 0 18px;color:var(--muted);line-height:1.8}
+.decision-col li strong{color:var(--text)}
+
 .practice-box,
 .risk-box{
   margin-top:12px;
@@ -432,6 +465,34 @@ html[data-theme="light"] .hero-band{
     </div>
     <div class="info-body">
       <p>En los Swagger de YiQi, las entidades repiten un <strong>patrón de endpoints</strong>. Si aprendés el de una entidad, podés reutilizar el mismo enfoque en casi todas.</p>
+
+      <div class="decision-box">
+        <div class="decision-title">Cómo elegir entre /search y /query</div>
+        <div class="decision-grid">
+          <article class="decision-col">
+            <h4>Usar <code>/search</code></h4>
+            <ul>
+              <li>Búsqueda rápida con pocos filtros y validaciones puntuales.</li>
+              <li>Escenarios exploratorios sin control fino de columnas, orden o paginado.</li>
+              <li>Puede tener tope por request (por ejemplo, <strong>50</strong>), según entidad.</li>
+            </ul>
+          </article>
+          <article class="decision-col">
+            <h4>Usar <code>/query</code></h4>
+            <ul>
+              <li>Listados productivos en UI, integraciones y sincronizaciones.</li>
+              <li>Paginado configurable (<code>page</code>, <code>pageSize</code>) y mejor control de respuesta.</li>
+              <li>Permite pedir solo columnas necesarias para mejorar performance y payload.</li>
+            </ul>
+          </article>
+        </div>
+        <ul style="margin:10px 0 0 18px;color:var(--muted);line-height:1.9">
+          <li><strong>Recomendación:</strong> preferí <code>/query</code> para procesos recurrentes, alto volumen, batch o exportaciones grandes.</li>
+          <li><strong>Compatibilidad:</strong> límites, filtros y columnas dependen de cada entidad; validalo siempre en su OpenAPI.</li>
+          <li><strong>Ejemplo:</strong> para listar artículos con SKU, nombre, stock y precio final, usar <code>/MATERIAL/query</code> con columnas explícitas.</li>
+        </ul>
+      </div>
+
       <div class="endpoint-grid">
         <article class="endpoint-item">
           <span class="endpoint-path">GET /ENTIDAD/search</span>
