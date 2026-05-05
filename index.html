@@ -173,6 +173,44 @@ html[data-theme="light"] .hero-band{
 }
 .info-link:hover{text-decoration-color:var(--cyan)}
 
+.base-urls{
+  margin-top:12px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--bg-soft);
+  padding:12px;
+}
+.base-urls-title{
+  font:700 11px var(--mono);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--cyan);
+  margin-bottom:8px;
+}
+.base-urls-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+.base-urls-table th,
+.base-urls-table td{
+  text-align:left;
+  padding:8px 10px;
+  border:1px solid var(--line);
+  vertical-align:top;
+}
+.base-urls-table th{
+  color:var(--text);
+  background:var(--bg-elev-2);
+  font-weight:700;
+}
+.base-urls-table td{
+  color:var(--muted);
+}
+.base-urls-table code{
+  font-size:11px;
+}
+
 .endpoint-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
@@ -268,6 +306,78 @@ html[data-theme="light"] .hero-band{
 .risk-box ul{margin:0 0 0 18px;color:var(--muted);line-height:1.9}
 .practice-box li strong,
 .risk-box li strong{color:var(--text)}
+
+.general-actions{
+  display:flex;
+  gap:8px;
+  margin:14px 0 10px;
+  flex-wrap:wrap;
+}
+.general-btn{
+  padding:6px 12px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:var(--bg-elev-2);
+  color:var(--muted);
+  font:700 11px var(--mono);
+  cursor:pointer;
+  transition:.15s ease;
+}
+.general-btn:hover{
+  color:var(--text);
+  border-color:var(--line-strong);
+  background:var(--bg-soft);
+}
+
+.collapsible-block{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--bg-soft);
+  margin-top:10px;
+  padding:0;
+}
+.collapsible-summary{
+  list-style:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px;
+}
+.collapsible-summary::-webkit-details-marker{display:none}
+.collapsible-heading{min-width:0}
+.collapsible-title{
+  display:block;
+  color:var(--text);
+  font:700 12px var(--mono);
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+.collapsible-hint{
+  display:block;
+  margin-top:5px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+}
+.collapsible-indicator{
+  width:24px;
+  height:24px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  display:grid;
+  place-items:center;
+  color:var(--cyan);
+  font:700 14px var(--mono);
+  flex-shrink:0;
+}
+.collapsible-indicator::before{content:"+"}
+.collapsible-block[open] .collapsible-indicator::before{content:"-"}
+.collapsible-content{
+  border-top:1px solid var(--line);
+  padding:12px;
+}
 
 /* Grid */
 .section-head{
@@ -445,6 +555,27 @@ html[data-theme="light"] .hero-band{
     <div class="info-body">
       <p><strong>Autenticación general:</strong> en <em>Seguridad</em> hay un único endpoint para obtener el token usando un usuario de YiQi. Este token se reutiliza en el resto de los módulos enviándolo como <code>Bearer</code> en el header <code>Authorization</code>.</p>
       <p><strong>Política de sesión:</strong> actualmente no hay refresh token. Cuando el token expira, se debe volver a autenticar con <code>/token</code>.</p>
+      <div class="base-urls">
+        <div class="base-urls-title">URLs base</div>
+        <table class="base-urls-table" aria-label="Diferencia de URLs base por módulo">
+          <thead>
+            <tr>
+              <th>Módulo</th>
+              <th>Base URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Seguridad (<code>/token</code>, login)</td>
+              <td><code>https://api.yiqi.com.ar</code></td>
+            </tr>
+            <tr>
+              <td>Todos los módulos ERP</td>
+              <td><code>https://api.yiqi.com.ar/api/public</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <ol class="info-steps">
         <li>Obtené el token desde el módulo <strong>Seguridad</strong>.</li>
         <li>Ejecutá <strong>GetLoginInformation</strong> como healthcheck canónico post-login.</li>
@@ -466,102 +597,153 @@ html[data-theme="light"] .hero-band{
     <div class="info-body">
       <p>En los Swagger de YiQi, las entidades repiten un <strong>patrón de endpoints</strong>. Si aprendés el de una entidad, podés reutilizar el mismo enfoque en casi todas.</p>
 
-      <div class="decision-box">
-        <div class="decision-title">Cómo elegir entre /search y /query</div>
-        <div class="decision-grid">
-          <article class="decision-col">
-            <h4>Usar <code>/search</code></h4>
-            <ul>
-              <li>Búsqueda rápida con pocos filtros y validaciones puntuales.</li>
-              <li>Escenarios exploratorios sin control fino de columnas, orden o paginado.</li>
-              <li>Puede tener tope por request (por ejemplo, <strong>50</strong>), según entidad.</li>
+      <p style="margin-top:8px"><strong>Resumen rápido:</strong> esta sección cubre <em>Search vs Query</em>, patrón común de endpoints, notas de smarties y recomendaciones de consumo responsable.</p>
+
+      <div class="general-actions">
+        <button type="button" class="general-btn" id="expandGeneralidades">Expandir todo</button>
+        <button type="button" class="general-btn" id="collapseGeneralidades">Contraer todo</button>
+      </div>
+
+      <details class="collapsible-block" data-accordion data-accordion-id="search-query">
+        <summary class="collapsible-summary">
+          <span class="collapsible-heading">
+            <span class="collapsible-title">Search vs Query</span>
+            <span class="collapsible-hint">Cuándo conviene cada endpoint y recomendación para alto volumen.</span>
+          </span>
+          <span class="collapsible-indicator" aria-hidden="true"></span>
+        </summary>
+        <div class="collapsible-content">
+          <div class="decision-box" style="margin-top:0">
+            <div class="decision-title">Cómo elegir entre /search y /query</div>
+            <div class="decision-grid">
+              <article class="decision-col">
+                <h4>Usar <code>/search</code></h4>
+                <ul>
+                  <li>Búsqueda rápida con pocos filtros y validaciones puntuales.</li>
+                  <li>Escenarios exploratorios sin control fino de columnas, orden o paginado.</li>
+                  <li>Puede tener tope por request (por ejemplo, <strong>50</strong>), según entidad.</li>
+                </ul>
+              </article>
+              <article class="decision-col">
+                <h4>Usar <code>/query</code></h4>
+                <ul>
+                  <li>Listados productivos en UI, integraciones y sincronizaciones.</li>
+                  <li>Paginado configurable (<code>page</code>, <code>pageSize</code>) y mejor control de respuesta.</li>
+                  <li>Permite pedir solo columnas necesarias para mejorar performance y payload.</li>
+                </ul>
+              </article>
+            </div>
+            <ul style="margin:10px 0 0 18px;color:var(--muted);line-height:1.9">
+              <li><strong>Recomendación:</strong> preferí <code>/query</code> para procesos recurrentes, alto volumen, batch o exportaciones grandes.</li>
+              <li><strong>Compatibilidad:</strong> límites, filtros y columnas dependen de cada entidad; validalo siempre en su OpenAPI.</li>
+              <li><strong>Ejemplo:</strong> para listar artículos con SKU, nombre, stock y precio final, usar <code>/MATERIAL/query</code> con columnas explícitas.</li>
             </ul>
-          </article>
-          <article class="decision-col">
-            <h4>Usar <code>/query</code></h4>
-            <ul>
-              <li>Listados productivos en UI, integraciones y sincronizaciones.</li>
-              <li>Paginado configurable (<code>page</code>, <code>pageSize</code>) y mejor control de respuesta.</li>
-              <li>Permite pedir solo columnas necesarias para mejorar performance y payload.</li>
-            </ul>
-          </article>
+          </div>
         </div>
-        <ul style="margin:10px 0 0 18px;color:var(--muted);line-height:1.9">
-          <li><strong>Recomendación:</strong> preferí <code>/query</code> para procesos recurrentes, alto volumen, batch o exportaciones grandes.</li>
-          <li><strong>Compatibilidad:</strong> límites, filtros y columnas dependen de cada entidad; validalo siempre en su OpenAPI.</li>
-          <li><strong>Ejemplo:</strong> para listar artículos con SKU, nombre, stock y precio final, usar <code>/MATERIAL/query</code> con columnas explícitas.</li>
-        </ul>
-      </div>
+      </details>
 
-      <div class="endpoint-grid">
-        <article class="endpoint-item">
-          <span class="endpoint-path">GET /ENTIDAD/search</span>
-          <p><strong>Búsqueda filtrada</strong> por atributos de la entidad. Suele devolver hasta <strong>50 registros máximo</strong> por request.</p>
-        </article>
-        <article class="endpoint-item">
-          <span class="endpoint-path">GET /ENTIDAD/{id}</span>
-          <p><strong>Detalle</strong> de una instancia puntual. Requiere el <strong>id</strong> en path.</p>
-        </article>
-        <article class="endpoint-item">
-          <span class="endpoint-path">POST /ENTIDAD</span>
-          <p><strong>Alta</strong> de instancia. El body incluye <strong>schemaId</strong> y un objeto <strong>data</strong>.</p>
-        </article>
-        <article class="endpoint-item">
-          <span class="endpoint-path">PUT /ENTIDAD/{id}</span>
-          <p><strong>Actualización</strong> de instancia existente, con estructura similar al alta.</p>
-        </article>
-        <article class="endpoint-item">
-          <span class="endpoint-path">DELETE /ENTIDAD/{id}</span>
-          <p><strong>Baja lógica/física</strong> según comportamiento de la entidad y reglas de negocio.</p>
-        </article>
-        <article class="endpoint-item">
-          <span class="endpoint-path">GET /ENTIDAD/smartie</span>
-          <p><strong>Vista (smartie) paginada</strong>. Una smartie es un reporte/vista armado por usuarios sobre la entidad.</p>
-        </article>
-        <article class="endpoint-item">
-          <span class="endpoint-path">POST /ENTIDAD/changestate</span>
-          <p><strong>Cambio de estado</strong> de workflow (cuando la entidad maneja estados).</p>
-        </article>
-        <article class="endpoint-item">
-          <span class="endpoint-path">GET|PUT /ENTIDAD/file</span>
-          <p><strong>Descarga/carga de archivos</strong> asociados a atributos de tipo archivo.</p>
-        </article>
-        <article class="endpoint-item">
-          <span class="endpoint-path">GET /ENTIDAD/report</span>
-          <p><strong>Descarga de reportes</strong> predefinidos (por ejemplo PDFs) para una instancia.</p>
-        </article>
-      </div>
+      <details class="collapsible-block" data-accordion data-accordion-id="patron-endpoints">
+        <summary class="collapsible-summary">
+          <span class="collapsible-heading">
+            <span class="collapsible-title">Patrón de endpoints por entidad</span>
+            <span class="collapsible-hint">Listado típico (search, get, alta, update, delete, smartie, changestate, files y reportes).</span>
+          </span>
+          <span class="collapsible-indicator" aria-hidden="true"></span>
+        </summary>
+        <div class="collapsible-content">
+          <div class="endpoint-grid" style="margin-top:0">
+            <article class="endpoint-item">
+              <span class="endpoint-path">GET /ENTIDAD/search</span>
+              <p><strong>Búsqueda filtrada</strong> por atributos de la entidad. Suele devolver hasta <strong>50 registros máximo</strong> por request.</p>
+            </article>
+            <article class="endpoint-item">
+              <span class="endpoint-path">GET /ENTIDAD/{id}</span>
+              <p><strong>Detalle</strong> de una instancia puntual. Requiere el <strong>id</strong> en path.</p>
+            </article>
+            <article class="endpoint-item">
+              <span class="endpoint-path">POST /ENTIDAD</span>
+              <p><strong>Alta</strong> de instancia. El body incluye <strong>schemaId</strong> y un objeto <strong>data</strong>.</p>
+            </article>
+            <article class="endpoint-item">
+              <span class="endpoint-path">PUT /ENTIDAD/{id}</span>
+              <p><strong>Actualización</strong> de instancia existente, con estructura similar al alta.</p>
+            </article>
+            <article class="endpoint-item">
+              <span class="endpoint-path">DELETE /ENTIDAD/{id}</span>
+              <p><strong>Baja lógica/física</strong> según comportamiento de la entidad y reglas de negocio.</p>
+            </article>
+            <article class="endpoint-item">
+              <span class="endpoint-path">GET /ENTIDAD/smartie</span>
+              <p><strong>Vista (smartie) paginada</strong>. Una smartie es un reporte/vista armado por usuarios sobre la entidad.</p>
+            </article>
+            <article class="endpoint-item">
+              <span class="endpoint-path">POST /ENTIDAD/changestate</span>
+              <p><strong>Cambio de estado</strong> de workflow (cuando la entidad maneja estados).</p>
+            </article>
+            <article class="endpoint-item">
+              <span class="endpoint-path">GET|PUT /ENTIDAD/file</span>
+              <p><strong>Descarga/carga de archivos</strong> asociados a atributos de tipo archivo.</p>
+            </article>
+            <article class="endpoint-item">
+              <span class="endpoint-path">GET /ENTIDAD/report</span>
+              <p><strong>Descarga de reportes</strong> predefinidos (por ejemplo PDFs) para una instancia.</p>
+            </article>
+          </div>
 
-      <div class="endpoint-notes">
-        <ul>
-          <li><strong>Smartie paginado:</strong> usar <code>smartieId</code>, <code>schemaId</code> y <code>page</code> (base 1). Empezar en <code>page=1</code> e incrementar de a 1.</li>
-          <li><strong>Filtro adicional en smartie:</strong> el parámetro <code>search</code> permite acotar resultados dentro de la vista.</li>
-          <li><strong>Particularidad de búsqueda:</strong> en <code>/search</code> los filtros disponibles cambian por entidad y están tipados en el Swagger de cada módulo.</li>
-          <li><strong>Particularidad de estados:</strong> no todas las entidades exponen <code>/changestate</code>; cuando existe, los estados válidos están listados en la operación.</li>
-          <li><strong>Particularidad de archivos/reportes:</strong> los valores permitidos de <code>attributeName</code> y <code>reportName</code> varían por entidad.</li>
-          <li><strong>schemaId:</strong> es obligatorio en casi todas las operaciones, ya sea por query o dentro del body según el endpoint.</li>
-          <li><strong>Regla recomendada para integraciones:</strong> obtener <code>schemaId</code> primero desde <code>GetLoginInformation</code>; usar <code>GetAvailableSchemas</code> como complemento cuando el usuario tenga acceso a más de un esquema.</li>
-        </ul>
-      </div>
+          <div class="endpoint-notes">
+            <ul>
+              <li><strong>Smartie paginado:</strong> usar <code>smartieId</code>, <code>schemaId</code> y <code>page</code> (base 1). Empezar en <code>page=1</code> e incrementar de a 1.</li>
+              <li><strong>Filtro adicional en smartie:</strong> el parámetro <code>search</code> permite acotar resultados dentro de la vista.</li>
+              <li><strong>Particularidad de búsqueda:</strong> en <code>/search</code> los filtros disponibles cambian por entidad y están tipados en el Swagger de cada módulo.</li>
+              <li><strong>Particularidad de estados:</strong> no todas las entidades exponen <code>/changestate</code>; cuando existe, los estados válidos están listados en la operación.</li>
+              <li><strong>Particularidad de archivos/reportes:</strong> los valores permitidos de <code>attributeName</code> y <code>reportName</code> varían por entidad.</li>
+              <li><strong>schemaId:</strong> es obligatorio en casi todas las operaciones, ya sea por query o dentro del body según el endpoint.</li>
+              <li><strong>Regla recomendada para integraciones:</strong> obtener <code>schemaId</code> primero desde <code>GetLoginInformation</code>; usar <code>GetAvailableSchemas</code> como complemento cuando el usuario tenga acceso a más de un esquema.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
 
-      <div class="practice-box">
-        <div class="practice-title">Buena práctica para consumir smarties</div>
-        <ul>
-          <li><strong>Orden recomendado:</strong> ordenar por <strong>fecha de modificación descendente</strong> para traer primero lo más reciente.</li>
-          <li><strong>Estrategia de paginado eficiente:</strong> paginar desde <code>page=1</code> y detenerse cuando se alcance la <strong>última fecha ya sincronizada</strong> por tu proceso.</li>
-          <li><strong>Objetivo:</strong> evitar paginado exhaustivo innecesario, reducir tráfico y proteger el rendimiento general del sistema.</li>
-        </ul>
-      </div>
+      <details class="collapsible-block" data-accordion data-accordion-id="buenas-practicas">
+        <summary class="collapsible-summary">
+          <span class="collapsible-heading">
+            <span class="collapsible-title">Buenas prácticas de paginado</span>
+            <span class="collapsible-hint">Cómo consumir smarties de forma eficiente para reducir carga y tráfico.</span>
+          </span>
+          <span class="collapsible-indicator" aria-hidden="true"></span>
+        </summary>
+        <div class="collapsible-content">
+          <div class="practice-box" style="margin-top:0">
+            <div class="practice-title">Buena práctica para consumir smarties</div>
+            <ul>
+              <li><strong>Orden recomendado:</strong> ordenar por <strong>fecha de modificación descendente</strong> para traer primero lo más reciente.</li>
+              <li><strong>Estrategia de paginado eficiente:</strong> paginar desde <code>page=1</code> y detenerse cuando se alcance la <strong>última fecha ya sincronizada</strong> por tu proceso.</li>
+              <li><strong>Objetivo:</strong> evitar paginado exhaustivo innecesario, reducir tráfico y proteger el rendimiento general del sistema.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
 
-      <div class="risk-box">
-        <div class="risk-title">Uso responsable de la API</div>
-        <ul>
-          <li><strong>Responsabilidad de uso:</strong> el consumo de la API debe realizarse con criterios de eficiencia, control de volumen y frecuencia de llamadas.</li>
-          <li><strong>Riesgos operativos:</strong> un uso intensivo o sin límites puede saturar tráfico, degradar tiempos de respuesta y afectar a otros usuarios.</li>
-          <li><strong>Cuenta técnica recomendada:</strong> utilizar usuarios de API con el <strong>menor privilegio posible</strong>, otorgando solo permisos estrictamente necesarios.</li>
-          <li><strong>Riesgo asumido por el integrador:</strong> la implementación, su impacto operativo y los riesgos asociados son responsabilidad del usuario que consume la API.</li>
-        </ul>
-      </div>
+      <details class="collapsible-block" data-accordion data-accordion-id="uso-responsable">
+        <summary class="collapsible-summary">
+          <span class="collapsible-heading">
+            <span class="collapsible-title">Uso responsable de la API</span>
+            <span class="collapsible-hint">Riesgos operativos, mínimos privilegios y responsabilidad de implementación.</span>
+          </span>
+          <span class="collapsible-indicator" aria-hidden="true"></span>
+        </summary>
+        <div class="collapsible-content">
+          <div class="risk-box" style="margin-top:0">
+            <div class="risk-title">Uso responsable de la API</div>
+            <ul>
+              <li><strong>Responsabilidad de uso:</strong> el consumo de la API debe realizarse con criterios de eficiencia, control de volumen y frecuencia de llamadas.</li>
+              <li><strong>Riesgos operativos:</strong> un uso intensivo o sin límites puede saturar tráfico, degradar tiempos de respuesta y afectar a otros usuarios.</li>
+              <li><strong>Cuenta técnica recomendada:</strong> utilizar usuarios de API con el <strong>menor privilegio posible</strong>, otorgando solo permisos estrictamente necesarios.</li>
+              <li><strong>Riesgo asumido por el integrador:</strong> la implementación, su impacto operativo y los riesgos asociados son responsabilidad del usuario que consume la API.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
     </div>
   </div>
 
@@ -785,6 +967,57 @@ function filterCards(q) {
   document.getElementById('countBadge').textContent = visible + (visible === 1 ? ' módulo' : ' módulos');
   document.getElementById('emptyState').classList.toggle('show', visible === 0);
 }
+
+const accordionStorageKey = 'yiqi-generalidades-open';
+
+function getGeneralidadesAccordions() {
+  return Array.from(document.querySelectorAll('[data-accordion]'));
+}
+
+function saveGeneralidadesState() {
+  try {
+    const openIds = getGeneralidadesAccordions()
+      .filter(block => block.open)
+      .map(block => block.dataset.accordionId)
+      .filter(Boolean);
+    localStorage.setItem(accordionStorageKey, JSON.stringify(openIds));
+  } catch (err) {
+    return;
+  }
+}
+
+function loadGeneralidadesState() {
+  try {
+    const raw = localStorage.getItem(accordionStorageKey);
+    if (!raw) return;
+    const openIds = new Set(JSON.parse(raw));
+    getGeneralidadesAccordions().forEach(block => {
+      block.open = openIds.has(block.dataset.accordionId);
+    });
+  } catch (err) {
+    return;
+  }
+}
+
+function setAllGeneralidades(open) {
+  getGeneralidadesAccordions().forEach(block => {
+    block.open = open;
+  });
+  saveGeneralidadesState();
+}
+
+loadGeneralidadesState();
+getGeneralidadesAccordions().forEach(block => {
+  block.addEventListener('toggle', saveGeneralidadesState);
+});
+
+document.getElementById('expandGeneralidades')?.addEventListener('click', () => {
+  setAllGeneralidades(true);
+});
+
+document.getElementById('collapseGeneralidades')?.addEventListener('click', () => {
+  setAllGeneralidades(false);
+});
 
 document.getElementById('year').textContent = new Date().getFullYear();
 </script>
