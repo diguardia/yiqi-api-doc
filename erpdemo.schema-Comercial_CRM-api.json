@@ -6,7 +6,12 @@
   },
   "servers": [
     {
-      "url": "https://api.yiqi.com.ar/api/public"
+      "url": "https://api.yiqi.com.ar/api/public",
+      "description": "production"
+    },
+    {
+      "url": "https://yiqiapi.azurewebsites.net/api/public",
+      "description": "beta"
     }
   ],
   "paths": {
@@ -16,7 +21,7 @@
           "Acción comercial"
         ],
         "summary": "Create a Acción comercial.",
-        "description": "Creates a new instance of Acción comercial.\n\n**Key Attributes (Unique):** `ACCO_FECHA` (Fecha), `ACCO_TITULO` (Título), `ACCO_RESPONSABLE` (Responsable)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
+        "description": "Creates a new instance of Acción comercial.\n\n**Key Attributes (Unique):** `ACCO_RESPONSABLE` (Responsable), `ACCO_FECHA` (Fecha), `ACCO_TITULO` (Título), `VEHA_ID_VEHA` (Vendedor)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -54,7 +59,7 @@
                       "TIDA_ID_TIDA": {
                         "title": "Tipo",
                         "type": "integer",
-                        "description": " This is a foreign key to Tipo de acción. An id of Tipo de acción is expected",
+                        "description": " This is a foreign key to Tipo de acción comercial. An id of Tipo de acción comercial is expected",
                         "nullable": true
                       },
                       "ACCO_TITULO": {
@@ -63,15 +68,16 @@
                         "type": "string",
                         "nullable": true
                       },
+                      "VEHA_ID_VEHA": {
+                        "title": "Vendedor",
+                        "type": "integer",
+                        "description": " This is a foreign key to Vendedor. An id of Vendedor is expected",
+                        "nullable": true
+                      },
                       "ACCO_OBSERVACIONES": {
                         "title": "Observaciones",
                         "maxLength": 80000,
                         "type": "string",
-                        "nullable": true
-                      },
-                      "ACCO_RESPONSABLE": {
-                        "title": "Responsable",
-                        "type": "integer",
                         "nullable": true
                       },
                       "OPDN_ID_OPOR": {
@@ -86,7 +92,7 @@
                         "nullable": true
                       }
                     },
-                    "description": "Instance data. Key attributes (ACCO_FECHA, ACCO_TITULO, ACCO_RESPONSABLE) must be unique across all instances."
+                    "description": "Instance data. Key attributes (ACCO_RESPONSABLE, ACCO_FECHA, ACCO_TITULO, VEHA_ID_VEHA) must be unique across all instances."
                   }
                 }
               }
@@ -121,7 +127,7 @@
             "description": "User does not have permission to create instances of this entity"
           },
           "409": {
-            "description": "Conflict - An instance with the same key values already exists. Key attributes: ACCO_FECHA, ACCO_TITULO, ACCO_RESPONSABLE"
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: ACCO_RESPONSABLE, ACCO_FECHA, ACCO_TITULO, VEHA_ID_VEHA"
           }
         }
       }
@@ -194,6 +200,11 @@
                       "type": "string",
                       "format": "date-time"
                     },
+                    "ACCO_RESPONSABLE": {
+                      "title": "Responsable",
+                      "type": "integer",
+                      "nullable": true
+                    },
                     "ACCO_FECHA": {
                       "title": "Fecha",
                       "type": "string",
@@ -214,7 +225,7 @@
                     "TIDA_ID_TIDA": {
                       "title": "Tipo",
                       "type": "integer",
-                      "description": "Foreign key to Tipo de acción",
+                      "description": "Foreign key to Tipo de acción comercial",
                       "nullable": true
                     },
                     "ACCO_TITULO": {
@@ -222,14 +233,15 @@
                       "type": "string",
                       "nullable": true
                     },
+                    "VEHA_ID_VEHA": {
+                      "title": "Vendedor",
+                      "type": "integer",
+                      "description": "Foreign key to Vendedor",
+                      "nullable": true
+                    },
                     "ACCO_OBSERVACIONES": {
                       "title": "Observaciones",
                       "type": "string",
-                      "nullable": true
-                    },
-                    "ACCO_RESPONSABLE": {
-                      "title": "Responsable",
-                      "type": "integer",
                       "nullable": true
                     },
                     "OPDN_ID_OPOR": {
@@ -313,7 +325,7 @@
                       "TIDA_ID_TIDA": {
                         "title": "Tipo",
                         "type": "integer",
-                        "description": " This is a foreign key to Tipo de acción. An id of Tipo de acción is expected",
+                        "description": " This is a foreign key to Tipo de acción comercial. An id of Tipo de acción comercial is expected",
                         "nullable": true
                       },
                       "ACCO_TITULO": {
@@ -322,15 +334,16 @@
                         "type": "string",
                         "nullable": true
                       },
+                      "VEHA_ID_VEHA": {
+                        "title": "Vendedor",
+                        "type": "integer",
+                        "description": " This is a foreign key to Vendedor. An id of Vendedor is expected",
+                        "nullable": true
+                      },
                       "ACCO_OBSERVACIONES": {
                         "title": "Observaciones",
                         "maxLength": 80000,
                         "type": "string",
-                        "nullable": true
-                      },
-                      "ACCO_RESPONSABLE": {
-                        "title": "Responsable",
-                        "type": "integer",
                         "nullable": true
                       },
                       "OPDN_ID_OPOR": {
@@ -418,6 +431,15 @@
             }
           },
           {
+            "name": "ACCO_RESPONSABLE",
+            "in": "query",
+            "description": "Responsable",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
             "name": "ACCO_FECHA",
             "in": "query",
             "description": "Fecha",
@@ -436,9 +458,9 @@
             }
           },
           {
-            "name": "ACCO_RESPONSABLE",
+            "name": "VEHA_ID_VEHA",
             "in": "query",
-            "description": "Responsable",
+            "description": "Vendedor",
             "allowEmptyValue": true,
             "schema": {
               "type": "integer"
@@ -568,7 +590,6 @@
                             "ACCO_FECHA",
                             "ACCO_TITULO",
                             "ACCO_OBSERVACIONES",
-                            "ACCO_RESPONSABLE",
                             "ACCO_ADJUNTO",
                             "id",
                             "DESC_ESTADO",
@@ -636,7 +657,6 @@
                             "ACCO_FECHA",
                             "ACCO_TITULO",
                             "ACCO_OBSERVACIONES",
-                            "ACCO_RESPONSABLE",
                             "ACCO_ADJUNTO",
                             "id",
                             "DESC_ESTADO",
@@ -4154,14 +4174,18 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "CAMP_DIAS_FALTANTES",
+                            "CAMP_DIAS_DE_CAMPAA_EFECT",
+                            "CAMP_CANTIDAD_SEGUIMIENTO",
+                            "CAMP_COSTO_POR_ON",
+                            "CAMP_CLIENTES_ACTIVADOS",
+                            "CAMP_COSTO_POR_CLIENTE",
+                            "CAMP_CONVERSION",
                             "CAMP_NOMBRE",
                             "CAMP_FECHA_LANZAMIENTO",
                             "CAMP_FECHA_CIERRE",
-                            "CAMP_DIAS_FALTANTES",
                             "CAMP_OBJETIVOS_GENERALES",
                             "CAMP_DESARROLLO",
-                            "CAMP_KPIS",
-                            "CAMP_DIAS_DE_CAMPAA_EFECT",
                             "CAMP_MONTO_INVERTIDO",
                             "CAMP_CLICKS_ADWORDS",
                             "CAMP_BOUNCE_RATE",
@@ -4169,11 +4193,6 @@
                             "CAMP_FOLLOWS",
                             "CAMP_LIKES",
                             "CAMP_IMPRESSIONS",
-                            "CAMP_CANTIDAD_SEGUIMIENTO",
-                            "CAMP_COSTO_POR_ON",
-                            "CAMP_CLIENTES_ACTIVADOS",
-                            "CAMP_COSTO_POR_CLIENTE",
-                            "CAMP_CONVERSION",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -4237,14 +4256,18 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "CAMP_DIAS_FALTANTES",
+                            "CAMP_DIAS_DE_CAMPAA_EFECT",
+                            "CAMP_CANTIDAD_SEGUIMIENTO",
+                            "CAMP_COSTO_POR_ON",
+                            "CAMP_CLIENTES_ACTIVADOS",
+                            "CAMP_COSTO_POR_CLIENTE",
+                            "CAMP_CONVERSION",
                             "CAMP_NOMBRE",
                             "CAMP_FECHA_LANZAMIENTO",
                             "CAMP_FECHA_CIERRE",
-                            "CAMP_DIAS_FALTANTES",
                             "CAMP_OBJETIVOS_GENERALES",
                             "CAMP_DESARROLLO",
-                            "CAMP_KPIS",
-                            "CAMP_DIAS_DE_CAMPAA_EFECT",
                             "CAMP_MONTO_INVERTIDO",
                             "CAMP_CLICKS_ADWORDS",
                             "CAMP_BOUNCE_RATE",
@@ -4252,11 +4275,6 @@
                             "CAMP_FOLLOWS",
                             "CAMP_LIKES",
                             "CAMP_IMPRESSIONS",
-                            "CAMP_CANTIDAD_SEGUIMIENTO",
-                            "CAMP_COSTO_POR_ON",
-                            "CAMP_CLIENTES_ACTIVADOS",
-                            "CAMP_COSTO_POR_CLIENTE",
-                            "CAMP_CONVERSION",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -5364,7 +5382,6 @@
                             "COCO_ORIGEN_TEXTO",
                             "COCO_CAMPANA_TEXTO",
                             "COCO_CUIT",
-                            "COCO_OTROS_DATOS",
                             "COCO_FORMA_DE_PAGO",
                             "COCO_DIRECCION_DE_FACTURA",
                             "COCO_DIRECCION_DE_ENTREGA",
@@ -5445,7 +5462,6 @@
                             "COCO_ORIGEN_TEXTO",
                             "COCO_CAMPANA_TEXTO",
                             "COCO_CUIT",
-                            "COCO_OTROS_DATOS",
                             "COCO_FORMA_DE_PAGO",
                             "COCO_DIRECCION_DE_FACTURA",
                             "COCO_DIRECCION_DE_ENTREGA",
@@ -6503,7 +6519,7 @@
                             "nullable": true
                           },
                           "DECO_NO_SUPERA_DTO_DE_VEN": {
-                            "title": "No supera DTO Vendeor",
+                            "title": "No supera DTO Vendedor",
                             "type": "string",
                             "nullable": true
                           },
@@ -7237,19 +7253,8 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "COCO_DATOS_COTIZACION",
-                            "COCO_RAIZ",
-                            "COCO_VERSION",
                             "COCO_NRO_COTIZACION",
-                            "COCO_ASUNTO",
-                            "COCO_FECHA",
-                            "COCO_FECHA_VIGENCIA",
-                            "COCO_FECHA_DE_ENTREGA",
-                            "COCO_DATOS_CLIENTE",
-                            "COCO_MONTOS",
-                            "COCO_COTIZACION_MONEDA",
                             "COCO_SUBTOTAL",
-                            "COCO_DTO_GLOBAL",
                             "COCO_NETO",
                             "COCO_IVA",
                             "COCO_TOTAL",
@@ -7258,17 +7263,25 @@
                             "COCO_COSTO_TOTAL_NETO",
                             "COCO_RENTABILIDAD_NETA",
                             "COCO_RENTABILIDAD_PORC",
-                            "COCO_DATOS_GENERALES",
-                            "COCO_COTIZACION_ADJUNTA",
-                            "COCO_OBSERVACIONES",
                             "COCO_PEDIDO___DESCRIPCION",
-                            "COCO_ENVIO_GRATUITO",
-                            "COCO_DESTINATARIO_ADICION",
+                            "TIDC_ID_TIDC",
                             "COCO_SUBTOTAL_CON_IVA",
                             "COCO_CANTIDAD_DE_ITEMS",
                             "COCO_TIENE_FACTURA_EMITID",
                             "COCO_DETALLE_DE_PRODUCTO",
                             "COCO_ALERTA_CLIENTE",
+                            "COCO_RAIZ",
+                            "COCO_VERSION",
+                            "COCO_ASUNTO",
+                            "COCO_FECHA",
+                            "COCO_FECHA_VIGENCIA",
+                            "COCO_FECHA_DE_ENTREGA",
+                            "COCO_COTIZACION_MONEDA",
+                            "COCO_DTO_GLOBAL",
+                            "COCO_COTIZACION_ADJUNTA",
+                            "COCO_OBSERVACIONES",
+                            "COCO_ENVIO_GRATUITO",
+                            "COCO_DESTINATARIO_ADICION",
                             "COCO_OPERATIONID",
                             "COCO_COMENTARIOS_INTERNOS",
                             "id",
@@ -7334,19 +7347,8 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "COCO_DATOS_COTIZACION",
-                            "COCO_RAIZ",
-                            "COCO_VERSION",
                             "COCO_NRO_COTIZACION",
-                            "COCO_ASUNTO",
-                            "COCO_FECHA",
-                            "COCO_FECHA_VIGENCIA",
-                            "COCO_FECHA_DE_ENTREGA",
-                            "COCO_DATOS_CLIENTE",
-                            "COCO_MONTOS",
-                            "COCO_COTIZACION_MONEDA",
                             "COCO_SUBTOTAL",
-                            "COCO_DTO_GLOBAL",
                             "COCO_NETO",
                             "COCO_IVA",
                             "COCO_TOTAL",
@@ -7355,17 +7357,25 @@
                             "COCO_COSTO_TOTAL_NETO",
                             "COCO_RENTABILIDAD_NETA",
                             "COCO_RENTABILIDAD_PORC",
-                            "COCO_DATOS_GENERALES",
-                            "COCO_COTIZACION_ADJUNTA",
-                            "COCO_OBSERVACIONES",
                             "COCO_PEDIDO___DESCRIPCION",
-                            "COCO_ENVIO_GRATUITO",
-                            "COCO_DESTINATARIO_ADICION",
+                            "TIDC_ID_TIDC",
                             "COCO_SUBTOTAL_CON_IVA",
                             "COCO_CANTIDAD_DE_ITEMS",
                             "COCO_TIENE_FACTURA_EMITID",
                             "COCO_DETALLE_DE_PRODUCTO",
                             "COCO_ALERTA_CLIENTE",
+                            "COCO_RAIZ",
+                            "COCO_VERSION",
+                            "COCO_ASUNTO",
+                            "COCO_FECHA",
+                            "COCO_FECHA_VIGENCIA",
+                            "COCO_FECHA_DE_ENTREGA",
+                            "COCO_COTIZACION_MONEDA",
+                            "COCO_DTO_GLOBAL",
+                            "COCO_COTIZACION_ADJUNTA",
+                            "COCO_OBSERVACIONES",
+                            "COCO_ENVIO_GRATUITO",
+                            "COCO_DESTINATARIO_ADICION",
                             "COCO_OPERATIONID",
                             "COCO_COMENTARIOS_INTERNOS",
                             "id",
@@ -7748,7 +7758,8 @@
             "required": true,
             "schema": {
               "enum": [
-                "COTIZACION_PDF 2.0"
+                "COTIZACION_PDF 2.0",
+                "COTIZACION_PDF_DETALLADO"
               ],
               "type": "string"
             }
@@ -8815,7 +8826,7 @@
                             "TIDA_ID_TIDA": {
                               "title": "Tipo",
                               "type": "integer",
-                              "description": " This is a foreign key to Tipo de acción. An id of Tipo de acción is expected",
+                              "description": " This is a foreign key to Tipo de acción comercial. An id of Tipo de acción comercial is expected",
                               "nullable": true
                             },
                             "ACCO_TITULO": {
@@ -8824,15 +8835,16 @@
                               "type": "string",
                               "nullable": true
                             },
+                            "VEHA_ID_VEHA": {
+                              "title": "Vendedor",
+                              "type": "integer",
+                              "description": " This is a foreign key to Vendedor. An id of Vendedor is expected",
+                              "nullable": true
+                            },
                             "ACCO_OBSERVACIONES": {
                               "title": "Observaciones",
                               "maxLength": 80000,
                               "type": "string",
-                              "nullable": true
-                            },
-                            "ACCO_RESPONSABLE": {
-                              "title": "Responsable",
-                              "type": "integer",
                               "nullable": true
                             },
                             "ACCO_ADJUNTO": {
@@ -9280,6 +9292,11 @@
                       "items": {
                         "type": "object",
                         "properties": {
+                          "ACCO_RESPONSABLE": {
+                            "title": "Responsable",
+                            "type": "integer",
+                            "nullable": true
+                          },
                           "ACCO_FECHA": {
                             "title": "Fecha",
                             "type": "string",
@@ -9305,14 +9322,14 @@
                             "type": "string",
                             "nullable": true
                           },
+                          "VEHA_ID_VEHA": {
+                            "title": "Vendedor",
+                            "type": "integer",
+                            "nullable": true
+                          },
                           "ACCO_OBSERVACIONES": {
                             "title": "Observaciones",
                             "type": "string",
-                            "nullable": true
-                          },
-                          "ACCO_RESPONSABLE": {
-                            "title": "Responsable",
-                            "type": "integer",
                             "nullable": true
                           },
                           "OPDN_ID_OPOR": {
@@ -9758,7 +9775,7 @@
                             "TIDA_ID_TIDA": {
                               "title": "Tipo",
                               "type": "integer",
-                              "description": " This is a foreign key to Tipo de acción. An id of Tipo de acción is expected",
+                              "description": " This is a foreign key to Tipo de acción comercial. An id of Tipo de acción comercial is expected",
                               "nullable": true
                             },
                             "ACCO_TITULO": {
@@ -9767,15 +9784,16 @@
                               "type": "string",
                               "nullable": true
                             },
+                            "VEHA_ID_VEHA": {
+                              "title": "Vendedor",
+                              "type": "integer",
+                              "description": " This is a foreign key to Vendedor. An id of Vendedor is expected",
+                              "nullable": true
+                            },
                             "ACCO_OBSERVACIONES": {
                               "title": "Observaciones",
                               "maxLength": 80000,
                               "type": "string",
-                              "nullable": true
-                            },
-                            "ACCO_RESPONSABLE": {
-                              "title": "Responsable",
-                              "type": "integer",
                               "nullable": true
                             },
                             "ACCO_ADJUNTO": {
@@ -10142,11 +10160,6 @@
                         "field": {
                           "enum": [
                             "OPDN_EMPRESA",
-                            "OPDN_SOLICITUD_INICIAL",
-                            "OPDN_SEEG_SEP",
-                            "OPDN_SEGMENTACION_ESPECIA",
-                            "OPDN_ESTADO_DE_LA_OPORUNI",
-                            "OPDN_PROXIMO_CONTACTO",
                             "OPDN_DIAS_PARA_PROX",
                             "OPDN_ATRASO",
                             "OPDN_EDAD",
@@ -10154,12 +10167,15 @@
                             "OPDN_TELEFONO",
                             "OPDN_TELEFONO_PARTICULAR",
                             "OPDN_TELEFONO_CELULAR",
-                            "OPDN_INFORMACION_ADICIONA",
-                            "OPDN_RESPONSABLE",
+                            "TIDC_ID_TIDC",
                             "OPDN_NIVEL",
+                            "OPDN_SOLICITUD_INICIAL",
+                            "OPDN_SEGMENTACION_ESPECIA",
+                            "OPDN_PROXIMO_CONTACTO",
                             "OPDN_FECHA_CONCRETADA",
                             "OPDN_FECHA_DESESTIMADA",
                             "OPDN_OBSERVACIONES",
+                            "OPDN_RESPONSABLE_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -10224,11 +10240,6 @@
                         "columnName": {
                           "enum": [
                             "OPDN_EMPRESA",
-                            "OPDN_SOLICITUD_INICIAL",
-                            "OPDN_SEEG_SEP",
-                            "OPDN_SEGMENTACION_ESPECIA",
-                            "OPDN_ESTADO_DE_LA_OPORUNI",
-                            "OPDN_PROXIMO_CONTACTO",
                             "OPDN_DIAS_PARA_PROX",
                             "OPDN_ATRASO",
                             "OPDN_EDAD",
@@ -10236,12 +10247,15 @@
                             "OPDN_TELEFONO",
                             "OPDN_TELEFONO_PARTICULAR",
                             "OPDN_TELEFONO_CELULAR",
-                            "OPDN_INFORMACION_ADICIONA",
-                            "OPDN_RESPONSABLE",
+                            "TIDC_ID_TIDC",
                             "OPDN_NIVEL",
+                            "OPDN_SOLICITUD_INICIAL",
+                            "OPDN_SEGMENTACION_ESPECIA",
+                            "OPDN_PROXIMO_CONTACTO",
                             "OPDN_FECHA_CONCRETADA",
                             "OPDN_FECHA_DESESTIMADA",
                             "OPDN_OBSERVACIONES",
+                            "OPDN_RESPONSABLE_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -11539,28 +11553,27 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "TARI_TARIFA",
-                            "TARI_DESCUENTO",
-                            "TARI_CANTIDAD",
                             "TARI_NETO",
                             "TARI_FINAL",
-                            "TARI_FECHA_DESDE",
-                            "TARI_FECHA_HASTA",
-                            "TARI_FECHA_DE_REVISION_DE",
                             "TARI_DIAS_FALTANTES",
-                            "TARI_RE_NEGOCIADA",
-                            "TARI_CONCEPTO",
-                            "TARI_COMENTARIO",
-                            "TARI_FACTURACION_RECURREN",
-                            "TARI_ES_FACTURACION_R",
                             "TARI_DIAS_A_FACTURACION_R",
-                            "TARI_ERROR_DE_FACTURACION",
-                            "TARI_FACTURADO",
-                            "TARI_TEXTO_ADICIONAL",
                             "TARI_DESCRIPCION",
                             "TARI_INFO",
                             "TARI_VIGENTE",
                             "TARI_VIGENCIA",
+                            "TARI_TARIFA",
+                            "TARI_DESCUENTO",
+                            "TARI_CANTIDAD",
+                            "TARI_FECHA_DESDE",
+                            "TARI_FECHA_HASTA",
+                            "TARI_FECHA_DE_REVISION_DE",
+                            "TARI_RE_NEGOCIADA",
+                            "TARI_CONCEPTO",
+                            "TARI_COMENTARIO",
+                            "TARI_ES_FACTURACION_R",
+                            "TARI_ERROR_DE_FACTURACION",
+                            "TARI_FACTURADO",
+                            "TARI_TEXTO_ADICIONAL",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -11624,28 +11637,27 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "TARI_TARIFA",
-                            "TARI_DESCUENTO",
-                            "TARI_CANTIDAD",
                             "TARI_NETO",
                             "TARI_FINAL",
-                            "TARI_FECHA_DESDE",
-                            "TARI_FECHA_HASTA",
-                            "TARI_FECHA_DE_REVISION_DE",
                             "TARI_DIAS_FALTANTES",
-                            "TARI_RE_NEGOCIADA",
-                            "TARI_CONCEPTO",
-                            "TARI_COMENTARIO",
-                            "TARI_FACTURACION_RECURREN",
-                            "TARI_ES_FACTURACION_R",
                             "TARI_DIAS_A_FACTURACION_R",
-                            "TARI_ERROR_DE_FACTURACION",
-                            "TARI_FACTURADO",
-                            "TARI_TEXTO_ADICIONAL",
                             "TARI_DESCRIPCION",
                             "TARI_INFO",
                             "TARI_VIGENTE",
                             "TARI_VIGENCIA",
+                            "TARI_TARIFA",
+                            "TARI_DESCUENTO",
+                            "TARI_CANTIDAD",
+                            "TARI_FECHA_DESDE",
+                            "TARI_FECHA_HASTA",
+                            "TARI_FECHA_DE_REVISION_DE",
+                            "TARI_RE_NEGOCIADA",
+                            "TARI_CONCEPTO",
+                            "TARI_COMENTARIO",
+                            "TARI_ES_FACTURACION_R",
+                            "TARI_ERROR_DE_FACTURACION",
+                            "TARI_FACTURADO",
+                            "TARI_TEXTO_ADICIONAL",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",

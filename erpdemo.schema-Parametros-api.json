@@ -6,7 +6,12 @@
   },
   "servers": [
     {
-      "url": "https://api.yiqi.com.ar/api/public"
+      "url": "https://api.yiqi.com.ar/api/public",
+      "description": "production"
+    },
+    {
+      "url": "https://yiqiapi.azurewebsites.net/api/public",
+      "description": "beta"
     }
   ],
   "paths": {
@@ -778,6 +783,925 @@
       "get": {
         "tags": [
           "Categoría de Origen de Pedido"
+        ],
+        "summary": "Descarga un reporte asociado a una entidad",
+        "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "reportName",
+            "in": "query",
+            "description": "Nombre del reporte",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reporte encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo de reporte"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un reporte con ese nombre en la entidad"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/COBRADOR": {
+      "post": {
+        "tags": [
+          "Cobrador"
+        ],
+        "summary": "Create a Cobrador.",
+        "description": "Creates a new instance of Cobrador.\n\n**Key Attributes (Unique):** `COHA_NOMBRE` (Nombre)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "required": [
+                      "COHA_NOMBRE",
+                      "TIDC_ID_TIDC"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "COHA_NOMBRE": {
+                        "title": "Nombre",
+                        "maxLength": 100,
+                        "type": "string"
+                      },
+                      "COHA_USUARIO_DE_YIQI": {
+                        "title": "Usuario de YiQi",
+                        "type": "integer",
+                        "nullable": true
+                      },
+                      "SUCU_ID_SUCU": {
+                        "title": "Sucursal",
+                        "type": "integer",
+                        "description": " This is a foreign key to Sucursal. An id of Sucursal is expected",
+                        "nullable": true
+                      },
+                      "TIDC_ID_TIDC": {
+                        "title": "Tipo de Cobrador",
+                        "type": "integer",
+                        "description": " This is a foreign key to Tipo de cobrador. An id of Tipo de cobrador is expected"
+                      },
+                      "COHA_CODIGO": {
+                        "title": "Codigo",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "COHA_DESHABILITADO": {
+                        "title": "Deshabilitado",
+                        "type": "boolean",
+                        "nullable": true
+                      }
+                    },
+                    "description": "Instance data. Key attributes (COHA_NOMBRE) must be unique across all instances."
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: COHA_NOMBRE"
+          }
+        }
+      }
+    },
+    "/COBRADOR/{id}": {
+      "get": {
+        "tags": [
+          "Cobrador"
+        ],
+        "description": "Get a Cobrador by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Cobrador id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "COHA_NOMBRE": {
+                      "title": "Nombre",
+                      "type": "string"
+                    },
+                    "COHA_USUARIO_DE_YIQI": {
+                      "title": "Usuario de YiQi",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "SUCU_ID_SUCU": {
+                      "title": "Sucursal",
+                      "type": "integer",
+                      "description": "Foreign key to Sucursal",
+                      "nullable": true
+                    },
+                    "TIDC_ID_TIDC": {
+                      "title": "Tipo de Cobrador",
+                      "type": "integer",
+                      "description": "Foreign key to Tipo de cobrador"
+                    },
+                    "COHA_ULTIMO_TRIMESTRE": {
+                      "title": "Último trimestre",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "COHA_ANTERIOR": {
+                      "title": "Anterior",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "COHA_CODIGO": {
+                      "title": "Codigo",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "COHA_DESHABILITADO": {
+                      "title": "Deshabilitado",
+                      "type": "boolean",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Cobrador"
+        ],
+        "summary": "Update a Cobrador by id.",
+        "description": "Update a Cobrador",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Cobrador id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "required": [
+                      "COHA_NOMBRE",
+                      "TIDC_ID_TIDC"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "COHA_NOMBRE": {
+                        "title": "Nombre",
+                        "maxLength": 100,
+                        "type": "string"
+                      },
+                      "COHA_USUARIO_DE_YIQI": {
+                        "title": "Usuario de YiQi",
+                        "type": "integer",
+                        "nullable": true
+                      },
+                      "SUCU_ID_SUCU": {
+                        "title": "Sucursal",
+                        "type": "integer",
+                        "description": " This is a foreign key to Sucursal. An id of Sucursal is expected",
+                        "nullable": true
+                      },
+                      "TIDC_ID_TIDC": {
+                        "title": "Tipo de Cobrador",
+                        "type": "integer",
+                        "description": " This is a foreign key to Tipo de cobrador. An id of Tipo de cobrador is expected"
+                      },
+                      "COHA_CODIGO": {
+                        "title": "Codigo",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "COHA_DESHABILITADO": {
+                        "title": "Deshabilitado",
+                        "type": "boolean",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Cobrador"
+        ],
+        "summary": "Delete a Cobrador by id.",
+        "description": "Delete a Cobrador",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Cobrador id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance deleted successfully"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Entity or instance not found"
+          }
+        }
+      }
+    },
+    "/COBRADOR/search": {
+      "get": {
+        "tags": [
+          "Cobrador"
+        ],
+        "summary": "Fast search endpoint. Returns up to 50 Cobrador records; prefer /query for controlled, production-grade listings.",
+        "description": "Performs a lightweight search over Cobrador instances. This endpoint is intended for fast lookup scenarios and may return a limited result set with the default response shape, including all available columns. Use /search when simplicity and quick retrieval are more important than payload optimization or query flexibility. For production listings that require configurable pagination, explicit column selection, or advanced filters, prefer /query.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "COHA_NOMBRE",
+            "in": "query",
+            "description": "Nombre",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "TIDC_ID_TIDC",
+            "in": "query",
+            "description": "Tipo de Cobrador",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/COBRADOR/smartie": {
+      "get": {
+        "tags": [
+          "Cobrador"
+        ],
+        "description": "Get a page of a smartie",
+        "parameters": [
+          {
+            "name": "smartieId",
+            "in": "query",
+            "description": "Smartie id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": " Page number (1-based)",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": " Search term",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/COBRADOR/query": {
+      "post": {
+        "tags": [
+          "Cobrador"
+        ],
+        "summary": "Execute dynamic query without persisted smartie",
+        "description": "Performs a dynamic query on Cobrador instances with custom columns, filters, sorting, aggregations, and configurable pagination. Use this endpoint for production-grade listings that require predictable performance, payload control, and advanced filtering. Unlike /search, /query allows explicit column selection and page size configuration, making it the preferred option for list screens, integrations, and high-volume data retrieval scenarios. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dynamic query parameters including pagination, columns, filters, and search criteria",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "page"
+                ],
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Page number (1-based)",
+                    "default": 1
+                  },
+                  "pageSize": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Number of records per page",
+                    "default": 50
+                  },
+                  "search": {
+                    "type": "string",
+                    "description": "Fast search term to filter across all columns",
+                    "nullable": true
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "field"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "enum": [
+                            "COHA_ULTIMO_TRIMESTRE",
+                            "COHA_ANTERIOR",
+                            "COHA_NOMBRE",
+                            "COHA_CODIGO",
+                            "COHA_DESHABILITADO",
+                            "COHA_USUARIO_DE_YIQI_NOMBRE",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Physical column name (required). Available columns from entity view."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Custom column title (optional)",
+                          "nullable": true
+                        },
+                        "sortDirection": {
+                          "enum": [
+                            "ASC",
+                            "DESC"
+                          ],
+                          "type": "string",
+                          "description": "Sort direction",
+                          "nullable": true
+                        },
+                        "order": {
+                          "type": "integer",
+                          "description": "Column display order (optional)",
+                          "nullable": true
+                        },
+                        "sortOrder": {
+                          "type": "integer",
+                          "description": "Sort priority order (optional)",
+                          "nullable": true
+                        },
+                        "aggregation": {
+                          "enum": [
+                            "SUM",
+                            "COUNT",
+                            "AVG",
+                            "MIN",
+                            "MAX"
+                          ],
+                          "type": "string",
+                          "description": "Aggregation function",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Column specifications. If null or empty, default header columns will be used",
+                    "nullable": true
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "columnName",
+                        "operator",
+                        "value"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "columnName": {
+                          "enum": [
+                            "COHA_ULTIMO_TRIMESTRE",
+                            "COHA_ANTERIOR",
+                            "COHA_NOMBRE",
+                            "COHA_CODIGO",
+                            "COHA_DESHABILITADO",
+                            "COHA_USUARIO_DE_YIQI_NOMBRE",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Column name to filter (required). Available columns from entity view."
+                        },
+                        "operator": {
+                          "enum": [
+                            "=",
+                            "!=",
+                            ">",
+                            "<",
+                            ">=",
+                            "<=",
+                            "LIKE"
+                          ],
+                          "type": "string",
+                          "description": "Comparison operator"
+                        },
+                        "value": {
+                          "description": "Value to compare. Type should match column data type",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Filter specifications",
+                    "nullable": true
+                  }
+                }
+              },
+              "example": {
+                "page": 1,
+                "pageSize": 10,
+                "search": "",
+                "columns": [
+                  {
+                    "field": "COLUMN_NAME",
+                    "title": "Column Title",
+                    "sortDirection": "ASC",
+                    "sortOrder": 1
+                  }
+                ],
+                "filters": [
+                  {
+                    "columnName": "COLUMN_NAME",
+                    "operator": "=",
+                    "value": "value"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Array of records matching the query"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records (without pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Column definitions"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters or column names"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity"
+          },
+          "404": {
+            "description": "Entity not found"
+          }
+        }
+      }
+    },
+    "/COBRADOR/file": {
+      "get": {
+        "tags": [
+          "Cobrador"
+        ],
+        "summary": "Descarga un archivo de una entidad",
+        "description": "Devuelve el archivo cargado en un atributo de tipo archivo de una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archivo encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Cobrador"
+        ],
+        "summary": "Carga o reemplaza un archivo en una entidad",
+        "description": "Guarda el archivo en el atributo de tipo archivo de una instancia de entidad. Soporta dos formatos: multipart/form-data o binary directo (application/octet-stream, application/pdf, etc.).",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "description": "Tipo de contenido (MIME) del archivo (ej: application/pdf, image/png)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Nombre del archivo (opcional, se puede inferir del multipart)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Archivo a cargar. Puede enviarse como multipart/form-data o como binary directo.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "Contenido del archivo",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido binario del archivo enviado directamente",
+                "format": "binary"
+              }
+            },
+            "application/pdf": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido PDF enviado directamente",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Archivo guardado correctamente"
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/COBRADOR/report": {
+      "get": {
+        "tags": [
+          "Cobrador"
         ],
         "summary": "Descarga un reporte asociado a una entidad",
         "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
@@ -3426,13 +4350,11 @@
                             "ODPB_NOMBRE",
                             "ODPB_ACTIVO",
                             "ODPB_INSTRUCTIVO",
-                            "ODPB_CONFIGURACION_DE_PED",
                             "ODPB_FACTURAR_PEDIDO",
                             "ODPB_FACTURAR_EN_RESERVA_",
                             "ODPB_PEDIDO_DE_RESERVADA",
                             "ODPB_ESPERA_SEGUNDA_VALID",
                             "ODPB_ESPERA_PICKING_LIST",
-                            "ODPB_OP_SEP",
                             "ODPB_OP_AUTOMATICA",
                             "ODPB_TOKEN",
                             "ODPB_TOKEN_SECRET",
@@ -3519,13 +4441,11 @@
                             "ODPB_NOMBRE",
                             "ODPB_ACTIVO",
                             "ODPB_INSTRUCTIVO",
-                            "ODPB_CONFIGURACION_DE_PED",
                             "ODPB_FACTURAR_PEDIDO",
                             "ODPB_FACTURAR_EN_RESERVA_",
                             "ODPB_PEDIDO_DE_RESERVADA",
                             "ODPB_ESPERA_SEGUNDA_VALID",
                             "ODPB_ESPERA_PICKING_LIST",
-                            "ODPB_OP_SEP",
                             "ODPB_OP_AUTOMATICA",
                             "ODPB_TOKEN",
                             "ODPB_TOKEN_SECRET",
@@ -5936,6 +6856,11 @@
                       "type": "string",
                       "nullable": true
                     },
+                    "PARA_ID_SCHEMA": {
+                      "title": "ID Schema",
+                      "type": "integer",
+                      "nullable": true
+                    },
                     "PARA_CLAVE": {
                       "title": "Clave",
                       "type": "integer"
@@ -6189,11 +7114,6 @@
                     "PARA_NOMBRE_LISTA_2": {
                       "title": "Nombre Lista 2",
                       "type": "string",
-                      "nullable": true
-                    },
-                    "PARA_ID_SCHEMA": {
-                      "title": "ID Schema",
-                      "type": "integer",
                       "nullable": true
                     },
                     "PARA_MONE_COTI": {
@@ -7444,27 +8364,26 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "PARA_OC_ENTI_ID",
+                            "PARA_HOY",
+                            "PARA_ID_INSTANCIA_AFIP",
                             "PARA_MAXIMO_DE_REDONDEO",
                             "PARA_FIRMA_DIGITAL",
                             "PARA_FIRMA_DIGITAL_ACL",
                             "PARA_BACKGROUND_COLOR",
                             "PARA_FOREGROUND_COLOR",
-                            "PARA_SMTP",
                             "PARA_HOST",
                             "PARA_PORT",
                             "PARA_USERNAME",
                             "PARA_PASSWORD",
                             "PARA_ENABLESSL",
                             "PARA_ADELANTO_PROYECCION_",
-                            "PARA_FACTURACION_ELECTRON",
                             "PARA_SOLICITUD_CERTIFICAD",
                             "PARA_CLAVE_PRIVADA_AFIP",
                             "PARA_CERTIFICADO_CLIENTE_",
                             "PARA_ARHC_ID_3904",
-                            "PARA_ULT_SEP_VENT",
                             "PARA_NUMERO_RE",
                             "PARA_NUMERO_PEDIDO",
-                            "PARA_DEFAULTS_VENTAS",
                             "PARA_CORREO_ADMINISTRACIO",
                             "PARA_ENTREGA_MANUAL_DE_FA",
                             "PARA_EMISION_MANUAL_DE_RE",
@@ -7476,7 +8395,6 @@
                             "PARA_OCULTAR_VENDEDOR_PDF",
                             "PARA_MESES_P_USO_MENSUAL",
                             "PARA_UTILIZAR_UMC",
-                            "PARA_DEFAULTS_STOCK",
                             "PARA_INGRESAR_STOCK_EN_CO",
                             "PARA_TEMPLATE_CODIGO_ARTI",
                             "PARA_NOMBRE_REMITO",
@@ -7497,10 +8415,8 @@
                             "PARA_MAX_REDONDEO_CONCILI",
                             "PARA_ESTIMACION_IIBB",
                             "PARA_ESTIMACION_DEB_CRED",
-                            "PARA_ACTUALIZACION_DE_COT",
                             "PARA_ACTUALIZAR_A_LA_MAAN",
                             "PARA_ACTUALIZAR_A_LA_TARD",
-                            "PARA_INTER_BAN_SEPA",
                             "PARA_CONSUMER_APP_TOKEN",
                             "PARA_CONSUMER_CLIENT_ID",
                             "PARA_CONSUMER_CLIENT_SEC",
@@ -7515,10 +8431,8 @@
                             "PARA_COTI_PDF_UNI",
                             "PARA_EXCLUIR_SKU_EN_PDF_C",
                             "PARA_FECHA_VIGENCIA_DIAS",
-                            "PARA_ULT_SEP_COMERCIAL",
                             "PARA_ULTIMO_NUMERO_DE_COT",
                             "PARA_CONDICIONES_DE_SERVI",
-                            "PARA_DEFAULTS_COMPRAS",
                             "PARA_MAXIMA_AUTO_APROBACI",
                             "PARA_NO_CAMBIAR_FECHA_DE_",
                             "PARA_OC__NO_CREAR_REMITO_",
@@ -7528,26 +8442,23 @@
                             "PARA_MODIFICAR_CONCP_COM",
                             "PARA_ENVIAR_TEMPLATE_DE_R",
                             "PARA_SMARTIE_FP_ID",
-                            "PARA_OC_ENTI_ID",
                             "PARA_FP_SHOW_LAST_OC",
                             "PARA_FRON_REG_SIN_PRO",
                             "PARA_CUERPO_DEL_MAIL_AL_P",
                             "PARA_CUERPO_DEL_MAIL_ORDE",
-                            "PARA_ULT_SEP_COMPRAS",
                             "PARA_NUMERO_OP",
                             "PARA_NUMERO_PAGO",
                             "PARA_REMITENTE_PAGOS",
                             "PARA_CALCULA_ART_REQ",
                             "PARA_OPERACIONES_MANUALES",
                             "PARA_BLOQUEO_DE_MOVIMIENT",
-                            "PARA_CUENTAS_SEP",
                             "PARA_AGRUPAR_ASIENTOS",
                             "PARA_PER_SOLO_CON_PADRON",
                             "PARA_ASIENTO_ANULACION_MI",
                             "PARA_UNIFICAR_MOVS_PAT",
                             "PARA_FIRMA_DIGITAL_RET",
                             "PARA_FIRMA_DIG_RET_ACL",
-                            "PARA_HOY",
+                            "PARA_ID_SCHEMA",
                             "PARA_CLAVE",
                             "PARA_LINK_TICKETS",
                             "PARA_LOGO_YIQI",
@@ -7559,7 +8470,6 @@
                             "PARA_PEDIDO_DESPACHA_REMI",
                             "PARA_URL_INTERN",
                             "PARA_PERF_BAS_HABILITADO",
-                            "PARA_SEP_MOD",
                             "PARA_CALIDAD",
                             "PARA_CLIENTES_Y_PROVEEDOR",
                             "PARA_COMERCIAL_CRM",
@@ -7575,7 +8485,6 @@
                             "PARA_USA_KRIKOS",
                             "PARA_EDITORIAL",
                             "PARA_MENSAJERIA",
-                            "PARA_INTEGRACIONES",
                             "PARA_ML",
                             "PARA_VT",
                             "PARA_FV",
@@ -7589,8 +8498,6 @@
                             "PARA_MG2",
                             "PARA_SC",
                             "PARA_TO",
-                            "PARA_ID_INSTANCIA_AFIP",
-                            "PARA_MAIL_INDICADORES",
                             "PARA_JSON",
                             "PARA_NO_DESPACHAR_REMITO",
                             "PARA_OS_USA_UBICACION_CLI",
@@ -7658,27 +8565,26 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "PARA_OC_ENTI_ID",
+                            "PARA_HOY",
+                            "PARA_ID_INSTANCIA_AFIP",
                             "PARA_MAXIMO_DE_REDONDEO",
                             "PARA_FIRMA_DIGITAL",
                             "PARA_FIRMA_DIGITAL_ACL",
                             "PARA_BACKGROUND_COLOR",
                             "PARA_FOREGROUND_COLOR",
-                            "PARA_SMTP",
                             "PARA_HOST",
                             "PARA_PORT",
                             "PARA_USERNAME",
                             "PARA_PASSWORD",
                             "PARA_ENABLESSL",
                             "PARA_ADELANTO_PROYECCION_",
-                            "PARA_FACTURACION_ELECTRON",
                             "PARA_SOLICITUD_CERTIFICAD",
                             "PARA_CLAVE_PRIVADA_AFIP",
                             "PARA_CERTIFICADO_CLIENTE_",
                             "PARA_ARHC_ID_3904",
-                            "PARA_ULT_SEP_VENT",
                             "PARA_NUMERO_RE",
                             "PARA_NUMERO_PEDIDO",
-                            "PARA_DEFAULTS_VENTAS",
                             "PARA_CORREO_ADMINISTRACIO",
                             "PARA_ENTREGA_MANUAL_DE_FA",
                             "PARA_EMISION_MANUAL_DE_RE",
@@ -7690,7 +8596,6 @@
                             "PARA_OCULTAR_VENDEDOR_PDF",
                             "PARA_MESES_P_USO_MENSUAL",
                             "PARA_UTILIZAR_UMC",
-                            "PARA_DEFAULTS_STOCK",
                             "PARA_INGRESAR_STOCK_EN_CO",
                             "PARA_TEMPLATE_CODIGO_ARTI",
                             "PARA_NOMBRE_REMITO",
@@ -7711,10 +8616,8 @@
                             "PARA_MAX_REDONDEO_CONCILI",
                             "PARA_ESTIMACION_IIBB",
                             "PARA_ESTIMACION_DEB_CRED",
-                            "PARA_ACTUALIZACION_DE_COT",
                             "PARA_ACTUALIZAR_A_LA_MAAN",
                             "PARA_ACTUALIZAR_A_LA_TARD",
-                            "PARA_INTER_BAN_SEPA",
                             "PARA_CONSUMER_APP_TOKEN",
                             "PARA_CONSUMER_CLIENT_ID",
                             "PARA_CONSUMER_CLIENT_SEC",
@@ -7729,10 +8632,8 @@
                             "PARA_COTI_PDF_UNI",
                             "PARA_EXCLUIR_SKU_EN_PDF_C",
                             "PARA_FECHA_VIGENCIA_DIAS",
-                            "PARA_ULT_SEP_COMERCIAL",
                             "PARA_ULTIMO_NUMERO_DE_COT",
                             "PARA_CONDICIONES_DE_SERVI",
-                            "PARA_DEFAULTS_COMPRAS",
                             "PARA_MAXIMA_AUTO_APROBACI",
                             "PARA_NO_CAMBIAR_FECHA_DE_",
                             "PARA_OC__NO_CREAR_REMITO_",
@@ -7742,26 +8643,23 @@
                             "PARA_MODIFICAR_CONCP_COM",
                             "PARA_ENVIAR_TEMPLATE_DE_R",
                             "PARA_SMARTIE_FP_ID",
-                            "PARA_OC_ENTI_ID",
                             "PARA_FP_SHOW_LAST_OC",
                             "PARA_FRON_REG_SIN_PRO",
                             "PARA_CUERPO_DEL_MAIL_AL_P",
                             "PARA_CUERPO_DEL_MAIL_ORDE",
-                            "PARA_ULT_SEP_COMPRAS",
                             "PARA_NUMERO_OP",
                             "PARA_NUMERO_PAGO",
                             "PARA_REMITENTE_PAGOS",
                             "PARA_CALCULA_ART_REQ",
                             "PARA_OPERACIONES_MANUALES",
                             "PARA_BLOQUEO_DE_MOVIMIENT",
-                            "PARA_CUENTAS_SEP",
                             "PARA_AGRUPAR_ASIENTOS",
                             "PARA_PER_SOLO_CON_PADRON",
                             "PARA_ASIENTO_ANULACION_MI",
                             "PARA_UNIFICAR_MOVS_PAT",
                             "PARA_FIRMA_DIGITAL_RET",
                             "PARA_FIRMA_DIG_RET_ACL",
-                            "PARA_HOY",
+                            "PARA_ID_SCHEMA",
                             "PARA_CLAVE",
                             "PARA_LINK_TICKETS",
                             "PARA_LOGO_YIQI",
@@ -7773,7 +8671,6 @@
                             "PARA_PEDIDO_DESPACHA_REMI",
                             "PARA_URL_INTERN",
                             "PARA_PERF_BAS_HABILITADO",
-                            "PARA_SEP_MOD",
                             "PARA_CALIDAD",
                             "PARA_CLIENTES_Y_PROVEEDOR",
                             "PARA_COMERCIAL_CRM",
@@ -7789,7 +8686,6 @@
                             "PARA_USA_KRIKOS",
                             "PARA_EDITORIAL",
                             "PARA_MENSAJERIA",
-                            "PARA_INTEGRACIONES",
                             "PARA_ML",
                             "PARA_VT",
                             "PARA_FV",
@@ -7803,8 +8699,6 @@
                             "PARA_MG2",
                             "PARA_SC",
                             "PARA_TO",
-                            "PARA_ID_INSTANCIA_AFIP",
-                            "PARA_MAIL_INDICADORES",
                             "PARA_JSON",
                             "PARA_NO_DESPACHAR_REMITO",
                             "PARA_OS_USA_UBICACION_CLI",
@@ -9813,6 +10707,830 @@
       "get": {
         "tags": [
           "Temporada"
+        ],
+        "summary": "Descarga un reporte asociado a una entidad",
+        "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "reportName",
+            "in": "query",
+            "description": "Nombre del reporte",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reporte encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo de reporte"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un reporte con ese nombre en la entidad"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/TIPO_DE_COBRADOR": {
+      "post": {
+        "tags": [
+          "Tipo de cobrador"
+        ],
+        "summary": "Create a Tipo de cobrador.",
+        "description": "Creates a new instance of Tipo de cobrador.\n\n**Key Attributes (Unique):** `TIDC_NOMBRE` (Nombre)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "TIDC_NOMBRE": {
+                        "title": "Nombre",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "TIDC_OBSERVACION": {
+                        "title": "Observación",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      }
+                    },
+                    "description": "Instance data. Key attributes (TIDC_NOMBRE) must be unique across all instances."
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: TIDC_NOMBRE"
+          }
+        }
+      }
+    },
+    "/TIPO_DE_COBRADOR/{id}": {
+      "get": {
+        "tags": [
+          "Tipo de cobrador"
+        ],
+        "description": "Get a Tipo de cobrador by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Tipo de cobrador id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "TIDC_NOMBRE": {
+                      "title": "Nombre",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "TIDC_OBSERVACION": {
+                      "title": "Observación",
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Tipo de cobrador"
+        ],
+        "summary": "Update a Tipo de cobrador by id.",
+        "description": "Update a Tipo de cobrador",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Tipo de cobrador id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "TIDC_NOMBRE": {
+                        "title": "Nombre",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "TIDC_OBSERVACION": {
+                        "title": "Observación",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tipo de cobrador"
+        ],
+        "summary": "Delete a Tipo de cobrador by id.",
+        "description": "Delete a Tipo de cobrador",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Tipo de cobrador id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance deleted successfully"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Entity or instance not found"
+          }
+        }
+      }
+    },
+    "/TIPO_DE_COBRADOR/search": {
+      "get": {
+        "tags": [
+          "Tipo de cobrador"
+        ],
+        "summary": "Fast search endpoint. Returns up to 50 Tipo de cobrador records; prefer /query for controlled, production-grade listings.",
+        "description": "Performs a lightweight search over Tipo de cobrador instances. This endpoint is intended for fast lookup scenarios and may return a limited result set with the default response shape, including all available columns. Use /search when simplicity and quick retrieval are more important than payload optimization or query flexibility. For production listings that require configurable pagination, explicit column selection, or advanced filters, prefer /query.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "TIDC_NOMBRE",
+            "in": "query",
+            "description": "Nombre",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/TIPO_DE_COBRADOR/smartie": {
+      "get": {
+        "tags": [
+          "Tipo de cobrador"
+        ],
+        "description": "Get a page of a smartie",
+        "parameters": [
+          {
+            "name": "smartieId",
+            "in": "query",
+            "description": "Smartie id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": " Page number (1-based)",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": " Search term",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/TIPO_DE_COBRADOR/query": {
+      "post": {
+        "tags": [
+          "Tipo de cobrador"
+        ],
+        "summary": "Execute dynamic query without persisted smartie",
+        "description": "Performs a dynamic query on Tipo de cobrador instances with custom columns, filters, sorting, aggregations, and configurable pagination. Use this endpoint for production-grade listings that require predictable performance, payload control, and advanced filtering. Unlike /search, /query allows explicit column selection and page size configuration, making it the preferred option for list screens, integrations, and high-volume data retrieval scenarios. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dynamic query parameters including pagination, columns, filters, and search criteria",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "page"
+                ],
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Page number (1-based)",
+                    "default": 1
+                  },
+                  "pageSize": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Number of records per page",
+                    "default": 50
+                  },
+                  "search": {
+                    "type": "string",
+                    "description": "Fast search term to filter across all columns",
+                    "nullable": true
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "field"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "enum": [
+                            "TIDC_NOMBRE",
+                            "TIDC_OBSERVACION",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Physical column name (required). Available columns from entity view."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Custom column title (optional)",
+                          "nullable": true
+                        },
+                        "sortDirection": {
+                          "enum": [
+                            "ASC",
+                            "DESC"
+                          ],
+                          "type": "string",
+                          "description": "Sort direction",
+                          "nullable": true
+                        },
+                        "order": {
+                          "type": "integer",
+                          "description": "Column display order (optional)",
+                          "nullable": true
+                        },
+                        "sortOrder": {
+                          "type": "integer",
+                          "description": "Sort priority order (optional)",
+                          "nullable": true
+                        },
+                        "aggregation": {
+                          "enum": [
+                            "SUM",
+                            "COUNT",
+                            "AVG",
+                            "MIN",
+                            "MAX"
+                          ],
+                          "type": "string",
+                          "description": "Aggregation function",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Column specifications. If null or empty, default header columns will be used",
+                    "nullable": true
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "columnName",
+                        "operator",
+                        "value"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "columnName": {
+                          "enum": [
+                            "TIDC_NOMBRE",
+                            "TIDC_OBSERVACION",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Column name to filter (required). Available columns from entity view."
+                        },
+                        "operator": {
+                          "enum": [
+                            "=",
+                            "!=",
+                            ">",
+                            "<",
+                            ">=",
+                            "<=",
+                            "LIKE"
+                          ],
+                          "type": "string",
+                          "description": "Comparison operator"
+                        },
+                        "value": {
+                          "description": "Value to compare. Type should match column data type",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Filter specifications",
+                    "nullable": true
+                  }
+                }
+              },
+              "example": {
+                "page": 1,
+                "pageSize": 10,
+                "search": "",
+                "columns": [
+                  {
+                    "field": "COLUMN_NAME",
+                    "title": "Column Title",
+                    "sortDirection": "ASC",
+                    "sortOrder": 1
+                  }
+                ],
+                "filters": [
+                  {
+                    "columnName": "COLUMN_NAME",
+                    "operator": "=",
+                    "value": "value"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Array of records matching the query"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records (without pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Column definitions"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters or column names"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity"
+          },
+          "404": {
+            "description": "Entity not found"
+          }
+        }
+      }
+    },
+    "/TIPO_DE_COBRADOR/file": {
+      "get": {
+        "tags": [
+          "Tipo de cobrador"
+        ],
+        "summary": "Descarga un archivo de una entidad",
+        "description": "Devuelve el archivo cargado en un atributo de tipo archivo de una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archivo encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Tipo de cobrador"
+        ],
+        "summary": "Carga o reemplaza un archivo en una entidad",
+        "description": "Guarda el archivo en el atributo de tipo archivo de una instancia de entidad. Soporta dos formatos: multipart/form-data o binary directo (application/octet-stream, application/pdf, etc.).",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "description": "Tipo de contenido (MIME) del archivo (ej: application/pdf, image/png)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Nombre del archivo (opcional, se puede inferir del multipart)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Archivo a cargar. Puede enviarse como multipart/form-data o como binary directo.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "Contenido del archivo",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido binario del archivo enviado directamente",
+                "format": "binary"
+              }
+            },
+            "application/pdf": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido PDF enviado directamente",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Archivo guardado correctamente"
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/TIPO_DE_COBRADOR/report": {
+      "get": {
+        "tags": [
+          "Tipo de cobrador"
         ],
         "summary": "Descarga un reporte asociado a una entidad",
         "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
@@ -16097,7 +17815,7 @@
                         "field": {
                           "enum": [
                             "SECT_NOMBRE",
-                            "SECT_RESPONSABLE",
+                            "SECT_RESPONSABLE_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -16162,7 +17880,7 @@
                         "columnName": {
                           "enum": [
                             "SECT_NOMBRE",
-                            "SECT_RESPONSABLE",
+                            "SECT_RESPONSABLE_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -30887,10 +32605,22 @@
                               "description": " This is a foreign key to Tipo de Cliente. An id of Tipo de Cliente is expected",
                               "nullable": true
                             },
+                            "MEDE_ID_MEDE": {
+                              "title": "Método de envío",
+                              "type": "integer",
+                              "description": " This is a foreign key to Método de envío. An id of Método de envío is expected",
+                              "nullable": true
+                            },
                             "CLIE_PASSWORD": {
                               "title": "Password",
                               "maxLength": 100,
                               "type": "string",
+                              "nullable": true
+                            },
+                            "CLIE_FRECU_COMPRA_DIAS": {
+                              "title": "Proveedor - Frecuencia de compra (días)",
+                              "type": "integer",
+                              "description": "Cantidad de días estimada entre compras al proveedor.",
                               "nullable": true
                             },
                             "CLIE_OBSERVACIONES": {
@@ -31508,9 +33238,19 @@
                             "type": "integer",
                             "nullable": true
                           },
+                          "MEDE_ID_MEDE": {
+                            "title": "Método de envío",
+                            "type": "integer",
+                            "nullable": true
+                          },
                           "CLIE_PASSWORD": {
                             "title": "Password",
                             "type": "string",
+                            "nullable": true
+                          },
+                          "CLIE_FRECU_COMPRA_DIAS": {
+                            "title": "Proveedor - Frecuencia de compra (días)",
+                            "type": "integer",
                             "nullable": true
                           },
                           "CLIE_OBSERVACIONES": {
@@ -32122,10 +33862,22 @@
                               "description": " This is a foreign key to Tipo de Cliente. An id of Tipo de Cliente is expected",
                               "nullable": true
                             },
+                            "MEDE_ID_MEDE": {
+                              "title": "Método de envío",
+                              "type": "integer",
+                              "description": " This is a foreign key to Método de envío. An id of Método de envío is expected",
+                              "nullable": true
+                            },
                             "CLIE_PASSWORD": {
                               "title": "Password",
                               "maxLength": 100,
                               "type": "string",
+                              "nullable": true
+                            },
+                            "CLIE_FRECU_COMPRA_DIAS": {
+                              "title": "Proveedor - Frecuencia de compra (días)",
+                              "type": "integer",
+                              "description": "Cantidad de días estimada entre compras al proveedor.",
                               "nullable": true
                             },
                             "CLIE_OBSERVACIONES": {
@@ -32703,8 +34455,8 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "ORCO_ORIGENCONTACTO",
                             "ORCO_ORIGENDELCONTACTO",
+                            "ORCO_ORIGENCONTACTO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -32768,8 +34520,8 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "ORCO_ORIGENCONTACTO",
                             "ORCO_ORIGENDELCONTACTO",
+                            "ORCO_ORIGENCONTACTO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -36321,10 +38073,10 @@
     "/TIPO_DE_ACCION": {
       "post": {
         "tags": [
-          "Comercial/CRM / Tipo de acción"
+          "Comercial/CRM / Tipo de acción comercial"
         ],
-        "summary": "Create a Tipo de acción.",
-        "description": "Creates a new instance of Tipo de acción.\n\n**Key Attributes (Unique):** `TIDA_NOMBRE` (Nombre)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
+        "summary": "Create a Tipo de acción comercial.",
+        "description": "Creates a new instance of Tipo de acción comercial.\n\n**Key Attributes (Unique):** `TIDA_NOMBRE` (Nombre)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -36392,14 +38144,14 @@
     "/TIPO_DE_ACCION/{id}": {
       "get": {
         "tags": [
-          "Comercial/CRM / Tipo de acción"
+          "Comercial/CRM / Tipo de acción comercial"
         ],
-        "description": "Get a Tipo de acción by id",
+        "description": "Get a Tipo de acción comercial by id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "Tipo de acción id",
+            "description": "Tipo de acción comercial id",
             "required": true,
             "schema": {
               "type": "integer"
@@ -36480,15 +38232,15 @@
       },
       "put": {
         "tags": [
-          "Comercial/CRM / Tipo de acción"
+          "Comercial/CRM / Tipo de acción comercial"
         ],
-        "summary": "Update a Tipo de acción by id.",
-        "description": "Update a Tipo de acción",
+        "summary": "Update a Tipo de acción comercial by id.",
+        "description": "Update a Tipo de acción comercial",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "Tipo de acción id",
+            "description": "Tipo de acción comercial id",
             "required": true,
             "schema": {
               "type": "integer"
@@ -36537,15 +38289,15 @@
       },
       "delete": {
         "tags": [
-          "Comercial/CRM / Tipo de acción"
+          "Comercial/CRM / Tipo de acción comercial"
         ],
-        "summary": "Delete a Tipo de acción by id.",
-        "description": "Delete a Tipo de acción",
+        "summary": "Delete a Tipo de acción comercial by id.",
+        "description": "Delete a Tipo de acción comercial",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "Tipo de acción id",
+            "description": "Tipo de acción comercial id",
             "required": true,
             "schema": {
               "type": "integer"
@@ -36577,10 +38329,10 @@
     "/TIPO_DE_ACCION/search": {
       "get": {
         "tags": [
-          "Comercial/CRM / Tipo de acción"
+          "Comercial/CRM / Tipo de acción comercial"
         ],
-        "summary": "Fast search endpoint. Returns up to 50 Tipo de acción records; prefer /query for controlled, production-grade listings.",
-        "description": "Performs a lightweight search over Tipo de acción instances. This endpoint is intended for fast lookup scenarios and may return a limited result set with the default response shape, including all available columns. Use /search when simplicity and quick retrieval are more important than payload optimization or query flexibility. For production listings that require configurable pagination, explicit column selection, or advanced filters, prefer /query.",
+        "summary": "Fast search endpoint. Returns up to 50 Tipo de acción comercial records; prefer /query for controlled, production-grade listings.",
+        "description": "Performs a lightweight search over Tipo de acción comercial instances. This endpoint is intended for fast lookup scenarios and may return a limited result set with the default response shape, including all available columns. Use /search when simplicity and quick retrieval are more important than payload optimization or query flexibility. For production listings that require configurable pagination, explicit column selection, or advanced filters, prefer /query.",
         "parameters": [
           {
             "name": "schemaId",
@@ -36614,7 +38366,7 @@
     "/TIPO_DE_ACCION/smartie": {
       "get": {
         "tags": [
-          "Comercial/CRM / Tipo de acción"
+          "Comercial/CRM / Tipo de acción comercial"
         ],
         "description": "Get a page of a smartie",
         "parameters": [
@@ -36668,10 +38420,10 @@
     "/TIPO_DE_ACCION/query": {
       "post": {
         "tags": [
-          "Comercial/CRM / Tipo de acción"
+          "Comercial/CRM / Tipo de acción comercial"
         ],
         "summary": "Execute dynamic query without persisted smartie",
-        "description": "Performs a dynamic query on Tipo de acción instances with custom columns, filters, sorting, aggregations, and configurable pagination. Use this endpoint for production-grade listings that require predictable performance, payload control, and advanced filtering. Unlike /search, /query allows explicit column selection and page size configuration, making it the preferred option for list screens, integrations, and high-volume data retrieval scenarios. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
+        "description": "Performs a dynamic query on Tipo de acción comercial instances with custom columns, filters, sorting, aggregations, and configurable pagination. Use this endpoint for production-grade listings that require predictable performance, payload control, and advanced filtering. Unlike /search, /query allows explicit column selection and page size configuration, making it the preferred option for list screens, integrations, and high-volume data retrieval scenarios. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
         "parameters": [
           {
             "name": "schemaId",
@@ -36893,7 +38645,7 @@
     "/TIPO_DE_ACCION/file": {
       "get": {
         "tags": [
-          "Comercial/CRM / Tipo de acción"
+          "Comercial/CRM / Tipo de acción comercial"
         ],
         "summary": "Descarga un archivo de una entidad",
         "description": "Devuelve el archivo cargado en un atributo de tipo archivo de una instancia de entidad.",
@@ -36958,7 +38710,7 @@
       },
       "put": {
         "tags": [
-          "Comercial/CRM / Tipo de acción"
+          "Comercial/CRM / Tipo de acción comercial"
         ],
         "summary": "Carga o reemplaza un archivo en una entidad",
         "description": "Guarda el archivo en el atributo de tipo archivo de una instancia de entidad. Soporta dos formatos: multipart/form-data o binary directo (application/octet-stream, application/pdf, etc.).",
@@ -37059,7 +38811,7 @@
     "/TIPO_DE_ACCION/report": {
       "get": {
         "tags": [
-          "Comercial/CRM / Tipo de acción"
+          "Comercial/CRM / Tipo de acción comercial"
         ],
         "summary": "Descarga un reporte asociado a una entidad",
         "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
@@ -39189,9 +40941,9 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "CODC_DESCRIPCION",
                             "CODC_NOMBRE",
                             "CODC_CODIGO",
-                            "CODC_DESCRIPCION",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -39255,9 +41007,9 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "CODC_DESCRIPCION",
                             "CODC_NOMBRE",
                             "CODC_CODIGO",
-                            "CODC_DESCRIPCION",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -44335,8 +46087,8 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "ASAG_FECHA",
                             "ASAG_DESCRIPCION",
+                            "ASAG_FECHA",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -44400,8 +46152,8 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "ASAG_FECHA",
                             "ASAG_DESCRIPCION",
+                            "ASAG_FECHA",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -48671,18 +50423,18 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "CUCO_ES_HOJA",
+                            "CUCO_SIGNO_DEBE",
+                            "CUCO_NIVEL",
+                            "CUCO_CANT_MOV_ASOCIADOS",
                             "CUCO_DESCRIPCION",
                             "CUCO_CODIGO",
                             "CUCO_ACTIVA",
-                            "CUCO_ES_HOJA",
-                            "CUCO_SIGNO_DEBE",
                             "CUCO_NOMBRE",
-                            "CUCO_NIVEL",
                             "CUCO_ERROR",
                             "CUCO_INCLUIR_EN_AJUSTE",
                             "CUCO_EXCLUIR_EN_AJUSTE",
                             "CUCO_CODIGO_ALTERNATIVO",
-                            "CUCO_CANT_MOV_ASOCIADOS",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -48746,18 +50498,18 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "CUCO_ES_HOJA",
+                            "CUCO_SIGNO_DEBE",
+                            "CUCO_NIVEL",
+                            "CUCO_CANT_MOV_ASOCIADOS",
                             "CUCO_DESCRIPCION",
                             "CUCO_CODIGO",
                             "CUCO_ACTIVA",
-                            "CUCO_ES_HOJA",
-                            "CUCO_SIGNO_DEBE",
                             "CUCO_NOMBRE",
-                            "CUCO_NIVEL",
                             "CUCO_ERROR",
                             "CUCO_INCLUIR_EN_AJUSTE",
                             "CUCO_EXCLUIR_EN_AJUSTE",
                             "CUCO_CODIGO_ALTERNATIVO",
-                            "CUCO_CANT_MOV_ASOCIADOS",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -51072,18 +52824,17 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "IMPU_ALICUOTA_CALCULADA",
                             "IMPU_NOMBRE",
                             "IMPU_TIPO",
                             "IMPU_NO_REALIZAR_CALCULO_",
                             "IMPU_ULTIMA_RET_REA",
                             "IMPU_ALICUOTA",
-                            "IMPU_RETENCIONES_Y_PERCEP",
                             "IMPU_ES_AGENTE_RET",
                             "IMPU_ES_AGENTE_PER",
                             "IMPU_CODIGO",
                             "IMPU_MNI_RETENCION",
                             "IMPU_COEFICIENTE_DE_DISTR",
-                            "IMPU_ALICUOTA_CALCULADA",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -51147,18 +52898,17 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "IMPU_ALICUOTA_CALCULADA",
                             "IMPU_NOMBRE",
                             "IMPU_TIPO",
                             "IMPU_NO_REALIZAR_CALCULO_",
                             "IMPU_ULTIMA_RET_REA",
                             "IMPU_ALICUOTA",
-                            "IMPU_RETENCIONES_Y_PERCEP",
                             "IMPU_ES_AGENTE_RET",
                             "IMPU_ES_AGENTE_PER",
                             "IMPU_CODIGO",
                             "IMPU_MNI_RETENCION",
                             "IMPU_COEFICIENTE_DE_DISTR",
-                            "IMPU_ALICUOTA_CALCULADA",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -54345,17 +56095,19 @@
                       "TIFA_CODIGO_AFIP_FA": {
                         "title": "Código ARCA Factura",
                         "type": "integer",
-                        "description": "Si está vacío, no genera asientos\nSi es 0, genera asientos pero se suma a una liquidación de impuestos\nSi es mayor que 0, genera asientos y una liquidación de impuestos",
+                        "description": "Si está vacío, no genera asientos ni se incluye en la liquidación de impuestos\nSi es 0, genera asientos pero NO se incluye en la liquidación de impuestos\nSi es mayor que 0, genera asientos y se incluye en la liquidación de impuestos",
                         "nullable": true
                       },
                       "TIFA_CODIGO_AFIP_ND": {
                         "title": "Código ARCA Nota de débito",
                         "type": "integer",
+                        "description": "Si está vacío, no genera asientos ni se incluye en la liquidación de impuestos\nSi es 0, genera asientos pero NO se incluye en la liquidación de impuestos\nSi es mayor que 0, genera asientos y se incluye en la liquidación de impuestos",
                         "nullable": true
                       },
                       "TIFA_CODIGO_AFIP_NC": {
                         "title": "Código ARCA Nota de crédito",
                         "type": "integer",
+                        "description": "Si está vacío, no genera asientos ni se incluye en la liquidación de impuestos\nSi es 0, genera asientos pero NO se incluye en la liquidación de impuestos\nSi es mayor que 0, genera asientos y se incluye en la liquidación de impuestos",
                         "nullable": true
                       },
                       "TIFA_DISCRIMINA_IVA": {
@@ -54553,17 +56305,19 @@
                     "TIFA_CODIGO_AFIP_FA": {
                       "title": "Código ARCA Factura",
                       "type": "integer",
-                      "description": "Si está vacío, no genera asientos\nSi es 0, genera asientos pero se suma a una liquidación de impuestos\nSi es mayor que 0, genera asientos y una liquidación de impuestos",
+                      "description": "Si está vacío, no genera asientos ni se incluye en la liquidación de impuestos\nSi es 0, genera asientos pero NO se incluye en la liquidación de impuestos\nSi es mayor que 0, genera asientos y se incluye en la liquidación de impuestos",
                       "nullable": true
                     },
                     "TIFA_CODIGO_AFIP_ND": {
                       "title": "Código ARCA Nota de débito",
                       "type": "integer",
+                      "description": "Si está vacío, no genera asientos ni se incluye en la liquidación de impuestos\nSi es 0, genera asientos pero NO se incluye en la liquidación de impuestos\nSi es mayor que 0, genera asientos y se incluye en la liquidación de impuestos",
                       "nullable": true
                     },
                     "TIFA_CODIGO_AFIP_NC": {
                       "title": "Código ARCA Nota de crédito",
                       "type": "integer",
+                      "description": "Si está vacío, no genera asientos ni se incluye en la liquidación de impuestos\nSi es 0, genera asientos pero NO se incluye en la liquidación de impuestos\nSi es mayor que 0, genera asientos y se incluye en la liquidación de impuestos",
                       "nullable": true
                     },
                     "TIFA_DISCRIMINA_IVA": {
@@ -54704,17 +56458,19 @@
                       "TIFA_CODIGO_AFIP_FA": {
                         "title": "Código ARCA Factura",
                         "type": "integer",
-                        "description": "Si está vacío, no genera asientos\nSi es 0, genera asientos pero se suma a una liquidación de impuestos\nSi es mayor que 0, genera asientos y una liquidación de impuestos",
+                        "description": "Si está vacío, no genera asientos ni se incluye en la liquidación de impuestos\nSi es 0, genera asientos pero NO se incluye en la liquidación de impuestos\nSi es mayor que 0, genera asientos y se incluye en la liquidación de impuestos",
                         "nullable": true
                       },
                       "TIFA_CODIGO_AFIP_ND": {
                         "title": "Código ARCA Nota de débito",
                         "type": "integer",
+                        "description": "Si está vacío, no genera asientos ni se incluye en la liquidación de impuestos\nSi es 0, genera asientos pero NO se incluye en la liquidación de impuestos\nSi es mayor que 0, genera asientos y se incluye en la liquidación de impuestos",
                         "nullable": true
                       },
                       "TIFA_CODIGO_AFIP_NC": {
                         "title": "Código ARCA Nota de crédito",
                         "type": "integer",
+                        "description": "Si está vacío, no genera asientos ni se incluye en la liquidación de impuestos\nSi es 0, genera asientos pero NO se incluye en la liquidación de impuestos\nSi es mayor que 0, genera asientos y se incluye en la liquidación de impuestos",
                         "nullable": true
                       },
                       "TIFA_DISCRIMINA_IVA": {
@@ -54990,11 +56746,9 @@
                             "TIFA_NOMBRE",
                             "TIFA_NOMBRE_CORTO",
                             "TIFA_LEYENDA",
-                            "TIFA_CODIGOS_AFIP",
                             "TIFA_CODIGO_AFIP_FA",
                             "TIFA_CODIGO_AFIP_ND",
                             "TIFA_CODIGO_AFIP_NC",
-                            "TIFA_COMPORTAMIENTO",
                             "TIFA_DISCRIMINA_IVA",
                             "TIFA_NO_CALCULAR_PERCEPCI",
                             "TIFA_DOCUMENTO_NO_VALIDO",
@@ -55065,11 +56819,9 @@
                             "TIFA_NOMBRE",
                             "TIFA_NOMBRE_CORTO",
                             "TIFA_LEYENDA",
-                            "TIFA_CODIGOS_AFIP",
                             "TIFA_CODIGO_AFIP_FA",
                             "TIFA_CODIGO_AFIP_ND",
                             "TIFA_CODIGO_AFIP_NC",
-                            "TIFA_COMPORTAMIENTO",
                             "TIFA_DISCRIMINA_IVA",
                             "TIFA_NO_CALCULAR_PERCEPCI",
                             "TIFA_DOCUMENTO_NO_VALIDO",
@@ -55947,7 +57699,6 @@
                             "COIA_RAZON_DE_AUTOEVALUAC",
                             "COIA_RAZON_DE_FINALIZACIO",
                             "COIA_TEMPERATURA",
-                            "COIA_TOKENS",
                             "COIA_TOKENS_DE_INICIO",
                             "COIA_TOKENS_DE_COMPLETADO",
                             "COIA_CANTIDAD_DE_TOKENS_U",
@@ -56023,7 +57774,6 @@
                             "COIA_RAZON_DE_AUTOEVALUAC",
                             "COIA_RAZON_DE_FINALIZACIO",
                             "COIA_TEMPERATURA",
-                            "COIA_TOKENS",
                             "COIA_TOKENS_DE_INICIO",
                             "COIA_TOKENS_DE_COMPLETADO",
                             "COIA_CANTIDAD_DE_TOKENS_U",
@@ -60212,9 +61962,9 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "BANC_DESCRIPCION",
                             "BANC_NOMBRE",
                             "BANC_CODIGO",
-                            "BANC_DESCRIPCION",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -60278,9 +62028,9 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "BANC_DESCRIPCION",
                             "BANC_NOMBRE",
                             "BANC_CODIGO",
-                            "BANC_DESCRIPCION",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -61132,12 +62882,12 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "COCO_ERROR",
                             "COCO_NOMBRE",
                             "COCO_SUBCADENA_1",
                             "COCO_SUBCADENA_2",
                             "COCO_ORDEN",
                             "COCO_INFO",
-                            "COCO_ERROR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -61201,12 +62951,12 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "COCO_ERROR",
                             "COCO_NOMBRE",
                             "COCO_SUBCADENA_1",
                             "COCO_SUBCADENA_2",
                             "COCO_ORDEN",
                             "COCO_INFO",
-                            "COCO_ERROR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -62030,8 +63780,8 @@
                           "enum": [
                             "CODM_COTIZACION",
                             "CODM_FECHA",
-                            "CODM_USUARIO_RESPONSABLE",
                             "CODM_ORIGEN_DE_DATO",
+                            "CODM_USUARIO_RESPONSABLE_NOMBR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -62097,8 +63847,8 @@
                           "enum": [
                             "CODM_COTIZACION",
                             "CODM_FECHA",
-                            "CODM_USUARIO_RESPONSABLE",
                             "CODM_ORIGEN_DE_DATO",
+                            "CODM_USUARIO_RESPONSABLE_NOMBR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -63295,13 +65045,13 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "MONE_AVISO",
                             "MONE_CODIGO",
                             "MONE_NOMBRE",
                             "MONE_COTIZACION",
                             "MONE_CODIGO_AFIP",
                             "MONE_SIMBOLO",
                             "MONE_MONEDA",
-                            "MONE_AVISO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -63365,13 +65115,13 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "MONE_AVISO",
                             "MONE_CODIGO",
                             "MONE_NOMBRE",
                             "MONE_COTIZACION",
                             "MONE_CODIGO_AFIP",
                             "MONE_SIMBOLO",
                             "MONE_MONEDA",
-                            "MONE_AVISO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -64691,12 +66441,12 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "TARJ_RESPONSABLE",
                             "TARJ_NUMERO",
                             "TARJ_TITULAR",
                             "TARJ_FECHA_DESDE",
                             "TARJ_FECHA_HASTA",
                             "TARJ_DESCRIPCION",
+                            "TARJ_RESPONSABLE_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -64760,12 +66510,12 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "TARJ_RESPONSABLE",
                             "TARJ_NUMERO",
                             "TARJ_TITULAR",
                             "TARJ_FECHA_DESDE",
                             "TARJ_FECHA_HASTA",
                             "TARJ_DESCRIPCION",
+                            "TARJ_RESPONSABLE_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -69633,8 +71383,8 @@
                         "field": {
                           "enum": [
                             "UNDN_NOMBRE",
-                            "UNDN_RESPONSABLE",
                             "UNDN_DESCRIPCION_ESTRATEG",
+                            "UNDN_RESPONSABLE_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -69699,8 +71449,8 @@
                         "columnName": {
                           "enum": [
                             "UNDN_NOMBRE",
-                            "UNDN_RESPONSABLE",
                             "UNDN_DESCRIPCION_ESTRATEG",
+                            "UNDN_RESPONSABLE_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -70642,15 +72392,15 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "DRDO_CANTIDAD",
                             "DRDO_DISPONIBLE_EN_PEDIDO",
+                            "DRDO_NOMBRE_ARTICULO",
+                            "DRDO_CANTIDAD",
                             "DRDO_OBSERVACIONES",
                             "DRDO_PRECIO_UNITARIO",
                             "DRDO_LEYENDA",
                             "DRDO_FECHA_DE_ENTREGA",
                             "DRDO_NRO_DE_SERIE",
                             "DRDO_CMV",
-                            "DRDO_NOMBRE_ARTICULO",
                             "DRDO_PESO",
                             "DRDO_CONTROL_CANTIDAD",
                             "id",
@@ -70716,15 +72466,15 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "DRDO_CANTIDAD",
                             "DRDO_DISPONIBLE_EN_PEDIDO",
+                            "DRDO_NOMBRE_ARTICULO",
+                            "DRDO_CANTIDAD",
                             "DRDO_OBSERVACIONES",
                             "DRDO_PRECIO_UNITARIO",
                             "DRDO_LEYENDA",
                             "DRDO_FECHA_DE_ENTREGA",
                             "DRDO_NRO_DE_SERIE",
                             "DRDO_CMV",
-                            "DRDO_NOMBRE_ARTICULO",
                             "DRDO_PESO",
                             "DRDO_CONTROL_CANTIDAD",
                             "id",
@@ -76121,7 +77871,6 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "DETA_DESCUENTOS___RECARGO",
                             "DETA_1",
                             "DETA_2",
                             "DETA_3",
@@ -76210,7 +77959,6 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "DETA_DESCUENTOS___RECARGO",
                             "DETA_1",
                             "DETA_2",
                             "DETA_3",
@@ -77918,9 +79666,10 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "VEHA_ID_VEHA",
                             "ESDD_PORCENTAJE_MAXIMO",
-                            "ESDD_USUARIO",
                             "ESDD_LOGIN",
+                            "ESDD_USUARIO_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -77984,9 +79733,10 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "VEHA_ID_VEHA",
                             "ESDD_PORCENTAJE_MAXIMO",
-                            "ESDD_USUARIO",
                             "ESDD_LOGIN",
+                            "ESDD_USUARIO_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -79360,23 +81110,20 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "PUPO_INFO",
                             "PUPO_TIPO_DE_VISTA",
                             "PUPO_TIPOSDEFACTURASPERMI",
-                            "PUPO_IMPRESORA_FISCAL",
                             "PUPO_PUERTO",
                             "PUPO_IP",
                             "PUPO_IMPRIME_TICKET_DE_CA",
                             "PUPO_MAXIMOSINCUIT",
-                            "PUPO_COMPORTAMIENTO",
                             "PUPO_DESHABILITAR_STOCK",
                             "PUPO_SALDO_CAJA",
                             "PUPO_ENTREGA_A_DOMICILIO",
                             "PUPO_CUENTA_CORRIENTE",
                             "PUPO_PERMITE_MODIFICAR_PR",
-                            "PUPO_INFO",
                             "PUPO_OCULTARSTOCK",
                             "PUPO_SOLOFINALES",
-                            "PUPO_AVANZADOS",
                             "PUPO_DATABASEPATH",
                             "PUPO_INTERFAZDEVENTAS",
                             "PUPO_BARCODEMASK",
@@ -79451,23 +81198,20 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "PUPO_INFO",
                             "PUPO_TIPO_DE_VISTA",
                             "PUPO_TIPOSDEFACTURASPERMI",
-                            "PUPO_IMPRESORA_FISCAL",
                             "PUPO_PUERTO",
                             "PUPO_IP",
                             "PUPO_IMPRIME_TICKET_DE_CA",
                             "PUPO_MAXIMOSINCUIT",
-                            "PUPO_COMPORTAMIENTO",
                             "PUPO_DESHABILITAR_STOCK",
                             "PUPO_SALDO_CAJA",
                             "PUPO_ENTREGA_A_DOMICILIO",
                             "PUPO_CUENTA_CORRIENTE",
                             "PUPO_PERMITE_MODIFICAR_PR",
-                            "PUPO_INFO",
                             "PUPO_OCULTARSTOCK",
                             "PUPO_SOLOFINALES",
-                            "PUPO_AVANZADOS",
                             "PUPO_DATABASEPATH",
                             "PUPO_INTERFAZDEVENTAS",
                             "PUPO_BARCODEMASK",
@@ -86929,6 +88673,7 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "CODS_REMUNERATIVO",
                             "CODS_CODIGO",
                             "CODS_NOMBRE",
                             "CODS_FORMULA_CANTIDAD",
@@ -86937,7 +88682,6 @@
                             "CODS_AYUDA",
                             "CODS_TIPO",
                             "CODS_UNIDADES",
-                            "CODS_IMPORTACION_AFIP",
                             "CODS_CONCEPTO_AFIP",
                             "CODS_CODIGO_AFIP",
                             "CODS_DESCRIPCION_CONCEPTO",
@@ -86957,7 +88701,6 @@
                             "CODS_CONT_LRT",
                             "CODS_AP_REG_DIF",
                             "CODS_AP_REG_ESP",
-                            "CODS_REMUNERATIVO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -87021,6 +88764,7 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "CODS_REMUNERATIVO",
                             "CODS_CODIGO",
                             "CODS_NOMBRE",
                             "CODS_FORMULA_CANTIDAD",
@@ -87029,7 +88773,6 @@
                             "CODS_AYUDA",
                             "CODS_TIPO",
                             "CODS_UNIDADES",
-                            "CODS_IMPORTACION_AFIP",
                             "CODS_CONCEPTO_AFIP",
                             "CODS_CODIGO_AFIP",
                             "CODS_DESCRIPCION_CONCEPTO",
@@ -87049,7 +88792,6 @@
                             "CODS_CONT_LRT",
                             "CODS_AP_REG_DIF",
                             "CODS_AP_REG_ESP",
-                            "CODS_REMUNERATIVO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -103477,12 +105219,12 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "PREP_DESCRICION_COMPLETA",
                             "PREP_NOMBRE",
                             "PREP_PERSONA_DE_CONTACTO",
                             "PREP_MAIL_DE_CONTACTO",
                             "PREP_TELEFONO_DE_CONTACTO",
                             "PREP_CODIGO",
-                            "PREP_DESCRICION_COMPLETA",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -103546,12 +105288,12 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "PREP_DESCRICION_COMPLETA",
                             "PREP_NOMBRE",
                             "PREP_PERSONA_DE_CONTACTO",
                             "PREP_MAIL_DE_CONTACTO",
                             "PREP_TELEFONO_DE_CONTACTO",
                             "PREP_CODIGO",
-                            "PREP_DESCRICION_COMPLETA",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -107786,13 +109528,13 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "SECT_NOMBRE",
-                            "SECT_RESPONSABLE",
                             "SECT_ARS_GENERADOS",
                             "SECT_ARS_CERRADOS",
                             "SECT_ARS_EN_PLAZO",
                             "SECT_ARS_VENCIDOS",
+                            "SECT_NOMBRE",
                             "SECT_DISCONTINUADO",
+                            "SECT_RESPONSABLE_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -107856,13 +109598,13 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "SECT_NOMBRE",
-                            "SECT_RESPONSABLE",
                             "SECT_ARS_GENERADOS",
                             "SECT_ARS_CERRADOS",
                             "SECT_ARS_EN_PLAZO",
                             "SECT_ARS_VENCIDOS",
+                            "SECT_NOMBRE",
                             "SECT_DISCONTINUADO",
+                            "SECT_RESPONSABLE_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -128012,17 +129754,16 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "USUA_NIVEL",
+                            "USUA_INFO",
                             "USUA_NOMBRE",
                             "USUA_MAIL",
                             "USUA_CARGO",
                             "USUA_ACTIVO",
                             "USUA_INTEGRADOR",
-                            "USUA_NIVEL",
-                            "USUA_RESTRICCIONES_SEP",
                             "USUA_EXPORT_EXCEL",
                             "USUA_HIDE_WAYBILL",
                             "USUA_HIDE_EVENTS",
-                            "USUA_PERF_SEP",
                             "USUA_CALIDAD",
                             "USUA_CALIDAD_ADM",
                             "USUA_CALIDAD_RO",
@@ -128068,11 +129809,9 @@
                             "USUA_INTERLOCUTOR_DE_ERP",
                             "USUA_VENDEDOR",
                             "USUA_CONTADOR",
-                            "USUA_NOTIFICACIONES",
                             "USUA_MAIL___ERRORES_AL_EM",
                             "USUA_MSJ_PUBLI",
                             "USUA_MSJ_POSTVENTA",
-                            "USUA_INFO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -128136,17 +129875,16 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "USUA_NIVEL",
+                            "USUA_INFO",
                             "USUA_NOMBRE",
                             "USUA_MAIL",
                             "USUA_CARGO",
                             "USUA_ACTIVO",
                             "USUA_INTEGRADOR",
-                            "USUA_NIVEL",
-                            "USUA_RESTRICCIONES_SEP",
                             "USUA_EXPORT_EXCEL",
                             "USUA_HIDE_WAYBILL",
                             "USUA_HIDE_EVENTS",
-                            "USUA_PERF_SEP",
                             "USUA_CALIDAD",
                             "USUA_CALIDAD_ADM",
                             "USUA_CALIDAD_RO",
@@ -128192,11 +129930,9 @@
                             "USUA_INTERLOCUTOR_DE_ERP",
                             "USUA_VENDEDOR",
                             "USUA_CONTADOR",
-                            "USUA_NOTIFICACIONES",
                             "USUA_MAIL___ERRORES_AL_EM",
                             "USUA_MSJ_PUBLI",
                             "USUA_MSJ_POSTVENTA",
-                            "USUA_INFO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -129890,14 +131626,14 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "CHOF_NOMBRE_Y_APELLIDO",
-                            "CHOF_VENCIMIENTO_DE_LA_LI",
-                            "CHOF_VTO_LINTI_CARGAS_GEN",
-                            "CHOF_VTO_PSICOFISICO",
                             "CHOF_DIAS_RESTANTES_AL_VE",
                             "CHOF_DIAS_RESTANTES0",
                             "CHOF_DIAS_RESTANTES1",
                             "CHOF_INFO",
+                            "CHOF_NOMBRE_Y_APELLIDO",
+                            "CHOF_VENCIMIENTO_DE_LA_LI",
+                            "CHOF_VTO_LINTI_CARGAS_GEN",
+                            "CHOF_VTO_PSICOFISICO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -129961,14 +131697,14 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "CHOF_NOMBRE_Y_APELLIDO",
-                            "CHOF_VENCIMIENTO_DE_LA_LI",
-                            "CHOF_VTO_LINTI_CARGAS_GEN",
-                            "CHOF_VTO_PSICOFISICO",
                             "CHOF_DIAS_RESTANTES_AL_VE",
                             "CHOF_DIAS_RESTANTES0",
                             "CHOF_DIAS_RESTANTES1",
                             "CHOF_INFO",
+                            "CHOF_NOMBRE_Y_APELLIDO",
+                            "CHOF_VENCIMIENTO_DE_LA_LI",
+                            "CHOF_VTO_LINTI_CARGAS_GEN",
+                            "CHOF_VTO_PSICOFISICO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -133307,12 +135043,11 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "ELDA_CANTIDAD_DE_DETALLES",
+                            "ELDA_INFO_ERROR",
                             "ELDA_NRO",
                             "ELDA_RAZON_DE_ELIMINACION",
-                            "ELDA_TOTALES",
-                            "ELDA_CANTIDAD_DE_DETALLES",
                             "ELDA_CANTIDAD_BORRADOS_CO",
-                            "ELDA_INFO_ERROR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -133376,12 +135111,11 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "ELDA_CANTIDAD_DE_DETALLES",
+                            "ELDA_INFO_ERROR",
                             "ELDA_NRO",
                             "ELDA_RAZON_DE_ELIMINACION",
-                            "ELDA_TOTALES",
-                            "ELDA_CANTIDAD_DE_DETALLES",
                             "ELDA_CANTIDAD_BORRADOS_CO",
-                            "ELDA_INFO_ERROR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -138312,15 +140046,13 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "MOVI_RESTA_VTV",
+                            "MOVI_RESTA_RUTA",
                             "MOVI_NOMBRE",
                             "MOVI_CENTRO_DE_DISTRIBUCI",
                             "MOVI_PATENTE",
-                            "MOVI_VTV_Y_RUTA",
                             "MOVI_VENCIMIENTO_VTV",
                             "MOVI_VENCIMIENTO_RUTA",
-                            "MOVI_RESTA_VTV",
-                            "MOVI_RESTA_RUTA",
-                            "MOVI_UBICACION",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -138384,15 +140116,13 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "MOVI_RESTA_VTV",
+                            "MOVI_RESTA_RUTA",
                             "MOVI_NOMBRE",
                             "MOVI_CENTRO_DE_DISTRIBUCI",
                             "MOVI_PATENTE",
-                            "MOVI_VTV_Y_RUTA",
                             "MOVI_VENCIMIENTO_VTV",
                             "MOVI_VENCIMIENTO_RUTA",
-                            "MOVI_RESTA_VTV",
-                            "MOVI_RESTA_RUTA",
-                            "MOVI_UBICACION",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -142637,7 +144367,7 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "REPU_RESPONSABLE",
+                            "REPU_RESPONSABLE_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -142701,7 +144431,7 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "REPU_RESPONSABLE",
+                            "REPU_RESPONSABLE_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -148152,22 +149882,18 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "TEET_MEDIDA_RESULTANTE",
                             "TEET_NOMBRE",
                             "TEET_ES_DOBLE_COLUMNA",
-                            "TEET_ZPL_#1",
                             "TEET_CODIGO",
                             "TEET_IMAGEN",
                             "TEET_ETIQUETA_ADJUNTO",
-                            "TEET_ZPL_#2",
                             "TEET_CODIGO_1",
                             "TEET_IMAGEN_2",
                             "TEET_ETIQUETA_ADJUNTO2",
-                            "TEET_MEDIDA",
                             "TEET_ANCHO",
                             "TEET_ALTO",
                             "TEET_DENSIDAD_DE_IMPRESIO",
-                            "TEET_MEDIDA_RESULTANTE",
-                            "TEET_CONFIGURACION_PARA_E",
                             "TEET_AJUSTAR_TEXTO",
                             "TEET_CARACTERES_POR_LINEA",
                             "id",
@@ -148233,22 +149959,18 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "TEET_MEDIDA_RESULTANTE",
                             "TEET_NOMBRE",
                             "TEET_ES_DOBLE_COLUMNA",
-                            "TEET_ZPL_#1",
                             "TEET_CODIGO",
                             "TEET_IMAGEN",
                             "TEET_ETIQUETA_ADJUNTO",
-                            "TEET_ZPL_#2",
                             "TEET_CODIGO_1",
                             "TEET_IMAGEN_2",
                             "TEET_ETIQUETA_ADJUNTO2",
-                            "TEET_MEDIDA",
                             "TEET_ANCHO",
                             "TEET_ALTO",
                             "TEET_DENSIDAD_DE_IMPRESIO",
-                            "TEET_MEDIDA_RESULTANTE",
-                            "TEET_CONFIGURACION_PARA_E",
                             "TEET_AJUSTAR_TEXTO",
                             "TEET_CARACTERES_POR_LINEA",
                             "id",
@@ -152976,7 +154698,7 @@
                       "TRLO_SUBIR_ORDENES": {
                         "title": "Subir órdenes automáticamente",
                         "type": "boolean",
-                        "description": "Sólo para Correo Arg.\nSi está marcado el sistema intenta hacer la subida del paquete a la web de CA para que se genere el Tracking Code y con eso poder obtener la etiqueta.",
+                        "description": "Para EnvioPack y Correo Arg.\nSi está marcado el sistema intenta hacer la subida del paquete a la web para que se genere el Tracking Code y con eso poder obtener la etiqueta.",
                         "nullable": true
                       },
                       "TRLO_URL_TRACKING": {
@@ -153243,7 +154965,7 @@
                     "TRLO_SUBIR_ORDENES": {
                       "title": "Subir órdenes automáticamente",
                       "type": "boolean",
-                      "description": "Sólo para Correo Arg.\nSi está marcado el sistema intenta hacer la subida del paquete a la web de CA para que se genere el Tracking Code y con eso poder obtener la etiqueta.",
+                      "description": "Para EnvioPack y Correo Arg.\nSi está marcado el sistema intenta hacer la subida del paquete a la web para que se genere el Tracking Code y con eso poder obtener la etiqueta.",
                       "nullable": true
                     },
                     "TRLO_URL_TRACKING": {
@@ -153460,7 +155182,7 @@
                       "TRLO_SUBIR_ORDENES": {
                         "title": "Subir órdenes automáticamente",
                         "type": "boolean",
-                        "description": "Sólo para Correo Arg.\nSi está marcado el sistema intenta hacer la subida del paquete a la web de CA para que se genere el Tracking Code y con eso poder obtener la etiqueta.",
+                        "description": "Para EnvioPack y Correo Arg.\nSi está marcado el sistema intenta hacer la subida del paquete a la web para que se genere el Tracking Code y con eso poder obtener la etiqueta.",
                         "nullable": true
                       },
                       "TRLO_URL_TRACKING": {
@@ -153692,9 +155414,9 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "TRLO_CODIGO",
                             "TRLO_NOMBRE",
                             "TRLO_CUIT",
-                            "TRLO_CODIGO",
                             "TRLO_RETIRA_EN_LOCAL",
                             "TRLO_DIRECCION",
                             "TRLO_TELEFONO",
@@ -153710,7 +155432,6 @@
                             "TRLO_LATITUD",
                             "TRLO_LONGITUD",
                             "TRLO_OBSERVACIONES",
-                            "TRLO_INT_SEP",
                             "TRLO_TOKEN",
                             "TRLO_API_KEY",
                             "TRLO_SECRET_KEY",
@@ -153779,9 +155500,9 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "TRLO_CODIGO",
                             "TRLO_NOMBRE",
                             "TRLO_CUIT",
-                            "TRLO_CODIGO",
                             "TRLO_RETIRA_EN_LOCAL",
                             "TRLO_DIRECCION",
                             "TRLO_TELEFONO",
@@ -153797,7 +155518,6 @@
                             "TRLO_LATITUD",
                             "TRLO_LONGITUD",
                             "TRLO_OBSERVACIONES",
-                            "TRLO_INT_SEP",
                             "TRLO_TOKEN",
                             "TRLO_API_KEY",
                             "TRLO_SECRET_KEY",
@@ -154297,12 +156017,6 @@
                         "description": " This is a foreign key to Transport. Logística. An id of Transport. Logística is expected",
                         "nullable": true
                       },
-                      "UBPE_ID_DE_VT": {
-                        "title": "Id ",
-                        "maxLength": 100,
-                        "type": "string",
-                        "nullable": true
-                      },
                       "UBPE_FILTRO": {
                         "title": "Filtro",
                         "type": "string",
@@ -154323,6 +156037,18 @@
                       "UBPE_EVITAR_SEGUNDA_VALID": {
                         "title": "Evitar segunda validación",
                         "type": "boolean",
+                        "nullable": true
+                      },
+                      "IPUE_ID_IPUE": {
+                        "title": "ID por Ubicación",
+                        "type": "integer",
+                        "description": " This is a foreign key to ID por ubi ES. An id of ID por ubi ES is expected",
+                        "nullable": true
+                      },
+                      "UBPE_ID_DE_VT": {
+                        "title": "Id ",
+                        "maxLength": 100,
+                        "type": "string",
                         "nullable": true
                       }
                     },
@@ -154474,11 +156200,6 @@
                       "description": "Foreign key to Transport. Logística",
                       "nullable": true
                     },
-                    "UBPE_ID_DE_VT": {
-                      "title": "Id ",
-                      "type": "string",
-                      "nullable": true
-                    },
                     "UBPE_FILTRO": {
                       "title": "Filtro",
                       "type": "string",
@@ -154499,6 +156220,17 @@
                     "UBPE_EVITAR_SEGUNDA_VALID": {
                       "title": "Evitar segunda validación",
                       "type": "boolean",
+                      "nullable": true
+                    },
+                    "IPUE_ID_IPUE": {
+                      "title": "ID por Ubicación",
+                      "type": "integer",
+                      "description": "Foreign key to ID por ubi ES",
+                      "nullable": true
+                    },
+                    "UBPE_ID_DE_VT": {
+                      "title": "Id ",
+                      "type": "string",
                       "nullable": true
                     }
                   }
@@ -154595,12 +156327,6 @@
                         "description": " This is a foreign key to Transport. Logística. An id of Transport. Logística is expected",
                         "nullable": true
                       },
-                      "UBPE_ID_DE_VT": {
-                        "title": "Id ",
-                        "maxLength": 100,
-                        "type": "string",
-                        "nullable": true
-                      },
                       "UBPE_FILTRO": {
                         "title": "Filtro",
                         "type": "string",
@@ -154621,6 +156347,18 @@
                       "UBPE_EVITAR_SEGUNDA_VALID": {
                         "title": "Evitar segunda validación",
                         "type": "boolean",
+                        "nullable": true
+                      },
+                      "IPUE_ID_IPUE": {
+                        "title": "ID por Ubicación",
+                        "type": "integer",
+                        "description": " This is a foreign key to ID por ubi ES. An id of ID por ubi ES is expected",
+                        "nullable": true
+                      },
+                      "UBPE_ID_DE_VT": {
+                        "title": "Id ",
+                        "maxLength": 100,
+                        "type": "string",
                         "nullable": true
                       }
                     }
@@ -154844,16 +156582,16 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "UBPE_PRIORIDAD",
                             "UBPE_UBICACION_NOMBRE",
+                            "UBPE_PRIORIDAD",
                             "UBPE_DIIRECCION_DEL_LOCAL",
                             "UBPE_SUCURSAL_DE_RETIRO",
                             "UBPE_CODIGO_POSTAL",
-                            "UBPE_ID_DE_VT",
                             "UBPE_FILTRO",
                             "UBPE_NO_SUMA_EN_STOCK_PUB",
                             "UBPE_EVITAR_PICKING_LIST",
                             "UBPE_EVITAR_SEGUNDA_VALID",
+                            "UBPE_ID_DE_VT",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -154917,16 +156655,16 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "UBPE_PRIORIDAD",
                             "UBPE_UBICACION_NOMBRE",
+                            "UBPE_PRIORIDAD",
                             "UBPE_DIIRECCION_DEL_LOCAL",
                             "UBPE_SUCURSAL_DE_RETIRO",
                             "UBPE_CODIGO_POSTAL",
-                            "UBPE_ID_DE_VT",
                             "UBPE_FILTRO",
                             "UBPE_NO_SUMA_EN_STOCK_PUB",
                             "UBPE_EVITAR_PICKING_LIST",
                             "UBPE_EVITAR_SEGUNDA_VALID",
+                            "UBPE_ID_DE_VT",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -156327,16 +158065,15 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "CEDI_ES_HOJA",
+                            "CEDI_CLIENTE___VENDEDOR",
                             "CEDI_NOMBRE",
                             "CEDI_CODIGO",
                             "CEDI_DIRECCION",
                             "CEDI_PRIORIDAD",
                             "CEDI_COMENTARIO",
-                            "CEDI_ES_HOJA",
                             "CEDI_UBICACION_EXTERNA",
                             "CEDI_BAJA",
-                            "CEDI_SEGMENTACION",
-                            "CEDI_CLIENTE___VENDEDOR",
                             "CEDI_UBICACION_DE_RESERVA",
                             "CEDI_SINCRONIZAR",
                             "CEDI_NO_SUMAR_AL_DISPONIB",
@@ -156404,16 +158141,15 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "CEDI_ES_HOJA",
+                            "CEDI_CLIENTE___VENDEDOR",
                             "CEDI_NOMBRE",
                             "CEDI_CODIGO",
                             "CEDI_DIRECCION",
                             "CEDI_PRIORIDAD",
                             "CEDI_COMENTARIO",
-                            "CEDI_ES_HOJA",
                             "CEDI_UBICACION_EXTERNA",
                             "CEDI_BAJA",
-                            "CEDI_SEGMENTACION",
-                            "CEDI_CLIENTE___VENDEDOR",
                             "CEDI_UBICACION_DE_RESERVA",
                             "CEDI_SINCRONIZAR",
                             "CEDI_NO_SUMAR_AL_DISPONIB",
@@ -158344,12 +160080,12 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "CAII_VIGENTE_LOGICO",
                             "CAII_NUMERO",
                             "CAII_FECHA_EMISION",
                             "CAII_FECHA_VENCIMIENTO",
                             "CAII_PRIMER_NRO_HABI",
                             "CAII_ULTIMO_NRO_HABI",
-                            "CAII_VIGENTE_LOGICO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -158413,12 +160149,12 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "CAII_VIGENTE_LOGICO",
                             "CAII_NUMERO",
                             "CAII_FECHA_EMISION",
                             "CAII_FECHA_VENCIMIENTO",
                             "CAII_PRIMER_NRO_HABI",
                             "CAII_ULTIMO_NRO_HABI",
-                            "CAII_VIGENTE_LOGICO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -159285,11 +161021,8 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "CEFE_SEPARADOR_1",
                             "CEFE_SOLICITUD_CERTIFICAD",
-                            "CEFE_SEPARADOR_2",
                             "CEFE_CERTIFICADO_CLIENTE_",
-                            "CEFE_SEPARADOR_3",
                             "CEFE_ARHC_ID_3904",
                             "CEFE_INFO_ERROR",
                             "CEFE_FECHA_DE_VENCIMIENTO",
@@ -159356,11 +161089,8 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "CEFE_SEPARADOR_1",
                             "CEFE_SOLICITUD_CERTIFICAD",
-                            "CEFE_SEPARADOR_2",
                             "CEFE_CERTIFICADO_CLIENTE_",
-                            "CEFE_SEPARADOR_3",
                             "CEFE_ARHC_ID_3904",
                             "CEFE_INFO_ERROR",
                             "CEFE_FECHA_DE_VENCIMIENTO",
@@ -160288,10 +162018,10 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "COFA_NOMBRE",
-                            "COFA_CODIGO",
                             "COFA_DESCRIPCION",
                             "COFA_CODIGO_Y_NOMBRE",
+                            "COFA_NOMBRE",
+                            "COFA_CODIGO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -160355,10 +162085,10 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "COFA_NOMBRE",
-                            "COFA_CODIGO",
                             "COFA_DESCRIPCION",
                             "COFA_CODIGO_Y_NOMBRE",
+                            "COFA_NOMBRE",
+                            "COFA_CODIGO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -165120,12 +166850,6 @@
                               "description": " This is a foreign key to Transport. Logística. An id of Transport. Logística is expected",
                               "nullable": true
                             },
-                            "UBPE_ID_DE_VT": {
-                              "title": "Id ",
-                              "maxLength": 100,
-                              "type": "string",
-                              "nullable": true
-                            },
                             "UBPE_FILTRO": {
                               "title": "Filtro",
                               "type": "string",
@@ -165146,6 +166870,18 @@
                             "UBPE_EVITAR_SEGUNDA_VALID": {
                               "title": "Evitar segunda validación",
                               "type": "boolean",
+                              "nullable": true
+                            },
+                            "IPUE_ID_IPUE": {
+                              "title": "ID por Ubicación",
+                              "type": "integer",
+                              "description": " This is a foreign key to ID por ubi ES. An id of ID por ubi ES is expected",
+                              "nullable": true
+                            },
+                            "UBPE_ID_DE_VT": {
+                              "title": "Id ",
+                              "maxLength": 100,
+                              "type": "string",
                               "nullable": true
                             }
                           },
@@ -166607,11 +168343,6 @@
                             "type": "integer",
                             "nullable": true
                           },
-                          "UBPE_ID_DE_VT": {
-                            "title": "Id ",
-                            "type": "string",
-                            "nullable": true
-                          },
                           "UBPE_FILTRO": {
                             "title": "Filtro",
                             "type": "string",
@@ -166630,6 +168361,16 @@
                           "UBPE_EVITAR_SEGUNDA_VALID": {
                             "title": "Evitar segunda validación",
                             "type": "boolean",
+                            "nullable": true
+                          },
+                          "IPUE_ID_IPUE": {
+                            "title": "ID por Ubicación",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "UBPE_ID_DE_VT": {
+                            "title": "Id ",
+                            "type": "string",
                             "nullable": true
                           }
                         }
@@ -166933,6 +168674,11 @@
                           "PUBL_TIPO_DE_FINANCIACION": {
                             "title": "Tipo de financiación",
                             "type": "string",
+                            "nullable": true
+                          },
+                          "PUBL_ACEPTA_PRECIOS_MAYO": {
+                            "title": "Acepta Precios Mayoristas",
+                            "type": "boolean",
                             "nullable": true
                           },
                           "PUBL_LINK_PUBLICACION": {
@@ -168093,12 +169839,6 @@
                               "description": " This is a foreign key to Transport. Logística. An id of Transport. Logística is expected",
                               "nullable": true
                             },
-                            "UBPE_ID_DE_VT": {
-                              "title": "Id ",
-                              "maxLength": 100,
-                              "type": "string",
-                              "nullable": true
-                            },
                             "UBPE_FILTRO": {
                               "title": "Filtro",
                               "type": "string",
@@ -168119,6 +169859,18 @@
                             "UBPE_EVITAR_SEGUNDA_VALID": {
                               "title": "Evitar segunda validación",
                               "type": "boolean",
+                              "nullable": true
+                            },
+                            "IPUE_ID_IPUE": {
+                              "title": "ID por Ubicación",
+                              "type": "integer",
+                              "description": " This is a foreign key to ID por ubi ES. An id of ID por ubi ES is expected",
+                              "nullable": true
+                            },
+                            "UBPE_ID_DE_VT": {
+                              "title": "Id ",
+                              "maxLength": 100,
+                              "type": "string",
                               "nullable": true
                             }
                           },
@@ -169120,13 +170872,14 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "EXTE_INFO",
+                            "EXTE_PORC_IDS",
+                            "EXTE_PENDIENTES_STOCK",
                             "EXTE_NOMBRE",
                             "EXTE_ACTIVO",
                             "EXTE_INSTRUCTIVO",
-                            "EXTE_CONFIGURACION_DE_PED",
                             "EXTE_RESERVAR_PENDIENTES",
                             "EXTE_DESCARGAR_PEDIDOS_DE",
-                            "EXTE_FACT_SEP",
                             "EXTE_FACTURAR_PEDIDO",
                             "EXTE_FACTURAR_EN_RESERVA_",
                             "EXTE_FACTURA_EN_MON_DEF",
@@ -169136,7 +170889,6 @@
                             "EXTE_LLEVAR_OBSERVACIONES",
                             "EXTE_PROYECTAR_AL_DESPACH",
                             "EXTE_CHEQUEO_PERCEPCIONES",
-                            "EXTE_CONTROL_SEP",
                             "EXTE_FRENAR_EN_ESPERA_DE_",
                             "EXTE_FRENA_EN_A_RESERVAR",
                             "EXTE_ESPERA_SEGUNDA_VALID",
@@ -169146,16 +170898,13 @@
                             "EXTE_AUTO_COBRO_APROBADO_",
                             "EXTE_NO_AGRUPAR_PEDIDOS_E",
                             "EXTE_GESTIONAR_MODIF",
-                            "EXTE_OP_SEP",
                             "EXTE_OP_AUTOMATICA",
-                            "EXTE_SINCRONIZACION",
                             "EXTE_ACTUALIZAR_STOCK",
                             "EXTE_ACTUALIZAR_PRECIOS",
                             "EXTE_GENERAR_PEDIDOS",
                             "EXTE_ESTIMAR_ENVIO",
                             "EXTE_VINCULACION_AUTOMATI",
                             "EXTE_VINCULACION_ART_PEND",
-                            "EXTE_OTROS",
                             "EXTE_FORMAS_DE_PAGO_EXCLU",
                             "EXTE_FEE_TOTAL_PROD",
                             "EXTE_CALCULAR_PRECIOS_DES",
@@ -169163,8 +170912,6 @@
                             "EXTE_HORARIO_ENTREGA_HAST",
                             "EXTE_UMBRAL_DE_STOCK",
                             "EXTE_INFO_ID_PUBLICACIONE",
-                            "EXTE_INFO",
-                            "EXTE_GESTION_DE_UBICACION",
                             "EXTE_COMPLETAR_ORIGEN",
                             "EXTE_COMPLETAR_DESTINO",
                             "EXTE_ESTIMACION_GASTO_PUB",
@@ -169193,13 +170940,10 @@
                             "EXTE_IDS_PUBLICACIONES",
                             "EXTE_IDS_PROCESADOS",
                             "EXTE_CANTIDAD_DE_IDS",
-                            "EXTE_PORC_IDS",
-                            "EXTE_PENDIENTES_STOCK",
                             "EXTE_USA_ESQUEMA_PUSH",
                             "EXTE_ULT_CHEQ_FULL_WC",
                             "EXTE_ORDERS_ADDITIONAL_QS",
                             "EXTE_VERIFICADOR_DE_CONTE",
-                            "EXTE_SEP_FRAV",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -169263,13 +171007,14 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "EXTE_INFO",
+                            "EXTE_PORC_IDS",
+                            "EXTE_PENDIENTES_STOCK",
                             "EXTE_NOMBRE",
                             "EXTE_ACTIVO",
                             "EXTE_INSTRUCTIVO",
-                            "EXTE_CONFIGURACION_DE_PED",
                             "EXTE_RESERVAR_PENDIENTES",
                             "EXTE_DESCARGAR_PEDIDOS_DE",
-                            "EXTE_FACT_SEP",
                             "EXTE_FACTURAR_PEDIDO",
                             "EXTE_FACTURAR_EN_RESERVA_",
                             "EXTE_FACTURA_EN_MON_DEF",
@@ -169279,7 +171024,6 @@
                             "EXTE_LLEVAR_OBSERVACIONES",
                             "EXTE_PROYECTAR_AL_DESPACH",
                             "EXTE_CHEQUEO_PERCEPCIONES",
-                            "EXTE_CONTROL_SEP",
                             "EXTE_FRENAR_EN_ESPERA_DE_",
                             "EXTE_FRENA_EN_A_RESERVAR",
                             "EXTE_ESPERA_SEGUNDA_VALID",
@@ -169289,16 +171033,13 @@
                             "EXTE_AUTO_COBRO_APROBADO_",
                             "EXTE_NO_AGRUPAR_PEDIDOS_E",
                             "EXTE_GESTIONAR_MODIF",
-                            "EXTE_OP_SEP",
                             "EXTE_OP_AUTOMATICA",
-                            "EXTE_SINCRONIZACION",
                             "EXTE_ACTUALIZAR_STOCK",
                             "EXTE_ACTUALIZAR_PRECIOS",
                             "EXTE_GENERAR_PEDIDOS",
                             "EXTE_ESTIMAR_ENVIO",
                             "EXTE_VINCULACION_AUTOMATI",
                             "EXTE_VINCULACION_ART_PEND",
-                            "EXTE_OTROS",
                             "EXTE_FORMAS_DE_PAGO_EXCLU",
                             "EXTE_FEE_TOTAL_PROD",
                             "EXTE_CALCULAR_PRECIOS_DES",
@@ -169306,8 +171047,6 @@
                             "EXTE_HORARIO_ENTREGA_HAST",
                             "EXTE_UMBRAL_DE_STOCK",
                             "EXTE_INFO_ID_PUBLICACIONE",
-                            "EXTE_INFO",
-                            "EXTE_GESTION_DE_UBICACION",
                             "EXTE_COMPLETAR_ORIGEN",
                             "EXTE_COMPLETAR_DESTINO",
                             "EXTE_ESTIMACION_GASTO_PUB",
@@ -169336,13 +171075,10 @@
                             "EXTE_IDS_PUBLICACIONES",
                             "EXTE_IDS_PROCESADOS",
                             "EXTE_CANTIDAD_DE_IDS",
-                            "EXTE_PORC_IDS",
-                            "EXTE_PENDIENTES_STOCK",
                             "EXTE_USA_ESQUEMA_PUSH",
                             "EXTE_ULT_CHEQ_FULL_WC",
                             "EXTE_ORDERS_ADDITIONAL_QS",
                             "EXTE_VERIFICADOR_DE_CONTE",
-                            "EXTE_SEP_FRAV",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -176974,9 +178710,9 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "MODP_CAMBIO_EXITOSO",
                             "MODP_COSTO_DE_ENVIO_PARA_",
                             "MODP_LOG_DE_PEDIDO",
-                            "MODP_CAMBIO_EXITOSO",
                             "MODP_INFO_ERROR",
                             "id",
                             "DESC_ESTADO",
@@ -177041,9 +178777,9 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "MODP_CAMBIO_EXITOSO",
                             "MODP_COSTO_DE_ENVIO_PARA_",
                             "MODP_LOG_DE_PEDIDO",
-                            "MODP_CAMBIO_EXITOSO",
                             "MODP_INFO_ERROR",
                             "id",
                             "DESC_ESTADO",
@@ -177572,8 +179308,15 @@
                         "nullable": true
                       },
                       "NODP_PEDIDO": {
-                        "title": "Pedido",
+                        "title": "Pedido general",
                         "type": "boolean",
+                        "description": "Si se marca, se adjuntará el PDF equivalente a -Generar.PDF- en Pedido",
+                        "nullable": true
+                      },
+                      "NODP_PEDIDO_DETALLADO": {
+                        "title": "Pedido detallado",
+                        "type": "boolean",
+                        "description": "Si se marca, se adjuntará el PDF equivalente a -Notificación de Pedido- en Pedido",
                         "nullable": true
                       },
                       "NODP_FACTURA": {
@@ -177785,8 +179528,15 @@
                       "nullable": true
                     },
                     "NODP_PEDIDO": {
-                      "title": "Pedido",
+                      "title": "Pedido general",
                       "type": "boolean",
+                      "description": "Si se marca, se adjuntará el PDF equivalente a -Generar.PDF- en Pedido",
+                      "nullable": true
+                    },
+                    "NODP_PEDIDO_DETALLADO": {
+                      "title": "Pedido detallado",
+                      "type": "boolean",
+                      "description": "Si se marca, se adjuntará el PDF equivalente a -Notificación de Pedido- en Pedido",
                       "nullable": true
                     },
                     "NODP_FACTURA": {
@@ -177946,8 +179696,15 @@
                         "nullable": true
                       },
                       "NODP_PEDIDO": {
-                        "title": "Pedido",
+                        "title": "Pedido general",
                         "type": "boolean",
+                        "description": "Si se marca, se adjuntará el PDF equivalente a -Generar.PDF- en Pedido",
+                        "nullable": true
+                      },
+                      "NODP_PEDIDO_DETALLADO": {
+                        "title": "Pedido detallado",
+                        "type": "boolean",
+                        "description": "Si se marca, se adjuntará el PDF equivalente a -Notificación de Pedido- en Pedido",
                         "nullable": true
                       },
                       "NODP_FACTURA": {
@@ -178164,12 +179921,11 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "NODP_VALIDO",
                             "NODP_REMITENTE",
                             "NODP_ASUNTO",
-                            "NODP_VALIDO",
                             "NODP_POSTDATADO",
                             "NODP_CUERPO",
-                            "NODP_ESTADOS_SEP",
                             "NODP_EN_ESPERA_DE_PAGO",
                             "NODP_ESPERANDO_ORDEN_DE_P",
                             "NODP_EN_ESPERA_DE_PICKING",
@@ -178178,12 +179934,11 @@
                             "NODP_DESPACHADO",
                             "NODP_ENTREGADO",
                             "NODP_EN_ESPERANDO_SEGUNDA",
-                            "NODP_PDFS_ADJUNTOS",
                             "NODP_PEDIDO",
+                            "NODP_PEDIDO_DETALLADO",
                             "NODP_FACTURA",
                             "NODP_RECIBO",
                             "NODP_REMITO",
-                            "NODP_CONDI_SEP",
                             "NODP_CONDICION",
                             "NODP_INFO",
                             "NODP_REEMPLAZOS_VALIDOS",
@@ -178250,12 +180005,11 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "NODP_VALIDO",
                             "NODP_REMITENTE",
                             "NODP_ASUNTO",
-                            "NODP_VALIDO",
                             "NODP_POSTDATADO",
                             "NODP_CUERPO",
-                            "NODP_ESTADOS_SEP",
                             "NODP_EN_ESPERA_DE_PAGO",
                             "NODP_ESPERANDO_ORDEN_DE_P",
                             "NODP_EN_ESPERA_DE_PICKING",
@@ -178264,12 +180018,11 @@
                             "NODP_DESPACHADO",
                             "NODP_ENTREGADO",
                             "NODP_EN_ESPERANDO_SEGUNDA",
-                            "NODP_PDFS_ADJUNTOS",
                             "NODP_PEDIDO",
+                            "NODP_PEDIDO_DETALLADO",
                             "NODP_FACTURA",
                             "NODP_RECIBO",
                             "NODP_REMITO",
-                            "NODP_CONDI_SEP",
                             "NODP_CONDICION",
                             "NODP_INFO",
                             "NODP_REEMPLAZOS_VALIDOS",
@@ -179175,10 +180928,10 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "NEDF_VALIDO",
                             "NEDF_REMITENTE",
                             "NEDF_ASUNTO",
                             "NEDF_CUERPO",
-                            "NEDF_VALIDO",
                             "NEDF_CUENTA_CORRIENTE",
                             "NEDF_INFO",
                             "NEDF_REEMPLAZOS_VALIDOS",
@@ -179245,10 +180998,10 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "NEDF_VALIDO",
                             "NEDF_REMITENTE",
                             "NEDF_ASUNTO",
                             "NEDF_CUERPO",
-                            "NEDF_VALIDO",
                             "NEDF_CUENTA_CORRIENTE",
                             "NEDF_INFO",
                             "NEDF_REEMPLAZOS_VALIDOS",
@@ -180181,15 +181934,14 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "NOFA_VALIDO",
                             "NOFA_ENVIAR_AL_VENCIMIENT",
                             "NOFA_DIAS_PARA_VENCIM",
                             "NOFA_DIAS_DESDE_VENCIM",
-                            "NOFA_CORREO",
                             "NOFA_COPIA_ADMINISTRACION",
                             "NOFA_REMITENTE",
                             "NOFA_ASUNTO",
                             "NOFA_CUERPO",
-                            "NOFA_VALIDO",
                             "NOFA_INFO",
                             "NOFA_REEMPLAZOS_VALIDOS",
                             "id",
@@ -180255,15 +182007,14 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "NOFA_VALIDO",
                             "NOFA_ENVIAR_AL_VENCIMIENT",
                             "NOFA_DIAS_PARA_VENCIM",
                             "NOFA_DIAS_DESDE_VENCIM",
-                            "NOFA_CORREO",
                             "NOFA_COPIA_ADMINISTRACION",
                             "NOFA_REMITENTE",
                             "NOFA_ASUNTO",
                             "NOFA_CUERPO",
-                            "NOFA_VALIDO",
                             "NOFA_INFO",
                             "NOFA_REEMPLAZOS_VALIDOS",
                             "id",
@@ -181135,10 +182886,10 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "NONC_VALIDO",
                             "NONC_REMITENTE",
                             "NONC_ASUNTO",
                             "NONC_CUERPO",
-                            "NONC_VALIDO",
                             "NONC_INFO",
                             "NONC_REEMPLAZOS_VALIDOS",
                             "id",
@@ -181204,10 +182955,10 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "NONC_VALIDO",
                             "NONC_REMITENTE",
                             "NONC_ASUNTO",
                             "NONC_CUERPO",
-                            "NONC_VALIDO",
                             "NONC_INFO",
                             "NONC_REEMPLAZOS_VALIDOS",
                             "id",
@@ -182079,10 +183830,10 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "NOTI_VALIDO",
                             "NOTI_REMITENTE",
                             "NOTI_ASUNTO",
                             "NOTI_CUERPO",
-                            "NOTI_VALIDO",
                             "NOTI_INFO",
                             "NOTI_REEMPLAZOS_VALIDOS",
                             "id",
@@ -182148,10 +183899,10 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "NOTI_VALIDO",
                             "NOTI_REMITENTE",
                             "NOTI_ASUNTO",
                             "NOTI_CUERPO",
-                            "NOTI_VALIDO",
                             "NOTI_INFO",
                             "NOTI_REEMPLAZOS_VALIDOS",
                             "id",
@@ -183038,10 +184789,10 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "NORE_VALIDO",
                             "NORE_REMITENTE",
                             "NORE_ASUNTO",
                             "NORE_CUERPO",
-                            "NORE_VALIDO",
                             "NORE_INFO",
                             "NORE_REEMPLAZOS_VALIDOS",
                             "NORE_COPIA_ADMINISTRACION",
@@ -183108,10 +184859,10 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "NORE_VALIDO",
                             "NORE_REMITENTE",
                             "NORE_ASUNTO",
                             "NORE_CUERPO",
-                            "NORE_VALIDO",
                             "NORE_INFO",
                             "NORE_REEMPLAZOS_VALIDOS",
                             "NORE_COPIA_ADMINISTRACION",
@@ -185084,6 +186835,8 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "PEDT_MIN_PAGO_ALTA_PEDI",
+                            "PEDT_SEG_PAGO_ALTA_PEDI",
                             "PEDT_NUMERO",
                             "PEDT_CLIENT_ID",
                             "PEDT_COD_TIPO_ORIGEN",
@@ -185096,8 +186849,6 @@
                             "PEDT_CREATED_AT",
                             "PEDT_INSTANCIA_CREADA",
                             "PEDT_FECHA_PAGO_MIN",
-                            "PEDT_MIN_PAGO_ALTA_PEDI",
-                            "PEDT_SEG_PAGO_ALTA_PEDI",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -185161,6 +186912,8 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "PEDT_MIN_PAGO_ALTA_PEDI",
+                            "PEDT_SEG_PAGO_ALTA_PEDI",
                             "PEDT_NUMERO",
                             "PEDT_CLIENT_ID",
                             "PEDT_COD_TIPO_ORIGEN",
@@ -185173,8 +186926,6 @@
                             "PEDT_CREATED_AT",
                             "PEDT_INSTANCIA_CREADA",
                             "PEDT_FECHA_PAGO_MIN",
-                            "PEDT_MIN_PAGO_ALTA_PEDI",
-                            "PEDT_SEG_PAGO_ALTA_PEDI",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -188165,14 +189916,14 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "PUVE_ID_PUNTO_VENTA_REMIT",
+                            "PUVE_DOMICILIO",
+                            "PUVE_TELEFONO",
                             "PUVE_NOMBRE",
                             "PUVE_NUMERO",
                             "PUVE_ELECTRONICO",
                             "PUVE_ULTIMO_NUMERO_RECIBO",
                             "PUVE_ULTIMO_NUMERO_REMITO",
-                            "PUVE_ID_PUNTO_VENTA_REMIT",
-                            "PUVE_DOMICILIO",
-                            "PUVE_TELEFONO",
                             "PUVE_OBSERVACIONES",
                             "PUVE_ISOLOGO",
                             "PUVE_WEB",
@@ -188241,14 +189992,14 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "PUVE_ID_PUNTO_VENTA_REMIT",
+                            "PUVE_DOMICILIO",
+                            "PUVE_TELEFONO",
                             "PUVE_NOMBRE",
                             "PUVE_NUMERO",
                             "PUVE_ELECTRONICO",
                             "PUVE_ULTIMO_NUMERO_RECIBO",
                             "PUVE_ULTIMO_NUMERO_REMITO",
-                            "PUVE_ID_PUNTO_VENTA_REMIT",
-                            "PUVE_DOMICILIO",
-                            "PUVE_TELEFONO",
                             "PUVE_OBSERVACIONES",
                             "PUVE_ISOLOGO",
                             "PUVE_WEB",
@@ -190845,6 +192596,811 @@
       "get": {
         "tags": [
           "Ventas / Servicio"
+        ],
+        "summary": "Descarga un reporte asociado a una entidad",
+        "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "reportName",
+            "in": "query",
+            "description": "Nombre del reporte",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reporte encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo de reporte"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un reporte con ese nombre en la entidad"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/TIPO_DE_ACCION_DE_CO": {
+      "post": {
+        "tags": [
+          "Ventas / Tipo de acción de cobranzas"
+        ],
+        "summary": "Create a Tipo de acción de cobranzas.",
+        "description": "Creates a new instance of Tipo de acción de cobranzas.\n\n**Key Attributes (Unique):** `TDAD_NOMBRE` (Nombre)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "TDAD_NOMBRE": {
+                        "title": "Nombre",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      }
+                    },
+                    "description": "Instance data. Key attributes (TDAD_NOMBRE) must be unique across all instances."
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - An instance with the same key values already exists. Key attributes: TDAD_NOMBRE"
+          }
+        }
+      }
+    },
+    "/TIPO_DE_ACCION_DE_CO/{id}": {
+      "get": {
+        "tags": [
+          "Ventas / Tipo de acción de cobranzas"
+        ],
+        "description": "Get a Tipo de acción de cobranzas by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Tipo de acción de cobranzas id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "TDAD_NOMBRE": {
+                      "title": "Nombre",
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Ventas / Tipo de acción de cobranzas"
+        ],
+        "summary": "Update a Tipo de acción de cobranzas by id.",
+        "description": "Update a Tipo de acción de cobranzas",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Tipo de acción de cobranzas id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "TDAD_NOMBRE": {
+                        "title": "Nombre",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Ventas / Tipo de acción de cobranzas"
+        ],
+        "summary": "Delete a Tipo de acción de cobranzas by id.",
+        "description": "Delete a Tipo de acción de cobranzas",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Tipo de acción de cobranzas id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance deleted successfully"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Entity or instance not found"
+          }
+        }
+      }
+    },
+    "/TIPO_DE_ACCION_DE_CO/search": {
+      "get": {
+        "tags": [
+          "Ventas / Tipo de acción de cobranzas"
+        ],
+        "summary": "Fast search endpoint. Returns up to 50 Tipo de acción de cobranzas records; prefer /query for controlled, production-grade listings.",
+        "description": "Performs a lightweight search over Tipo de acción de cobranzas instances. This endpoint is intended for fast lookup scenarios and may return a limited result set with the default response shape, including all available columns. Use /search when simplicity and quick retrieval are more important than payload optimization or query flexibility. For production listings that require configurable pagination, explicit column selection, or advanced filters, prefer /query.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "TDAD_NOMBRE",
+            "in": "query",
+            "description": "Nombre",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/TIPO_DE_ACCION_DE_CO/smartie": {
+      "get": {
+        "tags": [
+          "Ventas / Tipo de acción de cobranzas"
+        ],
+        "description": "Get a page of a smartie",
+        "parameters": [
+          {
+            "name": "smartieId",
+            "in": "query",
+            "description": "Smartie id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": " Page number (1-based)",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": " Search term",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/TIPO_DE_ACCION_DE_CO/query": {
+      "post": {
+        "tags": [
+          "Ventas / Tipo de acción de cobranzas"
+        ],
+        "summary": "Execute dynamic query without persisted smartie",
+        "description": "Performs a dynamic query on Tipo de acción de cobranzas instances with custom columns, filters, sorting, aggregations, and configurable pagination. Use this endpoint for production-grade listings that require predictable performance, payload control, and advanced filtering. Unlike /search, /query allows explicit column selection and page size configuration, making it the preferred option for list screens, integrations, and high-volume data retrieval scenarios. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dynamic query parameters including pagination, columns, filters, and search criteria",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "page"
+                ],
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Page number (1-based)",
+                    "default": 1
+                  },
+                  "pageSize": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Number of records per page",
+                    "default": 50
+                  },
+                  "search": {
+                    "type": "string",
+                    "description": "Fast search term to filter across all columns",
+                    "nullable": true
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "field"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "enum": [
+                            "TDAD_NOMBRE",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Physical column name (required). Available columns from entity view."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Custom column title (optional)",
+                          "nullable": true
+                        },
+                        "sortDirection": {
+                          "enum": [
+                            "ASC",
+                            "DESC"
+                          ],
+                          "type": "string",
+                          "description": "Sort direction",
+                          "nullable": true
+                        },
+                        "order": {
+                          "type": "integer",
+                          "description": "Column display order (optional)",
+                          "nullable": true
+                        },
+                        "sortOrder": {
+                          "type": "integer",
+                          "description": "Sort priority order (optional)",
+                          "nullable": true
+                        },
+                        "aggregation": {
+                          "enum": [
+                            "SUM",
+                            "COUNT",
+                            "AVG",
+                            "MIN",
+                            "MAX"
+                          ],
+                          "type": "string",
+                          "description": "Aggregation function",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Column specifications. If null or empty, default header columns will be used",
+                    "nullable": true
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "columnName",
+                        "operator",
+                        "value"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "columnName": {
+                          "enum": [
+                            "TDAD_NOMBRE",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Column name to filter (required). Available columns from entity view."
+                        },
+                        "operator": {
+                          "enum": [
+                            "=",
+                            "!=",
+                            ">",
+                            "<",
+                            ">=",
+                            "<=",
+                            "LIKE"
+                          ],
+                          "type": "string",
+                          "description": "Comparison operator"
+                        },
+                        "value": {
+                          "description": "Value to compare. Type should match column data type",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Filter specifications",
+                    "nullable": true
+                  }
+                }
+              },
+              "example": {
+                "page": 1,
+                "pageSize": 10,
+                "search": "",
+                "columns": [
+                  {
+                    "field": "COLUMN_NAME",
+                    "title": "Column Title",
+                    "sortDirection": "ASC",
+                    "sortOrder": 1
+                  }
+                ],
+                "filters": [
+                  {
+                    "columnName": "COLUMN_NAME",
+                    "operator": "=",
+                    "value": "value"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Array of records matching the query"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records (without pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Column definitions"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters or column names"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity"
+          },
+          "404": {
+            "description": "Entity not found"
+          }
+        }
+      }
+    },
+    "/TIPO_DE_ACCION_DE_CO/file": {
+      "get": {
+        "tags": [
+          "Ventas / Tipo de acción de cobranzas"
+        ],
+        "summary": "Descarga un archivo de una entidad",
+        "description": "Devuelve el archivo cargado en un atributo de tipo archivo de una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archivo encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Ventas / Tipo de acción de cobranzas"
+        ],
+        "summary": "Carga o reemplaza un archivo en una entidad",
+        "description": "Guarda el archivo en el atributo de tipo archivo de una instancia de entidad. Soporta dos formatos: multipart/form-data o binary directo (application/octet-stream, application/pdf, etc.).",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "description": "Tipo de contenido (MIME) del archivo (ej: application/pdf, image/png)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Nombre del archivo (opcional, se puede inferir del multipart)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Archivo a cargar. Puede enviarse como multipart/form-data o como binary directo.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "Contenido del archivo",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido binario del archivo enviado directamente",
+                "format": "binary"
+              }
+            },
+            "application/pdf": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido PDF enviado directamente",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Archivo guardado correctamente"
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/TIPO_DE_ACCION_DE_CO/report": {
+      "get": {
+        "tags": [
+          "Ventas / Tipo de acción de cobranzas"
         ],
         "summary": "Descarga un reporte asociado a una entidad",
         "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
@@ -195204,12 +197760,12 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "VEHA_NOMBRE",
-                            "VEHA_USUARIO_DE_YIQI",
                             "VEHA_ULTIMO_TRIMESTRE",
                             "VEHA_ANTERIOR",
+                            "VEHA_NOMBRE",
                             "VEHA_CODIGO",
                             "VEHA_DESHABILITADO",
+                            "VEHA_USUARIO_DE_YIQI_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -195273,12 +197829,12 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "VEHA_NOMBRE",
-                            "VEHA_USUARIO_DE_YIQI",
                             "VEHA_ULTIMO_TRIMESTRE",
                             "VEHA_ANTERIOR",
+                            "VEHA_NOMBRE",
                             "VEHA_CODIGO",
                             "VEHA_DESHABILITADO",
+                            "VEHA_USUARIO_DE_YIQI_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -199981,6 +202537,10 @@
       "description": "Categoría de Origen de Pedido"
     },
     {
+      "name": "Cobrador",
+      "description": "Cobrador"
+    },
+    {
       "name": "Comportamiento Lote/Despacho",
       "description": "Comportamiento Lote/Despacho"
     },
@@ -200003,6 +202563,10 @@
     {
       "name": "Temporada",
       "description": "Temporada"
+    },
+    {
+      "name": "Tipo de cobrador",
+      "description": "Tipo de cobrador"
     },
     {
       "name": "Tipo de Publicación",
@@ -200125,8 +202689,8 @@
       "description": "Tamaño Empresa"
     },
     {
-      "name": "Comercial/CRM / Tipo de acción",
-      "description": "Tipo de acción"
+      "name": "Comercial/CRM / Tipo de acción comercial",
+      "description": "Tipo de acción comercial"
     },
     {
       "name": "Comercial/CRM / Tipo de Cotización",
@@ -200767,6 +203331,10 @@
     {
       "name": "Ventas / Servicio",
       "description": "Servicio"
+    },
+    {
+      "name": "Ventas / Tipo de acción de cobranzas",
+      "description": "Tipo de acción de cobranzas"
     },
     {
       "name": "Ventas / Tipo de comisión",

@@ -6,7 +6,12 @@
   },
   "servers": [
     {
-      "url": "https://api.yiqi.com.ar/api/public"
+      "url": "https://api.yiqi.com.ar/api/public",
+      "description": "production"
+    },
+    {
+      "url": "https://yiqiapi.azurewebsites.net/api/public",
+      "description": "beta"
     }
   ],
   "paths": {
@@ -1241,6 +1246,12 @@
                               "description": "Es el concepto de facturación creado para el artículo.-\n This is a foreign key to Concepto facturación. An id of Concepto facturación is expected",
                               "nullable": true
                             },
+                            "CODC_ID_CODC": {
+                              "title": "Concepto de compras",
+                              "type": "integer",
+                              "description": " This is a foreign key to Concepto de Compras. An id of Concepto de Compras is expected",
+                              "nullable": true
+                            },
                             "TALL_ID_TALL": {
                               "title": "Talle",
                               "type": "integer",
@@ -1292,12 +1303,6 @@
                               "title": "Identificador Universal",
                               "maxLength": 100,
                               "type": "string",
-                              "nullable": true
-                            },
-                            "CODC_ID_CODC": {
-                              "title": "Concepto de compras",
-                              "type": "integer",
-                              "description": " This is a foreign key to Concepto de Compras. An id of Concepto de Compras is expected",
                               "nullable": true
                             },
                             "MATE_FOTO_EXTERNA_1": {
@@ -1410,37 +1415,45 @@
                               "nullable": true
                             },
                             "MATE_STOCK_SEGURIDAD": {
-                              "title": "Stock Seguridad",
+                              "title": "Stock de seguridad",
                               "type": "integer",
-                              "description": "Cantidad de artículos mínimo a tener de reserva en el stock",
+                              "description": "Cantidad mínima de resguardo que se desea mantener en stock.",
                               "nullable": true
                             },
                             "MATE_USO_MENSUAL": {
-                              "title": "Uso mensual",
+                              "title": "Consumo mensual manual",
                               "type": "integer",
-                              "description": "Valor ingresado a por el usuario en caso de no considerar el \"Uso mensual promedio\" calculado.",
-                              "nullable": true
-                            },
-                            "MATE_TOLERANCIA": {
-                              "title": "Tolerancia (%)",
-                              "type": "number",
-                              "description": "Margen sobre el punto de pedido",
+                              "description": "Valor ingresado manualmente para reemplazar el consumo mensual promedio calculado.",
                               "nullable": true
                             },
                             "MATE_LEAD_TIME": {
-                              "title": "Tiempo de reposición (días)",
+                              "title": "Lead time (días)",
                               "type": "integer",
                               "description": "Tiempo que transcurre entre que se realiza el pedido al proveedor (o se genera la orden de producción) y obtengo el artículo listo para la venta.",
                               "nullable": true
                             },
-                            "MATE_LEAD_TIME_MAXIMO": {
-                              "title": "Lead Time Máximo (días)",
+                            "MATE_TOLERANCIA": {
+                              "title": "Margen de cobertura (%)",
+                              "type": "number",
+                              "description": "Porcentaje adicional aplicado sobre la demanda del lead time.",
+                              "nullable": true
+                            },
+                            "MATE_MULTIPLO_COMPRA": {
+                              "title": "Múltiplo de compra",
                               "type": "integer",
+                              "description": "Define el múltiplo de reposición. Ejemplo: si vale 6, la cantidad a reponer se ajusta al próximo múltiplo de 6.",
+                              "nullable": true
+                            },
+                            "MATE_LEAD_TIME_MAXIMO": {
+                              "title": "Lead time máximo (días)",
+                              "type": "integer",
+                              "description": "Tiempo máximo esperado de reposición para calcular un escenario conservador.",
                               "nullable": true
                             },
                             "MATE_NOTAS_SOBRE_PUNTO_DE": {
-                              "title": "Notas sobre punto de pedido",
+                              "title": "Notas de reposición",
                               "type": "string",
+                              "description": "Observaciones operativas para compras, planificación o producción.",
                               "nullable": true
                             },
                             "MATE_PESO": {
@@ -1927,6 +1940,11 @@
                             "type": "integer",
                             "nullable": true
                           },
+                          "CODC_ID_CODC": {
+                            "title": "Concepto de compras",
+                            "type": "integer",
+                            "nullable": true
+                          },
                           "ARBA_ID_ARBA": {
                             "title": "Artículo Base",
                             "type": "integer",
@@ -1985,11 +2003,6 @@
                           "MATE_ID_UNIVERSAL": {
                             "title": "Identificador Universal",
                             "type": "string",
-                            "nullable": true
-                          },
-                          "CODC_ID_CODC": {
-                            "title": "Concepto de compras",
-                            "type": "integer",
                             "nullable": true
                           },
                           "MATE_STOCK_MINIMO": {
@@ -2092,6 +2105,11 @@
                             "type": "boolean",
                             "nullable": true
                           },
+                          "MATE_ID_PROV": {
+                            "title": "Identificador del proveedor",
+                            "type": "string",
+                            "nullable": true
+                          },
                           "MATE_STOCK_MINIMO_NEW": {
                             "title": "Nuevo mínimo stock publicado",
                             "type": "integer",
@@ -2137,43 +2155,58 @@
                             "type": "integer",
                             "nullable": true
                           },
+                          "MATE_FECHA_ULTIMA_COMPRA": {
+                            "title": "Fecha última compra",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "MATE_FECHA_PROXIMA_COMPRA": {
+                            "title": "Fecha próxima compra",
+                            "type": "string",
+                            "nullable": true
+                          },
                           "MATE_STOCK_DISPONIBLE": {
-                            "title": "Stock Disponible",
+                            "title": "Stock disponible",
                             "type": "number",
-                            "nullable": true
-                          },
-                          "MATE_STOCK_SEGURIDAD": {
-                            "title": "Stock Seguridad",
-                            "type": "integer",
-                            "nullable": true
-                          },
-                          "MATE_USO_MENSUAL_CALCULAD": {
-                            "title": "Uso mensual promedio",
-                            "type": "integer",
-                            "nullable": true
-                          },
-                          "MATE_USO_MENSUAL": {
-                            "title": "Uso mensual",
-                            "type": "integer",
-                            "nullable": true
-                          },
-                          "MATE_TOLERANCIA": {
-                            "title": "Tolerancia (%)",
-                            "type": "number",
-                            "nullable": true
-                          },
-                          "MATE_LEAD_TIME": {
-                            "title": "Tiempo de reposición (días)",
-                            "type": "integer",
                             "nullable": true
                           },
                           "MATE_CANTIDAD_PEDIDA": {
-                            "title": "# Pedida",
+                            "title": "Cantidad pedida pendiente",
                             "type": "integer",
                             "nullable": true
                           },
                           "MATE_STOCK_MAS_PEDIDO": {
-                            "title": "Stock disponible + Pedido",
+                            "title": "Cobertura actual (stock + pedido)",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MATE_STOCK_SEGURIDAD": {
+                            "title": "Stock de seguridad",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MATE_USO_MENSUAL_CALCULAD": {
+                            "title": "Consumo mensual promedio",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MATE_USO_MENSUAL": {
+                            "title": "Consumo mensual manual",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MATE_LEAD_TIME": {
+                            "title": "Lead time (días)",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "MATE_TOLERANCIA": {
+                            "title": "Margen de cobertura (%)",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "MATE_MULTIPLO_COMPRA": {
+                            "title": "Múltiplo de compra",
                             "type": "integer",
                             "nullable": true
                           },
@@ -2183,8 +2216,13 @@
                             "nullable": true
                           },
                           "MATE_CANT_PARA_REPOSICION": {
-                            "title": "# a reponer",
+                            "title": "Cantidad a reponer",
                             "type": "number",
+                            "nullable": true
+                          },
+                          "MATE_LEAD_TIME_MAXIMO": {
+                            "title": "Lead time máximo (días)",
+                            "type": "integer",
                             "nullable": true
                           },
                           "MATE_PUNTO_PEDIDO_MAX": {
@@ -2193,17 +2231,12 @@
                             "nullable": true
                           },
                           "MATE_CANTIDAD_A_REPONER_M": {
-                            "title": "# a Reponer Máx",
-                            "type": "integer",
-                            "nullable": true
-                          },
-                          "MATE_LEAD_TIME_MAXIMO": {
-                            "title": "Lead Time Máximo (días)",
+                            "title": "Cantidad a reponer (máx.)",
                             "type": "integer",
                             "nullable": true
                           },
                           "MATE_NOTAS_SOBRE_PUNTO_DE": {
-                            "title": "Notas sobre punto de pedido",
+                            "title": "Notas de reposición",
                             "type": "string",
                             "nullable": true
                           },
@@ -2313,7 +2346,7 @@
                             "nullable": true
                           },
                           "MATE_PRECIO_LISTA_2___NET": {
-                            "title": "Lista Mayorista - Net",
+                            "title": "3 - Shopify - Net",
                             "type": "number",
                             "nullable": true
                           },
@@ -2323,7 +2356,7 @@
                             "nullable": true
                           },
                           "MATE_PRECIO_LISTA_2___TAC": {
-                            "title": "Lista Mayorista - Tachado",
+                            "title": "3 - Shopify - Tachado",
                             "type": "number",
                             "nullable": true
                           },
@@ -2719,6 +2752,12 @@
                               "description": "Es el concepto de facturación creado para el artículo.-\n This is a foreign key to Concepto facturación. An id of Concepto facturación is expected",
                               "nullable": true
                             },
+                            "CODC_ID_CODC": {
+                              "title": "Concepto de compras",
+                              "type": "integer",
+                              "description": " This is a foreign key to Concepto de Compras. An id of Concepto de Compras is expected",
+                              "nullable": true
+                            },
                             "TALL_ID_TALL": {
                               "title": "Talle",
                               "type": "integer",
@@ -2770,12 +2809,6 @@
                               "title": "Identificador Universal",
                               "maxLength": 100,
                               "type": "string",
-                              "nullable": true
-                            },
-                            "CODC_ID_CODC": {
-                              "title": "Concepto de compras",
-                              "type": "integer",
-                              "description": " This is a foreign key to Concepto de Compras. An id of Concepto de Compras is expected",
                               "nullable": true
                             },
                             "MATE_FOTO_EXTERNA_1": {
@@ -2888,37 +2921,45 @@
                               "nullable": true
                             },
                             "MATE_STOCK_SEGURIDAD": {
-                              "title": "Stock Seguridad",
+                              "title": "Stock de seguridad",
                               "type": "integer",
-                              "description": "Cantidad de artículos mínimo a tener de reserva en el stock",
+                              "description": "Cantidad mínima de resguardo que se desea mantener en stock.",
                               "nullable": true
                             },
                             "MATE_USO_MENSUAL": {
-                              "title": "Uso mensual",
+                              "title": "Consumo mensual manual",
                               "type": "integer",
-                              "description": "Valor ingresado a por el usuario en caso de no considerar el \"Uso mensual promedio\" calculado.",
-                              "nullable": true
-                            },
-                            "MATE_TOLERANCIA": {
-                              "title": "Tolerancia (%)",
-                              "type": "number",
-                              "description": "Margen sobre el punto de pedido",
+                              "description": "Valor ingresado manualmente para reemplazar el consumo mensual promedio calculado.",
                               "nullable": true
                             },
                             "MATE_LEAD_TIME": {
-                              "title": "Tiempo de reposición (días)",
+                              "title": "Lead time (días)",
                               "type": "integer",
                               "description": "Tiempo que transcurre entre que se realiza el pedido al proveedor (o se genera la orden de producción) y obtengo el artículo listo para la venta.",
                               "nullable": true
                             },
-                            "MATE_LEAD_TIME_MAXIMO": {
-                              "title": "Lead Time Máximo (días)",
+                            "MATE_TOLERANCIA": {
+                              "title": "Margen de cobertura (%)",
+                              "type": "number",
+                              "description": "Porcentaje adicional aplicado sobre la demanda del lead time.",
+                              "nullable": true
+                            },
+                            "MATE_MULTIPLO_COMPRA": {
+                              "title": "Múltiplo de compra",
                               "type": "integer",
+                              "description": "Define el múltiplo de reposición. Ejemplo: si vale 6, la cantidad a reponer se ajusta al próximo múltiplo de 6.",
+                              "nullable": true
+                            },
+                            "MATE_LEAD_TIME_MAXIMO": {
+                              "title": "Lead time máximo (días)",
+                              "type": "integer",
+                              "description": "Tiempo máximo esperado de reposición para calcular un escenario conservador.",
                               "nullable": true
                             },
                             "MATE_NOTAS_SOBRE_PUNTO_DE": {
-                              "title": "Notas sobre punto de pedido",
+                              "title": "Notas de reposición",
                               "type": "string",
+                              "description": "Observaciones operativas para compras, planificación o producción.",
                               "nullable": true
                             },
                             "MATE_PESO": {
@@ -3288,6 +3329,9 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "ARBA_CANTIDAD_DE_TALLES",
+                            "ARBA_CANTIDAD_DE_VARIANTE",
+                            "ARBA_CANTIDAD_DE_ARTICULO",
                             "ARBA_CODIGO",
                             "ARBA_NOMBRE",
                             "ARBA_DESCRIPCION",
@@ -3299,9 +3343,6 @@
                             "ARBA_CODIGO_PROVEEDOR",
                             "ARBA_PRECIO_VENTA_PUBLICO",
                             "ARBA_PRECIO_VENTA_WEB",
-                            "ARBA_CANTIDAD_DE_TALLES",
-                            "ARBA_CANTIDAD_DE_VARIANTE",
-                            "ARBA_CANTIDAD_DE_ARTICULO",
                             "ARBA_FOTO_EXTERNA_1",
                             "ARBA_FOTO_EXTERNA_2",
                             "ARBA_TITULO_PUBLICACION",
@@ -3370,6 +3411,9 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "ARBA_CANTIDAD_DE_TALLES",
+                            "ARBA_CANTIDAD_DE_VARIANTE",
+                            "ARBA_CANTIDAD_DE_ARTICULO",
                             "ARBA_CODIGO",
                             "ARBA_NOMBRE",
                             "ARBA_DESCRIPCION",
@@ -3381,9 +3425,6 @@
                             "ARBA_CODIGO_PROVEEDOR",
                             "ARBA_PRECIO_VENTA_PUBLICO",
                             "ARBA_PRECIO_VENTA_WEB",
-                            "ARBA_CANTIDAD_DE_TALLES",
-                            "ARBA_CANTIDAD_DE_VARIANTE",
-                            "ARBA_CANTIDAD_DE_ARTICULO",
                             "ARBA_FOTO_EXTERNA_1",
                             "ARBA_FOTO_EXTERNA_2",
                             "ARBA_TITULO_PUBLICACION",
@@ -3935,6 +3976,12 @@
                         "description": "Es el concepto de facturación creado para el artículo.-\n This is a foreign key to Concepto facturación. An id of Concepto facturación is expected",
                         "nullable": true
                       },
+                      "CODC_ID_CODC": {
+                        "title": "Concepto de compras",
+                        "type": "integer",
+                        "description": " This is a foreign key to Concepto de Compras. An id of Concepto de Compras is expected",
+                        "nullable": true
+                      },
                       "ARBA_ID_ARBA": {
                         "title": "Artículo Base",
                         "type": "integer",
@@ -3992,12 +4039,6 @@
                         "title": "Identificador Universal",
                         "maxLength": 100,
                         "type": "string",
-                        "nullable": true
-                      },
-                      "CODC_ID_CODC": {
-                        "title": "Concepto de compras",
-                        "type": "integer",
-                        "description": " This is a foreign key to Concepto de Compras. An id of Concepto de Compras is expected",
                         "nullable": true
                       },
                       "MATE_FOTO_EXTERNA_1": {
@@ -4110,37 +4151,45 @@
                         "nullable": true
                       },
                       "MATE_STOCK_SEGURIDAD": {
-                        "title": "Stock Seguridad",
+                        "title": "Stock de seguridad",
                         "type": "integer",
-                        "description": "Cantidad de artículos mínimo a tener de reserva en el stock",
+                        "description": "Cantidad mínima de resguardo que se desea mantener en stock.",
                         "nullable": true
                       },
                       "MATE_USO_MENSUAL": {
-                        "title": "Uso mensual",
+                        "title": "Consumo mensual manual",
                         "type": "integer",
-                        "description": "Valor ingresado a por el usuario en caso de no considerar el \"Uso mensual promedio\" calculado.",
-                        "nullable": true
-                      },
-                      "MATE_TOLERANCIA": {
-                        "title": "Tolerancia (%)",
-                        "type": "number",
-                        "description": "Margen sobre el punto de pedido",
+                        "description": "Valor ingresado manualmente para reemplazar el consumo mensual promedio calculado.",
                         "nullable": true
                       },
                       "MATE_LEAD_TIME": {
-                        "title": "Tiempo de reposición (días)",
+                        "title": "Lead time (días)",
                         "type": "integer",
                         "description": "Tiempo que transcurre entre que se realiza el pedido al proveedor (o se genera la orden de producción) y obtengo el artículo listo para la venta.",
                         "nullable": true
                       },
-                      "MATE_LEAD_TIME_MAXIMO": {
-                        "title": "Lead Time Máximo (días)",
+                      "MATE_TOLERANCIA": {
+                        "title": "Margen de cobertura (%)",
+                        "type": "number",
+                        "description": "Porcentaje adicional aplicado sobre la demanda del lead time.",
+                        "nullable": true
+                      },
+                      "MATE_MULTIPLO_COMPRA": {
+                        "title": "Múltiplo de compra",
                         "type": "integer",
+                        "description": "Define el múltiplo de reposición. Ejemplo: si vale 6, la cantidad a reponer se ajusta al próximo múltiplo de 6.",
+                        "nullable": true
+                      },
+                      "MATE_LEAD_TIME_MAXIMO": {
+                        "title": "Lead time máximo (días)",
+                        "type": "integer",
+                        "description": "Tiempo máximo esperado de reposición para calcular un escenario conservador.",
                         "nullable": true
                       },
                       "MATE_NOTAS_SOBRE_PUNTO_DE": {
-                        "title": "Notas sobre punto de pedido",
+                        "title": "Notas de reposición",
                         "type": "string",
+                        "description": "Observaciones operativas para compras, planificación o producción.",
                         "nullable": true
                       },
                       "MATE_PESO": {
@@ -4904,6 +4953,12 @@
                       "description": "Es el concepto de facturación creado para el artículo.-\nForeign key to Concepto facturación",
                       "nullable": true
                     },
+                    "CODC_ID_CODC": {
+                      "title": "Concepto de compras",
+                      "type": "integer",
+                      "description": "Foreign key to Concepto de Compras",
+                      "nullable": true
+                    },
                     "ARBA_ID_ARBA": {
                       "title": "Artículo Base",
                       "type": "integer",
@@ -4968,12 +5023,6 @@
                     "MATE_ID_UNIVERSAL": {
                       "title": "Identificador Universal",
                       "type": "string",
-                      "nullable": true
-                    },
-                    "CODC_ID_CODC": {
-                      "title": "Concepto de compras",
-                      "type": "integer",
-                      "description": "Foreign key to Concepto de Compras",
                       "nullable": true
                     },
                     "MATE_STOCK_MINIMO": {
@@ -5082,6 +5131,11 @@
                       "type": "boolean",
                       "nullable": true
                     },
+                    "MATE_ID_PROV": {
+                      "title": "Identificador del proveedor",
+                      "type": "string",
+                      "nullable": true
+                    },
                     "MATE_STOCK_MINIMO_NEW": {
                       "title": "Nuevo mínimo stock publicado",
                       "type": "integer",
@@ -5130,51 +5184,70 @@
                       "type": "integer",
                       "nullable": true
                     },
+                    "MATE_FECHA_ULTIMA_COMPRA": {
+                      "title": "Fecha última compra",
+                      "type": "string",
+                      "description": "Fecha más reciente en la que se compra el artículo.",
+                      "nullable": true
+                    },
+                    "MATE_FECHA_PROXIMA_COMPRA": {
+                      "title": "Fecha próxima compra",
+                      "type": "string",
+                      "description": "Suma de campos Fecha última compra + Frecuencia de Compra definida para el proveedor.",
+                      "nullable": true
+                    },
                     "MATE_STOCK_DISPONIBLE": {
-                      "title": "Stock Disponible",
+                      "title": "Stock disponible",
                       "type": "number",
+                      "description": "Stock actual considerado para el cálculo del punto de pedido según la configuración del origen de pedido.",
+                      "nullable": true
+                    },
+                    "MATE_CANTIDAD_PEDIDA": {
+                      "title": "Cantidad pedida pendiente",
+                      "type": "integer",
+                      "description": "Cantidad pendiente de entrega en órdenes de compra.",
+                      "nullable": true
+                    },
+                    "MATE_STOCK_MAS_PEDIDO": {
+                      "title": "Cobertura actual (stock + pedido)",
+                      "type": "integer",
+                      "description": "Suma del stock disponible más la cantidad ya pedida al proveedor.",
                       "nullable": true
                     },
                     "MATE_STOCK_SEGURIDAD": {
-                      "title": "Stock Seguridad",
+                      "title": "Stock de seguridad",
                       "type": "integer",
-                      "description": "Cantidad de artículos mínimo a tener de reserva en el stock",
+                      "description": "Cantidad mínima de resguardo que se desea mantener en stock.",
                       "nullable": true
                     },
                     "MATE_USO_MENSUAL_CALCULAD": {
-                      "title": "Uso mensual promedio",
+                      "title": "Consumo mensual promedio",
                       "type": "integer",
-                      "description": "Promedio de ventas de los últimos 3 meses ( o desde inicio de venta, en caso de ser un tiempo menor).",
+                      "description": "Promedio de ventas de los últimos 3 meses (o desde el inicio de venta si el período es menor).",
                       "nullable": true
                     },
                     "MATE_USO_MENSUAL": {
-                      "title": "Uso mensual",
+                      "title": "Consumo mensual manual",
                       "type": "integer",
-                      "description": "Valor ingresado a por el usuario en caso de no considerar el \"Uso mensual promedio\" calculado.",
-                      "nullable": true
-                    },
-                    "MATE_TOLERANCIA": {
-                      "title": "Tolerancia (%)",
-                      "type": "number",
-                      "description": "Margen sobre el punto de pedido",
+                      "description": "Valor ingresado manualmente para reemplazar el consumo mensual promedio calculado.",
                       "nullable": true
                     },
                     "MATE_LEAD_TIME": {
-                      "title": "Tiempo de reposición (días)",
+                      "title": "Lead time (días)",
                       "type": "integer",
                       "description": "Tiempo que transcurre entre que se realiza el pedido al proveedor (o se genera la orden de producción) y obtengo el artículo listo para la venta.",
                       "nullable": true
                     },
-                    "MATE_CANTIDAD_PEDIDA": {
-                      "title": "# Pedida",
-                      "type": "integer",
-                      "description": "Suma la cantidad que figura pendiente de entrega en Detalles de OC.",
+                    "MATE_TOLERANCIA": {
+                      "title": "Margen de cobertura (%)",
+                      "type": "number",
+                      "description": "Porcentaje adicional aplicado sobre la demanda del lead time.",
                       "nullable": true
                     },
-                    "MATE_STOCK_MAS_PEDIDO": {
-                      "title": "Stock disponible + Pedido",
+                    "MATE_MULTIPLO_COMPRA": {
+                      "title": "Múltiplo de compra",
                       "type": "integer",
-                      "description": "Suma la cantidad de Stock disponible con la cantidad de Pedido",
+                      "description": "Define el múltiplo de reposición. Ejemplo: si vale 6, la cantidad a reponer se ajusta al próximo múltiplo de 6.",
                       "nullable": true
                     },
                     "MATE_PUNTO_DE_PEDIDO": {
@@ -5184,29 +5257,33 @@
                       "nullable": true
                     },
                     "MATE_CANT_PARA_REPOSICION": {
-                      "title": "# a reponer",
+                      "title": "Cantidad a reponer",
                       "type": "number",
-                      "description": "Valor máximo entre el punto de pedido y valor del stock de seguridad, menos stock disponible y cantidad pedida.",
+                      "description": "Cantidad sugerida a reponer, ajustada al múltiplo de compra cuando está informado.",
+                      "nullable": true
+                    },
+                    "MATE_LEAD_TIME_MAXIMO": {
+                      "title": "Lead time máximo (días)",
+                      "type": "integer",
+                      "description": "Tiempo máximo esperado de reposición para calcular un escenario conservador.",
                       "nullable": true
                     },
                     "MATE_PUNTO_PEDIDO_MAX": {
                       "title": "Punto de pedido máximo",
                       "type": "integer",
+                      "description": "Punto de pedido calculado usando el lead time máximo.",
                       "nullable": true
                     },
                     "MATE_CANTIDAD_A_REPONER_M": {
-                      "title": "# a Reponer Máx",
+                      "title": "Cantidad a reponer (máx.)",
                       "type": "integer",
-                      "nullable": true
-                    },
-                    "MATE_LEAD_TIME_MAXIMO": {
-                      "title": "Lead Time Máximo (días)",
-                      "type": "integer",
+                      "description": "Cantidad máxima sugerida a reponer, ajustada al múltiplo de compra cuando está informado.",
                       "nullable": true
                     },
                     "MATE_NOTAS_SOBRE_PUNTO_DE": {
-                      "title": "Notas sobre punto de pedido",
+                      "title": "Notas de reposición",
                       "type": "string",
+                      "description": "Observaciones operativas para compras, planificación o producción.",
                       "nullable": true
                     },
                     "MATE_PESO": {
@@ -5325,7 +5402,7 @@
                       "nullable": true
                     },
                     "MATE_PRECIO_LISTA_2___NET": {
-                      "title": "Lista Mayorista - Net",
+                      "title": "3 - Shopify - Net",
                       "type": "number",
                       "nullable": true
                     },
@@ -5335,7 +5412,7 @@
                       "nullable": true
                     },
                     "MATE_PRECIO_LISTA_2___TAC": {
-                      "title": "Lista Mayorista - Tachado",
+                      "title": "3 - Shopify - Tachado",
                       "type": "number",
                       "nullable": true
                     },
@@ -5416,7 +5493,7 @@
                             "nullable": true
                           },
                           "BOM0_TOTAL_DE_BOMS": {
-                            "title": "Costo total",
+                            "title": "Costo total Neto",
                             "type": "number",
                             "nullable": true
                           },
@@ -5428,6 +5505,11 @@
                           "BOM0_APERTURA_DE_BOMS": {
                             "title": "Devolución por Componentes",
                             "type": "boolean",
+                            "nullable": true
+                          },
+                          "MONE_ID_MONE": {
+                            "title": "Moneda de compras",
+                            "type": "integer",
                             "nullable": true
                           },
                           "MATE_ID_NUEV": {
@@ -6380,6 +6462,11 @@
                             "type": "string",
                             "nullable": true
                           },
+                          "PUBL_ACEPTA_PRECIOS_MAYO": {
+                            "title": "Acepta Precios Mayoristas",
+                            "type": "boolean",
+                            "nullable": true
+                          },
                           "PUBL_LINK_PUBLICACION": {
                             "title": "Link de la publicacíon.",
                             "type": "string",
@@ -6674,6 +6761,12 @@
                         "description": "Es el concepto de facturación creado para el artículo.-\n This is a foreign key to Concepto facturación. An id of Concepto facturación is expected",
                         "nullable": true
                       },
+                      "CODC_ID_CODC": {
+                        "title": "Concepto de compras",
+                        "type": "integer",
+                        "description": " This is a foreign key to Concepto de Compras. An id of Concepto de Compras is expected",
+                        "nullable": true
+                      },
                       "ARBA_ID_ARBA": {
                         "title": "Artículo Base",
                         "type": "integer",
@@ -6731,12 +6824,6 @@
                         "title": "Identificador Universal",
                         "maxLength": 100,
                         "type": "string",
-                        "nullable": true
-                      },
-                      "CODC_ID_CODC": {
-                        "title": "Concepto de compras",
-                        "type": "integer",
-                        "description": " This is a foreign key to Concepto de Compras. An id of Concepto de Compras is expected",
                         "nullable": true
                       },
                       "MATE_FOTO_EXTERNA_1": {
@@ -6849,37 +6936,45 @@
                         "nullable": true
                       },
                       "MATE_STOCK_SEGURIDAD": {
-                        "title": "Stock Seguridad",
+                        "title": "Stock de seguridad",
                         "type": "integer",
-                        "description": "Cantidad de artículos mínimo a tener de reserva en el stock",
+                        "description": "Cantidad mínima de resguardo que se desea mantener en stock.",
                         "nullable": true
                       },
                       "MATE_USO_MENSUAL": {
-                        "title": "Uso mensual",
+                        "title": "Consumo mensual manual",
                         "type": "integer",
-                        "description": "Valor ingresado a por el usuario en caso de no considerar el \"Uso mensual promedio\" calculado.",
-                        "nullable": true
-                      },
-                      "MATE_TOLERANCIA": {
-                        "title": "Tolerancia (%)",
-                        "type": "number",
-                        "description": "Margen sobre el punto de pedido",
+                        "description": "Valor ingresado manualmente para reemplazar el consumo mensual promedio calculado.",
                         "nullable": true
                       },
                       "MATE_LEAD_TIME": {
-                        "title": "Tiempo de reposición (días)",
+                        "title": "Lead time (días)",
                         "type": "integer",
                         "description": "Tiempo que transcurre entre que se realiza el pedido al proveedor (o se genera la orden de producción) y obtengo el artículo listo para la venta.",
                         "nullable": true
                       },
-                      "MATE_LEAD_TIME_MAXIMO": {
-                        "title": "Lead Time Máximo (días)",
+                      "MATE_TOLERANCIA": {
+                        "title": "Margen de cobertura (%)",
+                        "type": "number",
+                        "description": "Porcentaje adicional aplicado sobre la demanda del lead time.",
+                        "nullable": true
+                      },
+                      "MATE_MULTIPLO_COMPRA": {
+                        "title": "Múltiplo de compra",
                         "type": "integer",
+                        "description": "Define el múltiplo de reposición. Ejemplo: si vale 6, la cantidad a reponer se ajusta al próximo múltiplo de 6.",
+                        "nullable": true
+                      },
+                      "MATE_LEAD_TIME_MAXIMO": {
+                        "title": "Lead time máximo (días)",
+                        "type": "integer",
+                        "description": "Tiempo máximo esperado de reposición para calcular un escenario conservador.",
                         "nullable": true
                       },
                       "MATE_NOTAS_SOBRE_PUNTO_DE": {
-                        "title": "Notas sobre punto de pedido",
+                        "title": "Notas de reposición",
                         "type": "string",
+                        "description": "Observaciones operativas para compras, planificación o producción.",
                         "nullable": true
                       },
                       "MATE_PESO": {
@@ -7601,7 +7696,7 @@
           {
             "name": "MATE_STOCK_DISPONIBLE",
             "in": "query",
-            "description": "Stock Disponible",
+            "description": "Stock disponible",
             "allowEmptyValue": true,
             "schema": {
               "type": "number"
@@ -7746,22 +7841,50 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "MATE_COLOR",
+                            "MATE_ARTICULO_BASE___CATE",
+                            "MATE_CANTIDAD_EN_QUIEBRE",
+                            "MATE_PUBLICACIONES_CANT",
+                            "MATE_ES_BOM",
+                            "MATE_ID_PROV",
+                            "MATE_OTROS_CODIGOS",
+                            "MATE_GRUPO_IDEN",
+                            "MATE_PRIMER_GRUPO_IDEN",
+                            "MATE_SEGUNDO_GRUPO_IDEN",
+                            "MATE_FECHA_ULTIMA_COMPRA",
+                            "MATE_FECHA_PROXIMA_COMPRA",
+                            "MATE_STOCK_DISPONIBLE",
+                            "MATE_CANTIDAD_PEDIDA",
+                            "MATE_STOCK_MAS_PEDIDO",
+                            "MATE_PUNTO_DE_PEDIDO",
+                            "MATE_CANT_PARA_REPOSICION",
+                            "MATE_PUNTO_PEDIDO_MAX",
+                            "MATE_CANTIDAD_A_REPONER_M",
+                            "MATE_PESO_VOLUMETRICO",
+                            "MATE_CAJA",
+                            "MATE_CRM",
+                            "MATE_CRM_FINAL",
+                            "MATE_PRECIO_LISTA_1",
+                            "MATE_PRECIO_LISTA_2",
+                            "MATE_PRECIO_LISTA_1___NET",
+                            "MATE_PRECIO_LISTA_2___NET",
+                            "MATE_PRECIO_LISTA_1___TAC",
+                            "MATE_PRECIO_LISTA_2___TAC",
+                            "MATE_MARGEN_BRUTO_MONEDA",
+                            "MATE_MARGEN_BRUTO_PORC",
+                            "MATE_VALOR_MINIMO",
+                            "MATE_NO_PRECIO_ART",
                             "MATE_CODIGO",
                             "MATE_NOMBRE",
                             "MATE_DESCRIPCION",
                             "MATE_IMPUESTO_INTERNO",
                             "MATE_IMP_INT_COMPRA",
-                            "MATE_COLOR",
                             "MATE_ETIQUETA_GENERADA",
-                            "MATE_ARTICULO_BASE___CATE",
-                            "MATE_DATOS_COMPRAS",
                             "MATE_CODIGO_EN_EL_PROVEED",
                             "MATE_COD_PROV_2",
                             "MATE_ID_UNIVERSAL",
-                            "MATE_STOCK",
                             "MATE_STOCK_MINIMO",
                             "MATE_STOCK_MAXIMO",
-                            "MATE_FOTOS",
                             "MATE_FOTO_EXTERNA_1",
                             "MATE_FOTO_EXTERNA_2",
                             "MATE_FOTO_1",
@@ -7769,63 +7892,30 @@
                             "MATE_FOTO_3",
                             "MATE_FOTO_4",
                             "MATE_FOTO_5",
-                            "MATE_POS",
                             "MATE_ES_GENERICO",
                             "MATE_NO_SE_INCLUYE_EN_F7",
-                            "MATE_CONTABLE",
-                            "MATE_CANTIDAD_EN_QUIEBRE",
                             "MATE_TEXTO_ADICIONAL",
-                            "MATE_OTROS",
                             "MATE_MINIMO_DIAS_A_VTO",
                             "MATE_PRODUCIR_CANT_ENTERA",
-                            "MATE_PUBLICACIONES_CANT",
-                            "MATE_ES_BOM",
                             "MATE_STOCK_MINIMO_NEW",
                             "MATE_STOCK_MAXIMO_NEW",
                             "MATE_SIN_REPOSICION",
-                            "MATE_OTROS_CODIGOS",
-                            "MATE_GRUPO_IDEN",
-                            "MATE_PRIMER_GRUPO_IDEN",
-                            "MATE_SEGUNDO_GRUPO_IDEN",
-                            "MATE_STOCK_DISPONIBLE",
                             "MATE_STOCK_SEGURIDAD",
                             "MATE_USO_MENSUAL_CALCULAD",
                             "MATE_USO_MENSUAL",
-                            "MATE_TOLERANCIA",
                             "MATE_LEAD_TIME",
-                            "MATE_CANTIDAD_PEDIDA",
-                            "MATE_STOCK_MAS_PEDIDO",
-                            "MATE_PUNTO_DE_PEDIDO",
-                            "MATE_CANT_PARA_REPOSICION",
-                            "MATE_PUNTO_MAX_PEDIDO",
-                            "MATE_PUNTO_PEDIDO_MAX",
-                            "MATE_CANTIDAD_A_REPONER_M",
+                            "MATE_TOLERANCIA",
+                            "MATE_MULTIPLO_COMPRA",
                             "MATE_LEAD_TIME_MAXIMO",
                             "MATE_NOTAS_SOBRE_PUNTO_DE",
                             "MATE_PESO",
                             "MATE_LARGO",
                             "MATE_ANCHO",
                             "MATE_ALTO",
-                            "MATE_PESO_VOLUMETRICO",
                             "MATE_CANTIDAD_DE_UNIDADES",
-                            "MATE_CAJA",
-                            "MATE_COMPRAS",
-                            "MATE_CRM",
-                            "MATE_CRM_FINAL",
-                            "MATE_VENTAS",
-                            "MATE_PRECIO_LISTA_1",
-                            "MATE_PRECIO_LISTA_2",
-                            "MATE_PRECIO_LISTA_1___NET",
-                            "MATE_PRECIO_LISTA_2___NET",
-                            "MATE_PRECIO_LISTA_1___TAC",
-                            "MATE_PRECIO_LISTA_2___TAC",
                             "MATE_MARGEN",
-                            "MATE_MARGEN_BRUTO_MONEDA",
-                            "MATE_MARGEN_BRUTO_PORC",
-                            "MATE_VALOR_MINIMO",
                             "MATE_COSTO_ADICIONAL_POR",
                             "MATE_NO_ACTUALIZAR_PRECIO",
-                            "MATE_NO_PRECIO_ART",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -7889,22 +7979,50 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "MATE_COLOR",
+                            "MATE_ARTICULO_BASE___CATE",
+                            "MATE_CANTIDAD_EN_QUIEBRE",
+                            "MATE_PUBLICACIONES_CANT",
+                            "MATE_ES_BOM",
+                            "MATE_ID_PROV",
+                            "MATE_OTROS_CODIGOS",
+                            "MATE_GRUPO_IDEN",
+                            "MATE_PRIMER_GRUPO_IDEN",
+                            "MATE_SEGUNDO_GRUPO_IDEN",
+                            "MATE_FECHA_ULTIMA_COMPRA",
+                            "MATE_FECHA_PROXIMA_COMPRA",
+                            "MATE_STOCK_DISPONIBLE",
+                            "MATE_CANTIDAD_PEDIDA",
+                            "MATE_STOCK_MAS_PEDIDO",
+                            "MATE_PUNTO_DE_PEDIDO",
+                            "MATE_CANT_PARA_REPOSICION",
+                            "MATE_PUNTO_PEDIDO_MAX",
+                            "MATE_CANTIDAD_A_REPONER_M",
+                            "MATE_PESO_VOLUMETRICO",
+                            "MATE_CAJA",
+                            "MATE_CRM",
+                            "MATE_CRM_FINAL",
+                            "MATE_PRECIO_LISTA_1",
+                            "MATE_PRECIO_LISTA_2",
+                            "MATE_PRECIO_LISTA_1___NET",
+                            "MATE_PRECIO_LISTA_2___NET",
+                            "MATE_PRECIO_LISTA_1___TAC",
+                            "MATE_PRECIO_LISTA_2___TAC",
+                            "MATE_MARGEN_BRUTO_MONEDA",
+                            "MATE_MARGEN_BRUTO_PORC",
+                            "MATE_VALOR_MINIMO",
+                            "MATE_NO_PRECIO_ART",
                             "MATE_CODIGO",
                             "MATE_NOMBRE",
                             "MATE_DESCRIPCION",
                             "MATE_IMPUESTO_INTERNO",
                             "MATE_IMP_INT_COMPRA",
-                            "MATE_COLOR",
                             "MATE_ETIQUETA_GENERADA",
-                            "MATE_ARTICULO_BASE___CATE",
-                            "MATE_DATOS_COMPRAS",
                             "MATE_CODIGO_EN_EL_PROVEED",
                             "MATE_COD_PROV_2",
                             "MATE_ID_UNIVERSAL",
-                            "MATE_STOCK",
                             "MATE_STOCK_MINIMO",
                             "MATE_STOCK_MAXIMO",
-                            "MATE_FOTOS",
                             "MATE_FOTO_EXTERNA_1",
                             "MATE_FOTO_EXTERNA_2",
                             "MATE_FOTO_1",
@@ -7912,63 +8030,30 @@
                             "MATE_FOTO_3",
                             "MATE_FOTO_4",
                             "MATE_FOTO_5",
-                            "MATE_POS",
                             "MATE_ES_GENERICO",
                             "MATE_NO_SE_INCLUYE_EN_F7",
-                            "MATE_CONTABLE",
-                            "MATE_CANTIDAD_EN_QUIEBRE",
                             "MATE_TEXTO_ADICIONAL",
-                            "MATE_OTROS",
                             "MATE_MINIMO_DIAS_A_VTO",
                             "MATE_PRODUCIR_CANT_ENTERA",
-                            "MATE_PUBLICACIONES_CANT",
-                            "MATE_ES_BOM",
                             "MATE_STOCK_MINIMO_NEW",
                             "MATE_STOCK_MAXIMO_NEW",
                             "MATE_SIN_REPOSICION",
-                            "MATE_OTROS_CODIGOS",
-                            "MATE_GRUPO_IDEN",
-                            "MATE_PRIMER_GRUPO_IDEN",
-                            "MATE_SEGUNDO_GRUPO_IDEN",
-                            "MATE_STOCK_DISPONIBLE",
                             "MATE_STOCK_SEGURIDAD",
                             "MATE_USO_MENSUAL_CALCULAD",
                             "MATE_USO_MENSUAL",
-                            "MATE_TOLERANCIA",
                             "MATE_LEAD_TIME",
-                            "MATE_CANTIDAD_PEDIDA",
-                            "MATE_STOCK_MAS_PEDIDO",
-                            "MATE_PUNTO_DE_PEDIDO",
-                            "MATE_CANT_PARA_REPOSICION",
-                            "MATE_PUNTO_MAX_PEDIDO",
-                            "MATE_PUNTO_PEDIDO_MAX",
-                            "MATE_CANTIDAD_A_REPONER_M",
+                            "MATE_TOLERANCIA",
+                            "MATE_MULTIPLO_COMPRA",
                             "MATE_LEAD_TIME_MAXIMO",
                             "MATE_NOTAS_SOBRE_PUNTO_DE",
                             "MATE_PESO",
                             "MATE_LARGO",
                             "MATE_ANCHO",
                             "MATE_ALTO",
-                            "MATE_PESO_VOLUMETRICO",
                             "MATE_CANTIDAD_DE_UNIDADES",
-                            "MATE_CAJA",
-                            "MATE_COMPRAS",
-                            "MATE_CRM",
-                            "MATE_CRM_FINAL",
-                            "MATE_VENTAS",
-                            "MATE_PRECIO_LISTA_1",
-                            "MATE_PRECIO_LISTA_2",
-                            "MATE_PRECIO_LISTA_1___NET",
-                            "MATE_PRECIO_LISTA_2___NET",
-                            "MATE_PRECIO_LISTA_1___TAC",
-                            "MATE_PRECIO_LISTA_2___TAC",
                             "MATE_MARGEN",
-                            "MATE_MARGEN_BRUTO_MONEDA",
-                            "MATE_MARGEN_BRUTO_PORC",
-                            "MATE_VALOR_MINIMO",
                             "MATE_COSTO_ADICIONAL_POR",
                             "MATE_NO_ACTUALIZAR_PRECIO",
-                            "MATE_NO_PRECIO_ART",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -9710,7 +9795,7 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "RELA_USUARIO_RESPONSABLE",
+                            "RELA_USUARIO_RESPONSABLE_NOMBR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -9774,7 +9859,7 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "RELA_USUARIO_RESPONSABLE",
+                            "RELA_USUARIO_RESPONSABLE_NOMBR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -11200,10 +11285,7 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "STOC_CODIGO",
-                            "STOC_CANTIDAD",
                             "STOC_CLIENTE_MATERIAL",
-                            "STOC_COSTO",
                             "STOC_COSTO_TOTAL",
                             "STOC_FACTIBILIDAD_PRODUCC",
                             "STOC_FECHA_LOTE",
@@ -11214,24 +11296,36 @@
                             "STOC_SKU",
                             "STOC_TIPO",
                             "STOC_LOTE_DESPACHO",
+                            "ARBA_ID_ARBA",
+                            "TALL_ID_TALL",
+                            "VARI_ID_VARI",
+                            "GRMA_ID_GRMA",
+                            "SUMA_ID_SUMA",
+                            "SSDA_ID_SSDA",
+                            "CDAB_ID_CDAB",
                             "STOC_DIAS_A_FECHA_DE_LOTE",
+                            "MARC_ID_MARC",
                             "STOC_TIENE_BOM",
+                            "BOM0_ID_BOM0",
                             "STOC_FECHA_DE_LTIMO_MOVIM",
+                            "COLE_ID_COLE",
                             "STOC_CLIENTE___VENDEDOR",
                             "STOC_MATE_PUNTO",
                             "STOC_MATE_PUNTO_MAX",
-                            "STOC_COSTOS",
                             "STOC_CRM",
                             "STOC_CRM_FINAL",
                             "STOC_CRM___USD",
                             "STOC_CRM_F_USD",
                             "STOC_CRM_UNITARIO",
-                            "STOC_CANTIDAD_INFORMADA",
                             "STOC_DIFERENCIA_CANTIDAD_",
                             "STOC_ESTADO_DEL_ARTICULO",
                             "STOC_CLIENTE_UBICACION_ST",
                             "STOC_PESO",
                             "STOC_VOLUMEN",
+                            "STOC_CODIGO",
+                            "STOC_CANTIDAD",
+                            "STOC_COSTO",
+                            "STOC_CANTIDAD_INFORMADA",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -11295,10 +11389,7 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "STOC_CODIGO",
-                            "STOC_CANTIDAD",
                             "STOC_CLIENTE_MATERIAL",
-                            "STOC_COSTO",
                             "STOC_COSTO_TOTAL",
                             "STOC_FACTIBILIDAD_PRODUCC",
                             "STOC_FECHA_LOTE",
@@ -11309,24 +11400,36 @@
                             "STOC_SKU",
                             "STOC_TIPO",
                             "STOC_LOTE_DESPACHO",
+                            "ARBA_ID_ARBA",
+                            "TALL_ID_TALL",
+                            "VARI_ID_VARI",
+                            "GRMA_ID_GRMA",
+                            "SUMA_ID_SUMA",
+                            "SSDA_ID_SSDA",
+                            "CDAB_ID_CDAB",
                             "STOC_DIAS_A_FECHA_DE_LOTE",
+                            "MARC_ID_MARC",
                             "STOC_TIENE_BOM",
+                            "BOM0_ID_BOM0",
                             "STOC_FECHA_DE_LTIMO_MOVIM",
+                            "COLE_ID_COLE",
                             "STOC_CLIENTE___VENDEDOR",
                             "STOC_MATE_PUNTO",
                             "STOC_MATE_PUNTO_MAX",
-                            "STOC_COSTOS",
                             "STOC_CRM",
                             "STOC_CRM_FINAL",
                             "STOC_CRM___USD",
                             "STOC_CRM_F_USD",
                             "STOC_CRM_UNITARIO",
-                            "STOC_CANTIDAD_INFORMADA",
                             "STOC_DIFERENCIA_CANTIDAD_",
                             "STOC_ESTADO_DEL_ARTICULO",
                             "STOC_CLIENTE_UBICACION_ST",
                             "STOC_PESO",
                             "STOC_VOLUMEN",
+                            "STOC_CODIGO",
+                            "STOC_CANTIDAD",
+                            "STOC_COSTO",
+                            "STOC_CANTIDAD_INFORMADA",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -13575,11 +13678,11 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "CCDS_DESCRIPCION",
+                            "CCDS_RESTA_ENTRE_STOCKS",
                             "CCDS_COINCIDE",
                             "CCDS_CANTIDAD_YIQI",
                             "CCDS_CANTIDAD_TN",
-                            "CCDS_DESCRIPCION",
-                            "CCDS_RESTA_ENTRE_STOCKS",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -13643,11 +13746,11 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "CCDS_DESCRIPCION",
+                            "CCDS_RESTA_ENTRE_STOCKS",
                             "CCDS_COINCIDE",
                             "CCDS_CANTIDAD_YIQI",
                             "CCDS_CANTIDAD_TN",
-                            "CCDS_DESCRIPCION",
-                            "CCDS_RESTA_ENTRE_STOCKS",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -15030,6 +15133,12 @@
                         "title": "IDs Publicaciones",
                         "type": "string",
                         "nullable": true
+                      },
+                      "NOPU_FGPRINT_ANTILOOP": {
+                        "title": "Fingerprint Anti-Loop",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
                       }
                     },
                     "description": "Instance data"
@@ -15184,6 +15293,11 @@
                       "type": "string",
                       "nullable": true
                     },
+                    "NOPU_FGPRINT_ANTILOOP": {
+                      "title": "Fingerprint Anti-Loop",
+                      "type": "string",
+                      "nullable": true
+                    },
                     "NOPU_TAGS": {
                       "title": "Tags",
                       "type": "boolean",
@@ -15318,6 +15432,12 @@
                       },
                       "NOPU_IDS_PUBLICACIONES": {
                         "title": "IDs Publicaciones",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "NOPU_FGPRINT_ANTILOOP": {
+                        "title": "Fingerprint Anti-Loop",
+                        "maxLength": 100,
                         "type": "string",
                         "nullable": true
                       }
@@ -15521,7 +15641,7 @@
                             "NOPU_PUB_CRUDA",
                             "NOPU_URLS",
                             "NOPU_IDS_PUBLICACIONES",
-                            "NOPU_CAMBIOS",
+                            "NOPU_FGPRINT_ANTILOOP",
                             "NOPU_TAGS",
                             "NOPU_LISTING_TYPE",
                             "NOPU_LOGISTICA",
@@ -15599,7 +15719,7 @@
                             "NOPU_PUB_CRUDA",
                             "NOPU_URLS",
                             "NOPU_IDS_PUBLICACIONES",
-                            "NOPU_CAMBIOS",
+                            "NOPU_FGPRINT_ANTILOOP",
                             "NOPU_TAGS",
                             "NOPU_LISTING_TYPE",
                             "NOPU_LOGISTICA",
@@ -16593,7 +16713,6 @@
                             "NOST_DESTINO",
                             "NOST_SERIE",
                             "NOST_CANTIDAD",
-                            "NOST_DATOS_DE_ORIGEN",
                             "NOST_ENTIDAD_ORIGEN",
                             "NOST_ID_GENERADOR",
                             "NOST_LINK_GENERADOR",
@@ -16667,7 +16786,6 @@
                             "NOST_DESTINO",
                             "NOST_SERIE",
                             "NOST_CANTIDAD",
-                            "NOST_DATOS_DE_ORIGEN",
                             "NOST_ENTIDAD_ORIGEN",
                             "NOST_ID_GENERADOR",
                             "NOST_LINK_GENERADOR",
@@ -18802,6 +18920,11 @@
                       "type": "string",
                       "nullable": true
                     },
+                    "PUBL_ACEPTA_PRECIOS_MAYO": {
+                      "title": "Acepta Precios Mayoristas",
+                      "type": "boolean",
+                      "nullable": true
+                    },
                     "PUBL_LINK_PUBLICACION": {
                       "title": "Link de la publicacíon.",
                       "type": "string",
@@ -19462,33 +19585,38 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "PUBL_PARA_PUBLICACIONES_E",
+                            "LIDP_ID_UTIL",
+                            "CLIE_ID_CLIE",
+                            "PUBL_PRECIO",
+                            "PUBL_PRECIO_VARIANTE",
+                            "PUBL_DIFERENCIA",
+                            "PUBL_STOCK_REAL",
+                            "PUBL_FACTIBILIDAD_DE_PROD",
+                            "PUBL_STOCK_MINIMO",
+                            "PUBL_STOCK_MAXIMO",
+                            "PUBL_STOCK",
+                            "PUBL_VOLUMEN_PROD",
+                            "PUBL_VOLUMEN_ENV",
+                            "PUBL_ARTICULO___ALICUOTA_",
+                            "PUBL_PUBLICACION_OK",
+                            "PUBL_ARTICULO_ESTADO",
+                            "PUBL_TIPO_DE_FINANCIACION",
+                            "PUBL_ACEPTA_PRECIOS_MAYO",
                             "PUBL_ID_MERCADO_LIBRE",
                             "PUBL_VARI_ID",
                             "PUBL_INVENTORY_ID",
                             "PUBL_CANAL",
                             "PUBL_TIPO_DE_LOGISTICA",
                             "PUBL_USER_PRODUCT_ID",
-                            "PUBL_ESTADOS",
                             "PUBL_ESTADO_DE_LA_PUBLICA",
                             "PUBL_ESTADO_STOCK",
                             "PUBL_ESTADO_PRECIO",
-                            "PUBL_PRECIO_SEP",
-                            "PUBL_PRECIO",
-                            "PUBL_PRECIO_VARIANTE",
                             "PUBL_ULTIMO_PRECIO",
                             "PUBL_PRECIO_INFORMADO",
-                            "PUBL_DIFERENCIA",
                             "PUBL_PRECIO_INFOR_CON_PRO",
                             "PUBL_NO_ACTUALIZAR_PRECIO",
-                            "PUBL_STOCK_SEPARADOR",
-                            "PUBL_STOCK_REAL",
-                            "PUBL_FACTIBILIDAD_DE_PROD",
                             "PUBL_STOCK_MINIMO_PUBLICA",
-                            "PUBL_STOCK_MINIMO",
                             "PUBL_STOCK_MAXIMO_PUBLICA",
-                            "PUBL_STOCK_MAXIMO",
-                            "PUBL_STOCK",
                             "PUBL_STOCK_EXTERNO",
                             "PUBL_ULTIMO_STOCK_INFORMA",
                             "PUBL_STOCK_PROPIO",
@@ -19496,19 +19624,14 @@
                             "PUBL_STOCK_EN_TRANSITO",
                             "PUBL_UMBRAL_DE_STOCK",
                             "PUBL_NO_ACTUALIZAR_STOCK",
-                            "PUBL_DIM_PROD_SEP",
                             "PUBL_ALTO_PROD",
                             "PUBL_ANCHO_PROD",
                             "PUBL_LARGO_PROD",
-                            "PUBL_VOLUMEN_PROD",
                             "PUBL_PESO_PROD",
-                            "PUBL_DIM_ENV_SEP",
                             "PUBL_ALTO_ENV",
                             "PUBL_ANCHO_ENV",
                             "PUBL_LARGO_ENV",
-                            "PUBL_VOLUMEN_ENV",
                             "PUBL_PESO_ENV",
-                            "PUBL_OTROS",
                             "PUBL_ACTUALIZACION_DE_STO",
                             "PUBL_ENVIO_GRATUITO",
                             "PUBL_COSTO_DE_ENVIO",
@@ -19516,13 +19639,9 @@
                             "PUBL_ES_FLEX",
                             "PUBL_ES_DE_CATALOGO",
                             "PUBL_ID_RELACIONADO",
-                            "PUBL_ARTICULO___ALICUOTA_",
                             "PUBL_DESHABILITADA",
                             "PUBL_ESTADO_PUBLICACION",
                             "PUBL_INFO",
-                            "PUBL_PUBLICACION_OK",
-                            "PUBL_ARTICULO_ESTADO",
-                            "PUBL_TIPO_DE_FINANCIACION",
                             "PUBL_LINK_PUBLICACION",
                             "PUBL_ULTIMA_FECHA_PRECIO",
                             "PUBL_LOG_PRECIO",
@@ -19595,33 +19714,38 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "PUBL_PARA_PUBLICACIONES_E",
+                            "LIDP_ID_UTIL",
+                            "CLIE_ID_CLIE",
+                            "PUBL_PRECIO",
+                            "PUBL_PRECIO_VARIANTE",
+                            "PUBL_DIFERENCIA",
+                            "PUBL_STOCK_REAL",
+                            "PUBL_FACTIBILIDAD_DE_PROD",
+                            "PUBL_STOCK_MINIMO",
+                            "PUBL_STOCK_MAXIMO",
+                            "PUBL_STOCK",
+                            "PUBL_VOLUMEN_PROD",
+                            "PUBL_VOLUMEN_ENV",
+                            "PUBL_ARTICULO___ALICUOTA_",
+                            "PUBL_PUBLICACION_OK",
+                            "PUBL_ARTICULO_ESTADO",
+                            "PUBL_TIPO_DE_FINANCIACION",
+                            "PUBL_ACEPTA_PRECIOS_MAYO",
                             "PUBL_ID_MERCADO_LIBRE",
                             "PUBL_VARI_ID",
                             "PUBL_INVENTORY_ID",
                             "PUBL_CANAL",
                             "PUBL_TIPO_DE_LOGISTICA",
                             "PUBL_USER_PRODUCT_ID",
-                            "PUBL_ESTADOS",
                             "PUBL_ESTADO_DE_LA_PUBLICA",
                             "PUBL_ESTADO_STOCK",
                             "PUBL_ESTADO_PRECIO",
-                            "PUBL_PRECIO_SEP",
-                            "PUBL_PRECIO",
-                            "PUBL_PRECIO_VARIANTE",
                             "PUBL_ULTIMO_PRECIO",
                             "PUBL_PRECIO_INFORMADO",
-                            "PUBL_DIFERENCIA",
                             "PUBL_PRECIO_INFOR_CON_PRO",
                             "PUBL_NO_ACTUALIZAR_PRECIO",
-                            "PUBL_STOCK_SEPARADOR",
-                            "PUBL_STOCK_REAL",
-                            "PUBL_FACTIBILIDAD_DE_PROD",
                             "PUBL_STOCK_MINIMO_PUBLICA",
-                            "PUBL_STOCK_MINIMO",
                             "PUBL_STOCK_MAXIMO_PUBLICA",
-                            "PUBL_STOCK_MAXIMO",
-                            "PUBL_STOCK",
                             "PUBL_STOCK_EXTERNO",
                             "PUBL_ULTIMO_STOCK_INFORMA",
                             "PUBL_STOCK_PROPIO",
@@ -19629,19 +19753,14 @@
                             "PUBL_STOCK_EN_TRANSITO",
                             "PUBL_UMBRAL_DE_STOCK",
                             "PUBL_NO_ACTUALIZAR_STOCK",
-                            "PUBL_DIM_PROD_SEP",
                             "PUBL_ALTO_PROD",
                             "PUBL_ANCHO_PROD",
                             "PUBL_LARGO_PROD",
-                            "PUBL_VOLUMEN_PROD",
                             "PUBL_PESO_PROD",
-                            "PUBL_DIM_ENV_SEP",
                             "PUBL_ALTO_ENV",
                             "PUBL_ANCHO_ENV",
                             "PUBL_LARGO_ENV",
-                            "PUBL_VOLUMEN_ENV",
                             "PUBL_PESO_ENV",
-                            "PUBL_OTROS",
                             "PUBL_ACTUALIZACION_DE_STO",
                             "PUBL_ENVIO_GRATUITO",
                             "PUBL_COSTO_DE_ENVIO",
@@ -19649,13 +19768,9 @@
                             "PUBL_ES_FLEX",
                             "PUBL_ES_DE_CATALOGO",
                             "PUBL_ID_RELACIONADO",
-                            "PUBL_ARTICULO___ALICUOTA_",
                             "PUBL_DESHABILITADA",
                             "PUBL_ESTADO_PUBLICACION",
                             "PUBL_INFO",
-                            "PUBL_PUBLICACION_OK",
-                            "PUBL_ARTICULO_ESTADO",
-                            "PUBL_TIPO_DE_FINANCIACION",
                             "PUBL_LINK_PUBLICACION",
                             "PUBL_ULTIMA_FECHA_PRECIO",
                             "PUBL_LOG_PRECIO",
@@ -23785,12 +23900,11 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "APDP_ARTICULO_DESITNO",
+                            "APDP_CANT_DESTINO",
                             "APDP_NRO",
                             "APDP_FECHA",
                             "APDP_CANT_ORIGEN",
-                            "APDP_DESTINO",
-                            "APDP_ARTICULO_DESITNO",
-                            "APDP_CANT_DESTINO",
                             "APDP_ORDEN_DE_APERTURA",
                             "id",
                             "DESC_ESTADO",
@@ -23855,12 +23969,11 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "APDP_ARTICULO_DESITNO",
+                            "APDP_CANT_DESTINO",
                             "APDP_NRO",
                             "APDP_FECHA",
                             "APDP_CANT_ORIGEN",
-                            "APDP_DESTINO",
-                            "APDP_ARTICULO_DESITNO",
-                            "APDP_CANT_DESTINO",
                             "APDP_ORDEN_DE_APERTURA",
                             "id",
                             "DESC_ESTADO",
@@ -28628,8 +28741,8 @@
                           "enum": [
                             "HODR_NRO",
                             "HODR_FECHA",
-                            "HODR_USUARIO_PREPARACION",
                             "HODR_OBSERVACIONES",
+                            "HODR_USUARIO_PREPARACION_NOMBR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -28695,8 +28808,8 @@
                           "enum": [
                             "HODR_NRO",
                             "HODR_FECHA",
-                            "HODR_USUARIO_PREPARACION",
                             "HODR_OBSERVACIONES",
+                            "HODR_USUARIO_PREPARACION_NOMBR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -31197,6 +31310,11 @@
                             "type": "string",
                             "nullable": true
                           },
+                          "PEDI_NOTAS_CREDITO": {
+                            "title": "Estados Notas de Crédito",
+                            "type": "string",
+                            "nullable": true
+                          },
                           "PEDI_REMITOS": {
                             "title": "Estados Remitos",
                             "type": "string",
@@ -31445,6 +31563,11 @@
                           "PEDI_BULTOS": {
                             "title": "Bultos",
                             "type": "integer",
+                            "nullable": true
+                          },
+                          "PEDI_UBI_RES_FORZ": {
+                            "title": "Ubicación de reserva forzada",
+                            "type": "string",
                             "nullable": true
                           },
                           "PEDI_CANTIDAD_DE_SKUS": {
@@ -33172,15 +33295,15 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "PICK_NUMERO",
-                            "PICK_TITULO",
-                            "PICK_FECHA",
-                            "PICK_USUARIO",
-                            "PICK_FECHA_DE_SALIDA",
-                            "PICK_ADJUNTO",
                             "PICK_CANTIDAD_UNIDADES",
                             "PICK_PICKING_LIST_COMPLET",
                             "PICK_PEDIDOS_ASOCIADOS",
+                            "PICK_NUMERO",
+                            "PICK_TITULO",
+                            "PICK_FECHA",
+                            "PICK_FECHA_DE_SALIDA",
+                            "PICK_ADJUNTO",
+                            "PICK_USUARIO_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -33244,15 +33367,15 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "PICK_NUMERO",
-                            "PICK_TITULO",
-                            "PICK_FECHA",
-                            "PICK_USUARIO",
-                            "PICK_FECHA_DE_SALIDA",
-                            "PICK_ADJUNTO",
                             "PICK_CANTIDAD_UNIDADES",
                             "PICK_PICKING_LIST_COMPLET",
                             "PICK_PEDIDOS_ASOCIADOS",
+                            "PICK_NUMERO",
+                            "PICK_TITULO",
+                            "PICK_FECHA",
+                            "PICK_FECHA_DE_SALIDA",
+                            "PICK_ADJUNTO",
+                            "PICK_USUARIO_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -35921,9 +36044,9 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "ACDS_TIPO_DE_ARTICULO",
                             "ACDS_CANTIDAD",
                             "ACDS_NUMERO_DE_SERIE",
-                            "ACDS_TIPO_DE_ARTICULO",
                             "ACDS_COMENTARIO",
                             "id",
                             "DESC_ESTADO",
@@ -35988,9 +36111,9 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "ACDS_TIPO_DE_ARTICULO",
                             "ACDS_CANTIDAD",
                             "ACDS_NUMERO_DE_SERIE",
-                            "ACDS_TIPO_DE_ARTICULO",
                             "ACDS_COMENTARIO",
                             "id",
                             "DESC_ESTADO",
@@ -36355,6 +36478,1172 @@
       "get": {
         "tags": [
           "Movimientos / Actualización de stock"
+        ],
+        "summary": "Descarga un reporte asociado a una entidad",
+        "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "reportName",
+            "in": "query",
+            "description": "Nombre del reporte",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reporte encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo de reporte"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un reporte con ese nombre en la entidad"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/INVENTARIO": {
+      "post": {
+        "tags": [
+          "Movimientos / Inventario"
+        ],
+        "summary": "Create a Inventario.",
+        "description": "Creates a new instance of Inventario.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "required": [
+                      "INVE_FECHA",
+                      "CEDI_ID_CEDI"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "INVE_FECHA": {
+                        "title": "Fecha",
+                        "type": "string",
+                        "default": "PARAM.PARA_HOY"
+                      },
+                      "CEDI_ID_CEDI": {
+                        "title": "Ubicación",
+                        "type": "integer",
+                        "description": " This is a foreign key to Ubicación de stock. An id of Ubicación de stock is expected"
+                      },
+                      "INVE_CONT_RESERVAS": {
+                        "title": "Contabilizar Reservas",
+                        "type": "boolean",
+                        "description": "Si se marca el proceso de inventariado listará las cantidades de los artículos en la ubicación de reserva asociada a la seleccionada.",
+                        "nullable": true
+                      },
+                      "ScanDeInventario": {
+                        "title": "Scan de Inventario",
+                        "type": "array",
+                        "items": {
+                          "title": "Scan de Inventario",
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "title": "Instance unique identifier",
+                              "type": "integer",
+                              "description": "Instance identity. If ommited a new instance is created."
+                            },
+                            "MATE_ID_MATE": {
+                              "title": "SKU",
+                              "type": "integer",
+                              "description": " This is a foreign key to Artículo. An id of Artículo is expected"
+                            },
+                            "SCIN_CANTIDAD": {
+                              "title": "Cantidad",
+                              "type": "number",
+                              "default": "1",
+                              "nullable": true
+                            }
+                          },
+                          "description": "Child entity of Scan de Inventario"
+                        },
+                        "description": "Array of child entities of Scan de Inventario"
+                      },
+                      "DiferenciasDeInventario": {
+                        "title": "Diferencias de Inventario",
+                        "type": "array",
+                        "items": {
+                          "title": "Diferencias de Inventario",
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "title": "Instance unique identifier",
+                              "type": "integer",
+                              "description": "Instance identity. If ommited a new instance is created."
+                            },
+                            "MATE_ID_MATE": {
+                              "title": "SKU",
+                              "type": "integer",
+                              "description": " This is a foreign key to Artículo. An id of Artículo is expected"
+                            },
+                            "DIIN_CANT_ACTUAL": {
+                              "title": "Cantidad Actual",
+                              "type": "number",
+                              "description": "Cantidad actual del material en el sistema. Se muestra como referencia para comparar contra la Diferencia.",
+                              "nullable": true
+                            },
+                            "DIIN_CANT_ACTUAL_RES": {
+                              "title": "Cantidad Actual en Reserva",
+                              "type": "number",
+                              "description": "Cantidad actual del material en ubicaciones de reserva. Sölo se completa si se explicita en la cabecera del inventario. Se muestra como referencia para comparar contra la Diferencia.",
+                              "nullable": true
+                            }
+                          },
+                          "description": "Child entity of Diferencias de Inventario"
+                        },
+                        "description": "Array of child entities of Diferencias de Inventario"
+                      }
+                    },
+                    "description": "Instance data"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
+          }
+        }
+      }
+    },
+    "/INVENTARIO/{id}": {
+      "get": {
+        "tags": [
+          "Movimientos / Inventario"
+        ],
+        "description": "Get a Inventario by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Inventario id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "INVE_FECHA": {
+                      "title": "Fecha",
+                      "type": "string"
+                    },
+                    "CEDI_ID_CEDI": {
+                      "title": "Ubicación",
+                      "type": "integer",
+                      "description": "Foreign key to Ubicación de stock"
+                    },
+                    "INVE_CONT_RESERVAS": {
+                      "title": "Contabilizar Reservas",
+                      "type": "boolean",
+                      "description": "Si se marca el proceso de inventariado listará las cantidades de los artículos en la ubicación de reserva asociada a la seleccionada.",
+                      "nullable": true
+                    },
+                    "INVE_MOVS_REALIZADOS": {
+                      "title": "Movimientos Realizados",
+                      "type": "integer",
+                      "description": "Cantidad de movimientos de stock ya procesados para este inventariado.",
+                      "nullable": true
+                    },
+                    "INVE_MOVS_TOTALES": {
+                      "title": "Movimientos Totales a realizar",
+                      "type": "integer",
+                      "description": "Cantidad de movimientos de stock totales necesarios para este inventariado. No se tienen en cuenta aquellos que tenían diferencia de 0.",
+                      "nullable": true
+                    },
+                    "INVE_PROGRESO": {
+                      "title": "Progreso",
+                      "type": "decimal",
+                      "description": "Porcentaje de movimientos de stock ya procesados para este inventariado.",
+                      "nullable": true
+                    },
+                    "SCANDEINVENTARIO": {
+                      "title": "Scan de Inventario",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "INVE_ID_INVE": {
+                            "title": "Inventario",
+                            "type": "integer"
+                          },
+                          "MATE_ID_MATE": {
+                            "title": "SKU",
+                            "type": "integer"
+                          },
+                          "SCIN_CANTIDAD": {
+                            "title": "Cantidad",
+                            "type": "number",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Scan de Inventario (included when includeChildren=true)"
+                    },
+                    "DIFERENCIASDEINVENTARIO": {
+                      "title": "Diferencias de Inventario",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "DIIN_PROCESADO": {
+                            "title": "Procesado",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "INVE_ID_INVE": {
+                            "title": "Inventario",
+                            "type": "integer"
+                          },
+                          "MATE_ID_MATE": {
+                            "title": "SKU",
+                            "type": "integer"
+                          },
+                          "DIIN_CANT_ACTUAL": {
+                            "title": "Cantidad Actual",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DIIN_CANT_ACTUAL_RES": {
+                            "title": "Cantidad Actual en Reserva",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DIIN_CANT_INVENTARIADA": {
+                            "title": "Cantidad Inventariada",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DIIN_DIFERENCIA": {
+                            "title": "Diferencia",
+                            "type": "number",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Diferencias de Inventario (included when includeChildren=true)"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Movimientos / Inventario"
+        ],
+        "summary": "Update a Inventario by id.",
+        "description": "Update a Inventario",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Inventario id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "required": [
+                      "INVE_FECHA",
+                      "CEDI_ID_CEDI"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "INVE_FECHA": {
+                        "title": "Fecha",
+                        "type": "string",
+                        "default": "PARAM.PARA_HOY"
+                      },
+                      "CEDI_ID_CEDI": {
+                        "title": "Ubicación",
+                        "type": "integer",
+                        "description": " This is a foreign key to Ubicación de stock. An id of Ubicación de stock is expected"
+                      },
+                      "INVE_CONT_RESERVAS": {
+                        "title": "Contabilizar Reservas",
+                        "type": "boolean",
+                        "description": "Si se marca el proceso de inventariado listará las cantidades de los artículos en la ubicación de reserva asociada a la seleccionada.",
+                        "nullable": true
+                      },
+                      "ScanDeInventario": {
+                        "title": "Scan de Inventario",
+                        "type": "array",
+                        "items": {
+                          "title": "Scan de Inventario",
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "title": "Instance unique identifier",
+                              "type": "integer",
+                              "description": "Instance identity. If ommited a new instance is created."
+                            },
+                            "MATE_ID_MATE": {
+                              "title": "SKU",
+                              "type": "integer",
+                              "description": " This is a foreign key to Artículo. An id of Artículo is expected"
+                            },
+                            "SCIN_CANTIDAD": {
+                              "title": "Cantidad",
+                              "type": "number",
+                              "default": "1",
+                              "nullable": true
+                            }
+                          },
+                          "description": "Child entity of Scan de Inventario"
+                        },
+                        "description": "Array of child entities of Scan de Inventario"
+                      },
+                      "DiferenciasDeInventario": {
+                        "title": "Diferencias de Inventario",
+                        "type": "array",
+                        "items": {
+                          "title": "Diferencias de Inventario",
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "title": "Instance unique identifier",
+                              "type": "integer",
+                              "description": "Instance identity. If ommited a new instance is created."
+                            },
+                            "MATE_ID_MATE": {
+                              "title": "SKU",
+                              "type": "integer",
+                              "description": " This is a foreign key to Artículo. An id of Artículo is expected"
+                            },
+                            "DIIN_CANT_ACTUAL": {
+                              "title": "Cantidad Actual",
+                              "type": "number",
+                              "description": "Cantidad actual del material en el sistema. Se muestra como referencia para comparar contra la Diferencia.",
+                              "nullable": true
+                            },
+                            "DIIN_CANT_ACTUAL_RES": {
+                              "title": "Cantidad Actual en Reserva",
+                              "type": "number",
+                              "description": "Cantidad actual del material en ubicaciones de reserva. Sölo se completa si se explicita en la cabecera del inventario. Se muestra como referencia para comparar contra la Diferencia.",
+                              "nullable": true
+                            }
+                          },
+                          "description": "Child entity of Diferencias de Inventario"
+                        },
+                        "description": "Array of child entities of Diferencias de Inventario"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Movimientos / Inventario"
+        ],
+        "summary": "Delete a Inventario by id.",
+        "description": "Delete a Inventario",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Inventario id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance deleted successfully"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Entity or instance not found"
+          }
+        }
+      }
+    },
+    "/INVENTARIO/search": {
+      "get": {
+        "tags": [
+          "Movimientos / Inventario"
+        ],
+        "summary": "Fast search endpoint. Returns up to 50 Inventario records; prefer /query for controlled, production-grade listings.",
+        "description": "Performs a lightweight search over Inventario instances. This endpoint is intended for fast lookup scenarios and may return a limited result set with the default response shape, including all available columns. Use /search when simplicity and quick retrieval are more important than payload optimization or query flexibility. For production listings that require configurable pagination, explicit column selection, or advanced filters, prefer /query.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "INVE_FECHA",
+            "in": "query",
+            "description": "Fecha",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "CEDI_ID_CEDI",
+            "in": "query",
+            "description": "Ubicación",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "INVE_CONT_RESERVAS",
+            "in": "query",
+            "description": "Contabilizar Reservas",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/INVENTARIO/smartie": {
+      "get": {
+        "tags": [
+          "Movimientos / Inventario"
+        ],
+        "description": "Get a page of a smartie",
+        "parameters": [
+          {
+            "name": "smartieId",
+            "in": "query",
+            "description": "Smartie id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": " Page number (1-based)",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": " Search term",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/INVENTARIO/query": {
+      "post": {
+        "tags": [
+          "Movimientos / Inventario"
+        ],
+        "summary": "Execute dynamic query without persisted smartie",
+        "description": "Performs a dynamic query on Inventario instances with custom columns, filters, sorting, aggregations, and configurable pagination. Use this endpoint for production-grade listings that require predictable performance, payload control, and advanced filtering. Unlike /search, /query allows explicit column selection and page size configuration, making it the preferred option for list screens, integrations, and high-volume data retrieval scenarios. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dynamic query parameters including pagination, columns, filters, and search criteria",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "page"
+                ],
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Page number (1-based)",
+                    "default": 1
+                  },
+                  "pageSize": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Number of records per page",
+                    "default": 50
+                  },
+                  "search": {
+                    "type": "string",
+                    "description": "Fast search term to filter across all columns",
+                    "nullable": true
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "field"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "enum": [
+                            "INVE_MOVS_REALIZADOS",
+                            "INVE_MOVS_TOTALES",
+                            "INVE_PROGRESO",
+                            "INVE_FECHA",
+                            "INVE_CONT_RESERVAS",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Physical column name (required). Available columns from entity view."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Custom column title (optional)",
+                          "nullable": true
+                        },
+                        "sortDirection": {
+                          "enum": [
+                            "ASC",
+                            "DESC"
+                          ],
+                          "type": "string",
+                          "description": "Sort direction",
+                          "nullable": true
+                        },
+                        "order": {
+                          "type": "integer",
+                          "description": "Column display order (optional)",
+                          "nullable": true
+                        },
+                        "sortOrder": {
+                          "type": "integer",
+                          "description": "Sort priority order (optional)",
+                          "nullable": true
+                        },
+                        "aggregation": {
+                          "enum": [
+                            "SUM",
+                            "COUNT",
+                            "AVG",
+                            "MIN",
+                            "MAX"
+                          ],
+                          "type": "string",
+                          "description": "Aggregation function",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Column specifications. If null or empty, default header columns will be used",
+                    "nullable": true
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "columnName",
+                        "operator",
+                        "value"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "columnName": {
+                          "enum": [
+                            "INVE_MOVS_REALIZADOS",
+                            "INVE_MOVS_TOTALES",
+                            "INVE_PROGRESO",
+                            "INVE_FECHA",
+                            "INVE_CONT_RESERVAS",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Column name to filter (required). Available columns from entity view."
+                        },
+                        "operator": {
+                          "enum": [
+                            "=",
+                            "!=",
+                            ">",
+                            "<",
+                            ">=",
+                            "<=",
+                            "LIKE"
+                          ],
+                          "type": "string",
+                          "description": "Comparison operator"
+                        },
+                        "value": {
+                          "description": "Value to compare. Type should match column data type",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Filter specifications",
+                    "nullable": true
+                  }
+                }
+              },
+              "example": {
+                "page": 1,
+                "pageSize": 10,
+                "search": "",
+                "columns": [
+                  {
+                    "field": "COLUMN_NAME",
+                    "title": "Column Title",
+                    "sortDirection": "ASC",
+                    "sortOrder": 1
+                  }
+                ],
+                "filters": [
+                  {
+                    "columnName": "COLUMN_NAME",
+                    "operator": "=",
+                    "value": "value"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Array of records matching the query"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records (without pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Column definitions"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters or column names"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity"
+          },
+          "404": {
+            "description": "Entity not found"
+          }
+        }
+      }
+    },
+    "/INVENTARIO/changestate": {
+      "post": {
+        "tags": [
+          "Movimientos / Inventario"
+        ],
+        "description": "Change an instance's state",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Instance id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Possibles values: <ul><li>Paginando</li>\n<li>Pendiente</li>\n<li>Procesado</li>\n<li>Procesando</li></ul>",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/INVENTARIO/changestatemultiple": {
+      "post": {
+        "tags": [
+          "Movimientos / Inventario"
+        ],
+        "description": "Change multiple instances' state",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Possibles values: <ul><li>Paginando</li>\n<li>Pendiente</li>\n<li>Procesado</li>\n<li>Procesando</li></ul>",
+            "required": true,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "Comma separated ids",
+            "required": true,
+            "example": "100,101,102"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/INVENTARIO/file": {
+      "get": {
+        "tags": [
+          "Movimientos / Inventario"
+        ],
+        "summary": "Descarga un archivo de una entidad",
+        "description": "Devuelve el archivo cargado en un atributo de tipo archivo de una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archivo encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Movimientos / Inventario"
+        ],
+        "summary": "Carga o reemplaza un archivo en una entidad",
+        "description": "Guarda el archivo en el atributo de tipo archivo de una instancia de entidad. Soporta dos formatos: multipart/form-data o binary directo (application/octet-stream, application/pdf, etc.).",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "description": "Tipo de contenido (MIME) del archivo (ej: application/pdf, image/png)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Nombre del archivo (opcional, se puede inferir del multipart)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Archivo a cargar. Puede enviarse como multipart/form-data o como binary directo.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "Contenido del archivo",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido binario del archivo enviado directamente",
+                "format": "binary"
+              }
+            },
+            "application/pdf": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido PDF enviado directamente",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Archivo guardado correctamente"
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/INVENTARIO/report": {
+      "get": {
+        "tags": [
+          "Movimientos / Inventario"
         ],
         "summary": "Descarga un reporte asociado a una entidad",
         "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
@@ -37333,19 +38622,21 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "MOST_NRO_MOVIMIENTO",
+                            "TIMA_ID_TIMA",
                             "MOST_ARBA_NOMBRE",
+                            "MOST_CLIENTE_MATERIAL",
+                            "MOST_INFO",
+                            "GRMA_ID_GRMA",
+                            "MOST_NRO_MOVIMIENTO",
                             "MOST_CANTIDAD",
                             "MOST_OBSERVACIONES",
                             "MOST_CODIGO",
-                            "MOST_CLIENTE_MATERIAL",
                             "MOST_PRECIO",
                             "MOST_PRECIO_COMPRA",
                             "MOST_CANTIDAD_DESTINO",
                             "MOST_ENTIDAD_ORIGEN",
                             "MOST_SALDO_ACTUAL",
                             "MOST_CMV",
-                            "MOST_INFO",
                             "MOST_FIFO",
                             "MOST_CREADO_POR_SINCRO",
                             "MOST_CLAVE",
@@ -37420,19 +38711,21 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "MOST_NRO_MOVIMIENTO",
+                            "TIMA_ID_TIMA",
                             "MOST_ARBA_NOMBRE",
+                            "MOST_CLIENTE_MATERIAL",
+                            "MOST_INFO",
+                            "GRMA_ID_GRMA",
+                            "MOST_NRO_MOVIMIENTO",
                             "MOST_CANTIDAD",
                             "MOST_OBSERVACIONES",
                             "MOST_CODIGO",
-                            "MOST_CLIENTE_MATERIAL",
                             "MOST_PRECIO",
                             "MOST_PRECIO_COMPRA",
                             "MOST_CANTIDAD_DESTINO",
                             "MOST_ENTIDAD_ORIGEN",
                             "MOST_SALDO_ACTUAL",
                             "MOST_CMV",
-                            "MOST_INFO",
                             "MOST_FIFO",
                             "MOST_CREADO_POR_SINCRO",
                             "MOST_CLAVE",
@@ -39705,13 +40998,10 @@
                         "field": {
                           "enum": [
                             "GDRI_NRO",
-                            "GDRI_UBICACIONES",
-                            "GDRI_SOLICITANTE",
-                            "GDRI_RESPONSABLE",
-                            "GDRI_FILTROS",
                             "GDRI_REPO_FILTER",
                             "GDRI_GENERAR_PARTIR",
-                            "GDRI_RESULTADO",
+                            "GDRI_SOLICITANTE_NOMBRE",
+                            "GDRI_RESPONSABLE_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -39776,13 +41066,10 @@
                         "columnName": {
                           "enum": [
                             "GDRI_NRO",
-                            "GDRI_UBICACIONES",
-                            "GDRI_SOLICITANTE",
-                            "GDRI_RESPONSABLE",
-                            "GDRI_FILTROS",
                             "GDRI_REPO_FILTER",
                             "GDRI_GENERAR_PARTIR",
-                            "GDRI_RESULTADO",
+                            "GDRI_SOLICITANTE_NOMBRE",
+                            "GDRI_RESPONSABLE_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -42082,37 +43369,32 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "REMI_NRO_REMITO",
-                            "REMI_FECHA",
-                            "REMI_FECHA_DE_RECEPCION",
                             "REMI_FACTURAS_RELACIONADA",
                             "REMI_FAC_REL_NROS",
-                            "REMI_ACT_PRECIOS",
-                            "REMI_OBSERVACIONES",
-                            "REMI_LOTE_DESPACHO",
-                            "REMI_NRO_DE_LOTE",
-                            "REMI_FECHA_DE_LOTE",
-                            "REMI_ETIQUETA_ADJUNTO",
                             "REMI_NROS_OC",
-                            "REMI_FECHA_DE_PROCESADO",
-                            "REMI_TOTALES_SEPARADOR",
                             "REMI_CANTIDAD_DE_SKUS",
                             "REMI_UNIDADES_TOTALES",
                             "REMI_EXCEDE_PENDIENTE_OC",
+                            "REMI_TOTAL_DE_FACTURAS",
+                            "REMI_SUBOTOTA",
+                            "REMI_NRO_REMITO",
+                            "REMI_FECHA",
+                            "REMI_FECHA_DE_RECEPCION",
+                            "REMI_ACT_PRECIOS",
+                            "REMI_OBSERVACIONES",
+                            "REMI_NRO_DE_LOTE",
+                            "REMI_FECHA_DE_LOTE",
+                            "REMI_ETIQUETA_ADJUNTO",
+                            "REMI_FECHA_DE_PROCESADO",
                             "REMI_IMAGEN",
-                            "REMI_DATOS_FACTURA_1",
                             "REMI_PV_FC_1",
                             "REMI_NUM_FC_1",
                             "REMI_VALOR_DE_CAMB_1",
                             "REMI_FACO_NETO_1",
-                            "REMI_DATOS_FACTURA_2",
                             "REMI_PV_FC_2",
                             "REMI_NUM_FC_2",
                             "REMI_VALOR_DE_CAMB_2",
                             "REMI_FACO_NETO_2",
-                            "REMI_TOTALES_DE_FACTURAS",
-                            "REMI_TOTAL_DE_FACTURAS",
-                            "REMI_SUBOTOTA",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -42176,37 +43458,32 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "REMI_NRO_REMITO",
-                            "REMI_FECHA",
-                            "REMI_FECHA_DE_RECEPCION",
                             "REMI_FACTURAS_RELACIONADA",
                             "REMI_FAC_REL_NROS",
-                            "REMI_ACT_PRECIOS",
-                            "REMI_OBSERVACIONES",
-                            "REMI_LOTE_DESPACHO",
-                            "REMI_NRO_DE_LOTE",
-                            "REMI_FECHA_DE_LOTE",
-                            "REMI_ETIQUETA_ADJUNTO",
                             "REMI_NROS_OC",
-                            "REMI_FECHA_DE_PROCESADO",
-                            "REMI_TOTALES_SEPARADOR",
                             "REMI_CANTIDAD_DE_SKUS",
                             "REMI_UNIDADES_TOTALES",
                             "REMI_EXCEDE_PENDIENTE_OC",
+                            "REMI_TOTAL_DE_FACTURAS",
+                            "REMI_SUBOTOTA",
+                            "REMI_NRO_REMITO",
+                            "REMI_FECHA",
+                            "REMI_FECHA_DE_RECEPCION",
+                            "REMI_ACT_PRECIOS",
+                            "REMI_OBSERVACIONES",
+                            "REMI_NRO_DE_LOTE",
+                            "REMI_FECHA_DE_LOTE",
+                            "REMI_ETIQUETA_ADJUNTO",
+                            "REMI_FECHA_DE_PROCESADO",
                             "REMI_IMAGEN",
-                            "REMI_DATOS_FACTURA_1",
                             "REMI_PV_FC_1",
                             "REMI_NUM_FC_1",
                             "REMI_VALOR_DE_CAMB_1",
                             "REMI_FACO_NETO_1",
-                            "REMI_DATOS_FACTURA_2",
                             "REMI_PV_FC_2",
                             "REMI_NUM_FC_2",
                             "REMI_VALOR_DE_CAMB_2",
                             "REMI_FACO_NETO_2",
-                            "REMI_TOTALES_DE_FACTURAS",
-                            "REMI_TOTAL_DE_FACTURAS",
-                            "REMI_SUBOTOTA",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -43464,18 +44741,19 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "REDD_NRO",
-                            "REDD_USUARIO_RESPONSABLE",
-                            "REDD_FECHA",
-                            "REDD_OBSERVACION",
                             "REDD_REDD_INFO_REDD",
-                            "REDD_DIRECCION_DE_ENTREGA",
+                            "EXTE_ID_EXTE",
                             "REDD_CODIGO_ORIGEN_PEDIDO",
                             "REDD_CLIENTE___VENDEDOR",
                             "REDD_NOTA_DE_CREDITO___NE",
                             "REDD_NOTA_DE_CREDITO___TO",
                             "REDD_CANT_UNIDADES_DEVUEL",
+                            "REDD_NRO",
+                            "REDD_FECHA",
+                            "REDD_OBSERVACION",
+                            "REDD_DIRECCION_DE_ENTREGA",
                             "REDD_NOTA_FRANQ_TOTAL",
+                            "REDD_USUARIO_RESPONSABLE_NOMBR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -43539,18 +44817,19 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "REDD_NRO",
-                            "REDD_USUARIO_RESPONSABLE",
-                            "REDD_FECHA",
-                            "REDD_OBSERVACION",
                             "REDD_REDD_INFO_REDD",
-                            "REDD_DIRECCION_DE_ENTREGA",
+                            "EXTE_ID_EXTE",
                             "REDD_CODIGO_ORIGEN_PEDIDO",
                             "REDD_CLIENTE___VENDEDOR",
                             "REDD_NOTA_DE_CREDITO___NE",
                             "REDD_NOTA_DE_CREDITO___TO",
                             "REDD_CANT_UNIDADES_DEVUEL",
+                            "REDD_NRO",
+                            "REDD_FECHA",
+                            "REDD_OBSERVACION",
+                            "REDD_DIRECCION_DE_ENTREGA",
                             "REDD_NOTA_FRANQ_TOTAL",
+                            "REDD_USUARIO_RESPONSABLE_NOMBR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -44652,9 +45931,9 @@
                           "enum": [
                             "REDP_NRO",
                             "REDP_FECHA",
-                            "REDP_RESPONSABLE",
                             "REDP_OBSERVACIONES",
                             "REDP_ETAPA_ORIGEN",
+                            "REDP_RESPONSABLE_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -44720,9 +45999,9 @@
                           "enum": [
                             "REDP_NRO",
                             "REDP_FECHA",
-                            "REDP_RESPONSABLE",
                             "REDP_OBSERVACIONES",
                             "REDP_ETAPA_ORIGEN",
+                            "REDP_RESPONSABLE_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -46853,31 +48132,30 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "REDV_NRO",
                             "REDV_DESCRIPCION",
-                            "REDV_FECHA_DE_DESPACHO",
-                            "REDV_USUARIO_DESPACHANTE",
-                            "REDV_OBSERVACIONES",
-                            "REDV_UBICACIONES_DE_STOCK",
-                            "REDV_OTROS",
-                            "REDV_VALOR_DE_LA_MERCADER",
-                            "REDV_BULTOS",
                             "REDV_PICKING_LIST",
                             "REDV_TOTAL_CANTIDAD",
                             "REDV_PESO",
                             "REDV_VOLUMEN",
                             "REDV_ORIGEN_DE_PEDIDO",
-                            "REDV_ADJUNTO",
                             "REDV_CLIENTE___NOMBRE",
                             "REDV_CLIENTE_TIPO",
-                            "REDV_CAI",
-                            "REDV_RTA_INTEGRACION",
-                            "REDV_ESTADO_DE_ENTREGA",
                             "REDV_INFO_DE_STOCK",
                             "REDV_PEDIDO___METODO_DE_E",
                             "REDV_PEDIDO___CONDICION_D",
                             "REDV_PEDI_CANT_ENTREGAR",
                             "REDV_CLIE_IDEN",
+                            "REDV_FORMA_DE_ENTREGA",
+                            "REDV_TRANS_LOCALI",
+                            "REDV_NRO",
+                            "REDV_FECHA_DE_DESPACHO",
+                            "REDV_OBSERVACIONES",
+                            "REDV_VALOR_DE_LA_MERCADER",
+                            "REDV_BULTOS",
+                            "REDV_ADJUNTO",
+                            "REDV_CAI",
+                            "REDV_RTA_INTEGRACION",
+                            "REDV_ESTADO_DE_ENTREGA",
                             "REDV_GENERADO",
                             "REDV_LOCAL",
                             "REDV_SUCURSAL_DE_RETIRO",
@@ -46889,23 +48167,20 @@
                             "REDV_PAIS_DE_ENVIO",
                             "REDV_PARTIDO",
                             "REDV_PISO_DE_ENVIO",
-                            "REDV_FECHAS",
                             "REDV_FECHA_DE_ENTREGA",
                             "REDV_RANGO_HORARIO",
                             "REDV_HORARIO_ENTREGA_DESD",
                             "REDV_HORARIO_ENTREGA_HAST",
                             "REDV_FECHA_DE_ENTREGA_PED",
                             "REDV_TRACKING_CODE",
-                            "REDV_DATOS_DE_LA_ENTREGA",
                             "REDV_RETIRA_EN_LOCAL",
-                            "REDV_FORMA_DE_ENTREGA",
                             "REDV_LATITUD",
                             "REDV_LONGITUD",
                             "REDV_PRIORIDAD_DE_ENTREGA",
-                            "REDV_TRANS_LOCALI",
                             "REDV_LOG_KRIKOS",
                             "REDV_FC_ENVIADA_A_KRIKOS",
                             "REDV_INTENTOS_KRIKOS",
+                            "REDV_USUARIO_DESPACHANTE_NOMBR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -46969,31 +48244,30 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "REDV_NRO",
                             "REDV_DESCRIPCION",
-                            "REDV_FECHA_DE_DESPACHO",
-                            "REDV_USUARIO_DESPACHANTE",
-                            "REDV_OBSERVACIONES",
-                            "REDV_UBICACIONES_DE_STOCK",
-                            "REDV_OTROS",
-                            "REDV_VALOR_DE_LA_MERCADER",
-                            "REDV_BULTOS",
                             "REDV_PICKING_LIST",
                             "REDV_TOTAL_CANTIDAD",
                             "REDV_PESO",
                             "REDV_VOLUMEN",
                             "REDV_ORIGEN_DE_PEDIDO",
-                            "REDV_ADJUNTO",
                             "REDV_CLIENTE___NOMBRE",
                             "REDV_CLIENTE_TIPO",
-                            "REDV_CAI",
-                            "REDV_RTA_INTEGRACION",
-                            "REDV_ESTADO_DE_ENTREGA",
                             "REDV_INFO_DE_STOCK",
                             "REDV_PEDIDO___METODO_DE_E",
                             "REDV_PEDIDO___CONDICION_D",
                             "REDV_PEDI_CANT_ENTREGAR",
                             "REDV_CLIE_IDEN",
+                            "REDV_FORMA_DE_ENTREGA",
+                            "REDV_TRANS_LOCALI",
+                            "REDV_NRO",
+                            "REDV_FECHA_DE_DESPACHO",
+                            "REDV_OBSERVACIONES",
+                            "REDV_VALOR_DE_LA_MERCADER",
+                            "REDV_BULTOS",
+                            "REDV_ADJUNTO",
+                            "REDV_CAI",
+                            "REDV_RTA_INTEGRACION",
+                            "REDV_ESTADO_DE_ENTREGA",
                             "REDV_GENERADO",
                             "REDV_LOCAL",
                             "REDV_SUCURSAL_DE_RETIRO",
@@ -47005,23 +48279,20 @@
                             "REDV_PAIS_DE_ENVIO",
                             "REDV_PARTIDO",
                             "REDV_PISO_DE_ENVIO",
-                            "REDV_FECHAS",
                             "REDV_FECHA_DE_ENTREGA",
                             "REDV_RANGO_HORARIO",
                             "REDV_HORARIO_ENTREGA_DESD",
                             "REDV_HORARIO_ENTREGA_HAST",
                             "REDV_FECHA_DE_ENTREGA_PED",
                             "REDV_TRACKING_CODE",
-                            "REDV_DATOS_DE_LA_ENTREGA",
                             "REDV_RETIRA_EN_LOCAL",
-                            "REDV_FORMA_DE_ENTREGA",
                             "REDV_LATITUD",
                             "REDV_LONGITUD",
                             "REDV_PRIORIDAD_DE_ENTREGA",
-                            "REDV_TRANS_LOCALI",
                             "REDV_LOG_KRIKOS",
                             "REDV_FC_ENVIADA_A_KRIKOS",
                             "REDV_INTENTOS_KRIKOS",
+                            "REDV_USUARIO_DESPACHANTE_NOMBR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -48469,22 +49740,20 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "REIN_UNIDADES_TOTALES",
+                            "REIN_CANTIDAD_DE_SKUS",
+                            "REIN_HAY_DIFERENCIAS",
                             "REIN_NRO_REMITO_INTERNO",
-                            "REIN_USUARIO_RESPONSABLE",
                             "REIN_FECHA",
                             "REIN_FECHA_DE_ENTREGA",
                             "REIN_NRO_EXTERNO",
                             "REIN_OBSERVACION",
-                            "REIN_UNIDADES_TOTALES",
-                            "REIN_OTROS_DATOS",
                             "REIN_BULTOS",
                             "REIN_PALLETS",
                             "REIN_CONTENEDORES",
-                            "REIN_CANTIDAD_DE_SKUS",
-                            "REIN_ETIQUETA",
                             "REIN_ETIQUETA_ADJUNTO",
                             "REIN_PUEDE_PROCESAR",
-                            "REIN_HAY_DIFERENCIAS",
+                            "REIN_USUARIO_RESPONSABLE_NOMBR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -48548,22 +49817,20 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "REIN_UNIDADES_TOTALES",
+                            "REIN_CANTIDAD_DE_SKUS",
+                            "REIN_HAY_DIFERENCIAS",
                             "REIN_NRO_REMITO_INTERNO",
-                            "REIN_USUARIO_RESPONSABLE",
                             "REIN_FECHA",
                             "REIN_FECHA_DE_ENTREGA",
                             "REIN_NRO_EXTERNO",
                             "REIN_OBSERVACION",
-                            "REIN_UNIDADES_TOTALES",
-                            "REIN_OTROS_DATOS",
                             "REIN_BULTOS",
                             "REIN_PALLETS",
                             "REIN_CONTENEDORES",
-                            "REIN_CANTIDAD_DE_SKUS",
-                            "REIN_ETIQUETA",
                             "REIN_ETIQUETA_ADJUNTO",
                             "REIN_PUEDE_PROCESAR",
-                            "REIN_HAY_DIFERENCIAS",
+                            "REIN_USUARIO_RESPONSABLE_NOMBR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -50969,6 +52236,874 @@
             "description": "Nombre del reporte",
             "required": true,
             "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reporte encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo de reporte"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un reporte con ese nombre en la entidad"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/CONSULTA_EVOL_STOCK": {
+      "post": {
+        "tags": [
+          "Reportes / Consulta Evolución de stock"
+        ],
+        "summary": "Create a Consulta Evolución de stock.",
+        "description": "Creates a new instance of Consulta Evolución de stock.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "required": [
+                      "CEST_DESDE",
+                      "CEST_HASTA",
+                      "MONE_ID_MONE"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "CEST_DESDE": {
+                        "title": "Desde",
+                        "type": "string",
+                        "description": "Fecha desde la cual se desea consultar la evolución del stock"
+                      },
+                      "CEST_HASTA": {
+                        "title": "Hasta",
+                        "type": "string",
+                        "description": "Fecha hasta la cual se desea consultar la evolución del stock"
+                      },
+                      "MONE_ID_MONE": {
+                        "title": "Moneda de cambio",
+                        "type": "integer",
+                        "description": "Moneda de cambio para la consulta\n This is a foreign key to Moneda. An id of Moneda is expected",
+                        "default": "PARAM.MONE_ID_MONE"
+                      }
+                    },
+                    "description": "Instance data"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Instance created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the newly created instance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity"
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
+          }
+        }
+      }
+    },
+    "/CONSULTA_EVOL_STOCK/{id}": {
+      "get": {
+        "tags": [
+          "Reportes / Consulta Evolución de stock"
+        ],
+        "description": "Get a Consulta Evolución de stock by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Consulta Evolución de stock id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "CEST_DESDE": {
+                      "title": "Desde",
+                      "type": "string",
+                      "description": "Fecha desde la cual se desea consultar la evolución del stock"
+                    },
+                    "CEST_HASTA": {
+                      "title": "Hasta",
+                      "type": "string",
+                      "description": "Fecha hasta la cual se desea consultar la evolución del stock"
+                    },
+                    "MONE_ID_MONE": {
+                      "title": "Moneda de cambio",
+                      "type": "integer",
+                      "description": "Moneda de cambio para la consulta\nForeign key to Moneda"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource"
+          },
+          "404": {
+            "description": "Entity or instance not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reportes / Consulta Evolución de stock"
+        ],
+        "summary": "Update a Consulta Evolución de stock by id.",
+        "description": "Update a Consulta Evolución de stock",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Consulta Evolución de stock id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "required": [
+                      "CEST_DESDE",
+                      "CEST_HASTA",
+                      "MONE_ID_MONE"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "CEST_DESDE": {
+                        "title": "Desde",
+                        "type": "string",
+                        "description": "Fecha desde la cual se desea consultar la evolución del stock"
+                      },
+                      "CEST_HASTA": {
+                        "title": "Hasta",
+                        "type": "string",
+                        "description": "Fecha hasta la cual se desea consultar la evolución del stock"
+                      },
+                      "MONE_ID_MONE": {
+                        "title": "Moneda de cambio",
+                        "type": "integer",
+                        "description": "Moneda de cambio para la consulta\n This is a foreign key to Moneda. An id of Moneda is expected",
+                        "default": "PARAM.MONE_ID_MONE"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reportes / Consulta Evolución de stock"
+        ],
+        "summary": "Delete a Consulta Evolución de stock by id.",
+        "description": "Delete a Consulta Evolución de stock",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Consulta Evolución de stock id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance deleted successfully"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "Entity or instance not found"
+          }
+        }
+      }
+    },
+    "/CONSULTA_EVOL_STOCK/search": {
+      "get": {
+        "tags": [
+          "Reportes / Consulta Evolución de stock"
+        ],
+        "summary": "Fast search endpoint. Returns up to 50 Consulta Evolución de stock records; prefer /query for controlled, production-grade listings.",
+        "description": "Performs a lightweight search over Consulta Evolución de stock instances. This endpoint is intended for fast lookup scenarios and may return a limited result set with the default response shape, including all available columns. Use /search when simplicity and quick retrieval are more important than payload optimization or query flexibility. For production listings that require configurable pagination, explicit column selection, or advanced filters, prefer /query.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "CEST_DESDE",
+            "in": "query",
+            "description": "Desde",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "CEST_HASTA",
+            "in": "query",
+            "description": "Hasta",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "MONE_ID_MONE",
+            "in": "query",
+            "description": "Moneda de cambio",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/CONSULTA_EVOL_STOCK/smartie": {
+      "get": {
+        "tags": [
+          "Reportes / Consulta Evolución de stock"
+        ],
+        "description": "Get a page of a smartie",
+        "parameters": [
+          {
+            "name": "smartieId",
+            "in": "query",
+            "description": "Smartie id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": " Page number (1-based)",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": " Search term",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          }
+        }
+      }
+    },
+    "/CONSULTA_EVOL_STOCK/query": {
+      "post": {
+        "tags": [
+          "Reportes / Consulta Evolución de stock"
+        ],
+        "summary": "Execute dynamic query without persisted smartie",
+        "description": "Performs a dynamic query on Consulta Evolución de stock instances with custom columns, filters, sorting, aggregations, and configurable pagination. Use this endpoint for production-grade listings that require predictable performance, payload control, and advanced filtering. Unlike /search, /query allows explicit column selection and page size configuration, making it the preferred option for list screens, integrations, and high-volume data retrieval scenarios. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dynamic query parameters including pagination, columns, filters, and search criteria",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "page"
+                ],
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Page number (1-based)",
+                    "default": 1
+                  },
+                  "pageSize": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Number of records per page",
+                    "default": 50
+                  },
+                  "search": {
+                    "type": "string",
+                    "description": "Fast search term to filter across all columns",
+                    "nullable": true
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "field"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "enum": [
+                            "CEST_DESDE",
+                            "CEST_HASTA",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Physical column name (required). Available columns from entity view."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Custom column title (optional)",
+                          "nullable": true
+                        },
+                        "sortDirection": {
+                          "enum": [
+                            "ASC",
+                            "DESC"
+                          ],
+                          "type": "string",
+                          "description": "Sort direction",
+                          "nullable": true
+                        },
+                        "order": {
+                          "type": "integer",
+                          "description": "Column display order (optional)",
+                          "nullable": true
+                        },
+                        "sortOrder": {
+                          "type": "integer",
+                          "description": "Sort priority order (optional)",
+                          "nullable": true
+                        },
+                        "aggregation": {
+                          "enum": [
+                            "SUM",
+                            "COUNT",
+                            "AVG",
+                            "MIN",
+                            "MAX"
+                          ],
+                          "type": "string",
+                          "description": "Aggregation function",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Column specifications. If null or empty, default header columns will be used",
+                    "nullable": true
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "columnName",
+                        "operator",
+                        "value"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "columnName": {
+                          "enum": [
+                            "CEST_DESDE",
+                            "CEST_HASTA",
+                            "id",
+                            "DESC_ESTADO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Column name to filter (required). Available columns from entity view."
+                        },
+                        "operator": {
+                          "enum": [
+                            "=",
+                            "!=",
+                            ">",
+                            "<",
+                            ">=",
+                            "<=",
+                            "LIKE"
+                          ],
+                          "type": "string",
+                          "description": "Comparison operator"
+                        },
+                        "value": {
+                          "description": "Value to compare. Type should match column data type",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Filter specifications",
+                    "nullable": true
+                  }
+                }
+              },
+              "example": {
+                "page": 1,
+                "pageSize": 10,
+                "search": "",
+                "columns": [
+                  {
+                    "field": "COLUMN_NAME",
+                    "title": "Column Title",
+                    "sortDirection": "ASC",
+                    "sortOrder": 1
+                  }
+                ],
+                "filters": [
+                  {
+                    "columnName": "COLUMN_NAME",
+                    "operator": "=",
+                    "value": "value"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Array of records matching the query"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records (without pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Column definitions"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters or column names"
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity"
+          },
+          "404": {
+            "description": "Entity not found"
+          }
+        }
+      }
+    },
+    "/CONSULTA_EVOL_STOCK/file": {
+      "get": {
+        "tags": [
+          "Reportes / Consulta Evolución de stock"
+        ],
+        "summary": "Descarga un archivo de una entidad",
+        "description": "Devuelve el archivo cargado en un atributo de tipo archivo de una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archivo encontrado",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string",
+                      "description": "Nombre del archivo"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Contenido binario (base64)",
+                      "format": "byte"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reportes / Consulta Evolución de stock"
+        ],
+        "summary": "Carga o reemplaza un archivo en una entidad",
+        "description": "Guarda el archivo en el atributo de tipo archivo de una instancia de entidad. Soporta dos formatos: multipart/form-data o binary directo (application/octet-stream, application/pdf, etc.).",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "description": "Tipo de contenido (MIME) del archivo (ej: application/pdf, image/png)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Nombre del archivo (opcional, se puede inferir del multipart)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Archivo a cargar. Puede enviarse como multipart/form-data o como binary directo.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "Contenido del archivo",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido binario del archivo enviado directamente",
+                "format": "binary"
+              }
+            },
+            "application/pdf": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido PDF enviado directamente",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Archivo guardado correctamente"
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo"
+          },
+          "403": {
+            "description": "El usuario no tiene permisos"
+          }
+        }
+      }
+    },
+    "/CONSULTA_EVOL_STOCK/report": {
+      "get": {
+        "tags": [
+          "Reportes / Consulta Evolución de stock"
+        ],
+        "summary": "Descarga un reporte asociado a una entidad",
+        "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "reportName",
+            "in": "query",
+            "description": "Nombre del reporte",
+            "required": true,
+            "schema": {
+              "enum": [
+                "consulta_evol_stock"
+              ],
               "type": "string"
             }
           },
@@ -57237,6 +59372,10 @@
       "description": "Actualización de stock"
     },
     {
+      "name": "Movimientos / Inventario",
+      "description": "Inventario"
+    },
+    {
       "name": "Movimientos / Movimiento de Stock",
       "description": "Movimiento de Stock"
     },
@@ -57275,6 +59414,10 @@
     {
       "name": "Reportes / Consulta de Stock",
       "description": "Consulta de Stock"
+    },
+    {
+      "name": "Reportes / Consulta Evolución de stock",
+      "description": "Consulta Evolución de stock"
     },
     {
       "name": "Reportes / Rem. Int. en tránsito",

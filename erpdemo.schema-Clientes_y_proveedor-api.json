@@ -6,7 +6,12 @@
   },
   "servers": [
     {
-      "url": "https://api.yiqi.com.ar/api/public"
+      "url": "https://api.yiqi.com.ar/api/public",
+      "description": "production"
+    },
+    {
+      "url": "https://yiqiapi.azurewebsites.net/api/public",
+      "description": "beta"
     }
   ],
   "paths": {
@@ -146,10 +151,22 @@
                         "description": " This is a foreign key to Tipo de Cliente. An id of Tipo de Cliente is expected",
                         "nullable": true
                       },
+                      "MEDE_ID_MEDE": {
+                        "title": "Método de envío",
+                        "type": "integer",
+                        "description": " This is a foreign key to Método de envío. An id of Método de envío is expected",
+                        "nullable": true
+                      },
                       "CLIE_PASSWORD": {
                         "title": "Password",
                         "maxLength": 100,
                         "type": "string",
+                        "nullable": true
+                      },
+                      "CLIE_FRECU_COMPRA_DIAS": {
+                        "title": "Proveedor - Frecuencia de compra (días)",
+                        "type": "integer",
+                        "description": "Cantidad de días estimada entre compras al proveedor.",
                         "nullable": true
                       },
                       "CLIE_OBSERVACIONES": {
@@ -1598,9 +1615,21 @@
                       "description": "Foreign key to Tipo de Cliente",
                       "nullable": true
                     },
+                    "MEDE_ID_MEDE": {
+                      "title": "Método de envío",
+                      "type": "integer",
+                      "description": "Foreign key to Método de envío",
+                      "nullable": true
+                    },
                     "CLIE_PASSWORD": {
                       "title": "Password",
                       "type": "string",
+                      "nullable": true
+                    },
+                    "CLIE_FRECU_COMPRA_DIAS": {
+                      "title": "Proveedor - Frecuencia de compra (días)",
+                      "type": "integer",
+                      "description": "Cantidad de días estimada entre compras al proveedor.",
                       "nullable": true
                     },
                     "CLIE_OBSERVACIONES": {
@@ -2528,6 +2557,11 @@
                             "type": "string",
                             "nullable": true
                           },
+                          "CUDE_ACCOUNT_TYPE_INTER": {
+                            "title": "Tipo de Cuenta Interbanking",
+                            "type": "string",
+                            "nullable": true
+                          },
                           "MONE_ID_MONE": {
                             "title": "Moneda",
                             "type": "integer"
@@ -2563,7 +2597,7 @@
                             "nullable": true
                           },
                           "CUDE_SALDO_INICIAL_DEL_ME": {
-                            "title": "Saldo inicial del mes (M)",
+                            "title": "Saldo de cuenta inicial del mes",
                             "type": "number",
                             "nullable": true
                           },
@@ -3146,10 +3180,22 @@
                         "description": " This is a foreign key to Tipo de Cliente. An id of Tipo de Cliente is expected",
                         "nullable": true
                       },
+                      "MEDE_ID_MEDE": {
+                        "title": "Método de envío",
+                        "type": "integer",
+                        "description": " This is a foreign key to Método de envío. An id of Método de envío is expected",
+                        "nullable": true
+                      },
                       "CLIE_PASSWORD": {
                         "title": "Password",
                         "maxLength": 100,
                         "type": "string",
+                        "nullable": true
+                      },
+                      "CLIE_FRECU_COMPRA_DIAS": {
+                        "title": "Proveedor - Frecuencia de compra (días)",
+                        "type": "integer",
+                        "description": "Cantidad de días estimada entre compras al proveedor.",
                         "nullable": true
                       },
                       "CLIE_OBSERVACIONES": {
@@ -4656,25 +4702,27 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "CLIE_DIFERENCIA_SALDOS",
+                            "CLIE_INFO",
+                            "CLIE_INFOR_ALERTE",
+                            "CLIE_CONCEPTO_DE_SERVICIO",
+                            "CLIE_ANTIGUEDAD",
+                            "CLIE_DIAS_PARA_FACTURACIO",
+                            "CLIE_CODIGO_COMPLETO",
                             "CLIE_NOMBRE",
                             "CLIE_RAZON_SOCIAL",
                             "CLIE_CUIT",
                             "CLIE_CODIGO",
                             "CLIE_ISOLOGO",
-                            "CLIE_SALDOS_SEP",
                             "CLIE_SALDO_DE_AJUSTES",
                             "CLIE_SALDO_CLIENTE",
                             "CLIE_SALDO_PROVEEDOR",
-                            "CLIE_DIFERENCIA_SALDOS",
-                            "CLIE_CLIENTE",
                             "CLIE_ACTIVO",
-                            "CLIE_PROVEEDOR",
                             "CLIE_ACTIVO_P",
                             "CLIE_SOL_ACT_DATOS",
-                            "CLIE_OTROS_SEP",
                             "CLIE_PASSWORD",
+                            "CLIE_FRECU_COMPRA_DIAS",
                             "CLIE_OBSERVACIONES",
-                            "CLIE_INFO",
                             "CLIE_CODIGO_DIARIO",
                             "CLIE_PERMITIR_DUPLICAR_CU",
                             "CLIE_GLN",
@@ -4685,7 +4733,6 @@
                             "CLIE_NO_USAR_WEB",
                             "CLIE_ALERTA_FINANCIERA",
                             "CLIE_NO_INCLU_REPO_PAGOS",
-                            "CLIE_INFOR_ALERTE",
                             "CLIE_CODIGO_BANELCO",
                             "CLIE_WEB",
                             "CLIE_DOMICILIO",
@@ -4700,27 +4747,21 @@
                             "CLIE_PLAZO_DIAS_DE_PAGO",
                             "CLIE_DESCUENTO_PAGO_TEMP",
                             "CLIE_SE_FACTURA_MES_VENCI",
-                            "CLIE_CONCEPTO_DE_SERVICIO",
                             "CLIE_INICIO_SERVICIO",
-                            "CLIE_ANTIGUEDAD",
                             "CLIE_NO_NOTIFICAR_VENCIMI",
                             "CLIE_ID_INTEGRACION_ML",
                             "CLIE_NICKNAME_ML",
                             "CLIE_ID_INTEGRACION_TN",
                             "CLIE_CREDITO_MAXIMO_COMO_",
-                            "CLIE_DIAS_PARA_FACTURACIO",
                             "CLIE_ULTIMA_FECHA_FACT_RE",
                             "CLIE_FIRMA_RECIBO",
                             "CLIE_ATENCION_A_PROVEEDOR",
                             "CLIE_PAGO_PROVEEDORES",
                             "CLIE_HORARIO_DE_ENTREGA",
                             "CLIE_TIPO_EMPRESA",
-                            "CLIE_CODIGO_COMPLETO",
                             "CLIE_SEGMENTACION_ESPECIA",
                             "CLIE_NRO_IIBB",
                             "CLIE_INICIO_ACTIVIDADES",
-                            "CLIE_RETENCIONES",
-                            "CLIE_PERCEPCIONES",
                             "CLIE_NO_CALCULAR_PERCEPCI",
                             "CLIE_FECHA_DESDE",
                             "CLIE_FECHA_HASTA",
@@ -4790,25 +4831,27 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "CLIE_DIFERENCIA_SALDOS",
+                            "CLIE_INFO",
+                            "CLIE_INFOR_ALERTE",
+                            "CLIE_CONCEPTO_DE_SERVICIO",
+                            "CLIE_ANTIGUEDAD",
+                            "CLIE_DIAS_PARA_FACTURACIO",
+                            "CLIE_CODIGO_COMPLETO",
                             "CLIE_NOMBRE",
                             "CLIE_RAZON_SOCIAL",
                             "CLIE_CUIT",
                             "CLIE_CODIGO",
                             "CLIE_ISOLOGO",
-                            "CLIE_SALDOS_SEP",
                             "CLIE_SALDO_DE_AJUSTES",
                             "CLIE_SALDO_CLIENTE",
                             "CLIE_SALDO_PROVEEDOR",
-                            "CLIE_DIFERENCIA_SALDOS",
-                            "CLIE_CLIENTE",
                             "CLIE_ACTIVO",
-                            "CLIE_PROVEEDOR",
                             "CLIE_ACTIVO_P",
                             "CLIE_SOL_ACT_DATOS",
-                            "CLIE_OTROS_SEP",
                             "CLIE_PASSWORD",
+                            "CLIE_FRECU_COMPRA_DIAS",
                             "CLIE_OBSERVACIONES",
-                            "CLIE_INFO",
                             "CLIE_CODIGO_DIARIO",
                             "CLIE_PERMITIR_DUPLICAR_CU",
                             "CLIE_GLN",
@@ -4819,7 +4862,6 @@
                             "CLIE_NO_USAR_WEB",
                             "CLIE_ALERTA_FINANCIERA",
                             "CLIE_NO_INCLU_REPO_PAGOS",
-                            "CLIE_INFOR_ALERTE",
                             "CLIE_CODIGO_BANELCO",
                             "CLIE_WEB",
                             "CLIE_DOMICILIO",
@@ -4834,27 +4876,21 @@
                             "CLIE_PLAZO_DIAS_DE_PAGO",
                             "CLIE_DESCUENTO_PAGO_TEMP",
                             "CLIE_SE_FACTURA_MES_VENCI",
-                            "CLIE_CONCEPTO_DE_SERVICIO",
                             "CLIE_INICIO_SERVICIO",
-                            "CLIE_ANTIGUEDAD",
                             "CLIE_NO_NOTIFICAR_VENCIMI",
                             "CLIE_ID_INTEGRACION_ML",
                             "CLIE_NICKNAME_ML",
                             "CLIE_ID_INTEGRACION_TN",
                             "CLIE_CREDITO_MAXIMO_COMO_",
-                            "CLIE_DIAS_PARA_FACTURACIO",
                             "CLIE_ULTIMA_FECHA_FACT_RE",
                             "CLIE_FIRMA_RECIBO",
                             "CLIE_ATENCION_A_PROVEEDOR",
                             "CLIE_PAGO_PROVEEDORES",
                             "CLIE_HORARIO_DE_ENTREGA",
                             "CLIE_TIPO_EMPRESA",
-                            "CLIE_CODIGO_COMPLETO",
                             "CLIE_SEGMENTACION_ESPECIA",
                             "CLIE_NRO_IIBB",
                             "CLIE_INICIO_ACTIVIDADES",
-                            "CLIE_RETENCIONES",
-                            "CLIE_PERCEPCIONES",
                             "CLIE_NO_CALCULAR_PERCEPCI",
                             "CLIE_FECHA_DESDE",
                             "CLIE_FECHA_HASTA",
@@ -6161,15 +6197,17 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "CONT_DIAS_AL_CUMPLEAOS",
+                            "PAIS_ID_PAIS",
+                            "PROV_ID_PROV",
+                            "TIDD_ID_TIDC",
                             "CONT_NOMBRE",
                             "CONT_PUESTO",
                             "CONT_TELABORAL",
                             "CONT_TEPARTIC",
                             "CONT_CELULAR",
-                            "CONT_CONTACTOINT",
                             "CONT_EMAIL",
                             "CONT_ULTIMOCONT",
-                            "CONT_SEPA_EXTRAS",
                             "CONT_SKYPE",
                             "CONT_LINKEDINPROF",
                             "CONT_IDIOMA_PRIM",
@@ -6178,12 +6216,11 @@
                             "CONT_DNI",
                             "CONT_PASSWORD_TICKETS",
                             "CONT_FECHA_DE_NACIMIENTO",
-                            "CONT_DIAS_AL_CUMPLEAOS",
-                            "CONT_COMPORTAMIENTO",
                             "CONT_CONTACTO_FACTURACION",
                             "CONT_CONTACTO_COBRANZAS",
                             "CONT_CONTACTO_DE_PAGOS",
                             "CONT_CONTACTO_DE_COMPRAS",
+                            "CONT_CONTACTOINT_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -6247,15 +6284,17 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "CONT_DIAS_AL_CUMPLEAOS",
+                            "PAIS_ID_PAIS",
+                            "PROV_ID_PROV",
+                            "TIDD_ID_TIDC",
                             "CONT_NOMBRE",
                             "CONT_PUESTO",
                             "CONT_TELABORAL",
                             "CONT_TEPARTIC",
                             "CONT_CELULAR",
-                            "CONT_CONTACTOINT",
                             "CONT_EMAIL",
                             "CONT_ULTIMOCONT",
-                            "CONT_SEPA_EXTRAS",
                             "CONT_SKYPE",
                             "CONT_LINKEDINPROF",
                             "CONT_IDIOMA_PRIM",
@@ -6264,12 +6303,11 @@
                             "CONT_DNI",
                             "CONT_PASSWORD_TICKETS",
                             "CONT_FECHA_DE_NACIMIENTO",
-                            "CONT_DIAS_AL_CUMPLEAOS",
-                            "CONT_COMPORTAMIENTO",
                             "CONT_CONTACTO_FACTURACION",
                             "CONT_CONTACTO_COBRANZAS",
                             "CONT_CONTACTO_DE_PAGOS",
                             "CONT_CONTACTO_DE_COMPRAS",
+                            "CONT_CONTACTOINT_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -7256,12 +7294,12 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "DLCL_DIAS_A_FIN_DE_CONTRA",
+                            "DLCL_INICIO_DE_GESTION_ES",
                             "DLCL_TITULO",
                             "DLCL_ARHC_ID_1926",
                             "DLCL_FECHA_DE_FIN_DE_VIGE",
-                            "DLCL_DIAS_A_FIN_DE_CONTRA",
                             "DLCL_DIAS_DE_PREAVISO",
-                            "DLCL_INICIO_DE_GESTION_ES",
                             "DLCL_OBSERVACIONES",
                             "id",
                             "DESC_ESTADO",
@@ -7326,12 +7364,12 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "DLCL_DIAS_A_FIN_DE_CONTRA",
+                            "DLCL_INICIO_DE_GESTION_ES",
                             "DLCL_TITULO",
                             "DLCL_ARHC_ID_1926",
                             "DLCL_FECHA_DE_FIN_DE_VIGE",
-                            "DLCL_DIAS_A_FIN_DE_CONTRA",
                             "DLCL_DIAS_DE_PREAVISO",
-                            "DLCL_INICIO_DE_GESTION_ES",
                             "DLCL_OBSERVACIONES",
                             "id",
                             "DESC_ESTADO",
@@ -9748,7 +9786,6 @@
                             "INFP_EMAIL_VENTAS",
                             "INFP_EMAIL_DPTO_TECNICO",
                             "INFP_EMAIL_RECLAMOS",
-                            "INFP_DATOS_PAGO_SEP",
                             "INFP_PERSONA_CONTACTO",
                             "INFP_EMITIR_CHEQUE_ORDEN",
                             "INFP_ENTIDAD_BANCARIA",
@@ -9757,24 +9794,20 @@
                             "INFP_TIPO_CUENTA",
                             "INFP_CBU",
                             "INFP_TITULAR_CUENTA",
-                            "INFP_DATOS_IMPO_SEP",
                             "INFP_CUIT",
                             "INFP_CERT_NO_RETENCION",
                             "INFP_FECHA_CAD_EX",
                             "INFP_PORC_NO_RETENCION",
-                            "INFP_IVA_SEP",
                             "INFP_CONDICION_IVA",
                             "INFP_AGENTE_RETENCION",
                             "INFP_ES_EMPLEADOR",
                             "INFP_FECHA_CAD_EX_IVA",
                             "INFP_PORCENTAJE_EX_IVA",
-                            "INFP_INGRESOS_BRUTOS_SEP",
                             "INFP_LOCAL",
                             "INFP_CONV_MULTILATERAL",
                             "INFP_FECHA_CAD_EX_IIBB",
                             "INFP_PORCENTAJE_EX_IIBB",
                             "INFP_LUGAR",
-                            "INFP_DATOS_INTERNOS_SEP",
                             "INFP_FECHA",
                             "INFP_NRO_PROVEEDOR_YIQI",
                             "INFP_TIPO_SOLICITUD",
@@ -9862,7 +9895,6 @@
                             "INFP_EMAIL_VENTAS",
                             "INFP_EMAIL_DPTO_TECNICO",
                             "INFP_EMAIL_RECLAMOS",
-                            "INFP_DATOS_PAGO_SEP",
                             "INFP_PERSONA_CONTACTO",
                             "INFP_EMITIR_CHEQUE_ORDEN",
                             "INFP_ENTIDAD_BANCARIA",
@@ -9871,24 +9903,20 @@
                             "INFP_TIPO_CUENTA",
                             "INFP_CBU",
                             "INFP_TITULAR_CUENTA",
-                            "INFP_DATOS_IMPO_SEP",
                             "INFP_CUIT",
                             "INFP_CERT_NO_RETENCION",
                             "INFP_FECHA_CAD_EX",
                             "INFP_PORC_NO_RETENCION",
-                            "INFP_IVA_SEP",
                             "INFP_CONDICION_IVA",
                             "INFP_AGENTE_RETENCION",
                             "INFP_ES_EMPLEADOR",
                             "INFP_FECHA_CAD_EX_IVA",
                             "INFP_PORCENTAJE_EX_IVA",
-                            "INFP_INGRESOS_BRUTOS_SEP",
                             "INFP_LOCAL",
                             "INFP_CONV_MULTILATERAL",
                             "INFP_FECHA_CAD_EX_IIBB",
                             "INFP_PORCENTAJE_EX_IIBB",
                             "INFP_LUGAR",
-                            "INFP_DATOS_INTERNOS_SEP",
                             "INFP_FECHA",
                             "INFP_NRO_PROVEEDOR_YIQI",
                             "INFP_TIPO_SOLICITUD",
@@ -12211,6 +12239,7 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "VEHA_ID_VEHA",
                             "SUCU_NOMBRE",
                             "SUCU_DIRECCION",
                             "SUCU_PARTIDO",
@@ -12284,6 +12313,7 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "VEHA_ID_VEHA",
                             "SUCU_NOMBRE",
                             "SUCU_DIRECCION",
                             "SUCU_PARTIDO",
@@ -15170,15 +15200,14 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "EVPR_PUNTAJE_DE_EVALUACIO",
+                            "EVPR_DIAS_FALTANTES_A_EVA",
                             "EVPR_FECHA",
                             "EVPR_EVALUACION_INICIAL",
                             "EVPR_ES_PROVEEDOR_UNICO",
                             "EVPR_COMENTARIOS",
                             "EVPR_PUNTAJE_EVALUACION_I",
-                            "EVPR_PUNTAJE_DE_EVALUACIO",
-                            "EVPR_DIAS_FALTANTES_A_EVA",
                             "EVPR_EVALUACION_TERMINADA",
-                            "EVPR_SEP11",
                             "EVPR_FORMA_DE_PAGO",
                             "EVPR_EXPERIENCIA_CON_EL_P",
                             "EVPR_SERVICIO_DE_POST_VEN",
@@ -15258,15 +15287,14 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "EVPR_PUNTAJE_DE_EVALUACIO",
+                            "EVPR_DIAS_FALTANTES_A_EVA",
                             "EVPR_FECHA",
                             "EVPR_EVALUACION_INICIAL",
                             "EVPR_ES_PROVEEDOR_UNICO",
                             "EVPR_COMENTARIOS",
                             "EVPR_PUNTAJE_EVALUACION_I",
-                            "EVPR_PUNTAJE_DE_EVALUACIO",
-                            "EVPR_DIAS_FALTANTES_A_EVA",
                             "EVPR_EVALUACION_TERMINADA",
-                            "EVPR_SEP11",
                             "EVPR_FORMA_DE_PAGO",
                             "EVPR_EXPERIENCIA_CON_EL_P",
                             "EVPR_SERVICIO_DE_POST_VEN",

@@ -6,7 +6,12 @@
   },
   "servers": [
     {
-      "url": "https://api.yiqi.com.ar/api/public"
+      "url": "https://api.yiqi.com.ar/api/public",
+      "description": "production"
+    },
+    {
+      "url": "https://yiqiapi.azurewebsites.net/api/public",
+      "description": "beta"
     }
   ],
   "paths": {
@@ -2717,6 +2722,15 @@
             "schema": {
               "type": "number"
             }
+          },
+          {
+            "name": "COBR_ESTADO_SALDO",
+            "in": "query",
+            "description": "Estado de saldo no imputado del cliente",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "number"
+            }
           }
         ],
         "responses": {
@@ -2839,14 +2853,9 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "COBR_FECHA",
-                            "COBR_NRODERECIBO",
                             "COBR_DESCRIPCION",
-                            "COBR_COBRADOR",
-                            "COBR_OBSERVACIONES",
-                            "COBR_MONE_SEP",
-                            "COBR_COTIZACION_MONEDA_EX",
-                            "COBR_IMPORTES_SEP",
+                            "MONE_ID_FACT",
+                            "MONE_ID_NODE",
                             "COBR_TOTAL_CANCELADO",
                             "COBR_TOTAL_IMPUTADO_MD",
                             "COBR_TOTAL_RECIBIDO",
@@ -2854,16 +2863,11 @@
                             "COBR_TOTAL_COBRADO",
                             "COBR_TOTAL_DEL_RECIBO_MD",
                             "COBR_PENDIENTE_DE_ASIGNAC",
-                            "COBR_DIFERENCIA_DE_CAMBIO",
                             "COBR_RETENCIONES",
-                            "COBR_A_CUENTA",
-                            "COBR_DE_SALDO_PREVIO",
                             "COBR_DEVOLUCIONES",
                             "COBR_ESTADO_SALDO",
                             "COBR_FECHA_DE_ULTIMA_ACRE",
-                            "COBR_ARHC_ID_3720",
-                            "COBR_OPERATIONID",
-                            "COBR_COMENTARIOS_INTERNOS",
+                            "VEHA_ID_VEHA",
                             "COBR_CLIENTE___CONDICION_",
                             "COBR_CODICION_VENTA",
                             "COBR_ORIGEN_DE_PEDIDO___N",
@@ -2875,11 +2879,21 @@
                             "COBR_TOTAL_COBRO_ELECTRON",
                             "COBR_TOTAL_DEPOSITOS",
                             "COBR_TOTAL_RETENCIONES",
-                            "COBR_SEPA_RETE",
                             "COBR_RET_IVA",
                             "COBR_RET_IIBB",
                             "COBR_RET_IG",
                             "COBR_RET_SUSS",
+                            "COBR_FECHA",
+                            "COBR_NRODERECIBO",
+                            "COBR_OBSERVACIONES",
+                            "COBR_COTIZACION_MONEDA_EX",
+                            "COBR_DIFERENCIA_DE_CAMBIO",
+                            "COBR_A_CUENTA",
+                            "COBR_DE_SALDO_PREVIO",
+                            "COBR_ARHC_ID_3720",
+                            "COBR_OPERATIONID",
+                            "COBR_COMENTARIOS_INTERNOS",
+                            "COBR_COBRADOR_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -2943,14 +2957,9 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "COBR_FECHA",
-                            "COBR_NRODERECIBO",
                             "COBR_DESCRIPCION",
-                            "COBR_COBRADOR",
-                            "COBR_OBSERVACIONES",
-                            "COBR_MONE_SEP",
-                            "COBR_COTIZACION_MONEDA_EX",
-                            "COBR_IMPORTES_SEP",
+                            "MONE_ID_FACT",
+                            "MONE_ID_NODE",
                             "COBR_TOTAL_CANCELADO",
                             "COBR_TOTAL_IMPUTADO_MD",
                             "COBR_TOTAL_RECIBIDO",
@@ -2958,16 +2967,11 @@
                             "COBR_TOTAL_COBRADO",
                             "COBR_TOTAL_DEL_RECIBO_MD",
                             "COBR_PENDIENTE_DE_ASIGNAC",
-                            "COBR_DIFERENCIA_DE_CAMBIO",
                             "COBR_RETENCIONES",
-                            "COBR_A_CUENTA",
-                            "COBR_DE_SALDO_PREVIO",
                             "COBR_DEVOLUCIONES",
                             "COBR_ESTADO_SALDO",
                             "COBR_FECHA_DE_ULTIMA_ACRE",
-                            "COBR_ARHC_ID_3720",
-                            "COBR_OPERATIONID",
-                            "COBR_COMENTARIOS_INTERNOS",
+                            "VEHA_ID_VEHA",
                             "COBR_CLIENTE___CONDICION_",
                             "COBR_CODICION_VENTA",
                             "COBR_ORIGEN_DE_PEDIDO___N",
@@ -2979,11 +2983,21 @@
                             "COBR_TOTAL_COBRO_ELECTRON",
                             "COBR_TOTAL_DEPOSITOS",
                             "COBR_TOTAL_RETENCIONES",
-                            "COBR_SEPA_RETE",
                             "COBR_RET_IVA",
                             "COBR_RET_IIBB",
                             "COBR_RET_IG",
                             "COBR_RET_SUSS",
+                            "COBR_FECHA",
+                            "COBR_NRODERECIBO",
+                            "COBR_OBSERVACIONES",
+                            "COBR_COTIZACION_MONEDA_EX",
+                            "COBR_DIFERENCIA_DE_CAMBIO",
+                            "COBR_A_CUENTA",
+                            "COBR_DE_SALDO_PREVIO",
+                            "COBR_ARHC_ID_3720",
+                            "COBR_OPERATIONID",
+                            "COBR_COMENTARIOS_INTERNOS",
+                            "COBR_COBRADOR_NOMBRE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -4447,7 +4461,7 @@
                       "PUVE_ID_PUVE": {
                         "title": "Punto de venta",
                         "type": "integer",
-                        "description": " This is a foreign key to Punto de venta. An id of Punto de venta is expected\n This attribute is mandatory when the instance is at state 'Emitida'",
+                        "description": " This is a foreign key to Punto de venta. An id of Punto de venta is expected\n This attribute is mandatory when the instance is at state 'Emitiendo'",
                         "default": "PARAM.PUVE_ID_PUVE",
                         "nullable": true
                       },
@@ -4489,7 +4503,7 @@
                       "COVE_ID_COVE": {
                         "title": "Condición de venta",
                         "type": "integer",
-                        "description": " This is a foreign key to Condición de venta. An id of Condición de venta is expected\n This attribute is mandatory when the instance is at state 'Emitida'",
+                        "description": " This is a foreign key to Condición de venta. An id of Condición de venta is expected\n This attribute is mandatory when the instance is at state 'Emitiendo'",
                         "nullable": true
                       },
                       "PROY_ID_PROY": {
@@ -4501,7 +4515,7 @@
                       "PRSE_ID_PRSE": {
                         "title": "Producto Servicio",
                         "type": "integer",
-                        "description": " This is a foreign key to Producto Servicio. An id of Producto Servicio is expected\n This attribute is mandatory when the instance is at state 'Emitida'",
+                        "description": " This is a foreign key to Producto Servicio. An id of Producto Servicio is expected\n This attribute is mandatory when the instance is at state 'Emitiendo'",
                         "nullable": true
                       },
                       "FACT_CONCEPTO": {
@@ -5184,26 +5198,33 @@
                               "default": "PARAM.PARA_HOY",
                               "nullable": true
                             },
+                            "CLIE_ID_CLIE": {
+                              "title": "Cliente",
+                              "type": "integer",
+                              "description": " This is a foreign key to Empresa. An id of Empresa is expected",
+                              "nullable": true
+                            },
+                            "TDAD_ID_TDAD": {
+                              "title": "Tipo",
+                              "type": "integer",
+                              "description": " This is a foreign key to Tipo de acción de cobranzas. An id of Tipo de acción de cobranzas is expected",
+                              "nullable": true
+                            },
                             "ACCO_COMENTARIO": {
                               "title": "Comentario",
                               "maxLength": 100,
                               "type": "string",
                               "nullable": true
                             },
+                            "COHA_ID_COHA": {
+                              "title": "Cobrador",
+                              "type": "integer",
+                              "description": " This is a foreign key to Cobrador. An id of Cobrador is expected",
+                              "nullable": true
+                            },
                             "ACCO_PROXIMA_FECHA": {
                               "title": "Próxima fecha",
                               "type": "string",
-                              "nullable": true
-                            },
-                            "ACCO_USUARIO_A_CARGO": {
-                              "title": "Usuario a cargo",
-                              "type": "integer",
-                              "nullable": true
-                            },
-                            "CLIE_ID_CLIE": {
-                              "title": "Cliente",
-                              "type": "integer",
-                              "description": " This is a foreign key to Empresa. An id of Empresa is expected",
                               "nullable": true
                             },
                             "ACCO_OBSERVACIONES_ADICIO": {
@@ -6896,24 +6917,14 @@
                       "items": {
                         "type": "object",
                         "properties": {
-                          "ACCO_FECHA": {
-                            "title": "Fecha",
-                            "type": "string",
-                            "nullable": true
-                          },
-                          "ACCO_COMENTARIO": {
-                            "title": "Comentario",
-                            "type": "string",
-                            "nullable": true
-                          },
-                          "ACCO_PROXIMA_FECHA": {
-                            "title": "Próxima fecha",
-                            "type": "string",
-                            "nullable": true
-                          },
                           "ACCO_USUARIO_A_CARGO": {
                             "title": "Usuario a cargo",
                             "type": "integer",
+                            "nullable": true
+                          },
+                          "ACCO_FECHA": {
+                            "title": "Fecha",
+                            "type": "string",
                             "nullable": true
                           },
                           "CLIE_ID_CLIE": {
@@ -6926,19 +6937,39 @@
                             "type": "integer",
                             "nullable": true
                           },
+                          "TDAD_ID_TDAD": {
+                            "title": "Tipo",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ACCO_COMENTARIO": {
+                            "title": "Comentario",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "COHA_ID_COHA": {
+                            "title": "Cobrador",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "ACCO_PROXIMA_FECHA": {
+                            "title": "Próxima fecha",
+                            "type": "string",
+                            "nullable": true
+                          },
                           "ACCO_DIAS_FALTANTES": {
                             "title": "Días faltantes",
                             "type": "integer",
                             "nullable": true
                           },
-                          "ACCO_ESTADO_DE_LA_FACTURA": {
-                            "title": "Estado de la factura",
-                            "type": "string",
-                            "nullable": true
-                          },
                           "ACCO_MONTO_PENDIENTE": {
                             "title": "Monto pendiente",
                             "type": "number",
+                            "nullable": true
+                          },
+                          "ACCO_ESTADO_DE_LA_FACTURA": {
+                            "title": "Estado de la factura",
+                            "type": "string",
                             "nullable": true
                           },
                           "ACCO_OBSERVACIONES_ADICIO": {
@@ -7051,6 +7082,11 @@
                           },
                           "LIQI_ID_LIQI": {
                             "title": "Liquidación de impuestos",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "LRYP_ID_LRYP": {
+                            "title": "Liq. ret. y percep.",
                             "type": "integer",
                             "nullable": true
                           },
@@ -7258,7 +7294,7 @@
                       "PUVE_ID_PUVE": {
                         "title": "Punto de venta",
                         "type": "integer",
-                        "description": " This is a foreign key to Punto de venta. An id of Punto de venta is expected\n This attribute is mandatory when the instance is at state 'Emitida'",
+                        "description": " This is a foreign key to Punto de venta. An id of Punto de venta is expected\n This attribute is mandatory when the instance is at state 'Emitiendo'",
                         "default": "PARAM.PUVE_ID_PUVE",
                         "nullable": true
                       },
@@ -7300,7 +7336,7 @@
                       "COVE_ID_COVE": {
                         "title": "Condición de venta",
                         "type": "integer",
-                        "description": " This is a foreign key to Condición de venta. An id of Condición de venta is expected\n This attribute is mandatory when the instance is at state 'Emitida'",
+                        "description": " This is a foreign key to Condición de venta. An id of Condición de venta is expected\n This attribute is mandatory when the instance is at state 'Emitiendo'",
                         "nullable": true
                       },
                       "PROY_ID_PROY": {
@@ -7312,7 +7348,7 @@
                       "PRSE_ID_PRSE": {
                         "title": "Producto Servicio",
                         "type": "integer",
-                        "description": " This is a foreign key to Producto Servicio. An id of Producto Servicio is expected\n This attribute is mandatory when the instance is at state 'Emitida'",
+                        "description": " This is a foreign key to Producto Servicio. An id of Producto Servicio is expected\n This attribute is mandatory when the instance is at state 'Emitiendo'",
                         "nullable": true
                       },
                       "FACT_CONCEPTO": {
@@ -7995,26 +8031,33 @@
                               "default": "PARAM.PARA_HOY",
                               "nullable": true
                             },
+                            "CLIE_ID_CLIE": {
+                              "title": "Cliente",
+                              "type": "integer",
+                              "description": " This is a foreign key to Empresa. An id of Empresa is expected",
+                              "nullable": true
+                            },
+                            "TDAD_ID_TDAD": {
+                              "title": "Tipo",
+                              "type": "integer",
+                              "description": " This is a foreign key to Tipo de acción de cobranzas. An id of Tipo de acción de cobranzas is expected",
+                              "nullable": true
+                            },
                             "ACCO_COMENTARIO": {
                               "title": "Comentario",
                               "maxLength": 100,
                               "type": "string",
                               "nullable": true
                             },
+                            "COHA_ID_COHA": {
+                              "title": "Cobrador",
+                              "type": "integer",
+                              "description": " This is a foreign key to Cobrador. An id of Cobrador is expected",
+                              "nullable": true
+                            },
                             "ACCO_PROXIMA_FECHA": {
                               "title": "Próxima fecha",
                               "type": "string",
-                              "nullable": true
-                            },
-                            "ACCO_USUARIO_A_CARGO": {
-                              "title": "Usuario a cargo",
-                              "type": "integer",
-                              "nullable": true
-                            },
-                            "CLIE_ID_CLIE": {
-                              "title": "Cliente",
-                              "type": "integer",
-                              "description": " This is a foreign key to Empresa. An id of Empresa is expected",
                               "nullable": true
                             },
                             "ACCO_OBSERVACIONES_ADICIO": {
@@ -8423,87 +8466,78 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "FACT_NUMERO",
-                            "FACT_CONCEPTO",
-                            "FACT_NROS_REMITO",
                             "FACT_COND_IVA_CLIENTE",
-                            "FACT_MONE_SEP",
-                            "FACT_COTIZACION",
-                            "FACT_FECHA_COTIZACION",
-                            "FACT_MOSTRAR_COTIZACION",
-                            "FACT_SEPA_FECHAS",
-                            "FACT_FECHA_EMISION",
                             "FACT_DIAS_FALTANTES_PARA_",
-                            "FACT_FECHA_VENCIMIENTO",
                             "FACT_DIAS_PARA_VENCIMIENT",
                             "FACT_D_FALTANTE_INTERNO",
-                            "FACT_FECHA_PERIODO_DESDE",
-                            "FACT_FECHA_PERIODO_HASTA",
                             "FACT_DIAS_CREACION",
                             "FACT_FECHA_DE_VENCIMIENTO",
-                            "FACT_SEPA_MONTOS",
                             "FACT_NETO_SIN_DESCUENTO",
-                            "FACT_PORCENTAJE_DESCUENTO",
                             "FACT_DESCUENTO",
                             "FACT_NETO",
                             "FACT_IVA",
-                            "FACT_TOTAL_PERCEPCIONES",
                             "FACT_IMPUESTOS_INTERNO",
                             "FACT_TOTAL",
-                            "FACT_SEP_TOTAL_MD",
                             "FACT_TOTAL_MONEDA_DEFAULT",
-                            "FACT_COBRANZAS",
                             "FACT_PENDIENTE_NOTA",
                             "FACT_PENDIENTE_CANCELACIO",
-                            "FACT_AJUSTE_DE_NC",
-                            "FACT_FECHA_PLANIFICADA_DE",
                             "FACT_FECHA_PAGO",
                             "FACT_FECHA_DE_ULTIMO_COBR",
                             "FACT_TIEMPO_DE_COBRO",
                             "FACT_COLOR",
-                            "FACT_ARHC_ID_3617",
                             "FACT_DESCRIPCION",
-                            "FACT_OBSERVACION",
                             "FACT_ID_CLIENTE",
                             "FACT_CRM",
-                            "FACT_OPERATIONID",
-                            "FACT_CORREOS_ENVIADOS",
-                            "FACT_CANTIDAD_CORREOS_PRO",
                             "FACT_CANTIDAD_CORREOS_ENV",
-                            "FACT_PEDI_SEP",
-                            "FACT_PEDI_ENTREGADO",
                             "FACT_CDOD_TIPO",
                             "FACT_EXTE_NOMBRE",
                             "FACT_ESTADO_DEL_PEDIDO",
+                            "FODE_ID_FODE",
                             "FACT_CLIENTE_TIPO",
                             "FACT_INFO_EMISION",
-                            "FACT_FACTURA_COPY_LINK",
-                            "FACT_CPAS_RS_RNI",
-                            "FACT_SEPA_OT",
                             "FACT_IVA_27",
                             "FACT_IVA_21",
                             "FACT_IVA_105",
-                            "FACT_IMPUESTOS_MUNICIP",
-                            "FACT_SEPA_TO",
                             "FACT_TOTAL_GRAVADO",
                             "FACT_TOTAL_NO_GRAVADO",
                             "FACT_TOTAL_EXENTO",
-                            "FACT_PERCEP_SEPA",
                             "FACT_PER_IIBB",
                             "FACT_PERCEPCION_IVA",
-                            "FACT_ERROR_AFIP",
-                            "FACT_CAE",
-                            "FACT_CAE_VENCIMIENTO",
                             "FACT_CANT_DETALLES",
                             "FACT_INFO",
                             "FACT_ELECTRONICA",
+                            "FACT_TOTAL_MONEDA_EXTRANJ",
+                            "FACT_NUMERO",
+                            "FACT_CONCEPTO",
+                            "FACT_NROS_REMITO",
+                            "FACT_COTIZACION",
+                            "FACT_FECHA_COTIZACION",
+                            "FACT_MOSTRAR_COTIZACION",
+                            "FACT_FECHA_EMISION",
+                            "FACT_FECHA_VENCIMIENTO",
+                            "FACT_FECHA_PERIODO_DESDE",
+                            "FACT_FECHA_PERIODO_HASTA",
+                            "FACT_PORCENTAJE_DESCUENTO",
+                            "FACT_TOTAL_PERCEPCIONES",
+                            "FACT_AJUSTE_DE_NC",
+                            "FACT_FECHA_PLANIFICADA_DE",
+                            "FACT_ARHC_ID_3617",
+                            "FACT_OBSERVACION",
+                            "FACT_OPERATIONID",
+                            "FACT_CANTIDAD_CORREOS_PRO",
+                            "FACT_PEDI_ENTREGADO",
+                            "FACT_FACTURA_COPY_LINK",
+                            "FACT_CPAS_RS_RNI",
+                            "FACT_IMPUESTOS_MUNICIP",
+                            "FACT_ERROR_AFIP",
+                            "FACT_CAE",
+                            "FACT_CAE_VENCIMIENTO",
                             "FACT_JSON_QR",
                             "FACT_URL_QR",
                             "FACT_TIPO_DE_OPERACION_FC",
                             "FACT_INTENTOS_EMISION",
                             "FACT_FECHA_DE_COTIZACION",
                             "FACT_COTIZACION_DE_MONEDA",
-                            "FACT_TOTAL_MONEDA_EXTRANJ",
                             "FACT_CUPON_MP_ID",
                             "FACT_CUPON_MP_EXTERNAL_RE",
                             "FACT_CUPON_MP_DESCRIPTION",
@@ -8571,87 +8605,78 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "FACT_NUMERO",
-                            "FACT_CONCEPTO",
-                            "FACT_NROS_REMITO",
                             "FACT_COND_IVA_CLIENTE",
-                            "FACT_MONE_SEP",
-                            "FACT_COTIZACION",
-                            "FACT_FECHA_COTIZACION",
-                            "FACT_MOSTRAR_COTIZACION",
-                            "FACT_SEPA_FECHAS",
-                            "FACT_FECHA_EMISION",
                             "FACT_DIAS_FALTANTES_PARA_",
-                            "FACT_FECHA_VENCIMIENTO",
                             "FACT_DIAS_PARA_VENCIMIENT",
                             "FACT_D_FALTANTE_INTERNO",
-                            "FACT_FECHA_PERIODO_DESDE",
-                            "FACT_FECHA_PERIODO_HASTA",
                             "FACT_DIAS_CREACION",
                             "FACT_FECHA_DE_VENCIMIENTO",
-                            "FACT_SEPA_MONTOS",
                             "FACT_NETO_SIN_DESCUENTO",
-                            "FACT_PORCENTAJE_DESCUENTO",
                             "FACT_DESCUENTO",
                             "FACT_NETO",
                             "FACT_IVA",
-                            "FACT_TOTAL_PERCEPCIONES",
                             "FACT_IMPUESTOS_INTERNO",
                             "FACT_TOTAL",
-                            "FACT_SEP_TOTAL_MD",
                             "FACT_TOTAL_MONEDA_DEFAULT",
-                            "FACT_COBRANZAS",
                             "FACT_PENDIENTE_NOTA",
                             "FACT_PENDIENTE_CANCELACIO",
-                            "FACT_AJUSTE_DE_NC",
-                            "FACT_FECHA_PLANIFICADA_DE",
                             "FACT_FECHA_PAGO",
                             "FACT_FECHA_DE_ULTIMO_COBR",
                             "FACT_TIEMPO_DE_COBRO",
                             "FACT_COLOR",
-                            "FACT_ARHC_ID_3617",
                             "FACT_DESCRIPCION",
-                            "FACT_OBSERVACION",
                             "FACT_ID_CLIENTE",
                             "FACT_CRM",
-                            "FACT_OPERATIONID",
-                            "FACT_CORREOS_ENVIADOS",
-                            "FACT_CANTIDAD_CORREOS_PRO",
                             "FACT_CANTIDAD_CORREOS_ENV",
-                            "FACT_PEDI_SEP",
-                            "FACT_PEDI_ENTREGADO",
                             "FACT_CDOD_TIPO",
                             "FACT_EXTE_NOMBRE",
                             "FACT_ESTADO_DEL_PEDIDO",
+                            "FODE_ID_FODE",
                             "FACT_CLIENTE_TIPO",
                             "FACT_INFO_EMISION",
-                            "FACT_FACTURA_COPY_LINK",
-                            "FACT_CPAS_RS_RNI",
-                            "FACT_SEPA_OT",
                             "FACT_IVA_27",
                             "FACT_IVA_21",
                             "FACT_IVA_105",
-                            "FACT_IMPUESTOS_MUNICIP",
-                            "FACT_SEPA_TO",
                             "FACT_TOTAL_GRAVADO",
                             "FACT_TOTAL_NO_GRAVADO",
                             "FACT_TOTAL_EXENTO",
-                            "FACT_PERCEP_SEPA",
                             "FACT_PER_IIBB",
                             "FACT_PERCEPCION_IVA",
-                            "FACT_ERROR_AFIP",
-                            "FACT_CAE",
-                            "FACT_CAE_VENCIMIENTO",
                             "FACT_CANT_DETALLES",
                             "FACT_INFO",
                             "FACT_ELECTRONICA",
+                            "FACT_TOTAL_MONEDA_EXTRANJ",
+                            "FACT_NUMERO",
+                            "FACT_CONCEPTO",
+                            "FACT_NROS_REMITO",
+                            "FACT_COTIZACION",
+                            "FACT_FECHA_COTIZACION",
+                            "FACT_MOSTRAR_COTIZACION",
+                            "FACT_FECHA_EMISION",
+                            "FACT_FECHA_VENCIMIENTO",
+                            "FACT_FECHA_PERIODO_DESDE",
+                            "FACT_FECHA_PERIODO_HASTA",
+                            "FACT_PORCENTAJE_DESCUENTO",
+                            "FACT_TOTAL_PERCEPCIONES",
+                            "FACT_AJUSTE_DE_NC",
+                            "FACT_FECHA_PLANIFICADA_DE",
+                            "FACT_ARHC_ID_3617",
+                            "FACT_OBSERVACION",
+                            "FACT_OPERATIONID",
+                            "FACT_CANTIDAD_CORREOS_PRO",
+                            "FACT_PEDI_ENTREGADO",
+                            "FACT_FACTURA_COPY_LINK",
+                            "FACT_CPAS_RS_RNI",
+                            "FACT_IMPUESTOS_MUNICIP",
+                            "FACT_ERROR_AFIP",
+                            "FACT_CAE",
+                            "FACT_CAE_VENCIMIENTO",
                             "FACT_JSON_QR",
                             "FACT_URL_QR",
                             "FACT_TIPO_DE_OPERACION_FC",
                             "FACT_INTENTOS_EMISION",
                             "FACT_FECHA_DE_COTIZACION",
                             "FACT_COTIZACION_DE_MONEDA",
-                            "FACT_TOTAL_MONEDA_EXTRANJ",
                             "FACT_CUPON_MP_ID",
                             "FACT_CUPON_MP_EXTERNAL_RE",
                             "FACT_CUPON_MP_DESCRIPTION",
@@ -8788,7 +8813,7 @@
           {
             "name": "state",
             "in": "query",
-            "description": "Possibles values: <ul><li>Anulada</li>\n<li>Calculando Percepciones</li>\n<li>Cambiando Tipo de Factura</li>\n<li>Cancelada por NC</li>\n<li>Cargando datos AFIP</li>\n<li>Cargando NC</li>\n<li>Cobrada</li>\n<li>Copiando Factura</li>\n<li>Creando Recibo</li>\n<li>Cupón MP Cobrado</li>\n<li>Dividiendo Factura</li>\n<li>Emitida</li>\n<li>Emitiendo a fecha</li>\n<li>Entregada</li>\n<li>Error al emitir</li>\n<li>Generando cupón MP</li>\n<li>Habilitando emisión</li>\n<li>Proyectada</li>\n<li>Recalculando comisiones</li>\n<li>Regenerando asiento</li></ul>",
+            "description": "Possibles values: <ul><li>Anulada</li>\n<li>Calculando Percepciones</li>\n<li>Cambiando Tipo de Factura</li>\n<li>Cancelada por NC</li>\n<li>Cargando datos AFIP</li>\n<li>Cargando NC</li>\n<li>Cobrada</li>\n<li>Copiando Factura</li>\n<li>Creando Recibo</li>\n<li>Cupón MP Cobrado</li>\n<li>Dividiendo Factura</li>\n<li>Emitida</li>\n<li>Emitiendo</li>\n<li>Emitiendo a fecha</li>\n<li>Entregada</li>\n<li>Error al emitir</li>\n<li>Generando cupón MP</li>\n<li>Habilitando emisión</li>\n<li>Preparando emision</li>\n<li>Proyectada</li>\n<li>Recalculando comisiones</li>\n<li>Regenerando asiento</li></ul>",
             "allowEmptyValue": true,
             "schema": {
               "type": "string"
@@ -8824,7 +8849,7 @@
           {
             "name": "state",
             "in": "query",
-            "description": "Possibles values: <ul><li>Anulada</li>\n<li>Calculando Percepciones</li>\n<li>Cambiando Tipo de Factura</li>\n<li>Cancelada por NC</li>\n<li>Cargando datos AFIP</li>\n<li>Cargando NC</li>\n<li>Cobrada</li>\n<li>Copiando Factura</li>\n<li>Creando Recibo</li>\n<li>Cupón MP Cobrado</li>\n<li>Dividiendo Factura</li>\n<li>Emitida</li>\n<li>Emitiendo a fecha</li>\n<li>Entregada</li>\n<li>Error al emitir</li>\n<li>Generando cupón MP</li>\n<li>Habilitando emisión</li>\n<li>Proyectada</li>\n<li>Recalculando comisiones</li>\n<li>Regenerando asiento</li></ul>",
+            "description": "Possibles values: <ul><li>Anulada</li>\n<li>Calculando Percepciones</li>\n<li>Cambiando Tipo de Factura</li>\n<li>Cancelada por NC</li>\n<li>Cargando datos AFIP</li>\n<li>Cargando NC</li>\n<li>Cobrada</li>\n<li>Copiando Factura</li>\n<li>Creando Recibo</li>\n<li>Cupón MP Cobrado</li>\n<li>Dividiendo Factura</li>\n<li>Emitida</li>\n<li>Emitiendo</li>\n<li>Emitiendo a fecha</li>\n<li>Entregada</li>\n<li>Error al emitir</li>\n<li>Generando cupón MP</li>\n<li>Habilitando emisión</li>\n<li>Preparando emision</li>\n<li>Proyectada</li>\n<li>Recalculando comisiones</li>\n<li>Regenerando asiento</li></ul>",
             "required": true,
             "allowEmptyValue": true,
             "schema": {
@@ -9790,7 +9815,6 @@
                           "enum": [
                             "LIDC_NRO_LIQUIDACION",
                             "LIDC_PERIODO",
-                            "LIDC_TOTALES_SEP",
                             "LIDC_TOTAL_COBRADO",
                             "LIDC_TOTAL_NETO",
                             "LIDC_IMPORTE_COMISION",
@@ -9861,7 +9885,6 @@
                           "enum": [
                             "LIDC_NRO_LIQUIDACION",
                             "LIDC_PERIODO",
-                            "LIDC_TOTALES_SEP",
                             "LIDC_TOTAL_COBRADO",
                             "LIDC_TOTAL_NETO",
                             "LIDC_IMPORTE_COMISION",
@@ -10805,7 +10828,7 @@
                             "PUVE_ID_PUVE": {
                               "title": "Punto de venta",
                               "type": "integer",
-                              "description": " This is a foreign key to Punto de venta. An id of Punto de venta is expected\n This attribute is mandatory when the instance is at state 'Emitida'",
+                              "description": " This is a foreign key to Punto de venta. An id of Punto de venta is expected\n This attribute is mandatory when the instance is at state 'Emitiendo'",
                               "default": "PARAM.PUVE_ID_PUVE",
                               "nullable": true
                             },
@@ -10847,7 +10870,7 @@
                             "COVE_ID_COVE": {
                               "title": "Condición de venta",
                               "type": "integer",
-                              "description": " This is a foreign key to Condición de venta. An id of Condición de venta is expected\n This attribute is mandatory when the instance is at state 'Emitida'",
+                              "description": " This is a foreign key to Condición de venta. An id of Condición de venta is expected\n This attribute is mandatory when the instance is at state 'Emitiendo'",
                               "nullable": true
                             },
                             "PROY_ID_PROY": {
@@ -10859,7 +10882,7 @@
                             "PRSE_ID_PRSE": {
                               "title": "Producto Servicio",
                               "type": "integer",
-                              "description": " This is a foreign key to Producto Servicio. An id of Producto Servicio is expected\n This attribute is mandatory when the instance is at state 'Emitida'",
+                              "description": " This is a foreign key to Producto Servicio. An id of Producto Servicio is expected\n This attribute is mandatory when the instance is at state 'Emitiendo'",
                               "nullable": true
                             },
                             "FACT_CONCEPTO": {
@@ -12100,6 +12123,12 @@
                               "type": "string",
                               "nullable": true
                             },
+                            "NROS_FACTURA": {
+                              "title": "Nros Factura",
+                              "maxLength": 100,
+                              "type": "string",
+                              "nullable": true
+                            },
                             "DIRECCION_DE_ENTREGA": {
                               "title": "Dirección de entrega",
                               "maxLength": 100,
@@ -12272,6 +12301,12 @@
                             },
                             "CONCEPTO_COBRO_ELEC": {
                               "title": "Método de Pago Electrónico",
+                              "maxLength": 100,
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "NRO_DE_OPERACION": {
+                              "title": "Cobro de pedido - Nro de Operación",
                               "maxLength": 100,
                               "type": "string",
                               "nullable": true
@@ -13148,6 +13183,11 @@
                       "type": "string",
                       "nullable": true
                     },
+                    "PEDI_NOTAS_CREDITO": {
+                      "title": "Estados Notas de Crédito",
+                      "type": "string",
+                      "nullable": true
+                    },
                     "PEDI_REMITOS": {
                       "title": "Estados Remitos",
                       "type": "string",
@@ -13407,6 +13447,12 @@
                       "title": "Bultos",
                       "type": "integer",
                       "description": "Corresponde a los bultos mostrados en el PDF de Transporte en caso de no tener Remito de venta, y al crearse remito de venta se pasará este dato al creado en caso de ingresar antes de generarlo.",
+                      "nullable": true
+                    },
+                    "PEDI_UBI_RES_FORZ": {
+                      "title": "Ubicación de reserva forzada",
+                      "type": "string",
+                      "description": "Si el pedido utiliza una ubicación de reserva forzada se completa en este campo con su nombre.",
                       "nullable": true
                     },
                     "PEDI_CANTIDAD_DE_SKUS": {
@@ -16200,6 +16246,11 @@
                             "type": "string",
                             "nullable": true
                           },
+                          "NROS_FACTURA": {
+                            "title": "Nros Factura",
+                            "type": "string",
+                            "nullable": true
+                          },
                           "DIRECCION_DE_ENTREGA": {
                             "title": "Dirección de entrega",
                             "type": "string",
@@ -16352,6 +16403,11 @@
                           },
                           "CONCEPTO_COBRO_ELEC": {
                             "title": "Método de Pago Electrónico",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "NRO_DE_OPERACION": {
+                            "title": "Cobro de pedido - Nro de Operación",
                             "type": "string",
                             "nullable": true
                           },
@@ -17414,7 +17470,7 @@
                             "PUVE_ID_PUVE": {
                               "title": "Punto de venta",
                               "type": "integer",
-                              "description": " This is a foreign key to Punto de venta. An id of Punto de venta is expected\n This attribute is mandatory when the instance is at state 'Emitida'",
+                              "description": " This is a foreign key to Punto de venta. An id of Punto de venta is expected\n This attribute is mandatory when the instance is at state 'Emitiendo'",
                               "default": "PARAM.PUVE_ID_PUVE",
                               "nullable": true
                             },
@@ -17456,7 +17512,7 @@
                             "COVE_ID_COVE": {
                               "title": "Condición de venta",
                               "type": "integer",
-                              "description": " This is a foreign key to Condición de venta. An id of Condición de venta is expected\n This attribute is mandatory when the instance is at state 'Emitida'",
+                              "description": " This is a foreign key to Condición de venta. An id of Condición de venta is expected\n This attribute is mandatory when the instance is at state 'Emitiendo'",
                               "nullable": true
                             },
                             "PROY_ID_PROY": {
@@ -17468,7 +17524,7 @@
                             "PRSE_ID_PRSE": {
                               "title": "Producto Servicio",
                               "type": "integer",
-                              "description": " This is a foreign key to Producto Servicio. An id of Producto Servicio is expected\n This attribute is mandatory when the instance is at state 'Emitida'",
+                              "description": " This is a foreign key to Producto Servicio. An id of Producto Servicio is expected\n This attribute is mandatory when the instance is at state 'Emitiendo'",
                               "nullable": true
                             },
                             "FACT_CONCEPTO": {
@@ -18709,6 +18765,12 @@
                               "type": "string",
                               "nullable": true
                             },
+                            "NROS_FACTURA": {
+                              "title": "Nros Factura",
+                              "maxLength": 100,
+                              "type": "string",
+                              "nullable": true
+                            },
                             "DIRECCION_DE_ENTREGA": {
                               "title": "Dirección de entrega",
                               "maxLength": 100,
@@ -18881,6 +18943,12 @@
                             },
                             "CONCEPTO_COBRO_ELEC": {
                               "title": "Método de Pago Electrónico",
+                              "maxLength": 100,
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "NRO_DE_OPERACION": {
+                              "title": "Cobro de pedido - Nro de Operación",
                               "maxLength": 100,
                               "type": "string",
                               "nullable": true
@@ -19655,24 +19723,14 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "PEDI_NUMERO",
-                            "PEDI_FECHA",
-                            "PEDI_USUARIO_SOLICITANTE",
-                            "PEDI_VALOR_DE_CAMBIO",
-                            "PEDI_TOTAL_CUPONES",
-                            "PEDI_REEMBOLSO_BONIF",
+                            "TIDC_ID_TIDC",
                             "PEDI_TOTAL_PRODUCTOS_SIN_",
-                            "PEDI_MONTOS",
                             "PEDI_SUBTOTAL_SIN_DESCUEN",
                             "PEDI_IVA_SIN_DESCUENTO",
                             "PEDI_TOTAL_SIN_DESCUENTO",
                             "PEDI_IMP_INTERNOS",
-                            "PEDI_TOTALIZADOR_DE_DESCU",
-                            "PEDI_DTO_GLOBAL",
-                            "PEDI_DTO_GLOBAL_ORIGEN",
                             "PEDI_TOTAL_DESCONTADO",
                             "PEDI_DTO_POR_ITEM",
-                            "PEDI_MONTOS_CON_DESCUENTO",
                             "PEDI_SUBTOTAL",
                             "PEDI_IVA",
                             "PEDI_TOTAL",
@@ -19680,27 +19738,20 @@
                             "PEDI_IMP_INTERNOS_C_DTO",
                             "PEDI_TOTAL_SERVICIOS",
                             "PEDI_PERCEPCIONES",
-                            "PEDI_PERCEPCIONES_PROYECT",
                             "PEDI_DIF_TCD_COB",
                             "PEDI_TOTAL_COBROS",
                             "PEDI_TOTAL_MD",
-                            "PEDI_STOCK",
                             "PEDI_INFO",
-                            "PEDI_DATOS_DEL_CLIENTE",
                             "PEDI_RAZON_SOCIAL",
                             "PEDI_CUIT",
                             "PEDI_CONDICION_FRENTE_AL_",
-                            "PEDI_PICKEO",
                             "PEDI_ARTICULOS_PICKEADOS",
-                            "PEDI_AGREGADO_A_PICKING_L",
                             "PEDI_ARTICULOS_PENDIENTES",
-                            "PEDI_DOC_SEP",
                             "PEDI_FACTURAS",
                             "PEDI_RECIBOS",
+                            "PEDI_NOTAS_CREDITO",
                             "PEDI_REMITOS",
                             "PEDI_REMITO_DEV",
-                            "PEDI_OTROS_DATOS",
-                            "PEDI_FECHA_DE_DESPACHO",
                             "PEDI_RETRASO",
                             "PEDI_CANT_ARTICULOS",
                             "PEDI_UBIS_RES_CANT",
@@ -19708,71 +19759,79 @@
                             "PEDI_SIN_RESERVAR",
                             "PEDI_DEVUELTA",
                             "PEDI_NRO_PEDIDO",
-                            "PEDI_NUMERO_SOLO",
                             "PEDI_NRO_POR_ORIGEN",
+                            "PEDI_ANTIGEDAD",
+                            "PEDI_TIPO_DE_COTIZACION",
+                            "PEDI_PESO_DEL_PEDIDO",
+                            "PEDI_VOLUMEN_DEL_PEDIDO",
+                            "PEDI_PORCENTAJE_DE_ENTREG",
+                            "PEDI_FACTURACION_PENDIENT",
+                            "PEDI_TIPO_CANAL",
+                            "PEDI_ESTADO_DEL_COBRO_DE_",
+                            "PEDI_ULTIMA_FECHA_DE_COBR",
+                            "PEDI_FECHA_EMISION",
+                            "PEDI_MSJ_SINRESP",
+                            "PEDI_INFO_DETALLES",
+                            "PEDI_INFO_SERV",
+                            "PEDI_DIAS_A_DESPACHO",
+                            "PEDI_DIAS_PARA_EL_DESPACH",
+                            "PEDI_DEMORA_EN_ENTREGA",
+                            "PEDI_TIENE_ADJUNTO",
+                            "PEDI_CON_DEVOLUCION",
+                            "PEDI_DEVOLUCION_PARCIAL",
+                            "PEDI_INFORMACION",
+                            "PEDI_CANTIDAD_DE_SKUS",
+                            "PEDI_PRIMER_SKU",
+                            "PEDI_PRIMER_NOMBRE",
+                            "PEDI_CANT_SERVICIOS",
+                            "PEDI_SERV_PRIMER_NOM",
+                            "PEDI_FEE_COBROS",
+                            "PEDI_FEE_DE_FINANCIACION",
+                            "PEDI_RETENCIONES_DEL_PEDI",
+                            "PEDI_RETENCIONES_IVA",
+                            "PEDI_RETENCIONES_IIBB",
+                            "PEDI_RETENCIONES_OTROS",
+                            "PEDI_CANTIDAD_A_ENTREGAR",
+                            "PEDI_ESTADO_DE_ENTREGA",
+                            "PEDI_ETIQUETA_ZPL",
+                            "PEDI_ETIQUETA_PDF",
+                            "PEDI_SERVICIO_NOMBRE",
+                            "PEDI_PESO",
+                            "PEDI_CODIGO",
+                            "PEDI_NUMERO",
+                            "PEDI_FECHA",
+                            "PEDI_VALOR_DE_CAMBIO",
+                            "PEDI_TOTAL_CUPONES",
+                            "PEDI_REEMBOLSO_BONIF",
+                            "PEDI_DTO_GLOBAL",
+                            "PEDI_DTO_GLOBAL_ORIGEN",
+                            "PEDI_PERCEPCIONES_PROYECT",
+                            "PEDI_AGREGADO_A_PICKING_L",
+                            "PEDI_FECHA_DE_DESPACHO",
+                            "PEDI_NUMERO_SOLO",
                             "PEDI_NRO_DE_ORDEN_TN",
                             "PEDI_FECHA_DE_INGRESO_A_S",
                             "PEDI_DATE_ENTRY_RESE",
                             "PEDI_DATE_ENTRY_PL",
                             "PEDI_FECHA_DE_PAGO",
-                            "PEDI_ANTIGEDAD",
-                            "PEDI_TIPO_DE_COTIZACION",
                             "PEDI_INSTRUCCIONES",
-                            "PEDI_PESO_DEL_PEDIDO",
-                            "PEDI_VOLUMEN_DEL_PEDIDO",
-                            "PEDI_PORCENTAJE_DE_ENTREG",
                             "PEDI_VAL_CAMB_MANUAL",
                             "PEDI_OBSERVACIONES",
                             "PEDI_CODIGO_DE_CUPON",
-                            "PEDI_FACTURACION_PENDIENT",
                             "PEDI_CANAL",
-                            "PEDI_TIPO_CANAL",
-                            "PEDI_ESTADO_DEL_COBRO_DE_",
-                            "PEDI_ULTIMA_FECHA_DE_COBR",
-                            "PEDI_FECHA_EMISION",
                             "PEDI_FECHA_VENCIMIENTO",
                             "PEDI_FACTURA_SUBIDA",
-                            "PEDI_MSJ_SINRESP",
-                            "PEDI_INFO_DETALLES",
-                            "PEDI_INFO_SERV",
                             "PEDI_PEDIDO_REINICIADO",
-                            "PEDI_DIAS_A_DESPACHO",
-                            "PEDI_DIAS_PARA_EL_DESPACH",
-                            "PEDI_DEMORA_EN_ENTREGA",
                             "PEDI_ESQUEMA_FRANQUICIADO",
-                            "PEDI_TIENE_ADJUNTO",
-                            "PEDI_CON_DEVOLUCION",
-                            "PEDI_DEVOLUCION_PARCIAL",
-                            "PEDI_INFORMACION",
                             "PEDI_BULTOS",
-                            "PEDI_PRODUCTOS_DEL_PEDIDO",
-                            "PEDI_CANTIDAD_DE_SKUS",
-                            "PEDI_PRIMER_SKU",
-                            "PEDI_PRIMER_NOMBRE",
-                            "PEDI_SERVICIOS_DEL_PEDIDO",
-                            "PEDI_CANT_SERVICIOS",
-                            "PEDI_SERV_PRIMER_NOM",
+                            "PEDI_UBI_RES_FORZ",
                             "PEDI_INFO_TC",
-                            "PEDI_FEES_SEP",
                             "PEDI_FEE_CANAL_DE_VENTAS",
-                            "PEDI_FEE_COBROS",
-                            "PEDI_FEE_DE_FINANCIACION",
-                            "PEDI_RETENCIONES_SEP",
-                            "PEDI_RETENCIONES_DEL_PEDI",
-                            "PEDI_RETENCIONES_IVA",
-                            "PEDI_RETENCIONES_IIBB",
-                            "PEDI_RETENCIONES_OTROS",
-                            "PEDI_R_SEPA",
                             "PEDI_RAZON_C_C",
                             "PEDI_RAZON_C_D",
                             "PEDI_ETIQUETA",
-                            "PEDI_CANTIDAD_A_ENTREGAR",
-                            "PEDI_ESTADO_DE_ENTREGA",
-                            "PEDI_ETIQUETA_ZPL",
-                            "PEDI_ETIQUETA_PDF",
                             "PEDI_ETIQUETA_GENERADA",
                             "PEDI_FORMA_DE_ENTREGA",
-                            "PEDI_SERVICIO_NOMBRE",
                             "PEDI_RANGO_HASTA",
                             "PEDI_LOCAL",
                             "PEDI_SUCURSAL_DE_RETIRO",
@@ -19793,7 +19852,6 @@
                             "PEDI_BONIFICACION_POR_ENV",
                             "PEDI_TARDANZA_MINIMA_ENTR",
                             "PEDI_TARDANZA_MAXIMA_ENTR",
-                            "PEDI_PESO",
                             "PEDI_TRACKING_CODE",
                             "PEDI_TRACKING_CODE_ETIQ",
                             "PEDI_TELEFONO",
@@ -19819,9 +19877,9 @@
                             "PEDI_ESTADO_DEL_ENVIO",
                             "PEDI_ESTADO_DE_PAGO",
                             "PEDI_JSON",
-                            "PEDI_CODIGO",
                             "PEDI_PACK_ID",
                             "PEDI_ORIGEN_INTERNO",
+                            "PEDI_USUARIO_SOLICITANTE_NOMBR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -19885,24 +19943,14 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "PEDI_NUMERO",
-                            "PEDI_FECHA",
-                            "PEDI_USUARIO_SOLICITANTE",
-                            "PEDI_VALOR_DE_CAMBIO",
-                            "PEDI_TOTAL_CUPONES",
-                            "PEDI_REEMBOLSO_BONIF",
+                            "TIDC_ID_TIDC",
                             "PEDI_TOTAL_PRODUCTOS_SIN_",
-                            "PEDI_MONTOS",
                             "PEDI_SUBTOTAL_SIN_DESCUEN",
                             "PEDI_IVA_SIN_DESCUENTO",
                             "PEDI_TOTAL_SIN_DESCUENTO",
                             "PEDI_IMP_INTERNOS",
-                            "PEDI_TOTALIZADOR_DE_DESCU",
-                            "PEDI_DTO_GLOBAL",
-                            "PEDI_DTO_GLOBAL_ORIGEN",
                             "PEDI_TOTAL_DESCONTADO",
                             "PEDI_DTO_POR_ITEM",
-                            "PEDI_MONTOS_CON_DESCUENTO",
                             "PEDI_SUBTOTAL",
                             "PEDI_IVA",
                             "PEDI_TOTAL",
@@ -19910,27 +19958,20 @@
                             "PEDI_IMP_INTERNOS_C_DTO",
                             "PEDI_TOTAL_SERVICIOS",
                             "PEDI_PERCEPCIONES",
-                            "PEDI_PERCEPCIONES_PROYECT",
                             "PEDI_DIF_TCD_COB",
                             "PEDI_TOTAL_COBROS",
                             "PEDI_TOTAL_MD",
-                            "PEDI_STOCK",
                             "PEDI_INFO",
-                            "PEDI_DATOS_DEL_CLIENTE",
                             "PEDI_RAZON_SOCIAL",
                             "PEDI_CUIT",
                             "PEDI_CONDICION_FRENTE_AL_",
-                            "PEDI_PICKEO",
                             "PEDI_ARTICULOS_PICKEADOS",
-                            "PEDI_AGREGADO_A_PICKING_L",
                             "PEDI_ARTICULOS_PENDIENTES",
-                            "PEDI_DOC_SEP",
                             "PEDI_FACTURAS",
                             "PEDI_RECIBOS",
+                            "PEDI_NOTAS_CREDITO",
                             "PEDI_REMITOS",
                             "PEDI_REMITO_DEV",
-                            "PEDI_OTROS_DATOS",
-                            "PEDI_FECHA_DE_DESPACHO",
                             "PEDI_RETRASO",
                             "PEDI_CANT_ARTICULOS",
                             "PEDI_UBIS_RES_CANT",
@@ -19938,71 +19979,79 @@
                             "PEDI_SIN_RESERVAR",
                             "PEDI_DEVUELTA",
                             "PEDI_NRO_PEDIDO",
-                            "PEDI_NUMERO_SOLO",
                             "PEDI_NRO_POR_ORIGEN",
+                            "PEDI_ANTIGEDAD",
+                            "PEDI_TIPO_DE_COTIZACION",
+                            "PEDI_PESO_DEL_PEDIDO",
+                            "PEDI_VOLUMEN_DEL_PEDIDO",
+                            "PEDI_PORCENTAJE_DE_ENTREG",
+                            "PEDI_FACTURACION_PENDIENT",
+                            "PEDI_TIPO_CANAL",
+                            "PEDI_ESTADO_DEL_COBRO_DE_",
+                            "PEDI_ULTIMA_FECHA_DE_COBR",
+                            "PEDI_FECHA_EMISION",
+                            "PEDI_MSJ_SINRESP",
+                            "PEDI_INFO_DETALLES",
+                            "PEDI_INFO_SERV",
+                            "PEDI_DIAS_A_DESPACHO",
+                            "PEDI_DIAS_PARA_EL_DESPACH",
+                            "PEDI_DEMORA_EN_ENTREGA",
+                            "PEDI_TIENE_ADJUNTO",
+                            "PEDI_CON_DEVOLUCION",
+                            "PEDI_DEVOLUCION_PARCIAL",
+                            "PEDI_INFORMACION",
+                            "PEDI_CANTIDAD_DE_SKUS",
+                            "PEDI_PRIMER_SKU",
+                            "PEDI_PRIMER_NOMBRE",
+                            "PEDI_CANT_SERVICIOS",
+                            "PEDI_SERV_PRIMER_NOM",
+                            "PEDI_FEE_COBROS",
+                            "PEDI_FEE_DE_FINANCIACION",
+                            "PEDI_RETENCIONES_DEL_PEDI",
+                            "PEDI_RETENCIONES_IVA",
+                            "PEDI_RETENCIONES_IIBB",
+                            "PEDI_RETENCIONES_OTROS",
+                            "PEDI_CANTIDAD_A_ENTREGAR",
+                            "PEDI_ESTADO_DE_ENTREGA",
+                            "PEDI_ETIQUETA_ZPL",
+                            "PEDI_ETIQUETA_PDF",
+                            "PEDI_SERVICIO_NOMBRE",
+                            "PEDI_PESO",
+                            "PEDI_CODIGO",
+                            "PEDI_NUMERO",
+                            "PEDI_FECHA",
+                            "PEDI_VALOR_DE_CAMBIO",
+                            "PEDI_TOTAL_CUPONES",
+                            "PEDI_REEMBOLSO_BONIF",
+                            "PEDI_DTO_GLOBAL",
+                            "PEDI_DTO_GLOBAL_ORIGEN",
+                            "PEDI_PERCEPCIONES_PROYECT",
+                            "PEDI_AGREGADO_A_PICKING_L",
+                            "PEDI_FECHA_DE_DESPACHO",
+                            "PEDI_NUMERO_SOLO",
                             "PEDI_NRO_DE_ORDEN_TN",
                             "PEDI_FECHA_DE_INGRESO_A_S",
                             "PEDI_DATE_ENTRY_RESE",
                             "PEDI_DATE_ENTRY_PL",
                             "PEDI_FECHA_DE_PAGO",
-                            "PEDI_ANTIGEDAD",
-                            "PEDI_TIPO_DE_COTIZACION",
                             "PEDI_INSTRUCCIONES",
-                            "PEDI_PESO_DEL_PEDIDO",
-                            "PEDI_VOLUMEN_DEL_PEDIDO",
-                            "PEDI_PORCENTAJE_DE_ENTREG",
                             "PEDI_VAL_CAMB_MANUAL",
                             "PEDI_OBSERVACIONES",
                             "PEDI_CODIGO_DE_CUPON",
-                            "PEDI_FACTURACION_PENDIENT",
                             "PEDI_CANAL",
-                            "PEDI_TIPO_CANAL",
-                            "PEDI_ESTADO_DEL_COBRO_DE_",
-                            "PEDI_ULTIMA_FECHA_DE_COBR",
-                            "PEDI_FECHA_EMISION",
                             "PEDI_FECHA_VENCIMIENTO",
                             "PEDI_FACTURA_SUBIDA",
-                            "PEDI_MSJ_SINRESP",
-                            "PEDI_INFO_DETALLES",
-                            "PEDI_INFO_SERV",
                             "PEDI_PEDIDO_REINICIADO",
-                            "PEDI_DIAS_A_DESPACHO",
-                            "PEDI_DIAS_PARA_EL_DESPACH",
-                            "PEDI_DEMORA_EN_ENTREGA",
                             "PEDI_ESQUEMA_FRANQUICIADO",
-                            "PEDI_TIENE_ADJUNTO",
-                            "PEDI_CON_DEVOLUCION",
-                            "PEDI_DEVOLUCION_PARCIAL",
-                            "PEDI_INFORMACION",
                             "PEDI_BULTOS",
-                            "PEDI_PRODUCTOS_DEL_PEDIDO",
-                            "PEDI_CANTIDAD_DE_SKUS",
-                            "PEDI_PRIMER_SKU",
-                            "PEDI_PRIMER_NOMBRE",
-                            "PEDI_SERVICIOS_DEL_PEDIDO",
-                            "PEDI_CANT_SERVICIOS",
-                            "PEDI_SERV_PRIMER_NOM",
+                            "PEDI_UBI_RES_FORZ",
                             "PEDI_INFO_TC",
-                            "PEDI_FEES_SEP",
                             "PEDI_FEE_CANAL_DE_VENTAS",
-                            "PEDI_FEE_COBROS",
-                            "PEDI_FEE_DE_FINANCIACION",
-                            "PEDI_RETENCIONES_SEP",
-                            "PEDI_RETENCIONES_DEL_PEDI",
-                            "PEDI_RETENCIONES_IVA",
-                            "PEDI_RETENCIONES_IIBB",
-                            "PEDI_RETENCIONES_OTROS",
-                            "PEDI_R_SEPA",
                             "PEDI_RAZON_C_C",
                             "PEDI_RAZON_C_D",
                             "PEDI_ETIQUETA",
-                            "PEDI_CANTIDAD_A_ENTREGAR",
-                            "PEDI_ESTADO_DE_ENTREGA",
-                            "PEDI_ETIQUETA_ZPL",
-                            "PEDI_ETIQUETA_PDF",
                             "PEDI_ETIQUETA_GENERADA",
                             "PEDI_FORMA_DE_ENTREGA",
-                            "PEDI_SERVICIO_NOMBRE",
                             "PEDI_RANGO_HASTA",
                             "PEDI_LOCAL",
                             "PEDI_SUCURSAL_DE_RETIRO",
@@ -20023,7 +20072,6 @@
                             "PEDI_BONIFICACION_POR_ENV",
                             "PEDI_TARDANZA_MINIMA_ENTR",
                             "PEDI_TARDANZA_MAXIMA_ENTR",
-                            "PEDI_PESO",
                             "PEDI_TRACKING_CODE",
                             "PEDI_TRACKING_CODE_ETIQ",
                             "PEDI_TELEFONO",
@@ -20049,9 +20097,9 @@
                             "PEDI_ESTADO_DEL_ENVIO",
                             "PEDI_ESTADO_DE_PAGO",
                             "PEDI_JSON",
-                            "PEDI_CODIGO",
                             "PEDI_PACK_ID",
                             "PEDI_ORIGEN_INTERNO",
+                            "PEDI_USUARIO_SOLICITANTE_NOMBR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -20434,7 +20482,8 @@
               "enum": [
                 "PEDIDO_v1.3",
                 "PEDIDO_SINP_PDF",
-                "MULT_TRANSPORTE"
+                "MULT_TRANSPORTE",
+                "PEDIDO_DETALLADO_PDF"
               ],
               "type": "string"
             }
@@ -21247,7 +21296,6 @@
                             "SAIV_PRECIO_UNITARIO",
                             "SAIV_TOTAL_COBRADO",
                             "SAIV_EMITIR_FACTURA_ELECT",
-                            "SAIV_DOCUMENTOS_CREADOS",
                             "SAIV_VALOR_DE_CAMBIO",
                             "id",
                             "DESC_ESTADO",
@@ -21319,7 +21367,6 @@
                             "SAIV_PRECIO_UNITARIO",
                             "SAIV_TOTAL_COBRADO",
                             "SAIV_EMITIR_FACTURA_ELECT",
-                            "SAIV_DOCUMENTOS_CREADOS",
                             "SAIV_VALOR_DE_CAMBIO",
                             "id",
                             "DESC_ESTADO",
@@ -22685,11 +22732,11 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "CRDR_TOTAL_COBROS",
+                            "CRDR_TOTAL_CANCELACIONES",
                             "CRDR_FECHA",
                             "CRDR_INFO",
                             "CRDR_ANOTACIONES",
-                            "CRDR_TOTAL_COBROS",
-                            "CRDR_TOTAL_CANCELACIONES",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -22753,11 +22800,11 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "CRDR_TOTAL_COBROS",
+                            "CRDR_TOTAL_CANCELACIONES",
                             "CRDR_FECHA",
                             "CRDR_INFO",
                             "CRDR_ANOTACIONES",
-                            "CRDR_TOTAL_COBROS",
-                            "CRDR_TOTAL_CANCELACIONES",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -23755,11 +23802,8 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "CRDR_ORIGEN",
                             "CRDR_NUMERO_FACTURA",
-                            "CRDR_MEDIOS_COBRO",
                             "CRDR_MONTO",
-                            "CRDR_RECIBO_GENERADO",
                             "CRDR_FECHA_RECIBO",
                             "CRDR_INFO",
                             "id",
@@ -23825,11 +23869,8 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "CRDR_ORIGEN",
                             "CRDR_NUMERO_FACTURA",
-                            "CRDR_MEDIOS_COBRO",
                             "CRDR_MONTO",
-                            "CRDR_RECIBO_GENERADO",
                             "CRDR_FECHA_RECIBO",
                             "CRDR_INFO",
                             "id",
@@ -24288,22 +24329,6 @@
                         "default": "PARAM.PARA_HOY",
                         "nullable": true
                       },
-                      "ACCO_COMENTARIO": {
-                        "title": "Comentario",
-                        "maxLength": 100,
-                        "type": "string",
-                        "nullable": true
-                      },
-                      "ACCO_PROXIMA_FECHA": {
-                        "title": "Próxima fecha",
-                        "type": "string",
-                        "nullable": true
-                      },
-                      "ACCO_USUARIO_A_CARGO": {
-                        "title": "Usuario a cargo",
-                        "type": "integer",
-                        "nullable": true
-                      },
                       "CLIE_ID_CLIE": {
                         "title": "Cliente",
                         "type": "integer",
@@ -24314,6 +24339,29 @@
                         "title": "Factura asociada",
                         "type": "integer",
                         "description": " This is a foreign key to Factura. An id of Factura is expected",
+                        "nullable": true
+                      },
+                      "TDAD_ID_TDAD": {
+                        "title": "Tipo",
+                        "type": "integer",
+                        "description": " This is a foreign key to Tipo de acción de cobranzas. An id of Tipo de acción de cobranzas is expected",
+                        "nullable": true
+                      },
+                      "ACCO_COMENTARIO": {
+                        "title": "Comentario",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "COHA_ID_COHA": {
+                        "title": "Cobrador",
+                        "type": "integer",
+                        "description": " This is a foreign key to Cobrador. An id of Cobrador is expected",
+                        "nullable": true
+                      },
+                      "ACCO_PROXIMA_FECHA": {
+                        "title": "Próxima fecha",
+                        "type": "string",
                         "nullable": true
                       },
                       "ACCO_OBSERVACIONES_ADICIO": {
@@ -24430,24 +24478,14 @@
                       "type": "string",
                       "format": "date-time"
                     },
-                    "ACCO_FECHA": {
-                      "title": "Fecha",
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "ACCO_COMENTARIO": {
-                      "title": "Comentario",
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "ACCO_PROXIMA_FECHA": {
-                      "title": "Próxima fecha",
-                      "type": "string",
-                      "nullable": true
-                    },
                     "ACCO_USUARIO_A_CARGO": {
                       "title": "Usuario a cargo",
                       "type": "integer",
+                      "nullable": true
+                    },
+                    "ACCO_FECHA": {
+                      "title": "Fecha",
+                      "type": "string",
                       "nullable": true
                     },
                     "CLIE_ID_CLIE": {
@@ -24462,19 +24500,41 @@
                       "description": "Foreign key to Factura",
                       "nullable": true
                     },
+                    "TDAD_ID_TDAD": {
+                      "title": "Tipo",
+                      "type": "integer",
+                      "description": "Foreign key to Tipo de acción de cobranzas",
+                      "nullable": true
+                    },
+                    "ACCO_COMENTARIO": {
+                      "title": "Comentario",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "COHA_ID_COHA": {
+                      "title": "Cobrador",
+                      "type": "integer",
+                      "description": "Foreign key to Cobrador",
+                      "nullable": true
+                    },
+                    "ACCO_PROXIMA_FECHA": {
+                      "title": "Próxima fecha",
+                      "type": "string",
+                      "nullable": true
+                    },
                     "ACCO_DIAS_FALTANTES": {
                       "title": "Días faltantes",
                       "type": "integer",
                       "nullable": true
                     },
-                    "ACCO_ESTADO_DE_LA_FACTURA": {
-                      "title": "Estado de la factura",
-                      "type": "string",
-                      "nullable": true
-                    },
                     "ACCO_MONTO_PENDIENTE": {
                       "title": "Monto pendiente",
                       "type": "number",
+                      "nullable": true
+                    },
+                    "ACCO_ESTADO_DE_LA_FACTURA": {
+                      "title": "Estado de la factura",
+                      "type": "string",
                       "nullable": true
                     },
                     "ACCO_OBSERVACIONES_ADICIO": {
@@ -24573,22 +24633,6 @@
                         "default": "PARAM.PARA_HOY",
                         "nullable": true
                       },
-                      "ACCO_COMENTARIO": {
-                        "title": "Comentario",
-                        "maxLength": 100,
-                        "type": "string",
-                        "nullable": true
-                      },
-                      "ACCO_PROXIMA_FECHA": {
-                        "title": "Próxima fecha",
-                        "type": "string",
-                        "nullable": true
-                      },
-                      "ACCO_USUARIO_A_CARGO": {
-                        "title": "Usuario a cargo",
-                        "type": "integer",
-                        "nullable": true
-                      },
                       "CLIE_ID_CLIE": {
                         "title": "Cliente",
                         "type": "integer",
@@ -24599,6 +24643,29 @@
                         "title": "Factura asociada",
                         "type": "integer",
                         "description": " This is a foreign key to Factura. An id of Factura is expected",
+                        "nullable": true
+                      },
+                      "TDAD_ID_TDAD": {
+                        "title": "Tipo",
+                        "type": "integer",
+                        "description": " This is a foreign key to Tipo de acción de cobranzas. An id of Tipo de acción de cobranzas is expected",
+                        "nullable": true
+                      },
+                      "ACCO_COMENTARIO": {
+                        "title": "Comentario",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "COHA_ID_COHA": {
+                        "title": "Cobrador",
+                        "type": "integer",
+                        "description": " This is a foreign key to Cobrador. An id of Cobrador is expected",
+                        "nullable": true
+                      },
+                      "ACCO_PROXIMA_FECHA": {
+                        "title": "Próxima fecha",
+                        "type": "string",
                         "nullable": true
                       },
                       "ACCO_OBSERVACIONES_ADICIO": {
@@ -24680,6 +24747,15 @@
             }
           },
           {
+            "name": "ACCO_USUARIO_A_CARGO",
+            "in": "query",
+            "description": "Usuario a cargo",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
             "name": "ACCO_FECHA",
             "in": "query",
             "description": "Fecha",
@@ -24698,21 +24774,21 @@
             }
           },
           {
+            "name": "COHA_ID_COHA",
+            "in": "query",
+            "description": "Cobrador",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
             "name": "ACCO_PROXIMA_FECHA",
             "in": "query",
             "description": "Próxima fecha",
             "allowEmptyValue": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "ACCO_USUARIO_A_CARGO",
-            "in": "query",
-            "description": "Usuario a cargo",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "integer"
             }
           },
           {
@@ -24845,13 +24921,12 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "ACCO_DIAS_FALTANTES",
+                            "ACCO_MONTO_PENDIENTE",
+                            "ACCO_ESTADO_DE_LA_FACTURA",
                             "ACCO_FECHA",
                             "ACCO_COMENTARIO",
                             "ACCO_PROXIMA_FECHA",
-                            "ACCO_USUARIO_A_CARGO",
-                            "ACCO_DIAS_FALTANTES",
-                            "ACCO_ESTADO_DE_LA_FACTURA",
-                            "ACCO_MONTO_PENDIENTE",
                             "ACCO_OBSERVACIONES_ADICIO",
                             "ACCO_COMENTARIO_DE_NUEVA_",
                             "ACCO_FECHA_DE_RETIRO_DE_P",
@@ -24923,13 +24998,12 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "ACCO_DIAS_FALTANTES",
+                            "ACCO_MONTO_PENDIENTE",
+                            "ACCO_ESTADO_DE_LA_FACTURA",
                             "ACCO_FECHA",
                             "ACCO_COMENTARIO",
                             "ACCO_PROXIMA_FECHA",
-                            "ACCO_USUARIO_A_CARGO",
-                            "ACCO_DIAS_FALTANTES",
-                            "ACCO_ESTADO_DE_LA_FACTURA",
-                            "ACCO_MONTO_PENDIENTE",
                             "ACCO_OBSERVACIONES_ADICIO",
                             "ACCO_COMENTARIO_DE_NUEVA_",
                             "ACCO_FECHA_DE_RETIRO_DE_P",
@@ -26334,24 +26408,22 @@
                         "field": {
                           "enum": [
                             "CHEQ_BANCO_DESCRIPCION",
+                            "CHEQ_CLIENTE",
+                            "CHEQ_IMPORTE_ACREDITADO",
+                            "CHEQ_CODIGO_YIQI",
+                            "CHEQ_DESCRIPCION_AUTOMATI",
+                            "CHEQ_INFO",
+                            "CHEQ_CLIENTE___CUIT",
+                            "CHEQ_DIAS_FALTANTES_PARA_",
                             "CHEQ_NUMERO",
                             "CHEQ_ELECTRONICO",
                             "CHEQ_FECHA_PAGO",
                             "CHEQ_IMPORTE",
                             "CHEQ_FECHA_DEPOSITO",
-                            "CHEQ_CLIENTE",
                             "CHEQ_FECHA_DE_ACREDITACIO",
-                            "CHEQ_IMPORTE_ACREDITADO",
-                            "CHEQ_CODIGO_YIQI",
-                            "CHEQ_PAGO",
                             "CHEQ_FECHA_ENTREGA",
-                            "CHEQ_DESCRIPCION_AUTOMATI",
-                            "CHEQ_INFO",
                             "CHEQ_CUIT_LIBRADOR",
-                            "CHEQ_CLIENTE___CUIT",
                             "CHEQ_REFERENCIA",
-                            "CHEQ_DIAS_FALTANTES_PARA_",
-                            "CHEQ_RECHAZO",
                             "CHEQ_FECHA_RECHAZO",
                             "CHEQ_FECHA_DE_VENTA",
                             "CHEQ_MONTO_VENTA",
@@ -26419,24 +26491,22 @@
                         "columnName": {
                           "enum": [
                             "CHEQ_BANCO_DESCRIPCION",
+                            "CHEQ_CLIENTE",
+                            "CHEQ_IMPORTE_ACREDITADO",
+                            "CHEQ_CODIGO_YIQI",
+                            "CHEQ_DESCRIPCION_AUTOMATI",
+                            "CHEQ_INFO",
+                            "CHEQ_CLIENTE___CUIT",
+                            "CHEQ_DIAS_FALTANTES_PARA_",
                             "CHEQ_NUMERO",
                             "CHEQ_ELECTRONICO",
                             "CHEQ_FECHA_PAGO",
                             "CHEQ_IMPORTE",
                             "CHEQ_FECHA_DEPOSITO",
-                            "CHEQ_CLIENTE",
                             "CHEQ_FECHA_DE_ACREDITACIO",
-                            "CHEQ_IMPORTE_ACREDITADO",
-                            "CHEQ_CODIGO_YIQI",
-                            "CHEQ_PAGO",
                             "CHEQ_FECHA_ENTREGA",
-                            "CHEQ_DESCRIPCION_AUTOMATI",
-                            "CHEQ_INFO",
                             "CHEQ_CUIT_LIBRADOR",
-                            "CHEQ_CLIENTE___CUIT",
                             "CHEQ_REFERENCIA",
-                            "CHEQ_DIAS_FALTANTES_PARA_",
-                            "CHEQ_RECHAZO",
                             "CHEQ_FECHA_RECHAZO",
                             "CHEQ_FECHA_DE_VENTA",
                             "CHEQ_MONTO_VENTA",
@@ -27667,27 +27737,7 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "CODP_DESCRIPCION",
-                            "CODP_MONTO_TARJETA",
-                            "CODP_FECHA_DE_COBRO",
-                            "CODP_TIPO_DE_CAMBIO",
-                            "CODP_FECHA_DE_COBRO_APROB",
-                            "CODP_COBRO_NETO",
                             "CODP_FECHA_CALC_ACRED",
-                            "CODP_EFECTIVO",
-                            "CODP_ELECTRONICO",
-                            "CODP_CUOTAS",
-                            "CODP_NRO_DE_OPERACION",
-                            "CODP_TRANSFERENCIA",
-                            "CODP_RETENCION",
-                            "CODP_NRO_COMP_RETENCION",
-                            "CODP_SALDO_DEL_CLIENTE",
-                            "CODP_COBRAR_DESDE_SALDO_N",
-                            "CODP_CHEQ_RECI_SEP",
-                            "CODP_NRO_DE_CHEQUE",
-                            "CODP_FECHA_DE_PAGO",
-                            "CODP_ELECTRONICO_CHEQ",
-                            "CODP_DATOS_DEL_PEDIDO",
                             "CODP_ORIGEN",
                             "CODP_CONDICION_DE_VENTA",
                             "CODP_CLIENTE",
@@ -27699,9 +27749,22 @@
                             "CODP_PORC_DTO_ITEM",
                             "CODP_PEDIDO___CANTIDAD_AR",
                             "CODP_METODO_DE_ENVIO",
+                            "CODP_PEDI_DTO_POR_ITEM",
+                            "CODP_DESCRIPCION",
+                            "CODP_MONTO_TARJETA",
+                            "CODP_FECHA_DE_COBRO",
+                            "CODP_TIPO_DE_CAMBIO",
+                            "CODP_FECHA_DE_COBRO_APROB",
+                            "CODP_COBRO_NETO",
+                            "CODP_CUOTAS",
+                            "CODP_NRO_DE_OPERACION",
+                            "CODP_NRO_COMP_RETENCION",
+                            "CODP_COBRAR_DESDE_SALDO_N",
+                            "CODP_NRO_DE_CHEQUE",
+                            "CODP_FECHA_DE_PAGO",
+                            "CODP_ELECTRONICO_CHEQ",
                             "CODP_FEE_PAGOS",
                             "CODP_FEE_FINANCIACION",
-                            "CODP_PEDI_DTO_POR_ITEM",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -27765,27 +27828,7 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "CODP_DESCRIPCION",
-                            "CODP_MONTO_TARJETA",
-                            "CODP_FECHA_DE_COBRO",
-                            "CODP_TIPO_DE_CAMBIO",
-                            "CODP_FECHA_DE_COBRO_APROB",
-                            "CODP_COBRO_NETO",
                             "CODP_FECHA_CALC_ACRED",
-                            "CODP_EFECTIVO",
-                            "CODP_ELECTRONICO",
-                            "CODP_CUOTAS",
-                            "CODP_NRO_DE_OPERACION",
-                            "CODP_TRANSFERENCIA",
-                            "CODP_RETENCION",
-                            "CODP_NRO_COMP_RETENCION",
-                            "CODP_SALDO_DEL_CLIENTE",
-                            "CODP_COBRAR_DESDE_SALDO_N",
-                            "CODP_CHEQ_RECI_SEP",
-                            "CODP_NRO_DE_CHEQUE",
-                            "CODP_FECHA_DE_PAGO",
-                            "CODP_ELECTRONICO_CHEQ",
-                            "CODP_DATOS_DEL_PEDIDO",
                             "CODP_ORIGEN",
                             "CODP_CONDICION_DE_VENTA",
                             "CODP_CLIENTE",
@@ -27797,9 +27840,22 @@
                             "CODP_PORC_DTO_ITEM",
                             "CODP_PEDIDO___CANTIDAD_AR",
                             "CODP_METODO_DE_ENVIO",
+                            "CODP_PEDI_DTO_POR_ITEM",
+                            "CODP_DESCRIPCION",
+                            "CODP_MONTO_TARJETA",
+                            "CODP_FECHA_DE_COBRO",
+                            "CODP_TIPO_DE_CAMBIO",
+                            "CODP_FECHA_DE_COBRO_APROB",
+                            "CODP_COBRO_NETO",
+                            "CODP_CUOTAS",
+                            "CODP_NRO_DE_OPERACION",
+                            "CODP_NRO_COMP_RETENCION",
+                            "CODP_COBRAR_DESDE_SALDO_N",
+                            "CODP_NRO_DE_CHEQUE",
+                            "CODP_FECHA_DE_PAGO",
+                            "CODP_ELECTRONICO_CHEQ",
                             "CODP_FEE_PAGOS",
                             "CODP_FEE_FINANCIACION",
-                            "CODP_PEDI_DTO_POR_ITEM",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -28797,11 +28853,12 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "COEL_INFO",
+                            "PUVE_ID_PUVE",
                             "COEL_IMPORTE",
                             "COEL_CUOTAS",
                             "COEL_OBSERVACIONES",
                             "COEL_FECHA_DE_COBRO",
-                            "COEL_INFO",
                             "COEL_NRO_DE_OPERACION",
                             "id",
                             "DESC_ESTADO",
@@ -28866,11 +28923,12 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "COEL_INFO",
+                            "PUVE_ID_PUVE",
                             "COEL_IMPORTE",
                             "COEL_CUOTAS",
                             "COEL_OBSERVACIONES",
                             "COEL_FECHA_DE_COBRO",
-                            "COEL_INFO",
                             "COEL_NRO_DE_OPERACION",
                             "id",
                             "DESC_ESTADO",
@@ -31654,12 +31712,12 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "DEBA_INFO",
+                            "DEBA_DESCRIPCION",
                             "DEBA_IMPORTE",
                             "DEBA_REFERENCIA",
                             "DEBA_FECHA",
-                            "DEBA_INFO",
                             "DEBA_OBSERVACIONES",
-                            "DEBA_DESCRIPCION",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -31723,12 +31781,12 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "DEBA_INFO",
+                            "DEBA_DESCRIPCION",
                             "DEBA_IMPORTE",
                             "DEBA_REFERENCIA",
                             "DEBA_FECHA",
-                            "DEBA_INFO",
                             "DEBA_OBSERVACIONES",
-                            "DEBA_DESCRIPCION",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -32682,10 +32740,11 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "DECO_INFO",
+                            "PUVE_ID_PUVE",
                             "DECO_IMPORTE",
                             "DECO_FECHA_DEPOSITO",
                             "DECO_OBSERVACIONES",
-                            "DECO_INFO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -32749,10 +32808,11 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "DECO_INFO",
+                            "PUVE_ID_PUVE",
                             "DECO_IMPORTE",
                             "DECO_FECHA_DEPOSITO",
                             "DECO_OBSERVACIONES",
-                            "DECO_INFO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -34770,12 +34830,12 @@
                         "field": {
                           "enum": [
                             "REPA_TIPO_DE_COBRO",
-                            "REPA_MONTO",
-                            "REPA_VALOR_DEL_CAMBIO",
                             "REPA_MONTO_EN_MONEDA_DEF",
                             "REPA_FECHA",
                             "REPA_ESTADO_PAGO",
                             "REPA_FECHA_RECIBO",
+                            "REPA_MONTO",
+                            "REPA_VALOR_DEL_CAMBIO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -34840,12 +34900,12 @@
                         "columnName": {
                           "enum": [
                             "REPA_TIPO_DE_COBRO",
-                            "REPA_MONTO",
-                            "REPA_VALOR_DEL_CAMBIO",
                             "REPA_MONTO_EN_MONEDA_DEF",
                             "REPA_FECHA",
                             "REPA_ESTADO_PAGO",
                             "REPA_FECHA_RECIBO",
+                            "REPA_MONTO",
+                            "REPA_VALOR_DEL_CAMBIO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -35881,7 +35941,6 @@
                             "TRRE_IMPORTE",
                             "TRRE_COMISION_BANCARIA",
                             "TRRE_COT_COM_BANCARIA",
-                            "TRRE_OPCIONALES",
                             "TRRE_REFERENCIA",
                             "id",
                             "DESC_ESTADO",
@@ -35950,7 +36009,6 @@
                             "TRRE_IMPORTE",
                             "TRRE_COMISION_BANCARIA",
                             "TRRE_COT_COM_BANCARIA",
-                            "TRRE_OPCIONALES",
                             "TRRE_REFERENCIA",
                             "id",
                             "DESC_ESTADO",
@@ -43186,11 +43244,9 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "DENA_CONSULTA",
                             "DENA_ULTIMO_NUMERO_EMITID",
                             "DENA_CUIT",
                             "DENA_CAE",
-                            "DENA_RESOLUCION",
                             "DENA_TOTAL",
                             "DENA_RESULTADO",
                             "id",
@@ -43256,11 +43312,9 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "DENA_CONSULTA",
                             "DENA_ULTIMO_NUMERO_EMITID",
                             "DENA_CUIT",
                             "DENA_CAE",
-                            "DENA_RESOLUCION",
                             "DENA_TOTAL",
                             "DENA_RESULTADO",
                             "id",
@@ -45607,6 +45661,11 @@
                             "type": "integer",
                             "nullable": true
                           },
+                          "LRYP_ID_LRYP": {
+                            "title": "Liq. ret. y percep.",
+                            "type": "integer",
+                            "nullable": true
+                          },
                           "CASH_ID_CASH": {
                             "title": "Movimiento de fondo",
                             "type": "integer",
@@ -46423,62 +46482,56 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "NOCR_NUMERO",
-                            "NOCR_OBSERVACIONES",
-                            "NOCR_SEPA_FECHAS",
-                            "NOCR_FECHA_EMISION",
-                            "NOCR_FECHA_VENCIMIENTO",
-                            "NOCR_FECHA_PERIODO_DESDE",
-                            "NOCR_FECHA_PERIODO_HASTA",
-                            "NOCR_SEPA_VALORES",
+                            "VEHA_ID_VEHA",
                             "NOCR_NETO",
                             "NOCR_IVA",
-                            "NOCR_PORCENTAJE_DE_DESCUE",
                             "NOCR_DESCUENTO",
                             "NOCR_NETO_CON_DTO",
                             "NOCR_IVA_CON_DTO",
                             "NOCR_TOTAL",
-                            "NOCR_SEP_TOTAL_MD",
                             "NOCR_TOTAL_MONEDA_DEFAULT",
-                            "NOCR_SEPA_ADI",
-                            "NOCR_ARHC_ID_3621",
-                            "NOCR_MONE_SEP",
-                            "NOCR_COTIZACION",
-                            "NOCR_FECHA_COTIZACION",
+                            "PROY_ID_PROY",
                             "NOCR_FACTOR",
-                            "NOCR_ANULACION",
-                            "NOCR_CORREOS_ENVIADOS",
-                            "NOCR_CANTIDAD_CORREOS_PRO",
                             "NOCR_CANTIDAD_CORREOS_ENV",
-                            "NOCR_MOSTRAR_COTIZACION",
                             "NOCR_PER_IIBB",
-                            "NOCR_COMENTARIOS_INTERNOS",
                             "NOCR_TOTAL_PERCEPCIONES",
-                            "NOCR_SEPA_OT",
-                            "NOCR_CPAS_RS_RNI",
                             "NOCR_RET_IVA",
                             "NOCR_RET_IIBB",
                             "NOCR_RET_IG",
                             "NOCR_SUSS_Y_OTROS",
                             "NOCR_IMPUESTOS_INTERNO",
-                            "NOCR_IMPUESTOS_MUNICIP",
-                            "NOCR_SEPA_TO",
                             "NOCR_IVA_27",
                             "NOCR_IVA_21",
                             "NOCR_IVA_105",
                             "NOCR_TOTAL_GRAVADO",
                             "NOCR_TOTAL_NO_GRAVADO",
                             "NOCR_TOTAL_EXENTO",
+                            "NOCR_INFO",
+                            "NOCR_TOTAL_MONEDA_EXTRANJ",
+                            "NOCR_NUMERO",
+                            "NOCR_OBSERVACIONES",
+                            "NOCR_FECHA_EMISION",
+                            "NOCR_FECHA_VENCIMIENTO",
+                            "NOCR_FECHA_PERIODO_DESDE",
+                            "NOCR_FECHA_PERIODO_HASTA",
+                            "NOCR_PORCENTAJE_DE_DESCUE",
+                            "NOCR_ARHC_ID_3621",
+                            "NOCR_COTIZACION",
+                            "NOCR_FECHA_COTIZACION",
+                            "NOCR_ANULACION",
+                            "NOCR_CANTIDAD_CORREOS_PRO",
+                            "NOCR_MOSTRAR_COTIZACION",
+                            "NOCR_COMENTARIOS_INTERNOS",
+                            "NOCR_CPAS_RS_RNI",
+                            "NOCR_IMPUESTOS_MUNICIP",
                             "NOCR_CAE",
                             "NOCR_CAE_VENCIMIENTO",
                             "NOCR_CANT_DETALLES",
                             "NOCR_ERROR_AFIP",
                             "NOCR_JSON_QR",
                             "NOCR_URL_QR",
-                            "NOCR_INFO",
                             "NOCR_FECHA_DE_COTIZACION",
                             "NOCR_COTIZACION_DE_MONEDA",
-                            "NOCR_TOTAL_MONEDA_EXTRANJ",
                             "NOCR_LOG_KRIKOS",
                             "NOCR_NRO_SOLICITUD_NC",
                             "NOCR_ENVIADA_A_KRIKOS",
@@ -46546,62 +46599,56 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "NOCR_NUMERO",
-                            "NOCR_OBSERVACIONES",
-                            "NOCR_SEPA_FECHAS",
-                            "NOCR_FECHA_EMISION",
-                            "NOCR_FECHA_VENCIMIENTO",
-                            "NOCR_FECHA_PERIODO_DESDE",
-                            "NOCR_FECHA_PERIODO_HASTA",
-                            "NOCR_SEPA_VALORES",
+                            "VEHA_ID_VEHA",
                             "NOCR_NETO",
                             "NOCR_IVA",
-                            "NOCR_PORCENTAJE_DE_DESCUE",
                             "NOCR_DESCUENTO",
                             "NOCR_NETO_CON_DTO",
                             "NOCR_IVA_CON_DTO",
                             "NOCR_TOTAL",
-                            "NOCR_SEP_TOTAL_MD",
                             "NOCR_TOTAL_MONEDA_DEFAULT",
-                            "NOCR_SEPA_ADI",
-                            "NOCR_ARHC_ID_3621",
-                            "NOCR_MONE_SEP",
-                            "NOCR_COTIZACION",
-                            "NOCR_FECHA_COTIZACION",
+                            "PROY_ID_PROY",
                             "NOCR_FACTOR",
-                            "NOCR_ANULACION",
-                            "NOCR_CORREOS_ENVIADOS",
-                            "NOCR_CANTIDAD_CORREOS_PRO",
                             "NOCR_CANTIDAD_CORREOS_ENV",
-                            "NOCR_MOSTRAR_COTIZACION",
                             "NOCR_PER_IIBB",
-                            "NOCR_COMENTARIOS_INTERNOS",
                             "NOCR_TOTAL_PERCEPCIONES",
-                            "NOCR_SEPA_OT",
-                            "NOCR_CPAS_RS_RNI",
                             "NOCR_RET_IVA",
                             "NOCR_RET_IIBB",
                             "NOCR_RET_IG",
                             "NOCR_SUSS_Y_OTROS",
                             "NOCR_IMPUESTOS_INTERNO",
-                            "NOCR_IMPUESTOS_MUNICIP",
-                            "NOCR_SEPA_TO",
                             "NOCR_IVA_27",
                             "NOCR_IVA_21",
                             "NOCR_IVA_105",
                             "NOCR_TOTAL_GRAVADO",
                             "NOCR_TOTAL_NO_GRAVADO",
                             "NOCR_TOTAL_EXENTO",
+                            "NOCR_INFO",
+                            "NOCR_TOTAL_MONEDA_EXTRANJ",
+                            "NOCR_NUMERO",
+                            "NOCR_OBSERVACIONES",
+                            "NOCR_FECHA_EMISION",
+                            "NOCR_FECHA_VENCIMIENTO",
+                            "NOCR_FECHA_PERIODO_DESDE",
+                            "NOCR_FECHA_PERIODO_HASTA",
+                            "NOCR_PORCENTAJE_DE_DESCUE",
+                            "NOCR_ARHC_ID_3621",
+                            "NOCR_COTIZACION",
+                            "NOCR_FECHA_COTIZACION",
+                            "NOCR_ANULACION",
+                            "NOCR_CANTIDAD_CORREOS_PRO",
+                            "NOCR_MOSTRAR_COTIZACION",
+                            "NOCR_COMENTARIOS_INTERNOS",
+                            "NOCR_CPAS_RS_RNI",
+                            "NOCR_IMPUESTOS_MUNICIP",
                             "NOCR_CAE",
                             "NOCR_CAE_VENCIMIENTO",
                             "NOCR_CANT_DETALLES",
                             "NOCR_ERROR_AFIP",
                             "NOCR_JSON_QR",
                             "NOCR_URL_QR",
-                            "NOCR_INFO",
                             "NOCR_FECHA_DE_COTIZACION",
                             "NOCR_COTIZACION_DE_MONEDA",
-                            "NOCR_TOTAL_MONEDA_EXTRANJ",
                             "NOCR_LOG_KRIKOS",
                             "NOCR_NRO_SOLICITUD_NC",
                             "NOCR_ENVIADA_A_KRIKOS",
@@ -48623,6 +48670,11 @@
                             "type": "integer",
                             "nullable": true
                           },
+                          "LRYP_ID_LRYP": {
+                            "title": "Liq. ret. y percep.",
+                            "type": "integer",
+                            "nullable": true
+                          },
                           "CASH_ID_CASH": {
                             "title": "Movimiento de fondo",
                             "type": "integer",
@@ -49547,57 +49599,50 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "NODE_NUMERO",
-                            "NODE_OBSERVACIONES",
-                            "NODE_SEPA_FECHAS",
-                            "NODE_FECHA_EMISION",
-                            "NODE_FECHA_VENCIMIENTO",
-                            "NODE_FECHA_PERIODO_DESDE",
-                            "NODE_FECHA_PERIODO_HASTA",
-                            "NODE_SEPA_VALORES",
                             "NODE_NETO",
                             "NODE_IVA",
                             "NODE_TOTAL_PERCEPCIONES",
                             "NODE_TOTAL",
                             "NODE_PENDIENTE_CANCELACIO",
-                            "NODE_SEPA_ADI",
-                            "NODE_ARHC_ID_3620",
-                            "NODE_MONE_SEP",
-                            "NODE_COTIZACION",
-                            "NODE_FECHA_COTIZACION",
+                            "PROY_ID_PROY",
                             "NODE_FACTOR",
-                            "NODE_MOSTRAR_COTIZACION",
-                            "NODE_CORREOS_ENVIADOS",
-                            "NODE_CANTIDAD_CORREOS_PRO",
                             "NODE_CANTIDAD_CORREOS_ENV",
-                            "NODE_COMENTARIOS_INTERNOS",
-                            "NODE_ANULACION",
-                            "NODE_SEP_TOTAL_MD",
-                            "NODE_SEPA_OT",
-                            "NODE_CPAS_RS_RNI",
                             "NODE_RET_IVA",
                             "NODE_RET_IIBB",
                             "NODE_RET_IG",
                             "NODE_SUSS_Y_OTROS",
-                            "NODE_IMPUESTOS_INTERNO",
-                            "NODE_IMPUESTOS_MUNICIP",
-                            "NODE_SEPA_TO",
                             "NODE_TOTAL_GRAVADO",
                             "NODE_IVA_27",
                             "NODE_IVA_21",
                             "NODE_IVA_105",
                             "NODE_TOTAL_NO_GRAVADO",
                             "NODE_TOTAL_EXENTO",
+                            "NODE_INFO",
+                            "NODE_TOTAL_MONEDA_EXTRANJ",
+                            "NODE_NUMERO",
+                            "NODE_OBSERVACIONES",
+                            "NODE_FECHA_EMISION",
+                            "NODE_FECHA_VENCIMIENTO",
+                            "NODE_FECHA_PERIODO_DESDE",
+                            "NODE_FECHA_PERIODO_HASTA",
+                            "NODE_ARHC_ID_3620",
+                            "NODE_COTIZACION",
+                            "NODE_FECHA_COTIZACION",
+                            "NODE_MOSTRAR_COTIZACION",
+                            "NODE_CANTIDAD_CORREOS_PRO",
+                            "NODE_COMENTARIOS_INTERNOS",
+                            "NODE_ANULACION",
+                            "NODE_CPAS_RS_RNI",
+                            "NODE_IMPUESTOS_INTERNO",
+                            "NODE_IMPUESTOS_MUNICIP",
                             "NODE_CAE",
                             "NODE_CAE_VENCIMIENTO",
                             "NODE_CANT_DETALLES",
                             "NODE_ERROR_AFIP",
                             "NODE_JSON_QR",
                             "NODE_URL_QR",
-                            "NODE_INFO",
                             "NODE_FECHA_DE_COTIZACION",
                             "NODE_COTIZACION_DE_MONEDA",
-                            "NODE_TOTAL_MONEDA_EXTRANJ",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -49661,57 +49706,50 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "NODE_NUMERO",
-                            "NODE_OBSERVACIONES",
-                            "NODE_SEPA_FECHAS",
-                            "NODE_FECHA_EMISION",
-                            "NODE_FECHA_VENCIMIENTO",
-                            "NODE_FECHA_PERIODO_DESDE",
-                            "NODE_FECHA_PERIODO_HASTA",
-                            "NODE_SEPA_VALORES",
                             "NODE_NETO",
                             "NODE_IVA",
                             "NODE_TOTAL_PERCEPCIONES",
                             "NODE_TOTAL",
                             "NODE_PENDIENTE_CANCELACIO",
-                            "NODE_SEPA_ADI",
-                            "NODE_ARHC_ID_3620",
-                            "NODE_MONE_SEP",
-                            "NODE_COTIZACION",
-                            "NODE_FECHA_COTIZACION",
+                            "PROY_ID_PROY",
                             "NODE_FACTOR",
-                            "NODE_MOSTRAR_COTIZACION",
-                            "NODE_CORREOS_ENVIADOS",
-                            "NODE_CANTIDAD_CORREOS_PRO",
                             "NODE_CANTIDAD_CORREOS_ENV",
-                            "NODE_COMENTARIOS_INTERNOS",
-                            "NODE_ANULACION",
-                            "NODE_SEP_TOTAL_MD",
-                            "NODE_SEPA_OT",
-                            "NODE_CPAS_RS_RNI",
                             "NODE_RET_IVA",
                             "NODE_RET_IIBB",
                             "NODE_RET_IG",
                             "NODE_SUSS_Y_OTROS",
-                            "NODE_IMPUESTOS_INTERNO",
-                            "NODE_IMPUESTOS_MUNICIP",
-                            "NODE_SEPA_TO",
                             "NODE_TOTAL_GRAVADO",
                             "NODE_IVA_27",
                             "NODE_IVA_21",
                             "NODE_IVA_105",
                             "NODE_TOTAL_NO_GRAVADO",
                             "NODE_TOTAL_EXENTO",
+                            "NODE_INFO",
+                            "NODE_TOTAL_MONEDA_EXTRANJ",
+                            "NODE_NUMERO",
+                            "NODE_OBSERVACIONES",
+                            "NODE_FECHA_EMISION",
+                            "NODE_FECHA_VENCIMIENTO",
+                            "NODE_FECHA_PERIODO_DESDE",
+                            "NODE_FECHA_PERIODO_HASTA",
+                            "NODE_ARHC_ID_3620",
+                            "NODE_COTIZACION",
+                            "NODE_FECHA_COTIZACION",
+                            "NODE_MOSTRAR_COTIZACION",
+                            "NODE_CANTIDAD_CORREOS_PRO",
+                            "NODE_COMENTARIOS_INTERNOS",
+                            "NODE_ANULACION",
+                            "NODE_CPAS_RS_RNI",
+                            "NODE_IMPUESTOS_INTERNO",
+                            "NODE_IMPUESTOS_MUNICIP",
                             "NODE_CAE",
                             "NODE_CAE_VENCIMIENTO",
                             "NODE_CANT_DETALLES",
                             "NODE_ERROR_AFIP",
                             "NODE_JSON_QR",
                             "NODE_URL_QR",
-                            "NODE_INFO",
                             "NODE_FECHA_DE_COTIZACION",
                             "NODE_COTIZACION_DE_MONEDA",
-                            "NODE_TOTAL_MONEDA_EXTRANJ",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -51217,7 +51255,8 @@
                           "Listas de Venta",
                           "Listas de Compra"
                         ],
-                        "type": "string"
+                        "type": "string",
+                        "default": "Manual"
                       },
                       "LIDP_PORC_AUTO_TACHADO": {
                         "title": "% Automático precio tachado",
@@ -51281,6 +51320,11 @@
                         "type": "boolean",
                         "description": "Al marcar este check, la lista de precios se actualizará automáticamente cuando se actualice la lista de la que depende. No marcar si la lista depende de sí misma, ya que no tiene funcionamiento en ese caso.",
                         "default": "N",
+                        "nullable": true
+                      },
+                      "LIDP_INFO_COLA": {
+                        "title": "Estado cola",
+                        "type": "string",
                         "nullable": true
                       },
                       "Clientes": {
@@ -51398,10 +51442,22 @@
                               "description": " This is a foreign key to Tipo de Cliente. An id of Tipo de Cliente is expected",
                               "nullable": true
                             },
+                            "MEDE_ID_MEDE": {
+                              "title": "Método de envío",
+                              "type": "integer",
+                              "description": " This is a foreign key to Método de envío. An id of Método de envío is expected",
+                              "nullable": true
+                            },
                             "CLIE_PASSWORD": {
                               "title": "Password",
                               "maxLength": 100,
                               "type": "string",
+                              "nullable": true
+                            },
+                            "CLIE_FRECU_COMPRA_DIAS": {
+                              "title": "Proveedor - Frecuencia de compra (días)",
+                              "type": "integer",
+                              "description": "Cantidad de días estimada entre compras al proveedor.",
                               "nullable": true
                             },
                             "CLIE_OBSERVACIONES": {
@@ -52111,6 +52167,11 @@
                       "description": "Al marcar este check, la lista de precios se actualizará automáticamente cuando se actualice la lista de la que depende. No marcar si la lista depende de sí misma, ya que no tiene funcionamiento en ese caso.",
                       "nullable": true
                     },
+                    "LIDP_INFO_COLA": {
+                      "title": "Estado cola",
+                      "type": "string",
+                      "nullable": true
+                    },
                     "LIDP_PENDING_COMPLET_ART": {
                       "title": "Pendientes de completar (Articulos)",
                       "type": "integer",
@@ -52258,9 +52319,19 @@
                             "type": "integer",
                             "nullable": true
                           },
+                          "MEDE_ID_MEDE": {
+                            "title": "Método de envío",
+                            "type": "integer",
+                            "nullable": true
+                          },
                           "CLIE_PASSWORD": {
                             "title": "Password",
                             "type": "string",
+                            "nullable": true
+                          },
+                          "CLIE_FRECU_COMPRA_DIAS": {
+                            "title": "Proveedor - Frecuencia de compra (días)",
+                            "type": "integer",
                             "nullable": true
                           },
                           "CLIE_OBSERVACIONES": {
@@ -52884,7 +52955,8 @@
                           "Listas de Venta",
                           "Listas de Compra"
                         ],
-                        "type": "string"
+                        "type": "string",
+                        "default": "Manual"
                       },
                       "LIDP_PORC_AUTO_TACHADO": {
                         "title": "% Automático precio tachado",
@@ -52948,6 +53020,11 @@
                         "type": "boolean",
                         "description": "Al marcar este check, la lista de precios se actualizará automáticamente cuando se actualice la lista de la que depende. No marcar si la lista depende de sí misma, ya que no tiene funcionamiento en ese caso.",
                         "default": "N",
+                        "nullable": true
+                      },
+                      "LIDP_INFO_COLA": {
+                        "title": "Estado cola",
+                        "type": "string",
                         "nullable": true
                       },
                       "Clientes": {
@@ -53065,10 +53142,22 @@
                               "description": " This is a foreign key to Tipo de Cliente. An id of Tipo de Cliente is expected",
                               "nullable": true
                             },
+                            "MEDE_ID_MEDE": {
+                              "title": "Método de envío",
+                              "type": "integer",
+                              "description": " This is a foreign key to Método de envío. An id of Método de envío is expected",
+                              "nullable": true
+                            },
                             "CLIE_PASSWORD": {
                               "title": "Password",
                               "maxLength": 100,
                               "type": "string",
+                              "nullable": true
+                            },
+                            "CLIE_FRECU_COMPRA_DIAS": {
+                              "title": "Proveedor - Frecuencia de compra (días)",
+                              "type": "integer",
+                              "description": "Cantidad de días estimada entre compras al proveedor.",
                               "nullable": true
                             },
                             "CLIE_OBSERVACIONES": {
@@ -53730,37 +53819,33 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "LIDP_NOMBRE",
                             "LIDP_PENDIENTES_DE_ACTUAL",
                             "LIDP_PENDIENTES_DE_SINCRO",
-                            "LIDP_ACT_SOLO_SI_AUMENTA",
-                            "LIDP_METODO_DE_ACTUALIZAC",
-                            "LIDP_PORC_AUTO_TACHADO",
-                            "LIDP_SEP_COMPRAS",
-                            "LIDP_PORCENTAJE_COMPRAS",
-                            "LIDP_PORCENTAJE_DEL_CANAL",
-                            "LIDP_MARGEN_SOBRE_GANANCI",
-                            "LIDP_INFO_PUBLICACIONES",
                             "LIDP_CANT_PUB",
                             "LIDP_CANT_PUB_PEND",
                             "LIDP_CANT_PUB_U24",
                             "LIDP_CANT_PUB_ERROR",
                             "LIDP_INFO_POLITICAS",
-                            "LIDP_REDONDEO",
-                            "LIDP_APLICAR_REDONDEO",
-                            "LIDP_CANT_DECIMALES",
                             "LIDP_INFO_PENDIENTES",
-                            "LIDP_AVANZADO",
-                            "LIDP_EXPRESION_POST_ACTUA",
                             "LIDP_INFO_EXPRESION",
                             "LIDP_FECHA_DE_ULTIMA_ACTU",
+                            "LIDP_INFO_POLITICA",
+                            "LIDP_NOMBRE",
+                            "LIDP_ACT_SOLO_SI_AUMENTA",
+                            "LIDP_METODO_DE_ACTUALIZAC",
+                            "LIDP_PORC_AUTO_TACHADO",
+                            "LIDP_PORCENTAJE_COMPRAS",
+                            "LIDP_PORCENTAJE_DEL_CANAL",
+                            "LIDP_MARGEN_SOBRE_GANANCI",
+                            "LIDP_APLICAR_REDONDEO",
+                            "LIDP_CANT_DECIMALES",
+                            "LIDP_EXPRESION_POST_ACTUA",
                             "LIDP_NO_RECALCULAR_BOMS",
-                            "LIDP_SIMU_SEPA",
                             "LIDP_PRECIO_SIMU",
                             "LIDP_COSTO_ENVI_SIMU",
                             "LIDP_RESULTADO_SIMU",
-                            "LIDP_INFO_POLITICA",
                             "LIDP_ACTUALIZAR_AUTOMATIC",
+                            "LIDP_INFO_COLA",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -53824,37 +53909,33 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "LIDP_NOMBRE",
                             "LIDP_PENDIENTES_DE_ACTUAL",
                             "LIDP_PENDIENTES_DE_SINCRO",
-                            "LIDP_ACT_SOLO_SI_AUMENTA",
-                            "LIDP_METODO_DE_ACTUALIZAC",
-                            "LIDP_PORC_AUTO_TACHADO",
-                            "LIDP_SEP_COMPRAS",
-                            "LIDP_PORCENTAJE_COMPRAS",
-                            "LIDP_PORCENTAJE_DEL_CANAL",
-                            "LIDP_MARGEN_SOBRE_GANANCI",
-                            "LIDP_INFO_PUBLICACIONES",
                             "LIDP_CANT_PUB",
                             "LIDP_CANT_PUB_PEND",
                             "LIDP_CANT_PUB_U24",
                             "LIDP_CANT_PUB_ERROR",
                             "LIDP_INFO_POLITICAS",
-                            "LIDP_REDONDEO",
-                            "LIDP_APLICAR_REDONDEO",
-                            "LIDP_CANT_DECIMALES",
                             "LIDP_INFO_PENDIENTES",
-                            "LIDP_AVANZADO",
-                            "LIDP_EXPRESION_POST_ACTUA",
                             "LIDP_INFO_EXPRESION",
                             "LIDP_FECHA_DE_ULTIMA_ACTU",
+                            "LIDP_INFO_POLITICA",
+                            "LIDP_NOMBRE",
+                            "LIDP_ACT_SOLO_SI_AUMENTA",
+                            "LIDP_METODO_DE_ACTUALIZAC",
+                            "LIDP_PORC_AUTO_TACHADO",
+                            "LIDP_PORCENTAJE_COMPRAS",
+                            "LIDP_PORCENTAJE_DEL_CANAL",
+                            "LIDP_MARGEN_SOBRE_GANANCI",
+                            "LIDP_APLICAR_REDONDEO",
+                            "LIDP_CANT_DECIMALES",
+                            "LIDP_EXPRESION_POST_ACTUA",
                             "LIDP_NO_RECALCULAR_BOMS",
-                            "LIDP_SIMU_SEPA",
                             "LIDP_PRECIO_SIMU",
                             "LIDP_COSTO_ENVI_SIMU",
                             "LIDP_RESULTADO_SIMU",
-                            "LIDP_INFO_POLITICA",
                             "LIDP_ACTUALIZAR_AUTOMATIC",
+                            "LIDP_INFO_COLA",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -55373,16 +55454,14 @@
                         "field": {
                           "enum": [
                             "OFER_FILTRO",
-                            "OFER_TIPO_DE_FILTRO",
-                            "OFER_CONFIGURACION_DE_OFE",
+                            "OFER_CANCELADO",
+                            "OFER_ART_PROV",
+                            "OFER_ARTICULO_ARTICULO_B",
                             "OFER_DESDE",
                             "OFER_HASTA",
                             "OFER_PORCENTAJE_DE_DESCUE",
                             "OFER_INCREMENTO_DE_PRECIO",
                             "OFER_INFO",
-                            "OFER_CANCELADO",
-                            "OFER_ART_PROV",
-                            "OFER_ARTICULO_ARTICULO_B",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -55447,16 +55526,14 @@
                         "columnName": {
                           "enum": [
                             "OFER_FILTRO",
-                            "OFER_TIPO_DE_FILTRO",
-                            "OFER_CONFIGURACION_DE_OFE",
+                            "OFER_CANCELADO",
+                            "OFER_ART_PROV",
+                            "OFER_ARTICULO_ARTICULO_B",
                             "OFER_DESDE",
                             "OFER_HASTA",
                             "OFER_PORCENTAJE_DE_DESCUE",
                             "OFER_INCREMENTO_DE_PRECIO",
                             "OFER_INFO",
-                            "OFER_CANCELADO",
-                            "OFER_ART_PROV",
-                            "OFER_ARTICULO_ARTICULO_B",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -56518,17 +56595,17 @@
                         "field": {
                           "enum": [
                             "PAPL_ART_NOMBRE",
+                            "PAPL_PENDIENTE_ACTUALIZAR",
+                            "PAPL_PROBLEMA_SINCRO",
                             "PAPL_PRECIO",
                             "PAPL_DISPONIBLE",
                             "PAPL_PRECIO_FINAL",
                             "PAPL_COSTO_ENVIO_ESTIMADO",
                             "PAPL_PRECIO_SIN_EXPRESION",
-                            "PAPL_PENDIENTE_ACTUALIZAR",
                             "PAPL_PRECIO_FINAL_TACHADO",
                             "PAPL_RENT_NETA",
                             "PAPL_PORC_MARKUP",
                             "PAPL_PENDIENTE_SINCRONIZA",
-                            "PAPL_PROBLEMA_SINCRO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -56593,17 +56670,17 @@
                         "columnName": {
                           "enum": [
                             "PAPL_ART_NOMBRE",
+                            "PAPL_PENDIENTE_ACTUALIZAR",
+                            "PAPL_PROBLEMA_SINCRO",
                             "PAPL_PRECIO",
                             "PAPL_DISPONIBLE",
                             "PAPL_PRECIO_FINAL",
                             "PAPL_COSTO_ENVIO_ESTIMADO",
                             "PAPL_PRECIO_SIN_EXPRESION",
-                            "PAPL_PENDIENTE_ACTUALIZAR",
                             "PAPL_PRECIO_FINAL_TACHADO",
                             "PAPL_RENT_NETA",
                             "PAPL_PORC_MARKUP",
                             "PAPL_PENDIENTE_SINCRONIZA",
-                            "PAPL_PROBLEMA_SINCRO",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -57529,9 +57606,9 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "PSPL_PENDIENTE_ACTUALIZAR",
                             "PSPL_PRECIO",
                             "PSPL_PRECIO_FINAL",
-                            "PSPL_PENDIENTE_ACTUALIZAR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -57595,9 +57672,9 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "PSPL_PENDIENTE_ACTUALIZAR",
                             "PSPL_PRECIO",
                             "PSPL_PRECIO_FINAL",
-                            "PSPL_PENDIENTE_ACTUALIZAR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -58499,13 +58576,14 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "CANC_IMPORTE_A_CANCELAR",
                             "CANC_IMPORTE_CANCELADO",
+                            "MONE_ID_MONE",
                             "CANC_VALOR_DE_CAMBIO",
                             "CANC_TOTAL_MONEDA_DEFAULT",
                             "CANC_IDENTIFICADOR_DE_FAC",
                             "CANC_FORMULA_FACTURA",
                             "CANC_FORMULA_NOTA",
+                            "CANC_IMPORTE_A_CANCELAR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -58569,13 +58647,14 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "CANC_IMPORTE_A_CANCELAR",
                             "CANC_IMPORTE_CANCELADO",
+                            "MONE_ID_MONE",
                             "CANC_VALOR_DE_CAMBIO",
                             "CANC_TOTAL_MONEDA_DEFAULT",
                             "CANC_IDENTIFICADOR_DE_FAC",
                             "CANC_FORMULA_FACTURA",
                             "CANC_FORMULA_NOTA",
+                            "CANC_IMPORTE_A_CANCELAR",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -62483,13 +62562,13 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "DDFR_FECHA",
-                            "DDFR_FECHA_DE_CARGA",
-                            "DDFR_BORRAR_FACT_PROY",
                             "DDFR_FACTURADOS",
                             "DDFR_PENDIENTES",
                             "DDFR_SIN_TARIFAS_ACTIVAS",
                             "DDFR_NO_FACTURAN_HOY",
+                            "DDFR_FECHA",
+                            "DDFR_FECHA_DE_CARGA",
+                            "DDFR_BORRAR_FACT_PROY",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -62553,13 +62632,13 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "DDFR_FECHA",
-                            "DDFR_FECHA_DE_CARGA",
-                            "DDFR_BORRAR_FACT_PROY",
                             "DDFR_FACTURADOS",
                             "DDFR_PENDIENTES",
                             "DDFR_SIN_TARIFAS_ACTIVAS",
                             "DDFR_NO_FACTURAN_HOY",
+                            "DDFR_FECHA",
+                            "DDFR_FECHA_DE_CARGA",
+                            "DDFR_BORRAR_FACT_PROY",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -68490,7 +68569,6 @@
                             "PAMC_MENSAJE_PANTALLA",
                             "PAMC_MONTO_MAXIMO",
                             "PAMC_INCLUIR_CODIGO_DE_BA",
-                            "PAMC_SEP",
                             "PAMC_DETALLE",
                             "PAMC_ARCHIVO",
                             "PAMC_INFO",
@@ -68562,7 +68640,6 @@
                             "PAMC_MENSAJE_PANTALLA",
                             "PAMC_MONTO_MAXIMO",
                             "PAMC_INCLUIR_CODIGO_DE_BA",
-                            "PAMC_SEP",
                             "PAMC_DETALLE",
                             "PAMC_ARCHIVO",
                             "PAMC_INFO",
@@ -77836,6 +77913,12 @@
                         "type": "string",
                         "nullable": true
                       },
+                      "NROS_FACTURA": {
+                        "title": "Nros Factura",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
                       "DIRECCION_DE_ENTREGA": {
                         "title": "Dirección de entrega",
                         "maxLength": 100,
@@ -78008,6 +78091,12 @@
                       },
                       "CONCEPTO_COBRO_ELEC": {
                         "title": "Método de Pago Electrónico",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "NRO_DE_OPERACION": {
+                        "title": "Cobro de pedido - Nro de Operación",
                         "maxLength": 100,
                         "type": "string",
                         "nullable": true
@@ -78711,6 +78800,11 @@
                       "type": "string",
                       "nullable": true
                     },
+                    "NROS_FACTURA": {
+                      "title": "Nros Factura",
+                      "type": "string",
+                      "nullable": true
+                    },
                     "DIRECCION_DE_ENTREGA": {
                       "title": "Dirección de entrega",
                       "type": "string",
@@ -78863,6 +78957,11 @@
                     },
                     "CONCEPTO_COBRO_ELEC": {
                       "title": "Método de Pago Electrónico",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "NRO_DE_OPERACION": {
+                      "title": "Cobro de pedido - Nro de Operación",
                       "type": "string",
                       "nullable": true
                     },
@@ -79516,6 +79615,12 @@
                         "type": "string",
                         "nullable": true
                       },
+                      "NROS_FACTURA": {
+                        "title": "Nros Factura",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
                       "DIRECCION_DE_ENTREGA": {
                         "title": "Dirección de entrega",
                         "maxLength": 100,
@@ -79688,6 +79793,12 @@
                       },
                       "CONCEPTO_COBRO_ELEC": {
                         "title": "Método de Pago Electrónico",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "NRO_DE_OPERACION": {
+                        "title": "Cobro de pedido - Nro de Operación",
                         "maxLength": 100,
                         "type": "string",
                         "nullable": true
@@ -80357,6 +80468,15 @@
             }
           },
           {
+            "name": "NROS_FACTURA",
+            "in": "query",
+            "description": "Nros Factura",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "CODIGO_ENTREGA",
             "in": "query",
             "description": "CODIGO_ENTREGA",
@@ -80432,6 +80552,15 @@
             "name": "CODIGO_DE_CUPON",
             "in": "query",
             "description": "Código de Cupón",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "NRO_DE_OPERACION",
+            "in": "query",
+            "description": "Cobro de pedido - Nro de Operación",
             "allowEmptyValue": true,
             "schema": {
               "type": "string"
@@ -80709,6 +80838,7 @@
                             "ANTIGUEDAD",
                             "TOTAL_COBROS",
                             "ESTADO_FACTURAS",
+                            "NROS_FACTURA",
                             "DIRECCION_DE_ENTREGA",
                             "CODIGO_POSTAL",
                             "PROVINCIA_ENTREGA",
@@ -80740,6 +80870,7 @@
                             "PRECIO_FINAL_2DA_M",
                             "VALOR_2DA_MONEDA",
                             "CONCEPTO_COBRO_ELEC",
+                            "NRO_DE_OPERACION",
                             "PUBLICATION_ID",
                             "VARIANT_ID",
                             "BONI_ENVIO",
@@ -80916,6 +81047,7 @@
                             "ANTIGUEDAD",
                             "TOTAL_COBROS",
                             "ESTADO_FACTURAS",
+                            "NROS_FACTURA",
                             "DIRECCION_DE_ENTREGA",
                             "CODIGO_POSTAL",
                             "PROVINCIA_ENTREGA",
@@ -80947,6 +81079,7 @@
                             "PRECIO_FINAL_2DA_M",
                             "VALOR_2DA_MONEDA",
                             "CONCEPTO_COBRO_ELEC",
+                            "NRO_DE_OPERACION",
                             "PUBLICATION_ID",
                             "VARIANT_ID",
                             "BONI_ENVIO",

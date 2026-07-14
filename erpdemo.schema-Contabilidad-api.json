@@ -6,7 +6,12 @@
   },
   "servers": [
     {
-      "url": "https://api.yiqi.com.ar/api/public"
+      "url": "https://api.yiqi.com.ar/api/public",
+      "description": "production"
+    },
+    {
+      "url": "https://yiqiapi.azurewebsites.net/api/public",
+      "description": "beta"
     }
   ],
   "paths": {
@@ -718,7 +723,6 @@
                             "AJPT_TC_PROV",
                             "AJPT_TC_CLIE",
                             "AJPT_TC_MERC",
-                            "AJPT_FILTROS_EXTRAS",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -788,7 +792,6 @@
                             "AJPT_TC_PROV",
                             "AJPT_TC_CLIE",
                             "AJPT_TC_MERC",
-                            "AJPT_FILTROS_EXTRAS",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -1959,16 +1962,15 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "ASIE_FECHA",
-                            "ASIE_CODIGO",
                             "ASIE_TOTAL_DEBE",
                             "ASIE_TOTAL_HABER",
                             "ASIE_BALANCEADO",
-                            "ASIE_ANUL_SEP",
-                            "ASIE_ANULADO",
                             "ASIE_INFO",
-                            "ASIE_ORDEN",
                             "ASIE_DIAS_DE_DIFERENCIA_C",
+                            "ASIE_FECHA",
+                            "ASIE_CODIGO",
+                            "ASIE_ANULADO",
+                            "ASIE_ORDEN",
                             "ASIE_ENTIDAD_DE_ORIGEN",
                             "ASIE_IDENTIFICADOR_DE_ORI",
                             "ASIE_REFERENCIA",
@@ -2035,16 +2037,15 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "ASIE_FECHA",
-                            "ASIE_CODIGO",
                             "ASIE_TOTAL_DEBE",
                             "ASIE_TOTAL_HABER",
                             "ASIE_BALANCEADO",
-                            "ASIE_ANUL_SEP",
-                            "ASIE_ANULADO",
                             "ASIE_INFO",
-                            "ASIE_ORDEN",
                             "ASIE_DIAS_DE_DIFERENCIA_C",
+                            "ASIE_FECHA",
+                            "ASIE_CODIGO",
+                            "ASIE_ANULADO",
+                            "ASIE_ORDEN",
                             "ASIE_ENTIDAD_DE_ORIGEN",
                             "ASIE_IDENTIFICADOR_DE_ORI",
                             "ASIE_REFERENCIA",
@@ -2180,7 +2181,7 @@
           {
             "name": "state",
             "in": "query",
-            "description": "Possibles values: <ul><li>Copiando</li>\n<li>Creado</li></ul>",
+            "description": "Possibles values: <ul><li>Borrador</li>\n<li>Confirmado</li>\n<li>Copiando</li>\n<li>Creado</li></ul>",
             "allowEmptyValue": true,
             "schema": {
               "type": "string"
@@ -2216,7 +2217,7 @@
           {
             "name": "state",
             "in": "query",
-            "description": "Possibles values: <ul><li>Copiando</li>\n<li>Creado</li></ul>",
+            "description": "Possibles values: <ul><li>Borrador</li>\n<li>Confirmado</li>\n<li>Copiando</li>\n<li>Creado</li></ul>",
             "required": true,
             "allowEmptyValue": true,
             "schema": {
@@ -3571,44 +3572,100 @@
                       "GETE_DESDE": {
                         "title": "Desde",
                         "type": "string",
-                        "description": "Fecha inicial del rango que se usa para buscar ordenes de pago y generar los reportes.",
+                        "description": "Inicio del periodo a procesar.",
                         "default": "PARAM.PARA_HOY",
                         "nullable": true
                       },
                       "GETE_HASTA": {
                         "title": "Hasta",
                         "type": "string",
-                        "description": "Fecha final del rango utilizado en la consulta. Se procesa hasta el final del dia seleccionado.",
+                        "description": "Fin del periodo a procesar.",
+                        "nullable": true
+                      },
+                      "GETE_BBVA_SUC_DEB": {
+                        "title": "BBVA sucursal debito",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Sucursal de la cuenta debito.",
+                        "nullable": true
+                      },
+                      "GETE_BBVA_DV_DEB": {
+                        "title": "BBVA digito debito",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Digito de control de la cuenta debito.",
+                        "nullable": true
+                      },
+                      "GETE_BBVA_TIPO_DEB": {
+                        "title": "BBVA tipo cuenta",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Tipo de cuenta debito. Por defecto 01.",
+                        "default": "01",
+                        "nullable": true
+                      },
+                      "GETE_BBVA_MON_DEB": {
+                        "title": "BBVA moneda cuenta",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Moneda de la cuenta debito. Por defecto 0.",
+                        "default": "0",
+                        "nullable": true
+                      },
+                      "GETE_BBVA_CTA_DEB": {
+                        "title": "BBVA cuenta debito",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Numero de cuenta debito.",
+                        "nullable": true
+                      },
+                      "GETE_BBVA_CONTRATO": {
+                        "title": "BBVA contrato",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Contrato proveedor BBVA.",
+                        "nullable": true
+                      },
+                      "GETE_BBVA_TXT": {
+                        "title": "Archivo BBVA PAP",
+                        "type": "integer",
+                        "description": "TXT BBVA Pago a Proveedores.",
                         "nullable": true
                       },
                       "GETE_TEMPLATE_4": {
                         "title": "Template transferencia (hasta 250)",
                         "type": "integer",
-                        "description": "Archivo Excel simple de cuenta y monto para pagos por transferencia (CBU/CVU/Alias).",
+                        "description": "Excel cuenta y monto para transferencias.",
                         "nullable": true
                       },
                       "GETE_TEMPLATE_3": {
                         "title": "Template Cheques (hasta 250)",
                         "type": "integer",
-                        "description": "Archivo Excel en formato de emision de cheques, generado a partir de la informacion de eCheq.",
+                        "description": "Excel de emision de eCheq.",
                         "nullable": true
                       },
                       "GETE_TEMPLATE_TRANSFE": {
                         "title": "Template Transferencias (desde 250)",
                         "type": "integer",
-                        "description": "Archivo Excel con el detalle de transferencias bancarias del rango de fechas indicado.",
+                        "description": "Excel de transferencias Galicia.",
                         "nullable": true
                       },
                       "GETE_TEMPLATE_CHEQ": {
                         "title": "Template Cheques (desde 250)",
                         "type": "integer",
-                        "description": "Archivo Excel con los cheques electronicos (eCheq) pendientes dentro del rango de fechas.",
+                        "description": "Excel de eCheq Galicia.",
                         "nullable": true
                       },
                       "GETE_INFO": {
                         "title": "Info de procesamiento",
                         "type": "string",
-                        "description": "Informa cuando el periodo supera los maximos por plantilla, indicando cantidad encontrada y cantidad procesada.",
+                        "description": "Observaciones de la generacion.",
+                        "nullable": true
+                      },
+                      "GETE_POSIBLES_ERRORES": {
+                        "title": "Errores y observaciones",
+                        "type": "string",
+                        "description": "Detalle generado por el proceso.",
                         "nullable": true
                       }
                     },
@@ -3723,43 +3780,91 @@
                     "GETE_DESDE": {
                       "title": "Desde",
                       "type": "string",
-                      "description": "Fecha inicial del rango que se usa para buscar ordenes de pago y generar los reportes.",
+                      "description": "Inicio del periodo a procesar.",
                       "nullable": true
                     },
                     "GETE_HASTA": {
                       "title": "Hasta",
                       "type": "string",
-                      "description": "Fecha final del rango utilizado en la consulta. Se procesa hasta el final del dia seleccionado.",
+                      "description": "Fin del periodo a procesar.",
+                      "nullable": true
+                    },
+                    "GETE_BBVA_SUC_DEB": {
+                      "title": "BBVA sucursal debito",
+                      "type": "string",
+                      "description": "Sucursal de la cuenta debito.",
+                      "nullable": true
+                    },
+                    "GETE_BBVA_DV_DEB": {
+                      "title": "BBVA digito debito",
+                      "type": "string",
+                      "description": "Digito de control de la cuenta debito.",
+                      "nullable": true
+                    },
+                    "GETE_BBVA_TIPO_DEB": {
+                      "title": "BBVA tipo cuenta",
+                      "type": "string",
+                      "description": "Tipo de cuenta debito. Por defecto 01.",
+                      "nullable": true
+                    },
+                    "GETE_BBVA_MON_DEB": {
+                      "title": "BBVA moneda cuenta",
+                      "type": "string",
+                      "description": "Moneda de la cuenta debito. Por defecto 0.",
+                      "nullable": true
+                    },
+                    "GETE_BBVA_CTA_DEB": {
+                      "title": "BBVA cuenta debito",
+                      "type": "string",
+                      "description": "Numero de cuenta debito.",
+                      "nullable": true
+                    },
+                    "GETE_BBVA_CONTRATO": {
+                      "title": "BBVA contrato",
+                      "type": "string",
+                      "description": "Contrato proveedor BBVA.",
+                      "nullable": true
+                    },
+                    "GETE_BBVA_TXT": {
+                      "title": "Archivo BBVA PAP",
+                      "type": "integer",
+                      "description": "TXT BBVA Pago a Proveedores.",
                       "nullable": true
                     },
                     "GETE_TEMPLATE_4": {
                       "title": "Template transferencia (hasta 250)",
                       "type": "integer",
-                      "description": "Archivo Excel simple de cuenta y monto para pagos por transferencia (CBU/CVU/Alias).",
+                      "description": "Excel cuenta y monto para transferencias.",
                       "nullable": true
                     },
                     "GETE_TEMPLATE_3": {
                       "title": "Template Cheques (hasta 250)",
                       "type": "integer",
-                      "description": "Archivo Excel en formato de emision de cheques, generado a partir de la informacion de eCheq.",
+                      "description": "Excel de emision de eCheq.",
                       "nullable": true
                     },
                     "GETE_TEMPLATE_TRANSFE": {
                       "title": "Template Transferencias (desde 250)",
                       "type": "integer",
-                      "description": "Archivo Excel con el detalle de transferencias bancarias del rango de fechas indicado.",
+                      "description": "Excel de transferencias Galicia.",
                       "nullable": true
                     },
                     "GETE_TEMPLATE_CHEQ": {
                       "title": "Template Cheques (desde 250)",
                       "type": "integer",
-                      "description": "Archivo Excel con los cheques electronicos (eCheq) pendientes dentro del rango de fechas.",
+                      "description": "Excel de eCheq Galicia.",
                       "nullable": true
                     },
                     "GETE_INFO": {
                       "title": "Info de procesamiento",
                       "type": "string",
-                      "description": "Informa cuando el periodo supera los maximos por plantilla, indicando cantidad encontrada y cantidad procesada.",
+                      "description": "Observaciones de la generacion.",
+                      "nullable": true
+                    },
+                    "GETE_POSIBLES_ERRORES": {
+                      "title": "Errores y observaciones",
+                      "type": "string",
+                      "description": "Detalle generado por el proceso.",
                       "nullable": true
                     }
                   }
@@ -3815,44 +3920,100 @@
                       "GETE_DESDE": {
                         "title": "Desde",
                         "type": "string",
-                        "description": "Fecha inicial del rango que se usa para buscar ordenes de pago y generar los reportes.",
+                        "description": "Inicio del periodo a procesar.",
                         "default": "PARAM.PARA_HOY",
                         "nullable": true
                       },
                       "GETE_HASTA": {
                         "title": "Hasta",
                         "type": "string",
-                        "description": "Fecha final del rango utilizado en la consulta. Se procesa hasta el final del dia seleccionado.",
+                        "description": "Fin del periodo a procesar.",
+                        "nullable": true
+                      },
+                      "GETE_BBVA_SUC_DEB": {
+                        "title": "BBVA sucursal debito",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Sucursal de la cuenta debito.",
+                        "nullable": true
+                      },
+                      "GETE_BBVA_DV_DEB": {
+                        "title": "BBVA digito debito",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Digito de control de la cuenta debito.",
+                        "nullable": true
+                      },
+                      "GETE_BBVA_TIPO_DEB": {
+                        "title": "BBVA tipo cuenta",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Tipo de cuenta debito. Por defecto 01.",
+                        "default": "01",
+                        "nullable": true
+                      },
+                      "GETE_BBVA_MON_DEB": {
+                        "title": "BBVA moneda cuenta",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Moneda de la cuenta debito. Por defecto 0.",
+                        "default": "0",
+                        "nullable": true
+                      },
+                      "GETE_BBVA_CTA_DEB": {
+                        "title": "BBVA cuenta debito",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Numero de cuenta debito.",
+                        "nullable": true
+                      },
+                      "GETE_BBVA_CONTRATO": {
+                        "title": "BBVA contrato",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Contrato proveedor BBVA.",
+                        "nullable": true
+                      },
+                      "GETE_BBVA_TXT": {
+                        "title": "Archivo BBVA PAP",
+                        "type": "integer",
+                        "description": "TXT BBVA Pago a Proveedores.",
                         "nullable": true
                       },
                       "GETE_TEMPLATE_4": {
                         "title": "Template transferencia (hasta 250)",
                         "type": "integer",
-                        "description": "Archivo Excel simple de cuenta y monto para pagos por transferencia (CBU/CVU/Alias).",
+                        "description": "Excel cuenta y monto para transferencias.",
                         "nullable": true
                       },
                       "GETE_TEMPLATE_3": {
                         "title": "Template Cheques (hasta 250)",
                         "type": "integer",
-                        "description": "Archivo Excel en formato de emision de cheques, generado a partir de la informacion de eCheq.",
+                        "description": "Excel de emision de eCheq.",
                         "nullable": true
                       },
                       "GETE_TEMPLATE_TRANSFE": {
                         "title": "Template Transferencias (desde 250)",
                         "type": "integer",
-                        "description": "Archivo Excel con el detalle de transferencias bancarias del rango de fechas indicado.",
+                        "description": "Excel de transferencias Galicia.",
                         "nullable": true
                       },
                       "GETE_TEMPLATE_CHEQ": {
                         "title": "Template Cheques (desde 250)",
                         "type": "integer",
-                        "description": "Archivo Excel con los cheques electronicos (eCheq) pendientes dentro del rango de fechas.",
+                        "description": "Excel de eCheq Galicia.",
                         "nullable": true
                       },
                       "GETE_INFO": {
                         "title": "Info de procesamiento",
                         "type": "string",
-                        "description": "Informa cuando el periodo supera los maximos por plantilla, indicando cantidad encontrada y cantidad procesada.",
+                        "description": "Observaciones de la generacion.",
+                        "nullable": true
+                      },
+                      "GETE_POSIBLES_ERRORES": {
+                        "title": "Errores y observaciones",
+                        "type": "string",
+                        "description": "Detalle generado por el proceso.",
                         "nullable": true
                       }
                     }
@@ -4051,12 +4212,19 @@
                           "enum": [
                             "GETE_DESDE",
                             "GETE_HASTA",
-                            "GETE_SEPA_ARCHIVOS",
+                            "GETE_BBVA_SUC_DEB",
+                            "GETE_BBVA_DV_DEB",
+                            "GETE_BBVA_TIPO_DEB",
+                            "GETE_BBVA_MON_DEB",
+                            "GETE_BBVA_CTA_DEB",
+                            "GETE_BBVA_CONTRATO",
+                            "GETE_BBVA_TXT",
                             "GETE_TEMPLATE_4",
                             "GETE_TEMPLATE_3",
                             "GETE_TEMPLATE_TRANSFE",
                             "GETE_TEMPLATE_CHEQ",
                             "GETE_INFO",
+                            "GETE_POSIBLES_ERRORES",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -4122,12 +4290,19 @@
                           "enum": [
                             "GETE_DESDE",
                             "GETE_HASTA",
-                            "GETE_SEPA_ARCHIVOS",
+                            "GETE_BBVA_SUC_DEB",
+                            "GETE_BBVA_DV_DEB",
+                            "GETE_BBVA_TIPO_DEB",
+                            "GETE_BBVA_MON_DEB",
+                            "GETE_BBVA_CTA_DEB",
+                            "GETE_BBVA_CONTRATO",
+                            "GETE_BBVA_TXT",
                             "GETE_TEMPLATE_4",
                             "GETE_TEMPLATE_3",
                             "GETE_TEMPLATE_TRANSFE",
                             "GETE_TEMPLATE_CHEQ",
                             "GETE_INFO",
+                            "GETE_POSIBLES_ERRORES",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -4336,6 +4511,7 @@
             "required": true,
             "schema": {
               "enum": [
+                "BBVA_TXT",
                 "TEMPLATE_4",
                 "TEMPLATE_3",
                 "TEMPLATE_TRANSFE",
@@ -4407,6 +4583,7 @@
             "required": true,
             "schema": {
               "enum": [
+                "BBVA_TXT",
                 "TEMPLATE_4",
                 "TEMPLATE_3",
                 "TEMPLATE_TRANSFE",
@@ -4628,6 +4805,181 @@
                         "title": "Errores y observaciones",
                         "type": "string",
                         "nullable": true
+                      },
+                      "Retenciones": {
+                        "title": "Retenciones",
+                        "type": "array",
+                        "items": {
+                          "title": "Retenciones",
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "title": "Instance unique identifier",
+                              "type": "integer",
+                              "description": "Instance identity. If ommited a new instance is created."
+                            },
+                            "OBLI_ID_OBLI": {
+                              "title": "Orden de Pago",
+                              "type": "integer",
+                              "description": " This is a foreign key to Orden de pago. An id of Orden de pago is expected"
+                            },
+                            "RERE_NUMERO_COMPROBANTE": {
+                              "title": "Nro Comprobante",
+                              "type": "integer",
+                              "nullable": true
+                            },
+                            "RERE_FECHA": {
+                              "title": "Fecha de emisión",
+                              "type": "string",
+                              "description": " This attribute is mandatory when the instance is at state 'Realizada'",
+                              "nullable": true
+                            },
+                            "IMPU_ID_IMPU": {
+                              "title": "Impuesto",
+                              "type": "integer",
+                              "description": " This is a foreign key to Impuesto. An id of Impuesto is expected"
+                            },
+                            "CORE_ID_CORE": {
+                              "title": "Concepto",
+                              "type": "integer",
+                              "description": " This is a foreign key to Concepto Retención. An id of Concepto Retención is expected"
+                            },
+                            "SURE_ID_SURE": {
+                              "title": "Subconcepto Retención",
+                              "type": "integer",
+                              "description": " This is a foreign key to Subconcepto Retención. An id of Subconcepto Retención is expected\n This attribute is mandatory when the instance is at state 'Calculando retención'",
+                              "nullable": true
+                            },
+                            "RERE_NETO_FACTURA": {
+                              "title": "Neto OP",
+                              "type": "number",
+                              "description": "Neto de la Orden de Pago actual a la que se aplica la retención.\n This attribute is mandatory when the instance is at state 'Realizada'",
+                              "nullable": true
+                            },
+                            "RERE_NETO_TOTAL": {
+                              "title": "Neto Total",
+                              "type": "number",
+                              "description": "Suma de los netos de las Ordenes de Pago de ese mes, de ese proveedor, aplicables a ese concepto retención.",
+                              "nullable": true
+                            },
+                            "RERE_MONTO_RETENIDO_ANTER": {
+                              "title": "Monto Retenido Anteriormente",
+                              "type": "number",
+                              "description": "Suma de las retenciones del mes para ese proveedor de este concepto (sin considerar la retención de esta OP)",
+                              "nullable": true
+                            },
+                            "RERE_MINIMO_NO_IMPONIBLE": {
+                              "title": "Mínimo no imponible",
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "RERE_IMPORTE_IVA": {
+                              "title": "Importe IVA",
+                              "type": "number",
+                              "description": "Campo utilizado para la Liq. de Ret.",
+                              "nullable": true
+                            },
+                            "RERE_IMPORTE_OTROS": {
+                              "title": "Importe Otros",
+                              "type": "number",
+                              "description": "Campo utilizado para la Liq. de Ret.",
+                              "nullable": true
+                            },
+                            "RERE_PORCENTAJE_A_RETENER": {
+                              "title": "Alícuota",
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "RERE_IMPORTE": {
+                              "title": "Importe",
+                              "type": "number",
+                              "description": "(Neto Total - Mínimo no imponible) * Alicuota / 100 - Monto retenido anteriormente\n This attribute is mandatory when the instance is at state 'Realizada'",
+                              "nullable": true
+                            },
+                            "RERE_NO_SUJETO": {
+                              "title": "Importe no sujeto a retención",
+                              "type": "number",
+                              "nullable": true
+                            }
+                          },
+                          "description": "Child entity of Retenciones"
+                        },
+                        "description": "Array of child entities of Retenciones"
+                      },
+                      "Percepciones": {
+                        "title": "Percepciones",
+                        "type": "array",
+                        "items": {
+                          "title": "Percepciones",
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "title": "Instance unique identifier",
+                              "type": "integer",
+                              "description": "Instance identity. If ommited a new instance is created."
+                            },
+                            "FACT_ID_FACT": {
+                              "title": "Factura",
+                              "type": "integer",
+                              "description": " This is a foreign key to Factura. An id of Factura is expected",
+                              "nullable": true
+                            },
+                            "PERE_NUMERO_COMPROBANTE": {
+                              "title": "Nro Comprobante",
+                              "type": "integer",
+                              "nullable": true
+                            },
+                            "COPE_ID_COPE": {
+                              "title": "Concepto",
+                              "type": "integer",
+                              "description": " This is a foreign key to Concepto Percepción. An id of Concepto Percepción is expected"
+                            },
+                            "PERE_NETO": {
+                              "title": "Neto",
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "PERE_IVA": {
+                              "title": "IVA",
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "PERE_OTROS": {
+                              "title": "Otros",
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "PERE_IMPORTE": {
+                              "title": "Importe",
+                              "type": "number"
+                            },
+                            "LIQI_ID_LIQI": {
+                              "title": "Liquidación de impuestos",
+                              "type": "integer",
+                              "description": " This is a foreign key to Liquidación de impuestos. An id of Liquidación de impuestos is expected",
+                              "nullable": true
+                            },
+                            "NOCR_ID_NOCR": {
+                              "title": "Nota de crédito",
+                              "type": "integer",
+                              "description": " This is a foreign key to Nota de Crédito (V). An id of Nota de Crédito (V) is expected",
+                              "nullable": true
+                            },
+                            "NODE_ID_NODE": {
+                              "title": "Nota de débito",
+                              "type": "integer",
+                              "description": " This is a foreign key to Nota de Débito (V). An id of Nota de Débito (V) is expected",
+                              "nullable": true
+                            },
+                            "PERE_PORCENTAJE": {
+                              "title": "Porcentaje",
+                              "type": "number",
+                              "nullable": true
+                            }
+                          },
+                          "description": "Child entity of Percepciones"
+                        },
+                        "description": "Array of child entities of Percepciones"
                       }
                     },
                     "description": "Instance data"
@@ -4841,6 +5193,266 @@
                       "title": "Depuración retenciones",
                       "type": "integer",
                       "nullable": true
+                    },
+                    "RETENCIONES": {
+                      "title": "Retenciones",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "OBLI_ID_OBLI": {
+                            "title": "Orden de Pago",
+                            "type": "integer"
+                          },
+                          "RERE_NUMERO_COMPROBANTE": {
+                            "title": "Nro Comprobante",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "RERE_FECHA": {
+                            "title": "Fecha de emisión",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "CLIE_ID_CLIE": {
+                            "title": "Proveedor",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "RERE_CUIT": {
+                            "title": "CUIT",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "RERE_NRO_IIBB": {
+                            "title": "Nro IIBB",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "IMPU_ID_IMPU": {
+                            "title": "Impuesto",
+                            "type": "integer"
+                          },
+                          "CORE_ID_CORE": {
+                            "title": "Concepto",
+                            "type": "integer"
+                          },
+                          "SURE_ID_SURE": {
+                            "title": "Subconcepto Retención",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "RERE_NETO_FACTURA": {
+                            "title": "Neto OP",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "RERE_NETO_TOTAL": {
+                            "title": "Neto Total",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "RERE_MONTO_RETENIDO_ANTER": {
+                            "title": "Monto Retenido Anteriormente",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "RERE_MINIMO_NO_IMPONIBLE": {
+                            "title": "Mínimo no imponible",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "RERE_IMPORTE_IVA": {
+                            "title": "Importe IVA",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "RERE_IMPORTE_OTROS": {
+                            "title": "Importe Otros",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "RERE_PORCENTAJE_A_RETENER": {
+                            "title": "Alícuota",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "RERE_IMPORTE": {
+                            "title": "Importe",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "ASIE_ID_ASIE": {
+                            "title": "Asiento",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "LIQI_ID_LIQI": {
+                            "title": "Liquidación de impuestos",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "LRYP_ID_LRYP": {
+                            "title": "Liq. ret. y percep.",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CASH_ID_CASH": {
+                            "title": "Movimiento de fondo",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "RERE_NO_SUJETO": {
+                            "title": "Importe no sujeto a retención",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "OBLI_ID_NUEV": {
+                            "title": "Nueva OP",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "RERE_NO_BORRAR": {
+                            "title": "No borrar",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "SURE_ID_NEWR": {
+                            "title": "Nuevo concepto de retencion",
+                            "type": "integer",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Retenciones (included when includeChildren=true)"
+                    },
+                    "PERCEPCIONES": {
+                      "title": "Percepciones",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "FACT_ID_FACT": {
+                            "title": "Factura",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PERE_NUMERO_COMPROBANTE": {
+                            "title": "Nro Comprobante",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PERE_FECHA_DE_LA_FACTURA": {
+                            "title": "Fecha de la factura",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "COPE_ID_COPE": {
+                            "title": "Concepto",
+                            "type": "integer"
+                          },
+                          "PERE_RAZON_SOCIAL": {
+                            "title": "Razón social",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PERE_CUIT": {
+                            "title": "CUIT",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PERE_NRO_IIBB": {
+                            "title": "Nro IIBB",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PERE_NETO": {
+                            "title": "Neto",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PERE_IVA": {
+                            "title": "IVA",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PERE_OTROS": {
+                            "title": "Otros",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PERE_IMPORTE": {
+                            "title": "Importe",
+                            "type": "number"
+                          },
+                          "PERE_IMPORTE_MD": {
+                            "title": "Importe MD",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "LIQI_ID_LIQI": {
+                            "title": "Liquidación de impuestos",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "LRYP_ID_LRYP": {
+                            "title": "Liq. ret. y percep.",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CASH_ID_CASH": {
+                            "title": "Movimiento de fondo",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NOCR_ID_NOCR": {
+                            "title": "Nota de crédito",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "NODE_ID_NODE": {
+                            "title": "Nota de débito",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PERE_PORCENTAJE": {
+                            "title": "Porcentaje",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PERE_TIPO_DE_VALOR": {
+                            "title": "Tipo de valor",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "PERE_IMPORTE_B_TIPO": {
+                            "title": "Importe en base al tipo",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PERE_IMPORT_X_MD": {
+                            "title": "Importe MD en base al tipo",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "PERE_VALIDA": {
+                            "title": "Valida",
+                            "type": "boolean",
+                            "nullable": true
+                          },
+                          "CLIE_ID_CLIE": {
+                            "title": "Cliente",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "PERE_CONCEPTO": {
+                            "title": "Concepto Nombre",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Percepciones (included when includeChildren=true)"
                     }
                   }
                 }
@@ -4930,6 +5542,181 @@
                         "title": "Errores y observaciones",
                         "type": "string",
                         "nullable": true
+                      },
+                      "Retenciones": {
+                        "title": "Retenciones",
+                        "type": "array",
+                        "items": {
+                          "title": "Retenciones",
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "title": "Instance unique identifier",
+                              "type": "integer",
+                              "description": "Instance identity. If ommited a new instance is created."
+                            },
+                            "OBLI_ID_OBLI": {
+                              "title": "Orden de Pago",
+                              "type": "integer",
+                              "description": " This is a foreign key to Orden de pago. An id of Orden de pago is expected"
+                            },
+                            "RERE_NUMERO_COMPROBANTE": {
+                              "title": "Nro Comprobante",
+                              "type": "integer",
+                              "nullable": true
+                            },
+                            "RERE_FECHA": {
+                              "title": "Fecha de emisión",
+                              "type": "string",
+                              "description": " This attribute is mandatory when the instance is at state 'Realizada'",
+                              "nullable": true
+                            },
+                            "IMPU_ID_IMPU": {
+                              "title": "Impuesto",
+                              "type": "integer",
+                              "description": " This is a foreign key to Impuesto. An id of Impuesto is expected"
+                            },
+                            "CORE_ID_CORE": {
+                              "title": "Concepto",
+                              "type": "integer",
+                              "description": " This is a foreign key to Concepto Retención. An id of Concepto Retención is expected"
+                            },
+                            "SURE_ID_SURE": {
+                              "title": "Subconcepto Retención",
+                              "type": "integer",
+                              "description": " This is a foreign key to Subconcepto Retención. An id of Subconcepto Retención is expected\n This attribute is mandatory when the instance is at state 'Calculando retención'",
+                              "nullable": true
+                            },
+                            "RERE_NETO_FACTURA": {
+                              "title": "Neto OP",
+                              "type": "number",
+                              "description": "Neto de la Orden de Pago actual a la que se aplica la retención.\n This attribute is mandatory when the instance is at state 'Realizada'",
+                              "nullable": true
+                            },
+                            "RERE_NETO_TOTAL": {
+                              "title": "Neto Total",
+                              "type": "number",
+                              "description": "Suma de los netos de las Ordenes de Pago de ese mes, de ese proveedor, aplicables a ese concepto retención.",
+                              "nullable": true
+                            },
+                            "RERE_MONTO_RETENIDO_ANTER": {
+                              "title": "Monto Retenido Anteriormente",
+                              "type": "number",
+                              "description": "Suma de las retenciones del mes para ese proveedor de este concepto (sin considerar la retención de esta OP)",
+                              "nullable": true
+                            },
+                            "RERE_MINIMO_NO_IMPONIBLE": {
+                              "title": "Mínimo no imponible",
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "RERE_IMPORTE_IVA": {
+                              "title": "Importe IVA",
+                              "type": "number",
+                              "description": "Campo utilizado para la Liq. de Ret.",
+                              "nullable": true
+                            },
+                            "RERE_IMPORTE_OTROS": {
+                              "title": "Importe Otros",
+                              "type": "number",
+                              "description": "Campo utilizado para la Liq. de Ret.",
+                              "nullable": true
+                            },
+                            "RERE_PORCENTAJE_A_RETENER": {
+                              "title": "Alícuota",
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "RERE_IMPORTE": {
+                              "title": "Importe",
+                              "type": "number",
+                              "description": "(Neto Total - Mínimo no imponible) * Alicuota / 100 - Monto retenido anteriormente\n This attribute is mandatory when the instance is at state 'Realizada'",
+                              "nullable": true
+                            },
+                            "RERE_NO_SUJETO": {
+                              "title": "Importe no sujeto a retención",
+                              "type": "number",
+                              "nullable": true
+                            }
+                          },
+                          "description": "Child entity of Retenciones"
+                        },
+                        "description": "Array of child entities of Retenciones"
+                      },
+                      "Percepciones": {
+                        "title": "Percepciones",
+                        "type": "array",
+                        "items": {
+                          "title": "Percepciones",
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "title": "Instance unique identifier",
+                              "type": "integer",
+                              "description": "Instance identity. If ommited a new instance is created."
+                            },
+                            "FACT_ID_FACT": {
+                              "title": "Factura",
+                              "type": "integer",
+                              "description": " This is a foreign key to Factura. An id of Factura is expected",
+                              "nullable": true
+                            },
+                            "PERE_NUMERO_COMPROBANTE": {
+                              "title": "Nro Comprobante",
+                              "type": "integer",
+                              "nullable": true
+                            },
+                            "COPE_ID_COPE": {
+                              "title": "Concepto",
+                              "type": "integer",
+                              "description": " This is a foreign key to Concepto Percepción. An id of Concepto Percepción is expected"
+                            },
+                            "PERE_NETO": {
+                              "title": "Neto",
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "PERE_IVA": {
+                              "title": "IVA",
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "PERE_OTROS": {
+                              "title": "Otros",
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "PERE_IMPORTE": {
+                              "title": "Importe",
+                              "type": "number"
+                            },
+                            "LIQI_ID_LIQI": {
+                              "title": "Liquidación de impuestos",
+                              "type": "integer",
+                              "description": " This is a foreign key to Liquidación de impuestos. An id of Liquidación de impuestos is expected",
+                              "nullable": true
+                            },
+                            "NOCR_ID_NOCR": {
+                              "title": "Nota de crédito",
+                              "type": "integer",
+                              "description": " This is a foreign key to Nota de Crédito (V). An id of Nota de Crédito (V) is expected",
+                              "nullable": true
+                            },
+                            "NODE_ID_NODE": {
+                              "title": "Nota de débito",
+                              "type": "integer",
+                              "description": " This is a foreign key to Nota de Débito (V). An id of Nota de Débito (V) is expected",
+                              "nullable": true
+                            },
+                            "PERE_PORCENTAJE": {
+                              "title": "Porcentaje",
+                              "type": "number",
+                              "nullable": true
+                            }
+                          },
+                          "description": "Child entity of Percepciones"
+                        },
+                        "description": "Array of child entities of Percepciones"
                       }
                     }
                   }
@@ -5127,24 +5914,17 @@
                           "enum": [
                             "LRYP_DESDE",
                             "LRYP_HASTA",
-                            "LRYP_LIQUIDAR_DESDE_IMPUE",
-                            "LRYP_LIQUIDAR_DESDE_CONCE",
-                            "LRYP_PERCEPCIONES",
                             "LRYP_ARCH_00",
                             "LRYP_ARCH_TEXT_00",
-                            "LRYP_RETENCIONES",
                             "LRYP_ARCH_01",
                             "LRYP_ARCHIVO_PROVEEDORES",
                             "LRYP_ARCH_TEXT_01",
                             "LRYP_ARCH_TEXT_02",
-                            "LRYP_NOTAS_DE_CREDITO",
                             "LRYP_ARCH_02",
                             "LRYP_ARCH_TEXT_03",
-                            "LRYP_LIQ_CONJUNTA",
                             "LRYP_ARCH_03",
                             "LRYP_ARCH_TEXT_04",
                             "LRYP_INFO",
-                            "LRYP_AVISO_DE_POSIBLES_ER",
                             "LRYP_POSIBLES_ERRORES_ECO",
                             "LRYP_DEPURACION_PER",
                             "LRYP_DEPURACION_RET",
@@ -5213,24 +5993,17 @@
                           "enum": [
                             "LRYP_DESDE",
                             "LRYP_HASTA",
-                            "LRYP_LIQUIDAR_DESDE_IMPUE",
-                            "LRYP_LIQUIDAR_DESDE_CONCE",
-                            "LRYP_PERCEPCIONES",
                             "LRYP_ARCH_00",
                             "LRYP_ARCH_TEXT_00",
-                            "LRYP_RETENCIONES",
                             "LRYP_ARCH_01",
                             "LRYP_ARCHIVO_PROVEEDORES",
                             "LRYP_ARCH_TEXT_01",
                             "LRYP_ARCH_TEXT_02",
-                            "LRYP_NOTAS_DE_CREDITO",
                             "LRYP_ARCH_02",
                             "LRYP_ARCH_TEXT_03",
-                            "LRYP_LIQ_CONJUNTA",
                             "LRYP_ARCH_03",
                             "LRYP_ARCH_TEXT_04",
                             "LRYP_INFO",
-                            "LRYP_AVISO_DE_POSIBLES_ER",
                             "LRYP_POSIBLES_ERRORES_ECO",
                             "LRYP_DEPURACION_PER",
                             "LRYP_DEPURACION_RET",
@@ -6515,19 +7288,17 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "LIQI_PERIODO",
-                            "LIQI_QUIN_SEP",
-                            "LIQI_FECHA_DESDE",
-                            "LIQI_FECHA_HASTA",
-                            "LIQI_SEP_VACIO",
-                            "LIQI_FECHA_VENCIMIENTO",
                             "LIQI_ETA",
                             "LIQI_SEMANA_VENCIMIENTO",
                             "LIQI_PERIODO_VENCIMIENTO",
                             "LIQI_MONTO",
                             "LIQI_PENDIENTE_DE_PAGO",
-                            "LIQI_ARHC_ID_2902",
                             "LIQI_DESCRIPCION",
+                            "LIQI_PERIODO",
+                            "LIQI_FECHA_DESDE",
+                            "LIQI_FECHA_HASTA",
+                            "LIQI_FECHA_VENCIMIENTO",
+                            "LIQI_ARHC_ID_2902",
                             "LIQI_CODIGO_AFIP",
                             "LIQI_INFO",
                             "id",
@@ -6593,19 +7364,17 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "LIQI_PERIODO",
-                            "LIQI_QUIN_SEP",
-                            "LIQI_FECHA_DESDE",
-                            "LIQI_FECHA_HASTA",
-                            "LIQI_SEP_VACIO",
-                            "LIQI_FECHA_VENCIMIENTO",
                             "LIQI_ETA",
                             "LIQI_SEMANA_VENCIMIENTO",
                             "LIQI_PERIODO_VENCIMIENTO",
                             "LIQI_MONTO",
                             "LIQI_PENDIENTE_DE_PAGO",
-                            "LIQI_ARHC_ID_2902",
                             "LIQI_DESCRIPCION",
+                            "LIQI_PERIODO",
+                            "LIQI_FECHA_DESDE",
+                            "LIQI_FECHA_HASTA",
+                            "LIQI_FECHA_VENCIMIENTO",
+                            "LIQI_ARHC_ID_2902",
                             "LIQI_CODIGO_AFIP",
                             "LIQI_INFO",
                             "id",
@@ -7470,10 +8239,8 @@
                         "field": {
                           "enum": [
                             "LISI_PERIODO",
-                            "LISI_PER_SEP",
                             "LISI_ARCHIVO_PERCEPCIONES",
                             "LISI_TEXTO_PER",
-                            "LISI_RET_SEP",
                             "LISI_ARCHIVO_RETENCIONES",
                             "LISI_TEXTO_RET",
                             "LISI_INFO",
@@ -7541,10 +8308,8 @@
                         "columnName": {
                           "enum": [
                             "LISI_PERIODO",
-                            "LISI_PER_SEP",
                             "LISI_ARCHIVO_PERCEPCIONES",
                             "LISI_TEXTO_PER",
-                            "LISI_RET_SEP",
                             "LISI_ARCHIVO_RETENCIONES",
                             "LISI_TEXTO_RET",
                             "LISI_INFO",
@@ -9759,17 +10524,17 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "MOCO_DESCRIPCION",
+                            "MOCO_FECHA",
+                            "MOCO_MONTO",
+                            "MOCO_TIENE_ASIENTO_DE_ANU",
+                            "MOCO_ASIENTO_AGRUPADOR___",
                             "MOCO_NUMERO",
                             "MOCO_DEBE",
                             "MOCO_HABER",
-                            "MOCO_DESCRIPCION",
-                            "MOCO_FECHA",
                             "MOCO_DETALLE_DEL_PASE",
-                            "MOCO_MONTO",
                             "MOCO_DETALLE_UNIFICADO",
                             "MOCO_MONTO_2DA_MONEDA",
-                            "MOCO_TIENE_ASIENTO_DE_ANU",
-                            "MOCO_ASIENTO_AGRUPADOR___",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -9833,17 +10598,17 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "MOCO_DESCRIPCION",
+                            "MOCO_FECHA",
+                            "MOCO_MONTO",
+                            "MOCO_TIENE_ASIENTO_DE_ANU",
+                            "MOCO_ASIENTO_AGRUPADOR___",
                             "MOCO_NUMERO",
                             "MOCO_DEBE",
                             "MOCO_HABER",
-                            "MOCO_DESCRIPCION",
-                            "MOCO_FECHA",
                             "MOCO_DETALLE_DEL_PASE",
-                            "MOCO_MONTO",
                             "MOCO_DETALLE_UNIFICADO",
                             "MOCO_MONTO_2DA_MONEDA",
-                            "MOCO_TIENE_ASIENTO_DE_ANU",
-                            "MOCO_ASIENTO_AGRUPADOR___",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -11642,10 +12407,8 @@
                             "CICO_ADJUNTO_IMPORT",
                             "CICO_ARCHIVOCSV",
                             "CICO_INFO",
-                            "CICO_NUEVA_VERSION",
                             "CICO_ARCHIVO_COMPROBANTES",
                             "CICO_ARCHIVO_ALICUOTAS_V2",
-                            "CICO_AVISO_DE_POSIBLES_ER",
                             "CICO_POSIBLES_ERRORES_ECO",
                             "id",
                             "DESC_ESTADO",
@@ -11714,10 +12477,8 @@
                             "CICO_ADJUNTO_IMPORT",
                             "CICO_ARCHIVOCSV",
                             "CICO_INFO",
-                            "CICO_NUEVA_VERSION",
                             "CICO_ARCHIVO_COMPROBANTES",
                             "CICO_ARCHIVO_ALICUOTAS_V2",
-                            "CICO_AVISO_DE_POSIBLES_ER",
                             "CICO_POSIBLES_ERRORES_ECO",
                             "id",
                             "DESC_ESTADO",
@@ -14152,20 +14913,17 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "EJER_DESDE",
-                            "EJER_HASTA",
-                            "EJER_EJERCICIO_NRO",
                             "EJER_ACTIVO",
                             "EJER_PASIVO",
                             "EJER_PATRIMONIO_NETO",
                             "EJER_BALANCEADO",
-                            "EJER_INGRESOS_EGRESOS",
                             "EJER_INGRESOS",
                             "EJER_EGRESOS",
-                            "EJER_REPORTES",
+                            "EJER_DESDE",
+                            "EJER_HASTA",
+                            "EJER_EJERCICIO_NRO",
                             "EJER_FECHA_ACUMULADO_MAYO",
                             "EJER_MEMORIA",
-                            "EJER_ASIENTOS_AGREGADOS",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -14229,20 +14987,17 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "EJER_DESDE",
-                            "EJER_HASTA",
-                            "EJER_EJERCICIO_NRO",
                             "EJER_ACTIVO",
                             "EJER_PASIVO",
                             "EJER_PATRIMONIO_NETO",
                             "EJER_BALANCEADO",
-                            "EJER_INGRESOS_EGRESOS",
                             "EJER_INGRESOS",
                             "EJER_EGRESOS",
-                            "EJER_REPORTES",
+                            "EJER_DESDE",
+                            "EJER_HASTA",
+                            "EJER_EJERCICIO_NRO",
                             "EJER_FECHA_ACUMULADO_MAYO",
                             "EJER_MEMORIA",
-                            "EJER_ASIENTOS_AGREGADOS",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -19909,9 +20664,10 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "PERN_IMPORTE",
                             "PERN_FECHA_DE_LA_NC",
+                            "CLIE_ID_CLIE",
                             "PERN_IMPORTE_MONEDA_DEFAU",
+                            "PERN_IMPORTE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -19975,9 +20731,10 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "PERN_IMPORTE",
                             "PERN_FECHA_DE_LA_NC",
+                            "CLIE_ID_CLIE",
                             "PERN_IMPORTE_MONEDA_DEFAU",
+                            "PERN_IMPORTE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -20895,9 +21652,10 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "PERN_IMPORTE",
                             "PERN_FECHA_DE_LA_NC",
+                            "CLIE_ID_CLIE",
                             "PERN_IMPORTE_MONEDA_DEFAU",
+                            "PERN_IMPORTE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -20961,9 +21719,10 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "PERN_IMPORTE",
                             "PERN_FECHA_DE_LA_NC",
+                            "CLIE_ID_CLIE",
                             "PERN_IMPORTE_MONEDA_DEFAU",
+                            "PERN_IMPORTE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -21652,6 +22411,12 @@
                       "description": "Foreign key to Liquidación de impuestos",
                       "nullable": true
                     },
+                    "LRYP_ID_LRYP": {
+                      "title": "Liq. ret. y percep.",
+                      "type": "integer",
+                      "description": "Liquidacion de retenciones y percepciones emitidas que incluyo esta percepcion.\nForeign key to Liq Retenciones y Percepciones emitidas",
+                      "nullable": true
+                    },
                     "CASH_ID_CASH": {
                       "title": "Movimiento de fondo",
                       "type": "integer",
@@ -22061,21 +22826,20 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "PERE_NUMERO_COMPROBANTE",
                             "PERE_FECHA_DE_LA_FACTURA",
                             "PERE_RAZON_SOCIAL",
                             "PERE_CUIT",
                             "PERE_NRO_IIBB",
+                            "PERE_IMPORTE_MD",
+                            "PERE_TIPO_DE_VALOR",
+                            "PERE_IMPORTE_B_TIPO",
+                            "PERE_IMPORT_X_MD",
+                            "PERE_NUMERO_COMPROBANTE",
                             "PERE_NETO",
                             "PERE_IVA",
                             "PERE_OTROS",
                             "PERE_IMPORTE",
-                            "PERE_IMPORTE_MD",
-                            "PERE_SEPA_OTROS",
                             "PERE_PORCENTAJE",
-                            "PERE_TIPO_DE_VALOR",
-                            "PERE_IMPORTE_B_TIPO",
-                            "PERE_IMPORT_X_MD",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -22139,21 +22903,20 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "PERE_NUMERO_COMPROBANTE",
                             "PERE_FECHA_DE_LA_FACTURA",
                             "PERE_RAZON_SOCIAL",
                             "PERE_CUIT",
                             "PERE_NRO_IIBB",
+                            "PERE_IMPORTE_MD",
+                            "PERE_TIPO_DE_VALOR",
+                            "PERE_IMPORTE_B_TIPO",
+                            "PERE_IMPORT_X_MD",
+                            "PERE_NUMERO_COMPROBANTE",
                             "PERE_NETO",
                             "PERE_IVA",
                             "PERE_OTROS",
                             "PERE_IMPORTE",
-                            "PERE_IMPORTE_MD",
-                            "PERE_SEPA_OTROS",
                             "PERE_PORCENTAJE",
-                            "PERE_TIPO_DE_VALOR",
-                            "PERE_IMPORTE_B_TIPO",
-                            "PERE_IMPORT_X_MD",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -23112,10 +23875,11 @@
                             "PERE_CUIT",
                             "PERE_NRO_IIBB",
                             "PERE_NETO",
-                            "PERE_IMPORTE",
                             "PERE_IMPORTE_MONEDA_DEFAU",
                             "PERE_ALICUOTA",
                             "PERE_FECHA_DE_LA_FACTURA",
+                            "CLIE_ID_CLIE",
+                            "PERE_IMPORTE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -23183,10 +23947,11 @@
                             "PERE_CUIT",
                             "PERE_NRO_IIBB",
                             "PERE_NETO",
-                            "PERE_IMPORTE",
                             "PERE_IMPORTE_MONEDA_DEFAU",
                             "PERE_ALICUOTA",
                             "PERE_FECHA_DE_LA_FACTURA",
+                            "CLIE_ID_CLIE",
+                            "PERE_IMPORTE",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -28361,6 +29126,9 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "VACO_TOTAL_HALLAZGOS",
+                            "VACO_TOTAL_CONTABLE",
+                            "VACO_TOTAL_GESTION",
                             "VACO_RESULTADO",
                             "VACO_COLOR",
                             "VACO_NOTAS",
@@ -28369,11 +29137,6 @@
                             "VACO_SALDO_EJERCICIO_CONT",
                             "VACO_SALDO_EJERCICIO_GEST",
                             "VACO_SALDO_ASIENTOS_MANUA",
-                            "VACO_HALLAZGOS",
-                            "VACO_TOTAL_HALLAZGOS",
-                            "VACO_TOTALES",
-                            "VACO_TOTAL_CONTABLE",
-                            "VACO_TOTAL_GESTION",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -28437,6 +29200,9 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "VACO_TOTAL_HALLAZGOS",
+                            "VACO_TOTAL_CONTABLE",
+                            "VACO_TOTAL_GESTION",
                             "VACO_RESULTADO",
                             "VACO_COLOR",
                             "VACO_NOTAS",
@@ -28445,11 +29211,6 @@
                             "VACO_SALDO_EJERCICIO_CONT",
                             "VACO_SALDO_EJERCICIO_GEST",
                             "VACO_SALDO_ASIENTOS_MANUA",
-                            "VACO_HALLAZGOS",
-                            "VACO_TOTAL_HALLAZGOS",
-                            "VACO_TOTALES",
-                            "VACO_TOTAL_CONTABLE",
-                            "VACO_TOTAL_GESTION",
                             "id",
                             "DESC_ESTADO",
                             "AUDI_USUA_ALTA",
@@ -30214,6 +30975,12 @@
                       "description": "Foreign key to Liquidación de impuestos",
                       "nullable": true
                     },
+                    "LRYP_ID_LRYP": {
+                      "title": "Liq. ret. y percep.",
+                      "type": "integer",
+                      "description": "Liquidacion de retenciones y percepciones emitidas que incluyo esta retencion.\nForeign key to Liq Retenciones y Percepciones emitidas",
+                      "nullable": true
+                    },
                     "CASH_ID_CASH": {
                       "title": "Movimiento de fondo",
                       "type": "integer",
@@ -30637,18 +31404,17 @@
                       "properties": {
                         "field": {
                           "enum": [
-                            "RERE_NUMERO_COMPROBANTE",
-                            "RERE_FECHA",
+                            "CLIE_ID_CLIE",
                             "RERE_CUIT",
                             "RERE_NRO_IIBB",
-                            "RERE_SEP_MONTOS",
+                            "RERE_NUMERO_COMPROBANTE",
+                            "RERE_FECHA",
                             "RERE_NETO_FACTURA",
                             "RERE_NETO_TOTAL",
                             "RERE_MONTO_RETENIDO_ANTER",
                             "RERE_MINIMO_NO_IMPONIBLE",
                             "RERE_IMPORTE_IVA",
                             "RERE_IMPORTE_OTROS",
-                            "RERE_COMPLETAR_PORCENTAJE",
                             "RERE_PORCENTAJE_A_RETENER",
                             "RERE_IMPORTE",
                             "RERE_NO_SUJETO",
@@ -30715,18 +31481,17 @@
                       "properties": {
                         "columnName": {
                           "enum": [
-                            "RERE_NUMERO_COMPROBANTE",
-                            "RERE_FECHA",
+                            "CLIE_ID_CLIE",
                             "RERE_CUIT",
                             "RERE_NRO_IIBB",
-                            "RERE_SEP_MONTOS",
+                            "RERE_NUMERO_COMPROBANTE",
+                            "RERE_FECHA",
                             "RERE_NETO_FACTURA",
                             "RERE_NETO_TOTAL",
                             "RERE_MONTO_RETENIDO_ANTER",
                             "RERE_MINIMO_NO_IMPONIBLE",
                             "RERE_IMPORTE_IVA",
                             "RERE_IMPORTE_OTROS",
-                            "RERE_COMPLETAR_PORCENTAJE",
                             "RERE_PORCENTAJE_A_RETENER",
                             "RERE_IMPORTE",
                             "RERE_NO_SUJETO",
@@ -31352,6 +32117,7 @@
                     "RERE_NRO_DE_FACTURAS": {
                       "title": "Nro de Facturas",
                       "type": "string",
+                      "description": "Muestra el número de las facturas asociadas al recibo.",
                       "nullable": true
                     },
                     "CLIE_ID_CLIE": {
@@ -31737,14 +32503,14 @@
                         "field": {
                           "enum": [
                             "RERE_FECHA_DEL_RECIBO",
-                            "RERE_NUMERO_COMPROBANTE",
-                            "RERE_FECHA_EMISION",
                             "RERE_NRO_DE_FACTURAS",
                             "RERE_CUIT",
                             "RERE_NRO_IIBB",
                             "RERE_NETO",
-                            "RERE_IMPORTE",
                             "RERE_ALICUOTA",
+                            "RERE_NUMERO_COMPROBANTE",
+                            "RERE_FECHA_EMISION",
+                            "RERE_IMPORTE",
                             "RERE_ARHC_ID_3801",
                             "id",
                             "DESC_ESTADO",
@@ -31810,14 +32576,14 @@
                         "columnName": {
                           "enum": [
                             "RERE_FECHA_DEL_RECIBO",
-                            "RERE_NUMERO_COMPROBANTE",
-                            "RERE_FECHA_EMISION",
                             "RERE_NRO_DE_FACTURAS",
                             "RERE_CUIT",
                             "RERE_NRO_IIBB",
                             "RERE_NETO",
-                            "RERE_IMPORTE",
                             "RERE_ALICUOTA",
+                            "RERE_NUMERO_COMPROBANTE",
+                            "RERE_FECHA_EMISION",
+                            "RERE_IMPORTE",
                             "RERE_ARHC_ID_3801",
                             "id",
                             "DESC_ESTADO",
