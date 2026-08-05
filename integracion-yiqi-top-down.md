@@ -41,27 +41,29 @@ Esta cobertura es amplia y suficiente para diseñar integraciones horizontales (
 - Hay servidor base definido (`https://api.yiqi.com.ar/api/public` para módulos funcionales).
 
 ### Brechas detectadas
-- El spec de Seguridad (`Security.api.json`) define `/token`, pero no declara `securitySchemes`.
+- ~~El spec de Seguridad (`Security.api.json`) define `/token`, pero no declara `securitySchemes`.~~ Resuelto: ya declara `bearerAuth` y lo aplica a las operaciones que lo requieren.
 - Parte de los metadatos de operaciones están incompletos (descripciones/operationId vacíos en algunos casos).
 - Falta una receta de onboarding técnico en formato “copiar y pegar” para empezar rápido.
 - Falta explicitar en todos los documentos la regla operativa oficial para `schemaId` y healthcheck post-login.
 
 ## 4) Nivel de autenticación y sesión
 
-Hay un flujo explícito de obtención de token via `POST /token` con `application/x-www-form-urlencoded` (`username`, `password`, `grant_type=password`) y respuesta con `access_token`, `token_type`, `expires_in`.
+Hay un flujo explícito de obtención de token via `POST /token` con `application/x-www-form-urlencoded` (`username`, `password`, `grant_type=password`) y respuesta con `access_token`, `token_type`, `expires_in` y `refresh_token`.
 
 Esto es suficiente para implementar login en integraciones server-to-server o backend-for-frontend.
 
 Definiciones operativas vigentes:
-- No hay refresh token: cuando expira la sesión, se debe reloguear.
-- Healthcheck canónico: `GET /accountapi/GetLoginInformation`.
+- **Sí hay refresh token.** El access token es de vida corta; al vencer se renueva con `POST /token` y `grant_type=refresh_token&refresh_token=<token>`, sin reenviar credenciales. La duración se lee de `expires_in`, no se hardcodea.
+- El refresh token **rota**: cada uso devuelve uno nuevo y el anterior deja de servir, así que hay que persistir el último. Dura 14 días.
+- Límite conocido: **un solo refresh token vivo por usuario**. Un login nuevo invalida el anterior, así que procesos que compartan un mismo usuario de integración se desloguean entre sí — usar un usuario por proceso.
+- En `https://apilegacy.yiqi.com.ar` (proyectos no homologados) no hay refresh token: ahí sí el recambio es por relogin.
+- Healthcheck canónico: `GET /api/accountapi/GetLoginInformation`.
 - `schemaId` primario: tomarlo de `GetLoginInformation`.
-- `schemaId` complementario: usar `GET /schemasapi/GetAvailable` cuando el usuario tenga acceso a múltiples esquemas.
+- `schemaId` complementario: usar `GET /api/schemasapi/GetAvailable` cuando el usuario tenga acceso a múltiples esquemas.
 
 Mejoras recomendadas para reducir errores de implementación:
-- Documentar claramente que no existe refresh token y que el recambio es por relogin.
 - Estandarizar dónde enviar el bearer (header `Authorization`).
-- Incluir ejemplos de errores 401/403 y estrategia de relogin automático.
+- Incluir ejemplos de errores 401/403 y estrategia de renovación automática por refresh token.
 
 ## 5) Nivel de implementación (MVP real)
 

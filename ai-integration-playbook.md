@@ -47,9 +47,12 @@ Estas reglas deben considerarse fuente de verdad al construir recetas para bots:
    - Pueden existir esquemas de test por cliente, pero no cambia la URL base.
 
 2. **Autenticación**
-   - Obtener token con `POST /token` en `Security.api.json`.
+   - Obtener token con `POST /token` en `Security.api.json` (`grant_type=password`).
    - Enviar token como `Authorization: Bearer <token>`.
-   - **No hay refresh token**: al vencer, se debe reloguear.
+   - **Sí hay refresh token.** El login devuelve `access_token` (corto) y `refresh_token`. Al vencer el access token, renovar con `POST /token` y `grant_type=refresh_token&refresh_token=<token>`, sin reenviar credenciales. Leer la duración de `expires_in`, no hardcodearla.
+   - El refresh token **rota**: cada uso devuelve uno nuevo y el anterior deja de servir. Persistir siempre el último. Dura 14 días.
+   - Límite a tener en cuenta al diseñar: **un solo refresh token vivo por usuario**. Un login nuevo invalida el anterior, así que varios procesos con el mismo usuario se desloguean entre sí — usar un usuario de integración por proceso.
+   - En `https://apilegacy.yiqi.com.ar` (proyectos no homologados) no hay refresh token: ahí el recambio es por relogin.
 
 3. **Healthcheck canónico post-login**
    - Endpoint oficial: `GET /accountapi/GetLoginInformation`.
@@ -73,7 +76,7 @@ Usar algo como:
 
 > "Quiero que construyas una app [web/móvil/backend] que se conecte a YiQi ERP. Usa `modules.json` para descubrir módulos y las specs OpenAPI para generar cliente API tipado. Implementa autenticación con bearer token, manejo de refresh/login, reintentos con backoff, logging y validaciones. Empezá con este flujo: login, obtener clientes, consultar stock de un SKU y crear un pedido de venta. Mostrame estructura de carpetas, variables de entorno, scripts de arranque y tests de integración con mocks." 
 
-> "Quiero que construyas una app [web/móvil/backend] que se conecte a YiQi ERP. Usa `modules.json` para descubrir módulos y las specs OpenAPI para generar cliente API tipado. Implementa autenticación con bearer token (sin refresh token: si vence, reloguear), healthcheck con `GetLoginInformation`, resolución de `schemaId` desde ese endpoint y fallback con `GetAvailableSchemas`. Empezá con este flujo: login, healthcheck, consultar disponibilidad de stock de un SKU. Mostrame estructura de carpetas, variables de entorno, scripts de arranque y tests de integración con mocks." 
+> "Quiero que construyas una app [web/móvil/backend] que se conecte a YiQi ERP. Usa `modules.json` para descubrir módulos y las specs OpenAPI para generar cliente API tipado. Implementa autenticación con bearer token y renovación por `refresh_token` rotativo (cada uso devuelve uno nuevo; persistí el último), healthcheck con `GetLoginInformation`, resolución de `schemaId` desde ese endpoint y fallback con `GetAvailableSchemas`. Empezá con este flujo: login, healthcheck, consultar disponibilidad de stock de un SKU. Mostrame estructura de carpetas, variables de entorno, scripts de arranque y tests de integración con mocks." 
 
 ## 4) Aplicaciones externas posibles (y validación conceptual)
 

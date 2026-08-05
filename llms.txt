@@ -32,7 +32,11 @@ Reglas operativas para agentes (fuente rapida):
 - Base URL unica: https://api.yiqi.com.ar
 - Login: POST /token (Security.api.json)
 - Header de autenticacion: Authorization: Bearer <token>
-- Politica de sesion: no hay refresh token; al vencer, relogin
+- Politica de sesion: el login devuelve access_token + refresh_token; al vencer el access_token, renovar con POST /token grant_type=refresh_token&refresh_token=<token> (no relogin)
+- Duracion del access_token: leerla de expires_in en la respuesta, no hardcodearla
+- El refresh_token ROTA: cada uso devuelve uno nuevo y el anterior deja de servir; persistir siempre el ultimo. Dura 14 dias
+- Limite: hay un solo refresh_token vivo por usuario, un login nuevo invalida el anterior. Si varios procesos comparten el mismo usuario se desloguean entre ellos: usar un usuario por proceso
+- En https://apilegacy.yiqi.com.ar no hay refresh token; ahi el recambio es por relogin
 - Healthcheck canonico: GET /accountapi/GetLoginInformation
 - Regla de schemaId: usar schemaId de GetLoginInformation como metodo primario
 - Fallback de schemaId: GET /schemasapi/GetAvailable

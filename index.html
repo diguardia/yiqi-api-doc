@@ -554,7 +554,9 @@ html[data-theme="light"] .hero-band{
     </div>
     <div class="info-body">
       <p><strong>Autenticación general:</strong> en <em>Seguridad</em> hay un único endpoint para obtener el token usando un usuario de YiQi. Este token se reutiliza en el resto de los módulos enviándolo como <code>Bearer</code> en el header <code>Authorization</code>.</p>
-      <p><strong>Política de sesión:</strong> actualmente no hay refresh token. Cuando el token expira, se debe volver a autenticar con <code>/token</code>.</p>
+      <p><strong>Política de sesión:</strong> el login (<code>grant_type=password</code>) devuelve un <code>access_token</code> de vida corta y además un <code>refresh_token</code>. Cuando el access token expira, se pide uno nuevo con <code>grant_type=refresh_token</code>, sin volver a mandar usuario y contraseña. Guiate siempre por el <code>expires_in</code> de la respuesta en vez de hardcodear la duración.</p>
+      <p><strong>El refresh token rota:</strong> cada uso devuelve uno nuevo y el anterior deja de servir, así que hay que persistir el último. Dura 14 días. Y tiene un límite importante: <strong>hay un solo refresh token vivo por usuario</strong>, o sea que un login nuevo invalida el anterior. Si varios procesos comparten el mismo usuario de integración se van a desloguear entre ellos — conviene un usuario por proceso.</p>
+      <p>En <code>https://apilegacy.yiqi.com.ar</code> esto no aplica: ahí no hay refresh token y el recambio es por relogin.</p>
       <div class="base-urls">
         <div class="base-urls-title">URLs base</div>
         <table class="base-urls-table" aria-label="Diferencia de URLs base por módulo">

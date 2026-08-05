@@ -2,25 +2,36 @@
   "openapi": "3.0.1",
   "info": {
     "title": "YiQi ERP - Seguridad",
-    "version": "0"
+    "version": "0",
+    "description": "Autenticación y datos de sesión.\n\nA diferencia del resto de los módulos, estos endpoints **no cuelgan de `/api/public`**: van contra la raíz del host. Por eso los servers de este archivo no llevan ese prefijo.\n\n**Producción** (`https://api.yiqi.com.ar`) es la API nueva. **Legacy** (`https://apilegacy.yiqi.com.ar`) es la API anterior, para proyectos que todavía no se homologaron contra la nueva. Los tres endpoints existen en las dos; donde el comportamiento difiere está aclarado en cada operación."
   },
   "servers": [
     {
-      "url": "https://api.yiqi.com.ar/api/public",
+      "url": "https://api.yiqi.com.ar",
       "description": "production"
     },
     {
-      "url": "https://yiqiapi.azurewebsites.net/api/public",
-      "description": "beta"
+      "url": "https://apilegacy.yiqi.com.ar",
+      "description": "legacy (proyectos no homologados contra la API nueva)"
     }
   ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Token obtenido en `POST /token`. Se manda como `Authorization: Bearer <access_token>`."
+      }
+    }
+  },
   "paths": {
     "/token": {
       "summary": "Get a valid bearer token",
       "post": {
-        "summary": "",
-        "description": "",
-        "operationId": "",
+        "summary": "Get a bearer token.",
+        "description": "Emite el token de acceso que consume el resto de la API.\n\nEl body va **form-urlencoded** (`application/x-www-form-urlencoded`), no JSON.\n\n**En producción** el `access_token` es de vida corta y viene acompañado de un `refresh_token`: cuando expira, se pide uno nuevo con `grant_type=refresh_token` en vez de repetir usuario y contraseña. Usá siempre el `expires_in` de la respuesta para saber cuánto dura; no lo hardcodees.\n\n**En legacy** no hay `refresh_token`: el token es de larguísima duración y la respuesta trae además `userName`, `.issued` y `.expires`.\n\nEste endpoint es el único que no requiere token.",
+        "operationId": "GetToken",
         "requestBody": {
           "required": true,
           "content": {
@@ -28,23 +39,29 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "username",
-                  "password",
                   "grant_type"
                 ],
                 "properties": {
+                  "grant_type": {
+                    "type": "string",
+                    "description": "`password` para autenticar con usuario y contraseña. `refresh_token` para renovar un token vencido sin volver a mandar credenciales (solo en producción).",
+                    "enum": [
+                      "password",
+                      "refresh_token"
+                    ],
+                    "example": "password"
+                  },
                   "username": {
                     "type": "string",
-                    "description": "A valid e-mail"
+                    "description": "A valid e-mail. Requerido con `grant_type=password`."
                   },
                   "password": {
                     "type": "string",
-                    "description": "user password"
+                    "description": "user password. Requerido con `grant_type=password`."
                   },
-                  "grant_type": {
+                  "refresh_token": {
                     "type": "string",
-                    "description": "password",
-                    "example": "password"
+                    "description": "Requerido con `grant_type=refresh_token`. Es el que devolvió el login anterior. Rota en cada uso: guardá el nuevo que viene en la respuesta."
                   }
                 }
               }
@@ -56,16 +73,76 @@
             "description": "A valid token",
             "content": {
               "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string"
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "example": "Bearer"
+                    },
+                    "expires_in": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "Segundos de validez del access_token."
+                    },
+                    "refresh_token": {
+                      "type": "string",
+                      "description": "Solo en producción. En legacy no viaja."
+                    }
+                  }
+                },
                 "examples": {
-                  "A sample token (this is just an example, don´t try to use it)": {
-                    "value": "{\n  \"access_token\": \"sdfsdfsdfsdfsdfPFhfVAv0mTa-B9wN9nhK6QuB8jECFM4j4HxL26s4vfIahTIJa5c1rJ7qhtLtaDfwtnYViuixZzvQcJq8tmw2OkDQSFsXXtzAcZEHbXiBH2svEXfj-o9ih4j4pS8ibeDdH8g_RhI363BUw6yCepmhYqRxkTubDOf885E5p-oSn9sjhxGroTPOHL3QxeUHZiW7QkgP1YN4_jQresdfsdfsdfsdf9Y-ZUWCBVfTkki6dfLOZHUBa70Ikmj4wrEG2-hG5dEdreGVs53O2BzaoU_r2F-fu0T8nfN36LTFUK_KtKGjB3ZkNOssljZE25mrKJw5jHkykrTyNgsmNySilAEw5uOaho8wL6nXX41ktgiFrvgRpFwYw_TNYy7_M6-4z3Jr0TItqZsSgpfsA-UrQF3J8fc24x-n3enSwTH3qi20rn0B4RS0RLmTsah3ich-2rWeTDbMvKCpuA\",\n  \"token_type\": \"bearer\",\n  \"expires_in\": 120959999,\n  \"userName\": \"xxx@test.com\",\n  \".issued\": \"Mon, 30 May 2022 23:29:34 GMT\",\n  \".expires\": \"Mon, 30 Mar 2026 23:29:34 GMT\"\n}"
+                  "production": {
+                    "summary": "Respuesta de https://api.yiqi.com.ar (token de ejemplo, no sirve)",
+                    "value": {
+                      "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoieHh4QHRlc3QuY29tIiwiZXhwIjoxNzg1MDAwMDAwLCJpc3MiOiJZaVFpLkFQSSIsImF1ZCI6IllpUWkuQVBJIn0.ZmFrZS1zaWduYXR1cmUtdGhpcy1pcy1qdXN0LWFuLWV4YW1wbGU",
+                      "token_type": "Bearer",
+                      "expires_in": 86400,
+                      "refresh_token": "8f3c1d92a7b64e0f9c25d1b7e4a08f36"
+                    }
+                  },
+                  "legacy": {
+                    "summary": "Respuesta de https://apilegacy.yiqi.com.ar (token de ejemplo, no sirve)",
+                    "value": {
+                      "access_token": "sdfsdfsdfsdfsdfPFhfVAv0mTa-B9wN9nhK6QuB8jECFM4j4HxL26s4vfIahTIJa5c1rJ7qhtLtaDfwtnYViuixZzvQcJq8tmw2OkDQSFsXXtzAcZEHbXiBH2svEXfj-o9ih4j4pS8ibeDdH8g_RhI363BUw6yCepmhYqRxkTubDOf885E5p-oSn9sjhxGroTPOHL3QxeUHZiW7QkgP1YN4_jQresdfsdfsdfsdf9Y-ZUWCBVfTkki6dfLOZHUBa70Ikmj4wrEG2-hG5dEdreGVs53O2BzaoU_r2F-fu0T8nfN36LTFUK_KtKGjB3ZkNOssljZE25mrKJw5jHkykrTyNgsmNySilAEw5uOaho8wL6nXX41ktgiFrvgRpFwYw_TNYy7_M6-4z3Jr0TItqZsSgpfsA-UrQF3J8fc24x-n3enSwTH3qi20rn0B4RS0RLmTsah3ich-2rWeTDbMvKCpuA",
+                      "token_type": "bearer",
+                      "expires_in": 120959999,
+                      "userName": "xxx@test.com",
+                      ".issued": "Mon, 30 May 2022 23:29:34 GMT",
+                      ".expires": "Mon, 30 Mar 2026 23:29:34 GMT"
+                    }
                   }
                 }
               }
             }
           },
+          "400": {
+            "description": "Falta `grant_type` o no es uno de los soportados.\n\n**En legacy este también es el código de usuario o contraseña incorrectos** (`invalid_grant`); en producción ese caso devuelve 401.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "invalid_request",
+                  "error_description": "grant_type must be 'password', 'refresh_token' or 'client_credentials'"
+                }
+              }
+            }
+          },
           "401": {
-            "description": "Invalid username or password"
+            "description": "Invalid username or password, o refresh_token vencido/ya usado. Solo en producción: en legacy este caso da 400.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "invalid_grant",
+                  "error_description": "Invalid username or password"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Demasiados intentos desde la misma IP en poco tiempo (protección de fuerza bruta). Solo en producción."
           }
         }
       }
@@ -74,9 +151,25 @@
       "summary": "Get current login information",
       "get": {
         "summary": "Get login information.",
-        "description": "Returns current user login information for the provided schema.",
-        "operationId": "GetLoginInformation"
-        ,
+        "description": "Devuelve los datos de sesión del usuario del token: su id, nombre, y el esquema resuelto.\n\nSi no se manda `schemaId`, se resuelve el esquema activo del login. Si ese usuario no tiene ninguno, la respuesta es **404** — no es que el endpoint no exista.",
+        "operationId": "GetLoginInformation",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "required": false,
+            "description": "Esquema sobre el que resolver los datos. Si se omite, se usa el esquema activo del login (ver `GET /api/schemasapi/GetAvailable` para los disponibles).",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Login information",
@@ -107,8 +200,24 @@
               }
             }
           },
+          "400": {
+            "description": "El `schemaId` enviado no existe, o el usuario del token no tiene una instancia de usuario en ese esquema."
+          },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "404": {
+            "description": "No se mandó `schemaId` y el login no tiene ningún esquema activo.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "No active schema found for user 'xxx@test.com'"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Se superó el límite de requests del usuario. Solo en producción."
           }
         }
       }
@@ -117,8 +226,13 @@
       "summary": "Get available schemas for current user",
       "get": {
         "summary": "Get available schemas.",
-        "description": "Returns schemas the logged-in user can access.",
+        "description": "Devuelve los esquemas a los que el usuario del token tiene acceso. El `id` de cada uno es el que se manda como `schemaId` en el resto de la API.",
         "operationId": "GetAvailableSchemas",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Available schemas",
@@ -130,8 +244,8 @@
                     "type": "object",
                     "properties": {
                       "id": {
-                        "type": "integer",
-                        "format": "int32"
+                        "type": "string",
+                        "description": "Identificador del esquema. Viaja como string aunque su contenido sea numérico."
                       },
                       "name": {
                         "type": "string"
@@ -141,12 +255,22 @@
                       }
                     }
                   }
-                }
+                },
+                "example": [
+                  {
+                    "id": "1491",
+                    "name": "Mi Empresa",
+                    "imgName": "MiEmpresa"
+                  }
+                ]
               }
             }
           },
           "401": {
             "description": "Missing or invalid token"
+          },
+          "429": {
+            "description": "Se superó el límite de requests del usuario. Solo en producción."
           }
         }
       }
