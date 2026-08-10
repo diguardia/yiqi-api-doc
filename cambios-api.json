@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "updatedAt": "2026-08-10",
+  "entries": [
+    {
+      "id": "2026-08-10-query-filtros-ids-relacionados",
+      "date": "2026-08-10",
+      "type": "mejora",
+      "breaking": false,
+      "title": "Filtros de /query por ID de entidades relacionadas",
+      "summary": "Los endpoints POST /ENTIDAD/query ahora aceptan los IDs físicos de las entidades relacionadas en filters[].columnName.",
+      "details": [
+        "Ahora se puede filtrar directamente por una relación usando su campo físico, por ejemplo CLIE_ID_CLIE.",
+        "Estos IDs se agregaron únicamente a las columnas admitidas por filters[].columnName.",
+        "Los IDs relacionados no se agregaron a columns y, por lo tanto, esta mejora no habilita seleccionarlos como columnas de salida ni ordenarlos.",
+        "Los campos disponibles dependen de cada entidad y están enumerados en su especificación OpenAPI."
+      ],
+      "scope": {
+        "endpoints": ["POST /ENTIDAD/query"],
+        "modules": [
+          "Calidad",
+          "Clientes y proveedores",
+          "Comercial / CRM",
+          "Compras",
+          "Contabilidad",
+          "Editorial",
+          "Finanzas",
+          "Gestión",
+          "Mensajería",
+          "Parámetros",
+          "POS",
+          "Producción",
+          "RRHH",
+          "Stock",
+          "Ventas",
+          "YiQi Services"
+        ]
+      },
+      "example": {
+        "filters": [
+          {
+            "columnName": "CLIE_ID_CLIE",
+            "operator": "=",
+            "value": 123
+          }
+        ]
+      }
+    }
+  ]
+}
