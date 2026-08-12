@@ -1155,7 +1155,7 @@
                             "AUDI_FECHA_MODIF"
                           ],
                           "type": "string",
-                          "description": "Physical column name (required). Available columns from entity view."
+                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name."
                         },
                         "title": {
                           "type": "string",
@@ -1223,7 +1223,7 @@
                             "MEDP_ID_MEDP"
                           ],
                           "type": "string",
-                          "description": "Column name to filter (required). Available columns from entity view, plus the physical id of related entities (e.g. CLIE_ID_CLIE) even though those aren't offered in `columns` - filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
+                          "description": "Column name to filter (required). Available columns from `columns` (entity view columns plus the raw id of Usuario-typed attributes), plus the physical id of related entities (e.g. CLIE_ID_CLIE) which - unlike Usuario ids - are filter-only: filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
                         },
                         "operator": {
                           "enum": [
@@ -3240,7 +3240,7 @@
                             "AUDI_FECHA_MODIF"
                           ],
                           "type": "string",
-                          "description": "Physical column name (required). Available columns from entity view."
+                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name."
                         },
                         "title": {
                           "type": "string",
@@ -3314,7 +3314,7 @@
                             "PEDI_ID_PEDI"
                           ],
                           "type": "string",
-                          "description": "Column name to filter (required). Available columns from entity view, plus the physical id of related entities (e.g. CLIE_ID_CLIE) even though those aren't offered in `columns` - filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
+                          "description": "Column name to filter (required). Available columns from `columns` (entity view columns plus the raw id of Usuario-typed attributes), plus the physical id of related entities (e.g. CLIE_ID_CLIE) which - unlike Usuario ids - are filter-only: filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
                         },
                         "operator": {
                           "enum": [
@@ -3505,7 +3505,7 @@
         "tags": [
           "Mensaje de Pedido"
         ],
-        "description": "Change an instance's state",
+        "description": "Change an instance's state. Some target states require additional attributes to already have a value - see the optional request body. Only the attribute(s) required by the chosen `state` are accepted there; sending anything else returns 400.",
         "parameters": [
           {
             "name": "id",
@@ -3535,6 +3535,23 @@
             }
           }
         ],
+        "requestBody": {
+          "description": "Optional. Only needed when the chosen `state` requires specific attributes to have a value - existing callers that omit it keep working exactly as before.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "MEDP_MENSAJE_VEND": {
+                    "title": "Mensaje",
+                    "type": "string",
+                    "description": "Required when transitioning to state 'Respondiendo'. Rejected for any other target state."
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "State changed",
@@ -3553,7 +3570,7 @@
             }
           },
           "400": {
-            "description": "Bad request - id not greater than 0, state empty, or the transition is not allowed",
+            "description": "Bad request - id not greater than 0, state empty, the transition is not allowed, or the body includes a field not required by the target state",
             "content": {
               "application/json": {
                 "schema": {
@@ -5730,7 +5747,7 @@
                             "AUDI_FECHA_MODIF"
                           ],
                           "type": "string",
-                          "description": "Physical column name (required). Available columns from entity view."
+                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name."
                         },
                         "title": {
                           "type": "string",
@@ -5809,7 +5826,7 @@
                             "MSDP_ID_MSDP"
                           ],
                           "type": "string",
-                          "description": "Column name to filter (required). Available columns from entity view, plus the physical id of related entities (e.g. CLIE_ID_CLIE) even though those aren't offered in `columns` - filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
+                          "description": "Column name to filter (required). Available columns from `columns` (entity view columns plus the raw id of Usuario-typed attributes), plus the physical id of related entities (e.g. CLIE_ID_CLIE) which - unlike Usuario ids - are filter-only: filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
                         },
                         "operator": {
                           "enum": [
@@ -6048,7 +6065,7 @@
             }
           },
           "400": {
-            "description": "Bad request - id not greater than 0, state empty, or the transition is not allowed",
+            "description": "Bad request - id not greater than 0, state empty, the transition is not allowed, or the body includes a field not required by the target state",
             "content": {
               "application/json": {
                 "schema": {
@@ -8090,7 +8107,7 @@
                             "AUDI_FECHA_MODIF"
                           ],
                           "type": "string",
-                          "description": "Physical column name (required). Available columns from entity view."
+                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name."
                         },
                         "title": {
                           "type": "string",
@@ -8165,7 +8182,7 @@
                             "PUBL_ID_PUBL"
                           ],
                           "type": "string",
-                          "description": "Column name to filter (required). Available columns from entity view, plus the physical id of related entities (e.g. CLIE_ID_CLIE) even though those aren't offered in `columns` - filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
+                          "description": "Column name to filter (required). Available columns from `columns` (entity view columns plus the raw id of Usuario-typed attributes), plus the physical id of related entities (e.g. CLIE_ID_CLIE) which - unlike Usuario ids - are filter-only: filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
                         },
                         "operator": {
                           "enum": [
@@ -8356,7 +8373,7 @@
         "tags": [
           "Mensaje de Publicacion"
         ],
-        "description": "Change an instance's state",
+        "description": "Change an instance's state. Some target states require additional attributes to already have a value - see the optional request body. Only the attribute(s) required by the chosen `state` are accepted there; sending anything else returns 400.",
         "parameters": [
           {
             "name": "id",
@@ -8386,6 +8403,23 @@
             }
           }
         ],
+        "requestBody": {
+          "description": "Optional. Only needed when the chosen `state` requires specific attributes to have a value - existing callers that omit it keep working exactly as before.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "MSDP_RESPUESTA": {
+                    "title": "Respuesta",
+                    "type": "string",
+                    "description": "Required when transitioning to state 'Crea mensaje'. Rejected for any other target state."
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "State changed",
@@ -8404,7 +8438,7 @@
             }
           },
           "400": {
-            "description": "Bad request - id not greater than 0, state empty, or the transition is not allowed",
+            "description": "Bad request - id not greater than 0, state empty, the transition is not allowed, or the body includes a field not required by the target state",
             "content": {
               "application/json": {
                 "schema": {

@@ -1,7 +1,93 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-10",
+  "updatedAt": "2026-08-12",
   "entries": [
+    {
+      "id": "2026-08-12-changestate-atributos-obligatorios",
+      "date": "2026-08-12",
+      "type": "mejora",
+      "breaking": false,
+      "title": "Atributos obligatorios en cambios de estado",
+      "summary": "Los endpoints POST /ENTIDAD/changestate ahora permiten enviar en el body los atributos que el estado destino exige como obligatorios.",
+      "details": [
+        "El body es opcional y solo debe enviarse cuando el estado destino requiere atributos adicionales; las integraciones que no lo necesitan continúan funcionando sin cambios.",
+        "Esta mejora permite completar atributos obligatorios aunque estén ocultos para el usuario por diseño y no puedan cargarse previamente mediante las operaciones habituales.",
+        "Cada especificación OpenAPI enumera en el request body los atributos admitidos y el estado para el cual son obligatorios.",
+        "Solo se aceptan los atributos requeridos por el estado indicado en el parámetro state. Enviar otros atributos produce una respuesta 400.",
+        "La mejora aplica a changestate individual; el contrato de changestatemultiple no incorpora este body."
+      ],
+      "scope": {
+        "endpoints": ["POST /ENTIDAD/changestate"],
+        "modules": [
+          "Calidad",
+          "Clientes y proveedores",
+          "Comercial / CRM",
+          "Compras",
+          "Contabilidad",
+          "Finanzas",
+          "Gestión",
+          "Mensajería",
+          "Parámetros",
+          "POS",
+          "Producción",
+          "RRHH",
+          "Stock",
+          "Ventas",
+          "YiQi Services"
+        ]
+      },
+      "example": {
+        "endpoint": "POST /COTIZACION_COMERCIAL/changestate?id=456&schemaId=1&state=Cambiando cotización",
+        "body": {
+          "COCO_NUEVA_COTIZ": 789
+        }
+      }
+    },
+    {
+      "id": "2026-08-12-query-filtro-id-usuario",
+      "date": "2026-08-12",
+      "type": "mejora",
+      "breaking": false,
+      "title": "Filtros de /query por ID de usuario",
+      "summary": "Los endpoints POST /ENTIDAD/query ahora permiten filtrar por el ID físico de los atributos de tipo Usuario.",
+      "details": [
+        "El ID físico del usuario puede usarse en filters[].columnName, por ejemplo ORDC_SOLICITADA_POR.",
+        "El nombre resuelto del usuario continúa disponible por separado, por ejemplo ORDC_SOLICITADA_POR_NOMBRE.",
+        "A diferencia de los IDs de otras entidades relacionadas, los IDs de atributos de tipo Usuario también están disponibles en columns y pueden solicitarse como datos de salida.",
+        "Los campos disponibles dependen de cada entidad y están enumerados en su especificación OpenAPI."
+      ],
+      "scope": {
+        "endpoints": ["POST /ENTIDAD/query"],
+        "modules": [
+          "Calidad",
+          "Clientes y proveedores",
+          "Comercial / CRM",
+          "Compras",
+          "Contabilidad",
+          "Editorial",
+          "Finanzas",
+          "Gestión",
+          "Mensajería",
+          "Parámetros",
+          "POS",
+          "Producción",
+          "RRHH",
+          "Stock",
+          "Ventas",
+          "YiQi Services"
+        ]
+      },
+      "example": {
+        "columns": ["ORDC_SOLICITADA_POR", "ORDC_SOLICITADA_POR_NOMBRE"],
+        "filters": [
+          {
+            "columnName": "ORDC_SOLICITADA_POR",
+            "operator": "=",
+            "value": 42
+          }
+        ]
+      }
+    },
     {
       "id": "2026-08-10-query-filtros-ids-relacionados",
       "date": "2026-08-10",
