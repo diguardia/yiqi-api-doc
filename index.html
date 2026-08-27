@@ -490,6 +490,46 @@ html[data-theme="light"] .hero-band{
   .mod-card{padding:14px}
   .theme-toggle{padding:6px 8px}
 }
+
+/* La tabla de URLs base desborda en mobile: las URLs no tienen espacios y
+   no wrappean. Scroll horizontal propio + corte por caracter. 27/08/2026. */
+.base-urls{overflow:hidden}
+.base-urls-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.base-urls-table{min-width:340px}
+.base-urls-table code{word-break:break-all;overflow-wrap:anywhere}
+
+/* ── Menu movil. 27/08/2026. Solo tokens de esta pagina. ── */
+.mobile-menu-btn{display:none;align-items:center;justify-content:center;
+  width:38px;height:38px;margin-left:4px;border-radius:10px;
+  border:1px solid var(--line);background:var(--bg-elev-2);color:var(--text);
+  cursor:pointer;transition:.15s ease}
+.mobile-menu-btn:hover{border-color:var(--line-strong);background:var(--bg-soft)}
+.mobile-menu-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;
+  stroke-width:2;stroke-linecap:round}
+.nav-overlay{position:fixed;inset:0;z-index:180;background:rgba(0,0,0,.55);
+  opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease}
+.nav-overlay.show{opacity:1;visibility:visible}
+.mobile-nav{position:fixed;top:0;right:0;z-index:190;
+  width:min(320px,86vw);height:100dvh;
+  background:var(--bg-elev);border-left:1px solid var(--line);
+  transform:translateX(100%);transition:transform .22s ease;
+  display:flex;flex-direction:column;overflow-y:auto}
+.mobile-nav.open{transform:translateX(0)}
+.mobile-nav-head{display:flex;align-items:center;justify-content:space-between;
+  height:var(--topbar-h);padding:0 16px;border-bottom:1px solid var(--line);flex-shrink:0}
+.mobile-nav-title{font:700 11px var(--mono);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted-2)}
+.mobile-nav-close{display:flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border-radius:9px;border:1px solid var(--line);
+  background:var(--bg-elev-2);color:var(--text);cursor:pointer}
+.mobile-nav-close svg{width:18px;height:18px;fill:none;stroke:currentColor;
+  stroke-width:2;stroke-linecap:round}
+.mobile-nav-links{display:flex;flex-direction:column;gap:2px;padding:12px}
+.mobile-nav-link{padding:12px 14px;border-radius:10px;font-size:15px;
+  color:var(--muted);text-decoration:none;transition:.15s ease}
+.mobile-nav-link:hover,.mobile-nav-link:focus-visible{color:var(--text);background:var(--bg-soft)}
+.mobile-nav-sep{height:1px;background:var(--line);margin:10px 4px}
+@media (max-width: 980px){ .mobile-menu-btn{display:inline-flex} }
 </style>
 </head>
 <body>
@@ -522,8 +562,37 @@ html[data-theme="light"] .hero-band{
       <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
     </button>
     <div class="user">SM</div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileNav">
+      <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
   </div>
 </header>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     Menu movil. 27/08/2026. La topbar escondia .nav-links a 980px sin
+     reemplazo: en telefono no habia forma de navegar. Repite los mismos
+     links de la topbar, con los tokens de esta pagina. Sin dependencias
+     del sitio comercial.
+     ══════════════════════════════════════════════════════════════════ -->
+<div class="nav-overlay" id="navOverlay"></div>
+<nav class="mobile-nav" id="mobileNav" aria-label="Navegación principal">
+  <div class="mobile-nav-head">
+    <span class="mobile-nav-title">API Docs</span>
+    <button class="mobile-nav-close" id="mobileNavClose" aria-label="Cerrar menú">
+      <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="mobile-nav-links">
+    <a class="mobile-nav-link" href="#">Inicio</a>
+    <a class="mobile-nav-link" href="#generalidades-endpoints">Generalidades</a>
+    <a class="mobile-nav-link" href="bitacora.html">Bitácora</a>
+    <a class="mobile-nav-link" href="view.html?url=Security.api.json" target="_blank" rel="noopener">Probar Swagger</a>
+    <a class="mobile-nav-link" href="modules.json" target="_blank" rel="noopener">Listado JSON</a>
+    <div class="mobile-nav-sep"></div>
+    <a class="mobile-nav-link" href="https://yiqi.com.ar/homologador" target="_blank" rel="noopener">Homologador</a>
+    <a class="mobile-nav-link" href="https://yiqi.com.ar" target="_blank" rel="noopener">Sitio de YiQi</a>
+  </div>
+</nav>
 
 <div class="hero-band">
   <div style="max-width:1100px;margin:0 auto">
@@ -534,7 +603,7 @@ html[data-theme="light"] .hero-band{
     <h1 class="hero-title">Índice completo de APIs<br>de <span>YiQi ERP</span></h1>
     <p class="hero-sub">
       Este portal reúne los <strong>módulos funcionales</strong> y sus especificaciones OpenAPI.
-      Podés buscar por tema y abrir el Swagger de cada módulo.
+      Puedes buscar por tema y abrir el Swagger de cada módulo.
     </p>
     <div class="search-row">
       <div class="search-wrap">
@@ -542,6 +611,7 @@ html[data-theme="light"] .hero-band{
         <input id="apiSearch" type="search" placeholder="Buscar módulo, keyword o dominio (ej.: ventas, auth, stock)" oninput="filterCards(this.value)"/>
       </div>
       <div class="count-badge" id="countBadge">16 módulos</div>
+      <button id="llmBtn" class="mod-action" type="button" onclick="copyForLLM()">Copiar para LLMs</button>
     </div>
   </div>
 </div>
@@ -555,12 +625,12 @@ html[data-theme="light"] .hero-band{
     </div>
     <div class="info-body">
       <p><strong>Autenticación general:</strong> en <em>Seguridad</em> hay un único endpoint para obtener el token usando un usuario de YiQi. Este token se reutiliza en el resto de los módulos enviándolo como <code>Bearer</code> en el header <code>Authorization</code>.</p>
-      <p><strong>Política de sesión:</strong> el login (<code>grant_type=password</code>) devuelve un <code>access_token</code> de vida corta y además un <code>refresh_token</code>. Cuando el access token expira, se pide uno nuevo con <code>grant_type=refresh_token</code>, sin volver a mandar usuario y contraseña. Guiate siempre por el <code>expires_in</code> de la respuesta en vez de hardcodear la duración.</p>
+      <p><strong>Política de sesión:</strong> el login (<code>grant_type=password</code>) devuelve un <code>access_token</code> de vida corta y además un <code>refresh_token</code>. Cuando el access token expira, se pide uno nuevo con <code>grant_type=refresh_token</code>, sin volver a mandar usuario y contraseña. Guíate siempre por el <code>expires_in</code> de la respuesta en vez de hardcodear la duración.</p>
       <p><strong>El refresh token rota:</strong> cada uso devuelve uno nuevo y el anterior deja de servir, así que hay que persistir el último. Dura 14 días. Y tiene un límite importante: <strong>hay un solo refresh token vivo por usuario</strong>, o sea que un login nuevo invalida el anterior. Si varios procesos comparten el mismo usuario de integración se van a desloguear entre ellos — conviene un usuario por proceso.</p>
       <p>En <code>https://apilegacy.yiqi.com.ar</code> esto no aplica: ahí no hay refresh token y el recambio es por relogin.</p>
       <div class="base-urls">
         <div class="base-urls-title">URLs base</div>
-        <table class="base-urls-table" aria-label="Diferencia de URLs base por módulo">
+        <div class="base-urls-scroll"><table class="base-urls-table" aria-label="Diferencia de URLs base por módulo">
           <thead>
             <tr>
               <th>Módulo</th>
@@ -577,18 +647,18 @@ html[data-theme="light"] .hero-band{
               <td><code>https://api.yiqi.com.ar/api/public</code></td>
             </tr>
           </tbody>
-        </table>
+        </table></div>
       </div>
       <ol class="info-steps">
-        <li>Obtené el token desde el módulo <strong>Seguridad</strong>.</li>
-        <li>Ejecutá <strong>GetLoginInformation</strong> como healthcheck canónico post-login.</li>
-        <li>Tomá <strong>schemaId</strong> desde esa respuesta (método primario).</li>
-        <li>Elegí un módulo desde el índice y abrí su Swagger.</li>
-        <li>Dentro del Swagger, expandí tags y operaciones.</li>
-        <li>Validá parámetros obligatorios, cuerpos de request y respuestas.</li>
+        <li>Obtén el token desde el módulo <strong>Seguridad</strong>.</li>
+        <li>Ejecuta <strong>GetLoginInformation</strong> como healthcheck canónico post-login.</li>
+        <li>Toma <strong>schemaId</strong> desde esa respuesta (método primario).</li>
+        <li>Elige un módulo desde el índice y abre su Swagger.</li>
+        <li>Dentro del Swagger, expande tags y operaciones.</li>
+        <li>Valida parámetros obligatorios, cuerpos de request y respuestas.</li>
       </ol>
-      <p><strong>Estructura común de los Swagger:</strong> la mayoría de entidades siguen un formato homogéneo (operaciones list/get/create/update/delete, payloads con estructura repetida y respuestas paginadas o de detalle). Si entendés un módulo, la curva de adopción del resto suele ser mucho más rápida.</p>
-      <p style="margin-top:10px"><strong>Novedades:</strong> consultá la <a class="info-link" href="bitacora.html">bitácora de cambios de la API</a>. Para bots/agentes, consumí <a class="info-link" href="modules.json" target="_blank" rel="noopener">modules.json</a> para descubrir el catálogo de specs y <a class="info-link" href="cambios-api.json" target="_blank" rel="noopener">cambios-api.json</a> para leer la bitácora de manera estructurada.</p>
+      <p><strong>Estructura común de los Swagger:</strong> la mayoría de entidades siguen un formato homogéneo (operaciones list/get/create/update/delete, payloads con estructura repetida y respuestas paginadas o de detalle). Si entiendes un módulo, la curva de adopción del resto suele ser mucho más rápida.</p>
+      <p style="margin-top:10px"><strong>Novedades:</strong> consulta la <a class="info-link" href="bitacora.html">bitácora de cambios de la API</a>. Para bots/agentes, consume <a class="info-link" href="modules.json" target="_blank" rel="noopener">modules.json</a> para descubrir el catálogo de specs y <a class="info-link" href="cambios-api.json" target="_blank" rel="noopener">cambios-api.json</a> para leer la bitácora de manera estructurada.</p>
     </div>
   </div>
 
@@ -598,7 +668,7 @@ html[data-theme="light"] .hero-band{
       <span class="info-head-label">Generalidades de endpoints por entidad</span>
     </div>
     <div class="info-body">
-      <p>En los Swagger de YiQi, las entidades repiten un <strong>patrón de endpoints</strong>. Si aprendés el de una entidad, podés reutilizar el mismo enfoque en casi todas.</p>
+      <p>En los Swagger de YiQi, las entidades repiten un <strong>patrón de endpoints</strong>. Si aprendés el de una entidad, puedes reutilizar el mismo enfoque en casi todas.</p>
 
       <p style="margin-top:8px"><strong>Resumen rápido:</strong> esta sección cubre <em>Search vs Query</em>, patrón común de endpoints, notas de smarties y recomendaciones de consumo responsable.</p>
 
@@ -938,6 +1008,33 @@ html[data-theme="light"] .hero-band{
 
   </div>
 
+  <!-- ══════════════════════════════════════════════════════════════════
+       Homologador. Importado de yiqi.com.ar/api-docs.html el 27/08/2026.
+
+       Va DESPUES de la grilla a proposito: el recorrido es construis
+       sobre la API, homologas, cargas tu caso. Si va arriba aparece
+       antes de que el dev sepa que va a construir.
+
+       Se dice que es obligatorio porque lo es: correrlo y entregar el
+       resultado es parte del proceso de admision al Marketplace. El
+       puntaje no bloquea solo — lo revisa una persona.
+       ══════════════════════════════════════════════════════════════════ -->
+  <div class="section-head" style="margin-top:32px">
+    <span class="section-title">Antes de publicar</span>
+  </div>
+
+  <div class="mod-card security">
+    <div class="mod-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+    </div>
+    <div class="mod-body">
+      <div class="mod-name">Homologador de seguridad</div>
+      <div class="mod-desc">Audita tu código contra más de 90 reglas de seguridad, te devuelve un puntaje y genera un prompt de IA para corregir lo que encuentra. Corre sobre tu repositorio: no subes nada a YiQi.</div>
+      <div class="mod-desc" style="margin-top:6px">Correrlo y entregar el resultado es parte del proceso para publicar en el Marketplace. El puntaje no aprueba ni rechaza por sí solo — lo revisa una persona junto con el resto de la solicitud.</div>
+    </div>
+    <a class="mod-action" href="https://yiqi.com.ar/homologador" target="_blank" rel="noopener">Abrir</a>
+  </div>
+
 </main>
 
 <footer class="page-footer">
@@ -1023,6 +1120,75 @@ document.getElementById('collapseGeneralidades')?.addEventListener('click', () =
 });
 
 document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ── Copiar para LLMs. Importado de yiqi.com.ar/api-docs.html el 27/08/2026.
+      El homologador no lleva data-search a proposito: no es un modulo y no
+      tiene que entrar en el listado que se copia. ── */
+function showSuccess(msg){
+  const btn=document.getElementById('llmBtn');
+  if(!btn) return;
+  const prev=btn.textContent;
+  btn.textContent=msg||'Copiado';
+  setTimeout(()=>{btn.textContent=prev;},1800);
+}
+
+function copyForLLM(){
+  const modules=[...document.querySelectorAll('.mod-card[data-search]')].map(c=>{
+    const name=c.querySelector('.mod-name').textContent.trim();
+    const desc=c.querySelector('.mod-desc')?.textContent.trim()||'';
+    const url=c.querySelector('.mod-action')?.href||'';
+    return `## ${name}\n${desc}\nSwagger: ${url}`;
+  }).join('\n\n');
+
+  const text=`# YiQi ERP — API Docs
+OpenAPI · REST
+URL: https://apidoc.yiqi.com.ar
+
+## Autenticación
+Obtén el token desde el módulo Seguridad con POST /token (grant_type=password) y envíalo como Bearer en el header Authorization para el resto de los módulos. La respuesta incluye un refresh_token: para renovar, llama al mismo /token con grant_type=refresh_token, sin credenciales. El refresh token rota (cada uso devuelve uno nuevo, el anterior deja de servir) y dura 14 dias. Hay un solo refresh token vivo por usuario: un login nuevo invalida el anterior, asi que conviene un usuario de integracion por proceso. Guíate por el expires_in de la respuesta en vez de fijar la duracion. URLs base: https://api.yiqi.com.ar para /token, https://api.yiqi.com.ar/api/public para los modulos ERP. En https://apilegacy.yiqi.com.ar no hay refresh token y el recambio es por relogin.
+
+## Antes de publicar
+Homologador de seguridad: audita el codigo contra mas de 90 reglas, devuelve un puntaje y genera un prompt de IA para corregir. Corre sobre tu repositorio. Correrlo y entregar el resultado es parte del proceso para publicar en el Marketplace. https://yiqi.com.ar/homologador
+
+## Módulos disponibles
+${modules}
+
+## Catálogo machine-readable
+https://apidoc.yiqi.com.ar/modules.json
+
+## Bitácora de cambios
+https://apidoc.yiqi.com.ar/cambios-api.json`;
+
+  navigator.clipboard.writeText(text).then(()=>{
+    showSuccess();
+  }).catch(()=>{
+    const blob=new Blob([text],{type:'text/plain'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='yiqi-api-docs-llm.txt';
+    a.click();
+    showSuccess('Descargado');
+  });
+}
+
+/* ── Menu movil. 27/08/2026. ── */
+(function(){
+  const btn=document.getElementById('mobileMenuBtn');
+  const nav=document.getElementById('mobileNav');
+  const ov=document.getElementById('navOverlay');
+  const cl=document.getElementById('mobileNavClose');
+  if(!btn||!nav||!ov) return;
+  const open=()=>{nav.classList.add('open');ov.classList.add('show');
+    btn.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';};
+  const close=()=>{nav.classList.remove('open');ov.classList.remove('show');
+    btn.setAttribute('aria-expanded','false');document.body.style.overflow='';};
+  btn.addEventListener('click',open);
+  ov.addEventListener('click',close);
+  cl&&cl.addEventListener('click',close);
+  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+  window.addEventListener('resize',()=>{if(window.innerWidth>980)close();});
+})();
 </script>
 </body>
 </html>
