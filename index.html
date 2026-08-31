@@ -558,6 +558,8 @@ html[data-theme="light"] .hero-band{
       <p><strong>Política de sesión:</strong> el login (<code>grant_type=password</code>) devuelve un <code>access_token</code> de vida corta y además un <code>refresh_token</code>. Cuando el access token expira, se pide uno nuevo con <code>grant_type=refresh_token</code>, sin volver a mandar usuario y contraseña. Guiate siempre por el <code>expires_in</code> de la respuesta en vez de hardcodear la duración.</p>
       <p><strong>El refresh token rota:</strong> cada uso devuelve uno nuevo y el anterior deja de servir, así que hay que persistir el último. Dura 14 días. Y tiene un límite importante: <strong>hay un solo refresh token vivo por usuario</strong>, o sea que un login nuevo invalida el anterior. Si varios procesos comparten el mismo usuario de integración se van a desloguear entre ellos — conviene un usuario por proceso.</p>
       <p>En <code>https://apilegacy.yiqi.com.ar</code> esto no aplica: ahí no hay refresh token y el recambio es por relogin.</p>
+      <p><strong>Rate limiting y concurrencia:</strong> bajo <code>/api</code> hay una cuota general de <strong>300 requests/minuto</strong>, particionada por usuario autenticado (no por <code>schemaId</code>: si un mismo usuario opera en varios esquemas, comparte el mismo cupo). <code>POST /token</code> tiene su propio límite anti fuerza bruta de <strong>5 requests/minuto por IP</strong>, y las escrituras pesadas (por ejemplo carga de archivos) están limitadas a <strong>60 requests cada 5 minutos</strong>. Además hay un tope de <strong>8 requests simultáneas en vuelo</strong> por usuario: sin cola, el excedente se rechaza al instante con <code>429</code>.</p>
+      <p>Cuando el <code>429</code> viene de un límite por ventana (general, <code>/token</code> o escrituras pesadas), la respuesta incluye el header <code>Retry-After</code> en segundos. El límite de concurrencia no lo incluye —no es por ventana de tiempo, depende de cuándo termine otra request en vuelo— así que ahí conviene reintentar con backoff exponencial en vez de esperar un valor fijo.</p>
       <div class="base-urls">
         <div class="base-urls-title">URLs base</div>
         <table class="base-urls-table" aria-label="Diferencia de URLs base por módulo">
@@ -740,7 +742,7 @@ html[data-theme="light"] .hero-band{
             <div class="risk-title">Uso responsable de la API</div>
             <ul>
               <li><strong>Responsabilidad de uso:</strong> el consumo de la API debe realizarse con criterios de eficiencia, control de volumen y frecuencia de llamadas.</li>
-              <li><strong>Riesgos operativos:</strong> un uso intensivo o sin límites puede saturar tráfico, degradar tiempos de respuesta y afectar a otros usuarios.</li>
+              <li><strong>Riesgos operativos:</strong> aunque hay límites técnicos aplicados automáticamente (ver "Rate limiting y concurrencia" arriba), un uso intensivo mal distribuido igual puede degradar tiempos de respuesta y afectar a otros usuarios antes de tocar esos topes.</li>
               <li><strong>Cuenta técnica recomendada:</strong> utilizar usuarios de API con el <strong>menor privilegio posible</strong>, otorgando solo permisos estrictamente necesarios.</li>
               <li><strong>Riesgo asumido por el integrador:</strong> la implementación, su impacto operativo y los riesgos asociados son responsabilidad del usuario que consume la API.</li>
             </ul>

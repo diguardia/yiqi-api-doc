@@ -76,7 +76,7 @@ Patrones comunes en documentación de referencia:
 - Falta política de deprecación con plazos.
 
 ### H. Operación en producción
-- Falta documentación de **rate limits/cuotas**, límites de tamaño de payload y concurrencia.
+- ~~Falta documentación de **rate limits/cuotas** y concurrencia.~~ Resuelto: ver sección 2.7 de `ai-integration-playbook.md`, el bloque de rate limiting en `integracion-yiqi-top-down.md` y las reglas para agentes en `llms.txt`. Sigue faltando **límite de tamaño de payload**.
 - Falta estandarizar **correlation-id/request-id** para trazabilidad.
 - Falta guía de observabilidad y auditoría para incidentes.
 

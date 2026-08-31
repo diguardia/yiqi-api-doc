@@ -44,6 +44,11 @@ Reglas operativas para agentes (fuente rapida):
 - Fallback de schemaId: GET /schemasapi/GetAvailable
 - Usuario recomendado para integracion: usuario no interactivo con check INTEGRADOR
 - Datos demo estables: no disponibles
+- Rate limit general: 300 requests/minuto bajo /api, particionado por usuario autenticado (no por schemaId; sin usuario, por IP)
+- Rate limit de /token: 5 requests/minuto por IP
+- Rate limit de escrituras pesadas (ej. PutFile): 60 requests cada 5 minutos por usuario
+- Concurrencia: maximo 8 requests simultaneas en vuelo por usuario bajo /api, sin cola (el excedente devuelve 429 al instante)
+- Header Retry-After (segundos): presente en el 429 de los limites por ventana (general, /token, escrituras pesadas); ausente en el 429 por limite de concurrencia (no es time-based, ahi conviene backoff exponencial)
 
 Quickstart oficial para bots (prioridad actual):
 1) Login con /token

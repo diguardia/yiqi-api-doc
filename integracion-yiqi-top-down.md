@@ -60,6 +60,7 @@ Definiciones operativas vigentes:
 - Healthcheck canónico: `GET /api/accountapi/GetLoginInformation`.
 - `schemaId` primario: tomarlo de `GetLoginInformation`.
 - `schemaId` complementario: usar `GET /api/schemasapi/GetAvailable` cuando el usuario tenga acceso a múltiples esquemas.
+- **Rate limiting:** 300 req/min bajo `/api` (particionado por usuario, no por `schemaId`), `/token` limitado a 5 req/min por IP, escrituras pesadas (`PutFile`) a 60 cada 5 minutos, y un tope de 8 requests simultáneas en vuelo por usuario (sin cola, `429` inmediato al superarlo). El `429` trae header `Retry-After` en los tres límites por ventana; en el de concurrencia no, porque no es time-based.
 
 Mejoras recomendadas para reducir errores de implementación:
 - Estandarizar dónde enviar el bearer (header `Authorization`).

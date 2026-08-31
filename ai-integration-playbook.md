@@ -31,7 +31,7 @@ Hoy el portal ya tiene los OpenAPI por módulo y un índice (`modules.json`). Pa
    - Campos obligatorios por tipo de operación.
 
 6. **Checklist de producción**
-   - Límites de tasa, timeouts y reintentos.
+   - Límites de tasa, timeouts y reintentos (ver sección 2.7, "Rate limiting y concurrencia").
    - Logging con IDs de correlación.
    - Permisos mínimos por usuario técnico.
 
@@ -69,6 +69,14 @@ Estas reglas deben considerarse fuente de verdad al construir recetas para bots:
 
 6. **Datos demo**
    - No existe dataset demo estable oficial. Las recetas deben declarar precondiciones mínimas.
+
+7. **Rate limiting y concurrencia**
+   - Cuota general: **300 requests/minuto** bajo `/api`, particionada por usuario autenticado (no por `schemaId`: un usuario que opera en varios esquemas comparte el mismo cupo). Sin usuario (request anónima), se particiona por IP.
+   - `POST /token`: **5 requests/minuto por IP**, límite anti fuerza bruta independiente de la cuota general.
+   - Escrituras pesadas (por ejemplo `PutFile`): **60 requests cada 5 minutos** por usuario (~12/min sostenido).
+   - Concurrencia: máximo **8 requests simultáneas en vuelo** por usuario bajo `/api`. No hay cola: la request excedente se rechaza al toque con `429`, no queda esperando.
+   - Header `Retry-After` (segundos): presente en los `429` de las tres cuotas por ventana (general, `/token`, escrituras pesadas). **No** está presente en el `429` por límite de concurrencia, porque ese límite no es por ventana de tiempo sino por requests activas ahora mismo — ahí conviene reintentar con backoff exponencial en vez de esperar un valor fijo.
+   - Recomendación de diseño: mantener el paralelismo de un mismo cliente por debajo de 8 requests simultáneas hacia `/api`, y ante un `429` leer `Retry-After` cuando esté presente en vez de adivinar el tiempo de espera.
 
 ## 3) Prompt recomendado para pasarle a la IA
 
