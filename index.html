@@ -1,469 +1,140 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es" data-theme="system">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>YiQi ERP - API Docs</title>
-<meta name="description" content="Índice completo de APIs de YiQi ERP con acceso por módulo, pensado para personas y agentes automatizados."/>
-<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1"/>
-<link rel="canonical" href="https://apidoc.yiqi.com.ar/"/>
+<meta name="description" content="Índice de APIs de YiQi ERP con especificaciones OpenAPI por módulo. Busca por tema, abre el Swagger y conecta tus sistemas con la plataforma.">
+  <link rel="canonical" href="https://apidoc.yiqi.com.ar/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="YiQi">
+  <meta property="fb:app_id" content="1063837776294499">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:url" content="https://apidoc.yiqi.com.ar/">
+  <!-- og:title PENDIENTE DE APROBACION -->
+  <meta property="og:description" content="Índice de APIs de YiQi ERP con especificaciones OpenAPI por módulo. Busca por tema, abre el Swagger y conecta tus sistemas con la plataforma.">
+  <meta name="twitter:card" content="summary">
+<title>API de YiQi ERP — documentación OpenAPI por módulo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Design System canonico de YiQi. Se publica desde diguardia/yiqi-imagen; no editar aca. -->
+  <link rel="preconnect" href="https://diguardia.github.io">
+  <link rel="stylesheet" href="https://diguardia.github.io/yiqi-imagen/styles.css">
+  <link rel="stylesheet" href="https://yiqi.com.ar/site.css">
+<script src="https://diguardia.github.io/yiqi-imagen/yiqi-runtime.js" defer></script>
+  <script src="https://yiqi.com.ar/components/site-header.js" defer></script>
+<script src="https://yiqi.com.ar/components/site-footer.js" defer></script>
 <style>
-:root{
-  --bg:#0a0a0b;
-  --bg-elev:#0f1013;
-  --bg-elev-2:#14161b;
-  --bg-soft:#181b21;
-  --line:rgba(255,255,255,.08);
-  --line-strong:rgba(255,255,255,.14);
-  --text:#f3f5f7;
-  --muted:#98a2b3;
-  --muted-2:#6f7785;
-  --cyan:#00ccff;
-  --cyan-soft:rgba(0,204,255,.10);
-  --cyan-soft-2:rgba(0,204,255,.16);
-  --green:#15d49c;
-  --amber:#ffb020;
-  --red:#ff637d;
-  --blue:#7ab7ff;
-  --shadow:0 0 0 1px rgba(0,204,255,.14) inset;
-  --topbar-h:54px;
-  --radius:14px;
-  --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-  --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-}
-html[data-theme="light"]{
-  --bg:#eeece7;
-  --bg-elev:#f6f4ef;
-  --bg-elev-2:#ffffff;
-  --bg-soft:#ece9e2;
-  --line:rgba(0,0,0,.08);
-  --line-strong:rgba(0,0,0,.13);
-  --text:#17191c;
-  --muted:#586170;
-  --muted-2:#7f8896;
-  --cyan:#009fc7;
-  --cyan-soft:rgba(0,159,199,.10);
-  --cyan-soft-2:rgba(0,159,199,.14);
-  --green:#0c9b6d;
-  --amber:#c78000;
-  --red:#d4485e;
-  --blue:#347de6;
-  --shadow:0 0 0 1px rgba(0,159,199,.14) inset;
-}
+/* Tokens: consume el DS canónico vía site.css (DS v1.2.7.2). No redefinir :root en páginas. */
 
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;min-height:100%}
-body{font-family:var(--sans);background:var(--bg);color:var(--text);overflow-x:hidden;transition:background .2s,color .2s}
-button,input{font:inherit}
-svg{display:block}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:clip}body{overflow-x:clip;font-family:var(--sans);background:radial-gradient(circle at 72% 8%, rgba(0,204,255,.07), transparent 28%),radial-gradient(circle at 12% 60%, rgba(0,204,255,.04), transparent 22%),linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),var(--bg);background-size:auto,auto,52px 52px,52px 52px,auto;color:var(--text);line-height:1.5;font-size:14px;-webkit-font-smoothing:antialiased}html[data-theme="light"] body{background:radial-gradient(circle at 72% 8%, rgba(0,159,199,.06), transparent 28%),radial-gradient(circle at 12% 60%, rgba(0,159,199,.04), transparent 22%),linear-gradient(rgba(0,0,0,.032) 1px, transparent 1px),linear-gradient(90deg, rgba(0,0,0,.032) 1px, transparent 1px),var(--bg);background-size:auto,auto,52px 52px,52px 52px,auto}
 a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(127,136,150,.18);border-radius:999px}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
 
-/* Topbar */
-.topbar{
-  position:sticky;top:0;z-index:100;
-  height:var(--topbar-h);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 28px;
-  background:var(--bg-elev);
-  border-bottom:1px solid var(--line);
-  backdrop-filter:blur(12px);
-}
-.topbar-left{display:flex;align-items:center;gap:0}
-.logo-wrap{display:flex;align-items:center;gap:10px;color:var(--text)}
-.logo-wrap svg.logo-full{width:76px;height:auto}
-.logo-divider{width:1px;height:18px;background:var(--line);margin:0 16px}
-.topbar-label{font:600 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.topbar-right{display:flex;align-items:center;gap:8px}
+/* ── TOKENS ── */
+.panel-kicker{font:700 10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:5px;display:block}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:var(--radius-pill);font:600 11px var(--mono);border:1px solid transparent}
+.badge-cyan{background:var(--cyan-soft);color:var(--cyan)}
+.badge-amber{background:var(--amber-soft);color:var(--amber)}
+.badge-muted{background:var(--bg-soft);color:var(--muted-2)}
 
-.nav-links{display:flex;align-items:center;gap:4px;margin-right:12px}
-.nav-link{padding:7px 13px;border-radius:10px;font-size:13px;color:var(--muted);cursor:pointer;transition:.15s ease;border:none;background:none}
-.nav-link:hover{color:var(--text);background:var(--bg-soft)}
-.nav-link.active{color:var(--cyan);background:var(--cyan-soft);border:1px solid rgba(0,204,255,.18)}
 
-/* Theme toggle */
-.theme-toggle{display:flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--line);background:var(--bg-elev-2);border-radius:999px;cursor:pointer;transition:.18s ease}
-.theme-toggle:hover{border-color:var(--line-strong);background:var(--bg-soft)}
-.theme-toggle svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.theme-toggle .sun{color:var(--amber)}
-.theme-toggle .moon{color:var(--cyan)}
-.switch-track{width:32px;height:18px;border-radius:999px;background:var(--bg-soft);position:relative;border:1px solid var(--line)}
-.switch-thumb{position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:var(--cyan);transition:transform .2s ease,background .2s ease;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
-html[data-theme="light"] .switch-thumb{transform:translateX(14px);background:var(--amber)}
 
-.user{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--cyan-soft);color:var(--cyan);border:1px solid rgba(0,204,255,.24);font:700 11px var(--mono)}
-
-/* Hero */
-.hero-band{
-  background:linear-gradient(180deg,rgba(0,204,255,.04) 0%,transparent 100%),var(--bg-elev);
-  border-bottom:1px solid var(--line);
-  padding:40px 28px 32px;
-}
-html[data-theme="light"] .hero-band{
-  background:linear-gradient(180deg,rgba(0,159,199,.04) 0%,transparent 100%),var(--bg-elev);
-}
+/* ── HERO ── */
+.hero{max-width:1120px;margin:0 auto;padding:72px 24px 56px;text-align:left;animation:fadeInUp .35s ease both}
 .hero-kicker{
-  display:inline-flex;align-items:center;gap:7px;
-  padding:5px 11px;border-radius:999px;
-  border:1px solid rgba(0,204,255,.22);background:var(--cyan-soft);
-  color:var(--cyan);font:700 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;
-  margin-bottom:16px;
+  margin-bottom:20px;
 }
-.hero-kicker-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-.hero-title{font-size:32px;letter-spacing:-.03em;font-weight:800;font-family:'Montserrat',var(--sans);line-height:1.1;margin-bottom:10px}
-.hero-title span{color:var(--cyan)}
+.hero-title{margin-bottom:14px}
+.hero-title span{color:inherit}
 .hero-sub{color:var(--muted);font-size:14px;line-height:1.6;max-width:640px;margin-bottom:24px}
-.hero-sub strong{color:var(--text);font-weight:500}
+.hero-sub strong{color:var(--text);font-weight:600}
 
 /* Search */
-.search-row{display:flex;align-items:center;gap:12px;max-width:600px}
-.search-wrap{flex:1;position:relative}
-.search-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted-2);fill:none;stroke-width:1.8;pointer-events:none}
-.search-wrap input{
-  width:100%;height:44px;border-radius:14px;
-  border:1px solid var(--line);background:var(--bg-elev-2);
-  padding:0 16px 0 44px;color:var(--text);outline:none;font-size:14px;
-  transition:border-color .18s,box-shadow .18s,background .18s;
-}
-.search-wrap input::placeholder{color:var(--muted-2)}
-.search-wrap input:focus{border-color:rgba(0,204,255,.32);box-shadow:var(--shadow);background:var(--bg-elev-2)}
-.count-badge{
-  flex-shrink:0;padding:6px 12px;border-radius:999px;
-  border:1px solid var(--line);background:var(--bg-elev-2);
-  font:700 11px var(--mono);color:var(--muted);
-  white-space:nowrap;
-}
 
-/* Content */
-.content{max-width:1100px;margin:0 auto;padding:32px 28px 60px}
+.search-row{display:flex;align-items:center;gap:12px;max-width:880px}
+/* Los controles de la derecha estaban con style inline y height:40px a mano,
+   mientras .search-input es el canonico de site.css y mide 44 — de ahi los
+   4px de desalineacion. Escritos inline nadie los iba a mantener
+   sincronizados, y el hover se resolvia con onmouseenter en el markup. Pasan
+   a clase y la altura sale de una sola variable. 21/08/2026 */
+.search-row{--search-h:44px}
+.search-row .search-input{height:var(--search-h)}
+.search-row .search-wrap{flex:1 1 260px;min-width:220px}
+.api-tool{
+  display:inline-flex;align-items:center;gap:8px;
+  height:var(--search-h);padding:0 14px;
+  border:none;border-radius:var(--radius);
+  background:var(--bg-elev-2);color:var(--muted);
+  font:600 11px var(--mono);letter-spacing:.04em;
+  white-space:nowrap;cursor:pointer;text-decoration:none;flex-shrink:0;
+  transition:color 180ms ease,background 180ms ease;
+}
+.api-tool:hover{color:var(--cyan);background:var(--cyan-soft)}
+.api-tool:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.count-badge{flex-shrink:0;font:600 11px var(--mono);color:var(--muted-2);letter-spacing:.04em;white-space:nowrap}
 
-/* Info box */
-.info-box{
-  border:1px solid rgba(0,204,255,.35);
-  border-radius:18px;background:var(--bg-elev-2);
-  padding:20px 24px;margin-bottom:32px;
-  position:relative;overflow:hidden;
-  box-shadow:0 0 0 1px rgba(0,204,255,.08) inset, 0 4px 24px rgba(0,204,255,.06);
-}
-.info-box::before{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(0,204,255,.04) 0%,transparent 60%);
-  pointer-events:none;
-}
-.info-head{display:flex;align-items:center;gap:8px;margin-bottom:14px}
-.info-head svg{width:16px;height:16px;stroke:var(--cyan);fill:none;stroke-width:1.8;flex-shrink:0}
-.info-head-label{font-size:13px;font-weight:700;color:var(--cyan)}
-.info-body{font-size:13px;color:var(--muted);line-height:1.7}
-.info-body p + p{margin-top:10px}
+/* ── CONTENT ── */
+.content{max-width:1100px;margin:0 auto;padding:28px 24px 60px}
+
+/* Info box — colapsable */
+.info-box{box-shadow:var(--shadow-sm);border-radius:var(--radius-lg);background:var(--bg-elev-2);margin-bottom:8px;overflow:hidden;animation:fadeInUp .35s .05s ease both}
+.info-box-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;cursor:pointer;transition:background 180ms ease;gap:12px;user-select:none}
+.info-box-header:hover{background:var(--bg-soft)}
+.info-box-left{display:flex;align-items:center;gap:8px}
+.info-box-left svg{width:15px;height:15px;stroke:var(--cyan);fill:none;stroke-width:1.8;flex-shrink:0;stroke-linecap:round;stroke-linejoin:round}
+.info-box-label{font:700 12px var(--mono);color:var(--cyan);letter-spacing:.04em}
+.info-box-chevron{width:15px;height:15px;stroke:var(--muted-2);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform 200ms ease;flex-shrink:0}
+.info-box.open .info-box-chevron{transform:rotate(90deg)}
+.info-box-body{display:none;padding:0 20px 18px}
+.info-box.open .info-box-body{display:block}
+.info-body{font-size:13px;color:var(--muted);line-height:1.7;padding-top:14px}
+.info-body p+p{margin-top:10px}
 .info-body strong{color:var(--text);font-weight:600}
-.info-body em{font-style:italic}
-.info-body code{
-  font-family:var(--mono);font-size:11px;
-  background:var(--bg-soft);border:1px solid var(--line);
-  padding:2px 7px;border-radius:6px;color:var(--cyan);
-}
-.info-steps{margin:10px 0 10px 16px;list-style:decimal;color:var(--muted);line-height:2}
+.info-steps{margin:10px 0 10px 18px;list-style:decimal;color:var(--muted);line-height:2.2}
 .info-steps li strong{color:var(--text)}
-.info-link{
-  color:var(--cyan);text-decoration:underline;text-underline-offset:2px;
-  text-decoration-color:rgba(0,204,255,.35);font-family:var(--mono);font-size:12px;
-}
+.info-link{color:var(--cyan);text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(0,204,255,.35);font-family:var(--mono);font-size:12px}
 .info-link:hover{text-decoration-color:var(--cyan)}
+code{font-family:var(--mono);font-size:11px;background:var(--bg-soft);padding:2px 7px;border-radius:var(--radius-xs);color:var(--cyan)}
 
-.base-urls{
-  margin-top:12px;
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:var(--bg-soft);
-  padding:12px;
-}
-.base-urls-title{
-  font:700 11px var(--mono);
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:var(--cyan);
-  margin-bottom:8px;
-}
-.base-urls-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:12px;
-}
-.base-urls-table th,
-.base-urls-table td{
-  text-align:left;
-  padding:8px 10px;
-  border:1px solid var(--line);
-  vertical-align:top;
-}
-.base-urls-table th{
-  color:var(--text);
-  background:var(--bg-elev-2);
-  font-weight:700;
-}
-.base-urls-table td{
-  color:var(--muted);
-}
-.base-urls-table code{
-  font-size:11px;
-}
+/* ── SECTION HEAD ── */
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.section-title{font:700 9px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
 
-.endpoint-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:10px;
-  margin-top:14px;
-}
-.endpoint-item{
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:var(--bg-soft);
-  padding:12px;
-}
-.endpoint-path{
-  display:inline-block;
-  font:700 11px var(--mono);
-  color:var(--cyan);
-  background:var(--cyan-soft);
-  border:1px solid rgba(0,204,255,.24);
-  border-radius:999px;
-  padding:4px 8px;
-  margin-bottom:8px;
-}
-.endpoint-item p{font-size:12px;color:var(--muted);line-height:1.6}
-.endpoint-item p strong{color:var(--text)}
+/* ── MODULE GRID ── */
+.module-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
 
-.endpoint-notes{
-  margin-top:12px;
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:var(--bg-soft);
-  padding:12px;
-}
-.endpoint-notes ul{margin:0 0 0 18px;color:var(--muted);line-height:1.9}
-.endpoint-notes li strong{color:var(--text)}
+/* ── MODULE CARD ── */
+.mod-card{background:var(--bg-elev-2);box-shadow:var(--shadow-sm);border-radius:var(--radius-lg);overflow:hidden;animation:fadeInUp .3s ease both;transition:box-shadow 180ms ease}
+.mod-card.security{box-shadow:var(--shadow-sm)}
+.mod-card:hover{box-shadow:var(--shadow-md)}
+.mod-card.security:hover{box-shadow:var(--shadow-md)}
 
-.decision-box{
-  margin-top:12px;
-  border:1px solid rgba(0,204,255,.26);
-  border-radius:12px;
-  background:var(--bg-soft);
-  padding:12px;
-}
-.decision-title{
-  font:700 11px var(--mono);
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:var(--cyan);
-  margin-bottom:8px;
-}
-.decision-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:10px;
-}
-.decision-col{
-  border:1px solid var(--line);
-  border-radius:10px;
-  background:var(--bg-elev-2);
-  padding:10px;
-}
-.decision-col h4{
-  margin:0 0 6px;
-  font:700 11px var(--mono);
-  color:var(--text);
-}
-.decision-col ul{margin:0 0 0 18px;color:var(--muted);line-height:1.8}
-.decision-col li strong{color:var(--text)}
+.mod-card-header{display:flex;align-items:center;gap:12px;padding:14px 16px}
+.mod-icon{width:34px;height:34px;border-radius:var(--radius-sm);flex-shrink:0;display:grid;place-items:center;background:var(--cyan-soft);color:var(--cyan)}
+.mod-icon svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mod-card.security .mod-icon{background:var(--amber-soft);color:var(--amber)}
+.mod-name{font:700 13px var(--sans);color:var(--text);flex:1;min-width:0}
 
-.practice-box,
-.risk-box{
-  margin-top:12px;
-  border-radius:12px;
-  padding:12px;
-}
-.practice-box{
-  border:1px solid rgba(21,212,156,.35);
-  background:rgba(21,212,156,.08);
-}
-.risk-box{
-  border:1px solid rgba(255,176,32,.35);
-  background:rgba(255,176,32,.09);
-}
-.practice-title,
-.risk-title{
-  font:700 11px var(--mono);
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  margin-bottom:8px;
-}
-.practice-title{color:var(--green)}
-.risk-title{color:var(--amber)}
-.practice-box ul,
-.risk-box ul{margin:0 0 0 18px;color:var(--muted);line-height:1.9}
-.practice-box li strong,
-.risk-box li strong{color:var(--text)}
+.mod-body{display:flex;flex-direction:column;gap:12px;padding:0 16px 16px}
+.mod-desc{font:400 12px var(--sans);color:var(--muted);line-height:1.55;padding-top:12px}
+.mod-action{display:inline-flex;align-items:center;align-self:flex-start;text-decoration:none;padding:6px 14px;border-radius:var(--radius-pill);font:700 11px var(--mono);letter-spacing:.04em;color:var(--cyan);background:var(--cyan-soft);transition:all 180ms ease}
+.mod-action:hover{background:var(--cyan-soft-2)}
+.mod-card.security .mod-action{color:var(--amber);background:var(--amber-soft)}
+.mod-card.security .mod-action:hover{background:rgba(255,176,32,.18)}
 
-.general-actions{
-  display:flex;
-  gap:8px;
-  margin:14px 0 10px;
-  flex-wrap:wrap;
-}
-.general-btn{
-  padding:6px 12px;
-  border-radius:999px;
-  border:1px solid var(--line);
-  background:var(--bg-elev-2);
-  color:var(--muted);
-  font:700 11px var(--mono);
-  cursor:pointer;
-  transition:.15s ease;
-}
-.general-btn:hover{
-  color:var(--text);
-  border-color:var(--line-strong);
-  background:var(--bg-soft);
-}
-
-.collapsible-block{
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:var(--bg-soft);
-  margin-top:10px;
-  padding:0;
-}
-.collapsible-summary{
-  list-style:none;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:12px;
-}
-.collapsible-summary::-webkit-details-marker{display:none}
-.collapsible-heading{min-width:0}
-.collapsible-title{
-  display:block;
-  color:var(--text);
-  font:700 12px var(--mono);
-  letter-spacing:.04em;
-  text-transform:uppercase;
-}
-.collapsible-hint{
-  display:block;
-  margin-top:5px;
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.5;
-}
-.collapsible-indicator{
-  width:24px;
-  height:24px;
-  border-radius:999px;
-  border:1px solid var(--line);
-  display:grid;
-  place-items:center;
-  color:var(--cyan);
-  font:700 14px var(--mono);
-  flex-shrink:0;
-}
-.collapsible-indicator::before{content:"+"}
-.collapsible-block[open] .collapsible-indicator::before{content:"-"}
-.collapsible-content{
-  border-top:1px solid var(--line);
-  padding:12px;
-}
-
-/* Grid */
-.section-head{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:16px;
-}
-.section-title{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);font-family:var(--mono)}
-.module-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-  gap:12px;
-}
-
-/* Module card */
-.mod-card{
-  display:flex;align-items:flex-start;gap:14px;
-  background:var(--bg-elev-2);border:1px solid var(--line);border-radius:18px;
-  padding:16px 18px;cursor:pointer;
-  transition:border-color .18s,background .18s,transform .15s,box-shadow .18s;
-  position:relative;overflow:hidden;
-}
-.mod-card::before{
-  content:"";position:absolute;inset:0;border-radius:18px;
-  background:linear-gradient(135deg,rgba(0,204,255,.03) 0%,transparent 60%);
-  opacity:0;transition:opacity .18s;pointer-events:none;
-}
-.mod-card:hover{border-color:rgba(0,204,255,.28);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.18)}
-.mod-card:hover::before{opacity:1}
-.mod-card.security{border-color:rgba(255,176,32,.18)}
-.mod-card.security:hover{border-color:rgba(255,176,32,.4)}
-
-.mod-icon{
-  width:38px;height:38px;border-radius:12px;flex-shrink:0;
-  display:grid;place-items:center;
-  background:var(--cyan-soft);border:1px solid rgba(0,204,255,.18);
-  color:var(--cyan);transition:background .18s,border-color .18s;
-}
-.mod-icon svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.mod-card.security .mod-icon{background:rgba(255,176,32,.09);border-color:rgba(255,176,32,.22);color:var(--amber)}
-.mod-card:hover .mod-icon{background:var(--cyan-soft-2);border-color:rgba(0,204,255,.3)}
-.mod-card.security:hover .mod-icon{background:rgba(255,176,32,.15)}
-
-.mod-body{flex:1;min-width:0}
-.mod-name{font-size:13px;font-weight:700;margin-bottom:4px;color:var(--text)}
-.mod-desc{font-size:12px;color:var(--muted);line-height:1.5}
-
-.mod-action{display:inline-flex;align-items:center;text-decoration:none;
-  flex-shrink:0;align-self:center;
-  padding:6px 13px;border-radius:999px;
-  font:700 11px var(--mono);letter-spacing:.04em;
-  color:var(--cyan);background:var(--cyan-soft);
-  border:1px solid rgba(0,204,255,.2);
-  cursor:pointer;transition:.15s ease;white-space:nowrap;
-}
-.mod-action:hover{background:var(--cyan-soft-2);border-color:rgba(0,204,255,.35)}
-.mod-card.security .mod-action{display:inline-flex;align-items:center;text-decoration:none;color:var(--amber);background:rgba(255,176,32,.08);border-color:rgba(255,176,32,.22)}
-.mod-card.security .mod-action:hover{background:rgba(255,176,32,.14)}
-
-/* Footer */
-.page-footer{
-  border-top:1px solid var(--line);
-  padding:18px 28px;
-  display:flex;align-items:center;justify-content:space-between;
-  background:var(--bg-elev);
-}
-.footer-copy{font:400 12px var(--mono);color:var(--muted-2)}
-.footer-link{
-  font:600 12px var(--mono);color:var(--cyan);
-  text-decoration:underline;text-underline-offset:2px;
-  text-decoration-color:rgba(0,204,255,.3);
-}
-.footer-link:hover{text-decoration-color:var(--cyan)}
-
-/* Empty state on search */
-.empty-state{
-  display:none;grid-column:1/-1;
-  padding:40px 24px;text-align:center;color:var(--muted);
-  border:1px dashed var(--line);border-radius:18px;
-}
+/* Empty state */
+.empty-state{display:none;grid-column:1/-1;padding:40px 24px;text-align:center;color:var(--muted);background:var(--bg-soft);border-radius:var(--radius-lg)}
 .empty-state.show{display:block}
 
-/* Subtle entry animation */
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.hero-band{animation:fadeUp .35s ease both}
-.info-box{animation:fadeUp .35s .07s ease both}
-.mod-card{animation:fadeUp .3s ease both}
+
+/* Delay per card */
 .mod-card:nth-child(1){animation-delay:.04s}.mod-card:nth-child(2){animation-delay:.07s}
 .mod-card:nth-child(3){animation-delay:.10s}.mod-card:nth-child(4){animation-delay:.13s}
 .mod-card:nth-child(5){animation-delay:.16s}.mod-card:nth-child(6){animation-delay:.19s}
@@ -473,558 +144,560 @@ html[data-theme="light"] .hero-band{
 .mod-card:nth-child(13){animation-delay:.40s}.mod-card:nth-child(14){animation-delay:.43s}
 .mod-card:nth-child(15){animation-delay:.46s}.mod-card:nth-child(16){animation-delay:.49s}
 
-/* Responsive */
-@media (max-width: 980px){
-  .topbar{padding:0 16px}
-  .hero-band{padding:28px 16px 24px}
-  .content{padding:24px 16px 40px}
-  .page-footer{padding:16px;gap:8px;flex-direction:column;align-items:flex-start}
-  .nav-links{display:none}
+@media(max-width:768px){
+  .hero{padding:48px 16px 40px}
+  .content{padding:20px 16px 48px}
+  .module-grid{grid-template-columns:1fr}
 }
 
-@media (max-width: 640px){
-  .hero-title{font-size:26px}
-  .search-row{flex-direction:column;align-items:stretch}
-  .count-badge{text-align:center}
-  .module-grid{grid-template-columns:1fr}
-  .mod-card{padding:14px}
-  .theme-toggle{padding:6px 8px}
+
+
+/* ── MOBILE FIXES ── */
+@media(max-width:640px){
+  /* Search row: los botones bajan a segunda fila */
+  .search-row{flex-wrap:wrap;gap:8px}
+  .search-row .search-wrap{flex:1 1 auto;min-width:0}
+  .search-row .api-tool{
+    flex:1 1 calc(50% - 4px);
+    flex-shrink:1!important;
+    justify-content:center;
+    white-space:normal!important;
+    text-align:center;
+  }
+  /* Info boxes: menos padding lateral */
+  .info-box-header{padding:12px 14px;gap:8px}
+  .info-box-body{padding:0 14px 16px}
+  .info-box-label{letter-spacing:.02em}
 }
+
+@media(max-width:420px){
+  /* Pantallas muy chicas: botones apilados */
+  .search-row .api-tool{
+    flex:1 1 100%;
+    flex-shrink:1!important;
+    justify-content:center;
+  }
+  /* Info box label más pequeño para que no apriete */
+  .info-box-label{font-size:11px}
+}
+
+/* ── URLs base (importado de apidoc, 27/08/2026). Solo tokens del DS. ── */
+.base-urls{margin-top:12px;border:1px solid var(--line);border-radius:12px;background:var(--bg-soft);padding:12px}
+.base-urls-title{font:700 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px}
+.base-urls-table{width:100%;border-collapse:collapse;font-size:12px}
+.base-urls-table th,.base-urls-table td{text-align:left;padding:8px 10px;border:1px solid var(--line);vertical-align:top}
+.base-urls-table th{color:var(--text);background:var(--bg-elev-2);font-weight:700}
+.base-urls-table td{color:var(--muted)}
+.base-urls-table code{font-size:11px}
+
+/* La tabla de URLs base desborda en mobile: las URLs no tienen espacios y
+   no wrappean. Scroll horizontal propio + corte por caracter. 27/08/2026. */
+.base-urls{overflow:hidden}
+.base-urls-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.base-urls-table{min-width:340px}
+.base-urls-table code{word-break:break-all;overflow-wrap:anywhere}
 </style>
+  <link rel="icon" href="https://yiqi.com.ar/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="https://yiqi.com.ar/favicon.svg">
+  <link rel="apple-touch-icon" href="https://yiqi.com.ar/apple-touch-icon.png">
 </head>
 <body>
+<site-header base="https://yiqi.com.ar/" current-page="api-docs"></site-header>
 
-<header class="topbar">
-  <div class="topbar-left">
-    <a href="#" class="logo-wrap" aria-label="Inicio YiQi API Docs">
-      <svg class="logo-full" viewBox="0 0 100 65" xmlns="http://www.w3.org/2000/svg">
-        <rect fill="none" width="100" height="65"/>
-        <path fill="currentColor" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/>
-        <path fill="currentColor" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
-        <path fill="#00ccff" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/>
-        <path fill="currentColor" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
-      </svg>
-    </a>
-    <div class="logo-divider"></div>
-    <span class="topbar-label">API Docs</span>
-  </div>
-  <div class="topbar-right">
-    <nav class="nav-links">
-      <button class="nav-link active" onclick="setNav(this)">Inicio</button>
-      <a class="nav-link" href="#generalidades-endpoints">Generalidades</a>
-      <a class="nav-link" href="bitacora.html">Bitácora</a>
-      <a class="nav-link" href="view.html?url=Security.api.json" target="_blank" rel="noopener">Probar Swagger</a>
-      <a class="nav-link" href="modules.json" target="_blank" rel="noopener">Listado JSON</a>
-    </nav>
-    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
-      <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/></svg>
-      <span class="switch-track"><span class="switch-thumb"></span></span>
-      <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
-    </button>
-    <div class="user">SM</div>
-  </div>
-</header>
-
-<div class="hero-band">
-  <div style="max-width:1100px;margin:0 auto">
-    <div class="hero-kicker">
-      <span class="hero-kicker-dot"></span>
-      OpenAPI - REST - v2.5
-    </div>
-    <h1 class="hero-title">Índice completo de APIs<br>de <span>YiQi ERP</span></h1>
-    <p class="hero-sub">
-      Este portal reúne los <strong>módulos funcionales</strong> y sus especificaciones OpenAPI.
-      Podés buscar por tema y abrir el Swagger de cada módulo.
-    </p>
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-kicker"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> API Docs</div>
+    <h1 class="hero-title">Índice de APIs de YiQi ERP</h1>
+    <p class="hero-sub">Módulos funcionales y especificaciones OpenAPI. Busca por tema y abre el Swagger de cada módulo.</p>
     <div class="search-row">
       <div class="search-wrap">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.35-4.35"/></svg>
-        <input id="apiSearch" type="search" placeholder="Buscar módulo, keyword o dominio (ej.: ventas, auth, stock)" oninput="filterCards(this.value)"/>
+        <svg class="search-icon" viewBox="0 0 256 256"><circle cx="112" cy="112" r="80" stroke="currentColor" stroke-width="18" fill="none"/><line x1="168" y1="168" x2="224" y2="224" stroke="currentColor" stroke-width="18" stroke-linecap="round"/></svg>
+        <input class="search-input" id="apiSearch" type="search" placeholder="Buscar módulo (ej: ventas, stock, auth…)" oninput="filterCards(this.value)"/>
       </div>
-      <div class="count-badge" id="countBadge">16 módulos</div>
+      <button id="llmBtn" class="api-tool" onclick="copyForLLM()">Copiar para LLMs</button>
+      <a href="bitacora.html" target="_blank" rel="noopener" class="api-tool">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg>
+        Bitácora
+      </a>
+      <a href="modules.json" target="_blank" rel="noopener" class="api-tool">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
+        Catálogo JSON
+      </a>
+      <a href="https://yiqi.com.ar/homologador" target="_blank" rel="noopener" class="api-tool">
+        <svg width="13" height="13" viewBox="0 0 256 256" fill="none" stroke="currentColor" aria-hidden="true"><path d="M40,114.79V56a8,8,0,0,1,8-8H208a8,8,0,0,1,8,8v58.77c0,84.18-71.31,112.07-85.54,116.8a7.54,7.54,0,0,1-4.92,0C111.31,226.86,40,199,40,114.79Z" stroke-width="18"/><polyline points="88 136 112 160 168 104" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Homologador
+      </a>
     </div>
   </div>
-</div>
 
+<!-- CONTENT -->
 <main class="content">
 
-  <div class="info-box">
-    <div class="info-head">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-      <span class="info-head-label">Cómo usar esta documentación</span>
-    </div>
-    <div class="info-body">
-      <p><strong>Autenticación general:</strong> en <em>Seguridad</em> hay un único endpoint para obtener el token usando un usuario de YiQi. Este token se reutiliza en el resto de los módulos enviándolo como <code>Bearer</code> en el header <code>Authorization</code>.</p>
-      <p><strong>Política de sesión:</strong> el login (<code>grant_type=password</code>) devuelve un <code>access_token</code> de vida corta y además un <code>refresh_token</code>. Cuando el access token expira, se pide uno nuevo con <code>grant_type=refresh_token</code>, sin volver a mandar usuario y contraseña. Guiate siempre por el <code>expires_in</code> de la respuesta en vez de hardcodear la duración.</p>
-      <p><strong>El refresh token rota:</strong> cada uso devuelve uno nuevo y el anterior deja de servir, así que hay que persistir el último. Dura 14 días. Y tiene un límite importante: <strong>hay un solo refresh token vivo por usuario</strong>, o sea que un login nuevo invalida el anterior. Si varios procesos comparten el mismo usuario de integración se van a desloguear entre ellos — conviene un usuario por proceso.</p>
-      <p>En <code>https://apilegacy.yiqi.com.ar</code> esto no aplica: ahí no hay refresh token y el recambio es por relogin.</p>
-      <p><strong>Rate limiting y concurrencia:</strong> bajo <code>/api</code> hay una cuota general de <strong>300 requests/minuto</strong>, particionada por usuario autenticado (no por <code>schemaId</code>: si un mismo usuario opera en varios esquemas, comparte el mismo cupo). <code>POST /token</code> tiene su propio límite anti fuerza bruta de <strong>5 requests/minuto por IP</strong>, y las escrituras pesadas (por ejemplo carga de archivos) están limitadas a <strong>60 requests cada 5 minutos</strong>. Además hay un tope de <strong>8 requests simultáneas en vuelo</strong> por usuario: sin cola, el excedente se rechaza al instante con <code>429</code>.</p>
-      <p>Cuando el <code>429</code> viene de un límite por ventana (general, <code>/token</code> o escrituras pesadas), la respuesta incluye el header <code>Retry-After</code> en segundos. El límite de concurrencia no lo incluye —no es por ventana de tiempo, depende de cuándo termine otra request en vuelo— así que ahí conviene reintentar con backoff exponencial en vez de esperar un valor fijo.</p>
-      <div class="base-urls">
-        <div class="base-urls-title">URLs base</div>
-        <table class="base-urls-table" aria-label="Diferencia de URLs base por módulo">
-          <thead>
-            <tr>
-              <th>Módulo</th>
-              <th>Base URL</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Seguridad (<code>/token</code>, login)</td>
-              <td><code>https://api.yiqi.com.ar</code></td>
-            </tr>
-            <tr>
-              <td>Todos los módulos ERP</td>
-              <td><code>https://api.yiqi.com.ar/api/public</code></td>
-            </tr>
-          </tbody>
-        </table>
+  <!-- Info box — colapsada por defecto -->
+  <div class="info-box" id="infoBox">
+    <div class="info-box-header" onclick="toggleInfo()">
+      <div class="info-box-left">
+        <svg viewBox="0 0 256 256"><circle cx="128" cy="128" r="96" stroke="currentColor" stroke-width="18" fill="none"/><line x1="128" y1="120" x2="128" y2="176" stroke="currentColor" stroke-width="18" stroke-linecap="round"/><circle cx="128" cy="88" r="10" fill="currentColor"/></svg>
+        <span class="info-box-label">Cómo usar esta documentación</span>
       </div>
-      <ol class="info-steps">
-        <li>Obtené el token desde el módulo <strong>Seguridad</strong>.</li>
-        <li>Ejecutá <strong>GetLoginInformation</strong> como healthcheck canónico post-login.</li>
-        <li>Tomá <strong>schemaId</strong> desde esa respuesta (método primario).</li>
-        <li>Elegí un módulo desde el índice y abrí su Swagger.</li>
-        <li>Dentro del Swagger, expandí tags y operaciones.</li>
-        <li>Validá parámetros obligatorios, cuerpos de request y respuestas.</li>
-      </ol>
-      <p><strong>Estructura común de los Swagger:</strong> la mayoría de entidades siguen un formato homogéneo (operaciones list/get/create/update/delete, payloads con estructura repetida y respuestas paginadas o de detalle). Si entendés un módulo, la curva de adopción del resto suele ser mucho más rápida.</p>
-      <p style="margin-top:10px"><strong>Novedades:</strong> consultá la <a class="info-link" href="bitacora.html">bitácora de cambios de la API</a>. Para bots/agentes, consumí <a class="info-link" href="modules.json" target="_blank" rel="noopener">modules.json</a> para descubrir el catálogo de specs y <a class="info-link" href="cambios-api.json" target="_blank" rel="noopener">cambios-api.json</a> para leer la bitácora de manera estructurada.</p>
+      <svg class="info-box-chevron" viewBox="0 0 256 256"><polyline points="96 48 176 128 96 208" stroke="currentColor" stroke-width="18" fill="none"/></svg>
+    </div>
+    <div class="info-box-body">
+      <div class="info-body">
+        <p><strong>Autenticación general:</strong> en <em>Seguridad</em> hay un único endpoint para obtener el token usando un usuario de YiQi. Este token se reutiliza en el resto de los módulos enviándolo como <code>Bearer</code> en el header <code>Authorization</code>.</p>
+        <p><strong>Política de sesión:</strong> el login (<code>grant_type=password</code>) devuelve un <code>access_token</code> de vida corta y además un <code>refresh_token</code>. Cuando el access token expira, se pide uno nuevo con <code>grant_type=refresh_token</code>, sin volver a mandar usuario y contraseña. Guíate siempre por el <code>expires_in</code> de la respuesta en vez de fijar la duración en el código.</p>
+        <p><strong>El refresh token rota:</strong> cada uso devuelve uno nuevo y el anterior deja de servir, así que hay que persistir el último. Dura 14 días. Y tiene un límite importante: <strong>hay un solo refresh token vivo por usuario</strong>, o sea que un login nuevo invalida el anterior. Si varios procesos comparten el mismo usuario de integración se van a desloguear entre ellos — conviene un usuario por proceso.</p>
+        <p>En <code>https://apilegacy.yiqi.com.ar</code> esto no aplica: ahí no hay refresh token y el recambio es por relogin.</p>
+        <p><strong>Rate limiting y concurrencia:</strong> bajo <code>/api</code> hay una cuota general de <strong>300 requests/minuto</strong>, particionada por usuario autenticado (no por <code>schemaId</code>: si un mismo usuario opera en varios esquemas, comparte el mismo cupo). <code>POST /token</code> tiene su propio límite anti fuerza bruta de <strong>5 requests/minuto por IP</strong>, y las escrituras pesadas (por ejemplo carga de archivos) están limitadas a <strong>60 requests cada 5 minutos</strong>. Además hay un tope de <strong>8 requests simultáneas en vuelo</strong> por usuario: sin cola, el excedente se rechaza al instante con <code>429</code>.</p>
+        <p>Cuando el <code>429</code> viene de un límite por ventana (general, <code>/token</code> o escrituras pesadas), la respuesta incluye el header <code>Retry-After</code> en segundos. El límite de concurrencia no lo incluye —no es por ventana de tiempo, depende de cuándo termine otra request en vuelo— así que ahí conviene reintentar con backoff exponencial en vez de esperar un valor fijo.</p>
+        <div class="base-urls">
+          <div class="base-urls-title">URLs base</div>
+          <div class="base-urls-scroll"><table class="base-urls-table" aria-label="Diferencia de URLs base por módulo">
+            <thead>
+              <tr><th>Módulo</th><th>Base URL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Seguridad (<code>/token</code>, login)</td><td><code>https://api.yiqi.com.ar</code></td></tr>
+              <tr><td>Todos los módulos ERP</td><td><code>https://api.yiqi.com.ar/api/public</code></td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <ol class="info-steps">
+          <li>Obtén el token desde el módulo <strong>Seguridad</strong>.</li>
+          <li>Ejecuta <strong>GetLoginInformation</strong> como healthcheck canónico post-login.</li>
+          <li>Toma <strong>schemaid</strong> desde esa respuesta (método primario).</li>
+          <li>Elige un módulo desde el índice y abre su Swagger.</li>
+          <li>Dentro del Swagger, expande las operaciones por tag.</li>
+          <li>Valida los parámetros obligatorios, cuerpos de request y respuestas.</li>
+        </ol>
+        <p><strong>Estructura común de los Swagger:</strong> la mayoría de entidades siguen un formato homogéneo (operaciones list/get/create/update/delete, payloads con estructura repetida y respuestas paginadas o de detalle). Si entiendes un módulo, la curva de adopción del resto suele ser mucho más rápida.</p>
+        <p style="margin-top:10px"><strong>Novedades:</strong> consulta la <a class="info-link" href="bitacora.html" target="_blank" rel="noopener">bitácora de cambios de la API</a>. Para bots y agentes: consume <a class="info-link" href="modules.json" target="_blank" rel="noopener">modules.json</a> para descubrir el catálogo de specs y <a class="info-link" href="cambios-api.json" target="_blank" rel="noopener">cambios-api.json</a> para leer la bitácora de manera estructurada.</p>
+      </div>
     </div>
   </div>
 
-  <div class="info-box" id="generalidades-endpoints">
-    <div class="info-head">
-      <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="7" cy="7" r="1"/><circle cx="7" cy="12" r="1"/><circle cx="7" cy="17" r="1"/></svg>
-      <span class="info-head-label">Generalidades de endpoints por entidad</span>
-    </div>
-    <div class="info-body">
-      <p>En los Swagger de YiQi, las entidades repiten un <strong>patrón de endpoints</strong>. Si aprendés el de una entidad, podés reutilizar el mismo enfoque en casi todas.</p>
-
-      <p style="margin-top:8px"><strong>Resumen rápido:</strong> esta sección cubre <em>Search vs Query</em>, patrón común de endpoints, notas de smarties y recomendaciones de consumo responsable.</p>
-
-      <div class="general-actions">
-        <button type="button" class="general-btn" id="expandGeneralidades">Expandir todo</button>
-        <button type="button" class="general-btn" id="collapseGeneralidades">Contraer todo</button>
+  <!-- Info box 2 — Generalidades de endpoints -->
+  <div class="info-box" id="infoBox2" style="--ib-ring:rgba(0,204,255,.14);margin-bottom:8px">
+    <div class="info-box-header" onclick="this.closest('.info-box').classList.toggle('open')">
+      <div class="info-box-left">
+        <svg viewBox="0 0 256 256"><polyline points="64 88 16 128 64 168" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/><polyline points="192 88 240 128 192 168" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="160" y1="40" x2="96" y2="216" stroke="currentColor" stroke-width="18" stroke-linecap="round" fill="none"/></svg>
+        <span class="info-box-label">Generalidades de endpoints por entidad</span>
       </div>
-
-      <details class="collapsible-block" data-accordion data-accordion-id="search-query">
-        <summary class="collapsible-summary">
-          <span class="collapsible-heading">
-            <span class="collapsible-title">Search vs Query</span>
-            <span class="collapsible-hint">Cuándo conviene cada endpoint y recomendación para alto volumen.</span>
-          </span>
-          <span class="collapsible-indicator" aria-hidden="true"></span>
-        </summary>
-        <div class="collapsible-content">
-          <div class="decision-box" style="margin-top:0">
-            <div class="decision-title">Cómo elegir entre /search y /query</div>
-            <div class="decision-grid">
-              <article class="decision-col">
-                <h4>Usar <code>/search</code></h4>
-                <ul>
-                  <li>Búsqueda rápida con pocos filtros y validaciones puntuales.</li>
-                  <li>Escenarios exploratorios sin control fino de columnas, orden o paginado.</li>
-                  <li>Puede tener tope por request (por ejemplo, <strong>50</strong>), según entidad.</li>
-                </ul>
-              </article>
-              <article class="decision-col">
-                <h4>Usar <code>/query</code></h4>
-                <ul>
-                  <li>Listados productivos en UI, integraciones y sincronizaciones.</li>
-                  <li>Paginado configurable (<code>page</code>, <code>pageSize</code>) y mejor control de respuesta.</li>
-                  <li>Permite pedir solo columnas necesarias para mejorar performance y payload.</li>
-                </ul>
-              </article>
-            </div>
-            <ul style="margin:10px 0 0 18px;color:var(--muted);line-height:1.9">
-              <li><strong>Recomendación:</strong> preferí <code>/query</code> para procesos recurrentes, alto volumen, batch o exportaciones grandes.</li>
-              <li><strong>Compatibilidad:</strong> límites, filtros y columnas dependen de cada entidad; validalo siempre en su OpenAPI.</li>
-              <li><strong>Ejemplo:</strong> para listar artículos con SKU, nombre, stock y precio final, usar <code>/MATERIAL/query</code> con columnas explícitas.</li>
-            </ul>
+      <svg class="info-box-chevron" viewBox="0 0 256 256"><polyline points="96 48 176 128 96 208" stroke="currentColor" stroke-width="18" fill="none"/></svg>
+    </div>
+    <div class="info-box-body">
+      <div class="info-body">
+        <p>En los Swagger de YiQi, las entidades repiten un <strong>patrón de endpoints</strong>. Si aprendés el de una entidad, podés reutilizar el mismo enfoque en casi todas.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:14px">
+          <div style="padding:12px 14px;background:var(--bg-soft);border-radius:var(--radius-sm)">
+            <code style="color:var(--green)">GET /entidad/search</code>
+            <p style="font-size:12px;color:var(--muted);margin-top:6px;line-height:1.55"><strong style="color:var(--text)">Búsqueda filtrada</strong> por atributos de la entidad. Suele devolver hasta <strong style="color:var(--text)">50 registros máximo</strong> por request.</p>
+          </div>
+          <div style="padding:12px 14px;background:var(--bg-soft);border-radius:var(--radius-sm)">
+            <code style="color:var(--cyan)">GET /entidad/{id}</code>
+            <p style="font-size:12px;color:var(--muted);margin-top:6px;line-height:1.55"><strong style="color:var(--text)">Detalle</strong> de una instancia puntual. Requiere el <strong style="color:var(--text)">id</strong> en path.</p>
+          </div>
+          <div style="padding:12px 14px;background:var(--bg-soft);border-radius:var(--radius-sm)">
+            <code style="color:var(--amber)">POST /entidad</code>
+            <p style="font-size:12px;color:var(--muted);margin-top:6px;line-height:1.55"><strong style="color:var(--text)">Alta</strong> de instancia. El body incluye <strong style="color:var(--text)">schemaid</strong> y un objeto <strong style="color:var(--text)">data</strong>.</p>
+          </div>
+          <div style="padding:12px 14px;background:var(--bg-soft);border-radius:var(--radius-sm)">
+            <code style="color:var(--blue)">PUT /entidad/{id}</code>
+            <p style="font-size:12px;color:var(--muted);margin-top:6px;line-height:1.55"><strong style="color:var(--text)">Actualización</strong> de instancia existente, con estructura similar al alta.</p>
+          </div>
+          <div style="padding:12px 14px;background:var(--bg-soft);border-radius:var(--radius-sm)">
+            <code style="color:var(--red)">DELETE /entidad/{id}</code>
+            <p style="font-size:12px;color:var(--muted);margin-top:6px;line-height:1.55"><strong style="color:var(--text)">Baja lógica/física</strong> según comportamiento de la entidad y reglas de negocio.</p>
+          </div>
+          <div style="padding:12px 14px;background:var(--bg-soft);border-radius:var(--radius-sm)">
+            <code style="color:var(--cyan)">GET /entidad/smartie</code>
+            <p style="font-size:12px;color:var(--muted);margin-top:6px;line-height:1.55"><strong style="color:var(--text)">Vista (smartie) paginada.</strong> Un smartie es un reporte/vista armado por usuarios sobre la entidad.</p>
+          </div>
+          <div style="padding:12px 14px;background:var(--bg-soft);border-radius:var(--radius-sm)">
+            <code style="color:var(--amber)">POST /entidad/changestate</code>
+            <p style="font-size:12px;color:var(--muted);margin-top:6px;line-height:1.55"><strong style="color:var(--text)">Cambio de estado</strong> de workflow (cuando la entidad maneja estados).</p>
+          </div>
+          <div style="padding:12px 14px;background:var(--bg-soft);border-radius:var(--radius-sm)">
+            <code style="color:var(--purple)">GET|PUT /entidad/file</code>
+            <p style="font-size:12px;color:var(--muted);margin-top:6px;line-height:1.55"><strong style="color:var(--text)">Descarga/carga de archivos</strong> asociados a atributos de tipo archivo.</p>
+          </div>
+          <div style="padding:12px 14px;background:var(--bg-soft);border-radius:var(--radius-sm)">
+            <code style="color:var(--green)">GET /entidad/report</code>
+            <p style="font-size:12px;color:var(--muted);margin-top:6px;line-height:1.55"><strong style="color:var(--text)">Descarga de reportes</strong> predefinidos (por ejemplo PDFs) para una instancia.</p>
           </div>
         </div>
-      </details>
-
-      <details class="collapsible-block" data-accordion data-accordion-id="patron-endpoints">
-        <summary class="collapsible-summary">
-          <span class="collapsible-heading">
-            <span class="collapsible-title">Patrón de endpoints por entidad</span>
-            <span class="collapsible-hint">Listado típico (search, get, alta, update, delete, smartie, changestate, files y reportes).</span>
-          </span>
-          <span class="collapsible-indicator" aria-hidden="true"></span>
-        </summary>
-        <div class="collapsible-content">
-          <div class="endpoint-grid" style="margin-top:0">
-            <article class="endpoint-item">
-              <span class="endpoint-path">GET /ENTIDAD/search</span>
-              <p><strong>Búsqueda filtrada</strong> por atributos de la entidad. Suele devolver hasta <strong>50 registros máximo</strong> por request.</p>
-            </article>
-            <article class="endpoint-item">
-              <span class="endpoint-path">GET /ENTIDAD/{id}</span>
-              <p><strong>Detalle</strong> de una instancia puntual. Requiere el <strong>id</strong> en path.</p>
-            </article>
-            <article class="endpoint-item">
-              <span class="endpoint-path">POST /ENTIDAD</span>
-              <p><strong>Alta</strong> de instancia. El body incluye <strong>schemaId</strong> y un objeto <strong>data</strong>.</p>
-            </article>
-            <article class="endpoint-item">
-              <span class="endpoint-path">PUT /ENTIDAD/{id}</span>
-              <p><strong>Actualización</strong> de instancia existente, con estructura similar al alta.</p>
-            </article>
-            <article class="endpoint-item">
-              <span class="endpoint-path">DELETE /ENTIDAD/{id}</span>
-              <p><strong>Baja lógica/física</strong> según comportamiento de la entidad y reglas de negocio.</p>
-            </article>
-            <article class="endpoint-item">
-              <span class="endpoint-path">GET /ENTIDAD/smartie</span>
-              <p><strong>Vista (smartie) paginada</strong>. Una smartie es un reporte/vista armado por usuarios sobre la entidad.</p>
-            </article>
-            <article class="endpoint-item">
-              <span class="endpoint-path">POST /ENTIDAD/changestate</span>
-              <p><strong>Cambio de estado</strong> de workflow (cuando la entidad maneja estados).</p>
-            </article>
-            <article class="endpoint-item">
-              <span class="endpoint-path">GET|PUT /ENTIDAD/file</span>
-              <p><strong>Descarga/carga de archivos</strong> asociados a atributos de tipo archivo.</p>
-            </article>
-            <article class="endpoint-item">
-              <span class="endpoint-path">GET /ENTIDAD/report</span>
-              <p><strong>Descarga de reportes</strong> predefinidos (por ejemplo PDFs) para una instancia.</p>
-            </article>
-          </div>
-
-          <div class="endpoint-notes">
-            <ul>
-              <li><strong>Smartie paginado:</strong> usar <code>smartieId</code>, <code>schemaId</code> y <code>page</code> (base 1). Empezar en <code>page=1</code> e incrementar de a 1.</li>
-              <li><strong>Filtro adicional en smartie:</strong> el parámetro <code>search</code> permite acotar resultados dentro de la vista.</li>
-              <li><strong>Particularidad de búsqueda:</strong> en <code>/search</code> los filtros disponibles cambian por entidad y están tipados en el Swagger de cada módulo.</li>
-              <li><strong>Particularidad de estados:</strong> no todas las entidades exponen <code>/changestate</code>; cuando existe, los estados válidos están listados en la operación.</li>
-              <li><strong>Particularidad de archivos/reportes:</strong> los valores permitidos de <code>attributeName</code> y <code>reportName</code> varían por entidad.</li>
-              <li><strong>schemaId:</strong> es obligatorio en casi todas las operaciones, ya sea por query o dentro del body según el endpoint.</li>
-              <li><strong>Regla recomendada para integraciones:</strong> obtener <code>schemaId</code> primero desde <code>GetLoginInformation</code>; usar <code>GetAvailableSchemas</code> como complemento cuando el usuario tenga acceso a más de un esquema.</li>
-            </ul>
-          </div>
-        </div>
-      </details>
-
-      <details class="collapsible-block" data-accordion data-accordion-id="buenas-practicas">
-        <summary class="collapsible-summary">
-          <span class="collapsible-heading">
-            <span class="collapsible-title">Buenas prácticas de paginado</span>
-            <span class="collapsible-hint">Cómo consumir smarties de forma eficiente para reducir carga y tráfico.</span>
-          </span>
-          <span class="collapsible-indicator" aria-hidden="true"></span>
-        </summary>
-        <div class="collapsible-content">
-          <div class="practice-box" style="margin-top:0">
-            <div class="practice-title">Buena práctica para consumir smarties</div>
-            <ul>
-              <li><strong>Orden recomendado:</strong> ordenar por <strong>fecha de modificación descendente</strong> para traer primero lo más reciente.</li>
-              <li><strong>Estrategia de paginado eficiente:</strong> paginar desde <code>page=1</code> y detenerse cuando se alcance la <strong>última fecha ya sincronizada</strong> por tu proceso.</li>
-              <li><strong>Objetivo:</strong> evitar paginado exhaustivo innecesario, reducir tráfico y proteger el rendimiento general del sistema.</li>
-            </ul>
-          </div>
-        </div>
-      </details>
-
-      <details class="collapsible-block" data-accordion data-accordion-id="uso-responsable">
-        <summary class="collapsible-summary">
-          <span class="collapsible-heading">
-            <span class="collapsible-title">Uso responsable de la API</span>
-            <span class="collapsible-hint">Riesgos operativos, mínimos privilegios y responsabilidad de implementación.</span>
-          </span>
-          <span class="collapsible-indicator" aria-hidden="true"></span>
-        </summary>
-        <div class="collapsible-content">
-          <div class="risk-box" style="margin-top:0">
-            <div class="risk-title">Uso responsable de la API</div>
-            <ul>
-              <li><strong>Responsabilidad de uso:</strong> el consumo de la API debe realizarse con criterios de eficiencia, control de volumen y frecuencia de llamadas.</li>
-              <li><strong>Riesgos operativos:</strong> aunque hay límites técnicos aplicados automáticamente (ver "Rate limiting y concurrencia" arriba), un uso intensivo mal distribuido igual puede degradar tiempos de respuesta y afectar a otros usuarios antes de tocar esos topes.</li>
-              <li><strong>Cuenta técnica recomendada:</strong> utilizar usuarios de API con el <strong>menor privilegio posible</strong>, otorgando solo permisos estrictamente necesarios.</li>
-              <li><strong>Riesgo asumido por el integrador:</strong> la implementación, su impacto operativo y los riesgos asociados son responsabilidad del usuario que consume la API.</li>
-            </ul>
-          </div>
-        </div>
-      </details>
+      </div>
     </div>
   </div>
 
-  <div class="section-head">
-    <span class="section-title">Módulos disponibles</span>
+  <!-- Info box 3 — Buena práctica para consumir smarties -->
+  <div class="info-box" style="--ib-ring:rgba(21,212,156,.22);margin-bottom:8px">
+    <div class="info-box-header" onclick="this.closest('.info-box').classList.toggle('open')">
+      <div class="info-box-left">
+        <svg viewBox="0 0 256 256"><polyline points="40 144 96 200 224 64" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        <span class="info-box-label" style="color:var(--green)">Buena práctica para consumir smarties</span>
+      </div>
+      <svg class="info-box-chevron" viewBox="0 0 256 256"><polyline points="96 48 176 128 96 208" stroke="currentColor" stroke-width="18" fill="none"/></svg>
+    </div>
+    <div class="info-box-body">
+      <div class="info-body">
+        <p><strong>Orden recomendado:</strong> ordenar por <strong>fecha de modificación descendente</strong> para traer primero lo más reciente.</p>
+        <p><strong>Estrategia de paginado eficiente:</strong> paginar desde <code>page=1</code> y detenerse cuando se alcance la <strong>última fecha ya sincronizada</strong> por tu proceso.</p>
+        <p><strong>Objetivo:</strong> evitar paginado exhaustivo innecesario, reducir tráfico y proteger el rendimiento general del sistema.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info box 4 — Uso responsable de la API -->
+  <div class="info-box" style="--ib-ring:rgba(255,176,32,.22);margin-bottom:24px">
+    <div class="info-box-header" onclick="this.closest('.info-box').classList.toggle('open')">
+      <div class="info-box-left">
+        <svg viewBox="0 0 256 256"><path d="M142.74,40l93.19,160A16,16,0,0,1,222.19,224H33.81A16,16,0,0,1,20.07,200l93.19-160A16,16,0,0,1,142.74,40Z" stroke="currentColor" stroke-width="18" fill="none"/><line x1="128" y1="136" x2="128" y2="104" stroke="currentColor" stroke-width="18" stroke-linecap="round"/><circle cx="128" cy="168" r="10" fill="currentColor"/></svg>
+        <span class="info-box-label" style="color:var(--amber)">Uso responsable de la API</span>
+      </div>
+      <svg class="info-box-chevron" viewBox="0 0 256 256"><polyline points="96 48 176 128 96 208" stroke="currentColor" stroke-width="18" fill="none"/></svg>
+    </div>
+    <div class="info-box-body">
+      <div class="info-body">
+        <p><strong>Responsabilidad de uso:</strong> el consumo de la API debe realizarse con criterios de eficiencia, control de volumen y frecuencia de llamadas.</p>
+        <p><strong>Riesgos operativos:</strong> un uso intensivo o sin límites puede saturar tráfico, degradar tiempos de respuesta y afectar a otros usuarios.</p>
+        <p><strong>Cuenta técnica recomendada:</strong> utilizar usuarios de API con el <strong>menor privilegio posible</strong>, otorgando solo permisos estrictamente necesarios.</p>
+        <p><strong>Riesgo asumido por el integrador:</strong> la implementación, su impacto operativo y los riesgos asociados son responsabilidad del usuario que consume la API.</p>
+      </div>
+    </div>
+  </div>
+  <div class="section-head" id="modulos">
+    <div style="display:flex;align-items:baseline;gap:10px">
+      <span class="section-title">Módulos disponibles</span>
+      <span class="count-badge" id="countBadge">16 módulos</span>
+    </div>
   </div>
 
   <div class="module-grid" id="moduleGrid">
 
-    <div class="mod-card security" data-search="seguridad autenticacion tokens oauth2 acceso">
-      <div class="mod-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    <!-- Seguridad -->
+    <div class="mod-card security" data-search="seguridad autenticación tokens oauth2 acceso">
+      <div class="mod-card-header">
+        <div class="mod-icon"><svg viewBox="0 0 256 256"><path d="M40,114.79V56a8,8,0,0,1,8-8H208a8,8,0,0,1,8,8v58.77c0,84.18-71.31,112.07-85.54,116.8a7.54,7.54,0,0,1-4.92,0C111.31,226.86,40,199,40,114.79Z" stroke="currentColor" stroke-width="18" fill="none"/><polyline points="88 136 112 160 168 104" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+        <span class="mod-name">Seguridad</span>
+        <span class="badge badge-amber" style="margin-right:4px">Auth</span>
       </div>
       <div class="mod-body">
-        <div class="mod-name">Seguridad</div>
-        <div class="mod-desc">Autenticación, tokens y control de acceso OAuth2.</div>
+        <p class="mod-desc">Autenticación, tokens y control de acceso OAuth2.</p>
+        <a class="mod-action" href="view.html?url=Security.api.json" target="_blank" rel="noopener">Ver Swagger ↗</a>
       </div>
-      <a class="mod-action" href="view.html?url=Security.api.json" target="_blank" rel="noopener">Ver</a>
     </div>
 
-    <div class="mod-card" data-search="ventas pedidos facturacion notas credito remitos">
-      <div class="mod-icon">
-        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h12M3 18h15"/></svg>
+    <!-- Ventas -->
+    <div class="mod-card" data-search="ventas pedidos facturación notas crédito remitos">
+      <div class="mod-card-header">
+        <div class="mod-icon"><svg viewBox="0 0 256 256"><line x1="40" y1="80" x2="216" y2="80" stroke="currentColor" stroke-width="18" stroke-linecap="round"/><line x1="40" y1="128" x2="160" y2="128" stroke="currentColor" stroke-width="18" stroke-linecap="round"/><line x1="40" y1="176" x2="184" y2="176" stroke="currentColor" stroke-width="18" stroke-linecap="round"/></svg></div>
+        <span class="mod-name">Ventas</span>
       </div>
       <div class="mod-body">
-        <div class="mod-name">Módulo Ventas</div>
-        <div class="mod-desc">Pedidos, facturación, notas de crédito y remitos.</div>
+        <p class="mod-desc">Pedidos, facturación, notas de crédito y remitos.</p>
+        <a class="mod-action" href="view.html?url=erpdemo.schema-Ventas-api.json" target="_blank" rel="noopener">Ver Swagger ↗</a>
       </div>
-      <a class="mod-action" href="view.html?url=erpdemo.schema-Ventas-api.json" target="_blank" rel="noopener">Ver</a>
     </div>
 
-    <div class="mod-card" data-search="stock depositos movimientos inventarios ajustes">
-      <div class="mod-icon">
-        <svg viewBox="0 0 24 24"><rect x="3" y="12" width="6" height="9"/><rect x="9" y="7" width="6" height="14"/><rect x="15" y="3" width="6" height="18"/></svg>
+    <!-- Stock -->
+    <div class="mod-card" data-search="stock depósitos movimientos inventarios ajustes">
+      <div class="mod-card-header">
+        <div class="mod-icon"><svg viewBox="0 0 256 256"><rect x="32" y="128" width="56" height="96" stroke="currentColor" stroke-width="18" fill="none"/><rect x="100" y="80" width="56" height="144" stroke="currentColor" stroke-width="18" fill="none"/><rect x="168" y="32" width="56" height="192" stroke="currentColor" stroke-width="18" fill="none"/></svg></div>
+        <span class="mod-name">Stock</span>
       </div>
       <div class="mod-body">
-        <div class="mod-name">Módulo Stock</div>
-        <div class="mod-desc">Depósitos, movimientos, inventarios y ajustes.</div>
+        <p class="mod-desc">Depósitos, movimientos, inventarios y ajustes.</p>
+        <a class="mod-action" href="view.html?url=erpdemo.schema-Stock-api.json" target="_blank" rel="noopener">Ver Swagger ↗</a>
       </div>
-      <a class="mod-action" href="view.html?url=erpdemo.schema-Stock-api.json" target="_blank" rel="noopener">Ver</a>
     </div>
 
-    <div class="mod-card" data-search="clientes proveedores terceros cuentas corrientes condiciones comerciales">
-      <div class="mod-icon">
-        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <!-- Clientes y Proveedores -->
+    <div class="mod-card" data-search="clientes proveedores terceros cuentas corrientes condiciones">
+      <div class="mod-card-header">
+        <div class="mod-icon"><svg viewBox="0 0 256 256"><circle cx="88" cy="108" r="52" stroke="currentColor" stroke-width="18" fill="none"/><path d="M16,197.42a88,88,0,0,1,144,0" stroke="currentColor" stroke-width="18" stroke-linecap="round" fill="none"/><path d="M155.41,57.6a52,52,0,1,1,0,100.8" stroke="currentColor" stroke-width="18" stroke-linecap="round" fill="none"/><path d="M172.17,144A88,88,0,0,1,240,197.42" stroke="currentColor" stroke-width="18" stroke-linecap="round" fill="none"/></svg></div>
+        <span class="mod-name">Clientes y Proveedores</span>
       </div>
       <div class="mod-body">
-        <div class="mod-name">Clientes y Proveedores</div>
-        <div class="mod-desc">Maestro de terceros, cuentas corrientes y condiciones comerciales.</div>
+        <p class="mod-desc">Maestro de terceros, cuentas corrientes y condiciones comerciales.</p>
+        <a class="mod-action" href="view.html?url=erpdemo.schema-Clientes_y_proveedor-api.json" target="_blank" rel="noopener">Ver Swagger ↗</a>
       </div>
-      <a class="mod-action" href="view.html?url=erpdemo.schema-Clientes_y_proveedor-api.json" target="_blank" rel="noopener">Ver</a>
     </div>
 
-    <div class="mod-card" data-search="compras ordenes recepciones acuerdos precios">
-      <div class="mod-icon">
-        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    <!-- Compras -->
+    <div class="mod-card" data-search="compras órdenes recepciones acuerdos precios">
+      <div class="mod-card-header">
+        <div class="mod-icon"><svg viewBox="0 0 256 256"><circle cx="96" cy="216" r="16" fill="currentColor"/><circle cx="200" cy="216" r="16" fill="currentColor"/><path d="M16,32H40l26,144H200" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M72,72H232L212,152H88" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+        <span class="mod-name">Compras</span>
       </div>
       <div class="mod-body">
-        <div class="mod-name">Módulo Compras</div>
-        <div class="mod-desc">Órdenes de compra, recepciones y acuerdos de precios.</div>
+        <p class="mod-desc">Órdenes de compra, recepciones y acuerdos de precios.</p>
+        <a class="mod-action" href="view.html?url=erpdemo.schema-Compras-api.json" target="_blank" rel="noopener">Ver Swagger ↗</a>
       </div>
-      <a class="mod-action" href="view.html?url=erpdemo.schema-Compras-api.json" target="_blank" rel="noopener">Ver</a>
     </div>
 
+    <!-- Contabilidad -->
     <div class="mod-card" data-search="contabilidad asientos mayores centros costo">
-      <div class="mod-icon">
-        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      <div class="mod-card-header">
+        <div class="mod-icon"><svg viewBox="0 0 256 256"><rect x="32" y="48" width="192" height="136" rx="16" stroke="currentColor" stroke-width="18" fill="none"/><line x1="80" y1="216" x2="176" y2="216" stroke="currentColor" stroke-width="18" stroke-linecap="round"/><line x1="128" y1="184" x2="128" y2="216" stroke="currentColor" stroke-width="18" stroke-linecap="round"/></svg></div>
+        <span class="mod-name">Contabilidad</span>
       </div>
       <div class="mod-body">
-        <div class="mod-name">Módulo Contabilidad</div>
-        <div class="mod-desc">Asientos, mayores y centros de costo.</div>
+        <p class="mod-desc">Asientos, mayores y centros de costo.</p>
+        <a class="mod-action" href="view.html?url=erpdemo.schema-Contabilidad-api.json" target="_blank" rel="noopener">Ver Swagger ↗</a>
       </div>
-      <a class="mod-action" href="view.html?url=erpdemo.schema-Contabilidad-api.json" target="_blank" rel="noopener">Ver</a>
     </div>
 
-    <div class="mod-card" data-search="finanzas tesoreria bancos cobranzas pagos">
-      <div class="mod-icon">
-        <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/><circle cx="12" cy="15" r="2"/></svg>
+    <!-- Finanzas -->
+    <div class="mod-card" data-search="finanzas tesorería bancos cobranzas pagos">
+      <div class="mod-card-header">
+        <div class="mod-icon"><svg viewBox="0 0 256 256"><rect x="16" y="64" width="224" height="160" rx="16" stroke="currentColor" stroke-width="18" fill="none"/><line x1="16" y1="112" x2="240" y2="112" stroke="currentColor" stroke-width="18"/><circle cx="128" cy="160" r="20" stroke="currentColor" stroke-width="18" fill="none"/></svg></div>
+        <span class="mod-name">Finanzas</span>
       </div>
       <div class="mod-body">
-        <div class="mod-name">Módulo Finanzas</div>
-        <div class="mod-desc">Tesorería, bancos, cobranzas y pagos.</div>
+        <p class="mod-desc">Tesorería, bancos, cobranzas y pagos.</p>
+        <a class="mod-action" href="view.html?url=erpdemo.schema-Finanzas-api.json" target="_blank" rel="noopener">Ver Swagger ↗</a>
       </div>
-      <a class="mod-action" href="view.html?url=erpdemo.schema-Finanzas-api.json" target="_blank" rel="noopener">Ver</a>
     </div>
 
-    <div class="mod-card" data-search="gestion parametros generales catalogos maestros">
-      <div class="mod-icon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1 .6 1.65 1.65 0 0 0-.4 1V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-.4-1 1.65 1.65 0 0 0-1-.6 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-.6-1 1.65 1.65 0 0 0-1-.4H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1-.4 1.65 1.65 0 0 0 .6-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-.6 1.65 1.65 0 0 0 .4-1V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 .4 1 1.65 1.65 0 0 0 1 .6 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.23.31.37.68.4 1.06V10a1.65 1.65 0 0 0 1 .4H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1 .4 1.65 1.65 0 0 0-.6 1c-.06.38-.1.77-.1 1.06H19.4"/></svg>
+    <!-- Gestión -->
+    <div class="mod-card" data-search="gestión parámetros generales catálogos maestros">
+      <div class="mod-card-header">
+        <div class="mod-icon"><svg viewBox="0 0 256 256"><circle cx="128" cy="128" r="40" stroke="currentColor" stroke-width="18" fill="none"/><path d="M130.05,28.11l10.82,18.74a104.07,104.07,0,0,1,57.28,33.07l21.44-2.73a8,8,0,0,1,8.42,4.86l10,25.13a8,8,0,0,1-2.64,9.33l-17,12.42a104,104,0,0,1,0,57.16l17,12.42a8,8,0,0,1,2.64,9.33l-10,25.13a8,8,0,0,1-8.42,4.86l-21.44-2.73a104.07,104.07,0,0,1-57.28,33.07L130.05,227.89a8,8,0,0,1-8.1,4.44l-27.15-2.7a8,8,0,0,1-7.12-6.44l-3.85-21.77a104.08,104.08,0,0,1-46.77-46.77L15.29,158.22a8,8,0,0,1-6.44-7.12l-2.7-27.15a8,8,0,0,1,4.44-8.1l18.74-10.82a104.07,104.07,0,0,1,33.07-57.28L59.67,26.31a8,8,0,0,1,4.86-8.42L89.66,7.89a8,8,0,0,1,9.33,2.64L111.41,27.51A105,105,0,0,1,130.05,28.11Z" stroke="currentColor" stroke-width="18" fill="none"/></svg></div>
+        <span class="mod-name">Gestión</span>
       </div>
       <div class="mod-body">
-        <div class="mod-name">Módulo Gestión</div>
-        <div class="mod-desc">Parámetros generales y catálogos maestros.</div>
+        <p class="mod-desc">Parámetros generales y catálogos maestros.</p>
+        <a class="mod-action" href="view.html?url=erpdemo.schema-Gestion-api.json" target="_blank" rel="noopener">Ver Swagger ↗</a>
       </div>
-      <a class="mod-action" href="view.html?url=erpdemo.schema-Gestion-api.json" target="_blank" rel="noopener">Ver</a>
     </div>
 
-    <div class="mod-card" data-search="produccion ordenes bom rutas materiales">
-      <div class="mod-icon">
-        <svg viewBox="0 0 24 24"><path d="M2 20h20M4 20V10l8-7 8 7v10"/><path d="M9 20v-6h6v6"/></svg>
+    <!-- Producción -->
+    <div class="mod-card" data-search="producción órdenes bom rutas materiales">
+      <div class="mod-card-header">
+        <div class="mod-icon"><svg viewBox="0 0 256 256"><polyline points="24 208 128 40 232 208" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="56" y1="152" x2="200" y2="152" stroke="currentColor" stroke-width="18" stroke-linecap="round" fill="none"/></svg></div>
+        <span class="mod-name">Producción</span>
       </div>
       <div class="mod-body">
-        <div class="mod-name">Módulo Producción</div>
-        <div class="mod-desc">Órdenes de producción, BOM y rutas.</div>
+        <p class="mod-desc">Órdenes de producción, BOM y rutas.</p>
+        <a class="mod-action" href="view.html?url=erpdemo.schema-Produccion-api.json" target="_blank" rel="noopener">Ver Swagger ↗</a>
       </div>
-      <a class="mod-action" href="view.html?url=erpdemo.schema-Produccion-api.json" target="_blank" rel="noopener">Ver</a>
     </div>
 
+    <!-- Comercial/CRM -->
     <div class="mod-card" data-search="comercial crm oportunidades actividades pipeline">
-      <div class="mod-icon">
-        <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      <div class="mod-card-header">
+        <div class="mod-icon"><svg viewBox="0 0 256 256"><polyline points="232 56 136 152 96 112 24 184" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/><polyline points="232 120 232 56 168 56" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+        <span class="mod-name">Comercial / CRM</span>
       </div>
       <div class="mod-body">
-        <div class="mod-name">Módulo Comercial / CRM</div>
-        <div class="mod-desc">Oportunidades, actividades y pipeline comercial.</div>
+        <p class="mod-desc">Oportunidades, actividades y pipeline comercial.</p>
+        <a class="mod-action" href="view.html?url=erpdemo.schema-Comercial_CRM-api.json" target="_blank" rel="noopener">Ver Swagger ↗</a>
       </div>
-      <a class="mod-action" href="view.html?url=erpdemo.schema-Comercial_CRM-api.json" target="_blank" rel="noopener">Ver</a>
     </div>
 
-    <div class="mod-card" data-search="rrhh recursos humanos personal legajos novedades sueldos">
-      <div class="mod-icon">
-        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <!-- RRHH -->
+    <div class="mod-card" data-search="rrhh recursos humanos personal legajos novedades">
+      <div class="mod-card-header">
+        <div class="mod-icon"><svg viewBox="0 0 256 256"><circle cx="128" cy="96" r="64" stroke="currentColor" stroke-width="18" fill="none"/><path d="M16,216c16-52,96-80,112-80s96,28,112,80" stroke="currentColor" stroke-width="18" stroke-linecap="round" fill="none"/></svg></div>
+        <span class="mod-name">RRHH</span>
       </div>
       <div class="mod-body">
-        <div class="mod-name">Módulo RRHH</div>
-        <div class="mod-desc">Gestión de personal, legajos y novedades.</div>
+        <p class="mod-desc">Gestión de personal, legajos y novedades.</p>
+        <a class="mod-action" href="view.html?url=erpdemo.schema-RRHH-api.json" target="_blank" rel="noopener">Ver Swagger ↗</a>
       </div>
-      <a class="mod-action" href="view.html?url=erpdemo.schema-RRHH-api.json" target="_blank" rel="noopener">Ver</a>
     </div>
 
+    <!-- POS -->
     <div class="mod-card" data-search="pos punto venta tickets cobranzas caja">
-      <div class="mod-icon">
-        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 9h20M7 15h.01M11 15h2"/></svg>
+      <div class="mod-card-header">
+        <div class="mod-icon"><svg viewBox="0 0 256 256"><rect x="16" y="48" width="224" height="160" rx="16" stroke="currentColor" stroke-width="18" fill="none"/><line x1="16" y1="96" x2="240" y2="96" stroke="currentColor" stroke-width="18"/><line x1="72" y1="152" x2="72.1" y2="152" stroke="currentColor" stroke-width="20" stroke-linecap="round"/><line x1="120" y1="152" x2="152" y2="152" stroke="currentColor" stroke-width="18" stroke-linecap="round"/></svg></div>
+        <span class="mod-name">POS</span>
       </div>
       <div class="mod-body">
-        <div class="mod-name">Módulo POS</div>
-        <div class="mod-desc">Punto de venta, tickets y cobranzas en caja.</div>
+        <p class="mod-desc">Punto de venta, tickets y cobranzas en caja.</p>
+        <a class="mod-action" href="view.html?url=erpdemo.schema-POS-api.json" target="_blank" rel="noopener">Ver Swagger ↗</a>
       </div>
-      <a class="mod-action" href="view.html?url=erpdemo.schema-POS-api.json" target="_blank" rel="noopener">Ver</a>
     </div>
 
+    <!-- Calidad -->
     <div class="mod-card" data-search="calidad controles no conformidades acciones correctivas">
-      <div class="mod-icon">
-        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      <div class="mod-card-header">
+        <div class="mod-icon"><svg viewBox="0 0 256 256"><polyline points="40 144 96 200 224 64" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+        <span class="mod-name">Calidad</span>
       </div>
       <div class="mod-body">
-        <div class="mod-name">Módulo Calidad</div>
-        <div class="mod-desc">Controles, no conformidades y acciones correctivas.</div>
+        <p class="mod-desc">Controles, no conformidades y acciones correctivas.</p>
+        <a class="mod-action" href="view.html?url=erpdemo.schema-Calidad-api.json" target="_blank" rel="noopener">Ver Swagger ↗</a>
       </div>
-      <a class="mod-action" href="view.html?url=erpdemo.schema-Calidad-api.json" target="_blank" rel="noopener">Ver</a>
     </div>
 
-    <div class="mod-card" data-search="editorial operaciones catalogos flujo publicaciones">
-      <div class="mod-icon">
-        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    <!-- Editorial -->
+    <div class="mod-card" data-search="editorial catálogos publicaciones flujo">
+      <div class="mod-card-header">
+        <div class="mod-icon"><svg viewBox="0 0 256 256"><path d="M40,216A23.81,23.81,0,0,1,64,192H216V40H64A24,24,0,0,0,40,64Z" stroke="currentColor" stroke-width="18" fill="none"/><polyline points="40 216 40 256" stroke="currentColor" stroke-width="18" stroke-linecap="round" fill="none"/></svg></div>
+        <span class="mod-name">Editorial</span>
       </div>
       <div class="mod-body">
-        <div class="mod-name">Módulo Editorial</div>
-        <div class="mod-desc">Operaciones y catálogos del flujo editorial.</div>
+        <p class="mod-desc">Operaciones y catálogos del flujo editorial.</p>
+        <a class="mod-action" href="view.html?url=erpdemo.schema-Editorial-api.json" target="_blank" rel="noopener">Ver Swagger ↗</a>
       </div>
-      <a class="mod-action" href="view.html?url=erpdemo.schema-Editorial-api.json" target="_blank" rel="noopener">Ver</a>
     </div>
 
-    <div class="mod-card" data-search="mensajeria mensajes eventos envio trazabilidad notificaciones">
-      <div class="mod-icon">
-        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <!-- Mensajería -->
+    <div class="mod-card" data-search="mensajería mensajes eventos envío trazabilidad notificaciones">
+      <div class="mod-card-header">
+        <div class="mod-icon"><svg viewBox="0 0 256 256"><path d="M216,48H40a8,8,0,0,0-8,8V192a8,8,0,0,0,8,8H216a8,8,0,0,0,8-8V56A8,8,0,0,0,216,48Z" stroke="currentColor" stroke-width="18" fill="none"/><path d="M32,72l96,72,96-72" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+        <span class="mod-name">Mensajería</span>
       </div>
       <div class="mod-body">
-        <div class="mod-name">Módulo Mensajería</div>
-        <div class="mod-desc">Envío y trazabilidad de mensajes/eventos.</div>
+        <p class="mod-desc">Envío y trazabilidad de mensajes y eventos.</p>
+        <a class="mod-action" href="view.html?url=erpdemo.schema-Mensajeria-api.json" target="_blank" rel="noopener">Ver Swagger ↗</a>
       </div>
-      <a class="mod-action" href="view.html?url=erpdemo.schema-Mensajeria-api.json" target="_blank" rel="noopener">Ver</a>
     </div>
 
-    <div class="mod-card" data-search="parametros configuracion transversal valores sistema">
-      <div class="mod-icon">
-        <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="6" r="2" fill="var(--bg-elev-2)"/><circle cx="16" cy="12" r="2" fill="var(--bg-elev-2)"/><circle cx="10" cy="18" r="2" fill="var(--bg-elev-2)"/></svg>
+    <!-- Parámetros -->
+    <div class="mod-card" data-search="parámetros configuración transversal valores sistema">
+      <div class="mod-card-header">
+        <div class="mod-icon"><svg viewBox="0 0 256 256"><line x1="40" y1="64" x2="216" y2="64" stroke="currentColor" stroke-width="18" stroke-linecap="round"/><line x1="40" y1="128" x2="216" y2="128" stroke="currentColor" stroke-width="18" stroke-linecap="round"/><line x1="40" y1="192" x2="216" y2="192" stroke="currentColor" stroke-width="18" stroke-linecap="round"/><circle cx="80" cy="64" r="16" fill="var(--bg-elev-2)" stroke="currentColor" stroke-width="14"/><circle cx="160" cy="128" r="16" fill="var(--bg-elev-2)" stroke="currentColor" stroke-width="14"/><circle cx="100" cy="192" r="16" fill="var(--bg-elev-2)" stroke="currentColor" stroke-width="14"/></svg></div>
+        <span class="mod-name">Parámetros</span>
       </div>
       <div class="mod-body">
-        <div class="mod-name">Módulo Parámetros</div>
-        <div class="mod-desc">Configuración transversal y valores del sistema.</div>
+        <p class="mod-desc">Configuración transversal y valores del sistema.</p>
+        <a class="mod-action" href="view.html?url=erpdemo.schema-Parametros-api.json" target="_blank" rel="noopener">Ver Swagger ↗</a>
       </div>
-      <a class="mod-action" href="view.html?url=erpdemo.schema-Parametros-api.json" target="_blank" rel="noopener">Ver</a>
     </div>
 
-    <div class="empty-state" id="emptyState">
-      No hay módulos que coincidan con tu búsqueda.
-    </div>
-
+    <div class="empty-state" id="emptyState">No hay módulos que coincidan con tu búsqueda.</div>
   </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       Homologador. 21/08/2026.
+
+       Va DESPUES de la grilla y ANTES de la convocatoria a proposito: el
+       recorrido es construis sobre la API, homologas, cargas tu caso. Antes
+       de esto el homologador no estaba enlazado desde ninguna pagina del
+       sitio; circulaba solo porque se pasaba a mano en las reuniones.
+
+       Se dice que es obligatorio porque lo es: correrlo y entregar el
+       resultado es parte del proceso de admision al Marketplace. El puntaje
+       no bloquea solo — lo revisa una persona.
+       ══════════════════════════════════════════════════════════════════ -->
+  <div class="section-head" style="margin-top:28px">
+    <div style="display:flex;align-items:baseline;gap:10px">
+      <span class="section-title">Antes de publicar</span>
+    </div>
+  </div>
+
+  <div class="mod-card" style="margin-bottom:8px">
+    <div class="mod-card-header">
+      <div class="mod-icon"><svg viewBox="0 0 256 256"><path d="M40,114.79V56a8,8,0,0,1,8-8H208a8,8,0,0,1,8,8v58.77c0,84.18-71.31,112.07-85.54,116.8a7.54,7.54,0,0,1-4.92,0C111.31,226.86,40,199,40,114.79Z" stroke="currentColor" stroke-width="18" fill="none"/><polyline points="88 136 112 160 168 104" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <span class="mod-name">Homologador de seguridad</span>
+      <span class="badge badge-cyan" style="margin-right:4px">Obligatorio</span>
+    </div>
+    <div class="mod-body">
+      <p class="mod-desc">Audita tu código contra más de 90 reglas de seguridad, te devuelve un puntaje y genera un prompt de IA para corregir lo que encuentra. Corre sobre tu repositorio: no subes nada a YiQi.</p>
+      <p class="mod-desc" style="margin-top:8px">Correrlo y entregar el resultado es parte del proceso para publicar en el Marketplace. El puntaje no aprueba ni rechaza por sí solo — lo revisa una persona junto con el resto de la solicitud.</p>
+      <a class="btn btn-primary btn-lg" style="margin-top:12px;align-self:flex-start" href="https://yiqi.com.ar/homologador" target="_blank" rel="noopener">
+        Abrir el homologador
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       Convocatoria a developers. 21/08/2026.
+
+       Es el mismo componente de index.html y marketplace.html, y trae
+       consigo el embed de Tally: "Cargar mi caso" funciona aca sin cargar
+       nada aparte.
+
+       Por que aca: era la unica pagina publica para desarrolladores que
+       terminaba en la grilla de modulos sin ofrecer un paso siguiente.
+       Quien llega ya esta evaluando construir.
+       ══════════════════════════════════════════════════════════════════ -->
 
 </main>
 
-<footer class="page-footer">
-  <span class="footer-copy">&copy; <span id="year"></span> YiQi ERP - API Docs</span>
-  <a href="modules.json" target="_blank" rel="noopener" class="footer-link">Catálogo machine-readable (JSON)</a>
-</footer>
+<site-footer base="https://yiqi.com.ar/"></site-footer>
 
 <script>
-const html = document.documentElement;
-document.getElementById('themeToggle').addEventListener('click', () => {
-  html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-});
-
-function setNav(btn) {
-  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
-  btn.classList.add('active');
+/* Copy for LLMs */
+/* showSuccess faltaba: el .then() tiraba ReferenceError, caia al .catch() y
+   disparaba una descarga innecesaria sin confirmar nada. 27/08/2026. */
+function showSuccess(msg){
+  const btn=document.getElementById('llmBtn');
+  if(!btn) return;
+  const prev=btn.textContent;
+  btn.textContent=msg||'Copiado';
+  setTimeout(()=>{btn.textContent=prev;},1800);
 }
 
-function filterCards(q) {
-  const term = q.toLowerCase().trim();
-  const cards = document.querySelectorAll('.mod-card[data-search]');
-  let visible = 0;
-  cards.forEach(c => {
-    const match = !term
-      || c.dataset.search.includes(term)
-      || c.querySelector('.mod-name').textContent.toLowerCase().includes(term);
-    c.style.display = match ? '' : 'none';
-    if (match) visible++;
+function copyForLLM(){
+  const btn=document.getElementById('llmBtn');
+  const modules=[...document.querySelectorAll('.mod-card[data-search]')].map(c=>{
+    const name=c.querySelector('.mod-name').textContent.trim();
+    const desc=c.querySelector('.mod-desc')?.textContent.trim()||'';
+    const url=c.querySelector('.mod-action')?.href||'';
+    return `## ${name}\n${desc}\nSwagger: ${url}`;
+  }).join('\n\n');
+
+  const text=`# YiQi ERP — API Docs
+OpenAPI · REST · v2.5
+URL: https://apidoc.yiqi.com.ar
+
+## Autenticación
+Obtén el token desde el módulo Seguridad con POST /token (grant_type=password) y envíalo como Bearer en el header Authorization para el resto de los módulos. La respuesta incluye un refresh_token: para renovar, llama al mismo /token con grant_type=refresh_token, sin credenciales. El refresh token rota (cada uso devuelve uno nuevo, el anterior deja de servir) y dura 14 dias. Hay un solo refresh token vivo por usuario: un login nuevo invalida el anterior, asi que conviene un usuario de integracion por proceso. Guiate por el expires_in de la respuesta en vez de fijar la duracion. URLs base: https://api.yiqi.com.ar para /token, https://api.yiqi.com.ar/api/public para los modulos ERP. En https://apilegacy.yiqi.com.ar no hay refresh token y el recambio es por relogin.
+
+## Patrón de endpoints por entidad
+GET /entidad/search — Búsqueda filtrada, hasta 50 registros por request.
+GET /entidad/{id} — Detalle de instancia puntual.
+POST /entidad — Alta. Body incluye schemaid + objeto data.
+PUT /entidad/{id} — Actualización de instancia existente.
+DELETE /entidad/{id} — Baja lógica/física según reglas de negocio.
+GET /entidad/smartie — Vista paginada armada por usuarios.
+POST /entidad/changestate — Cambio de estado de workflow.
+GET|PUT /entidad/file — Descarga/carga de archivos asociados.
+GET /entidad/report — Descarga de reportes predefinidos (PDFs).
+
+## Módulos disponibles
+${modules}
+
+## Catálogo machine-readable
+modules.json`;
+
+  navigator.clipboard.writeText(text).then(()=>{
+    showSuccess();
+  }).catch(()=>{
+    // Fallback: descarga como .txt
+    const blob=new Blob([text],{type:'text/plain'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='yiqi-api-docs-llm.txt';
+    a.click();
+    showSuccess('Descargado');
   });
-  document.getElementById('countBadge').textContent = visible + (visible === 1 ? ' módulo' : ' módulos');
-  document.getElementById('emptyState').classList.toggle('show', visible === 0);
 }
 
-const accordionStorageKey = 'yiqi-generalidades-open';
 
-function getGeneralidadesAccordions() {
-  return Array.from(document.querySelectorAll('[data-accordion]'));
+/* Info box toggle */
+function toggleInfo(){
+  document.getElementById('infoBox').classList.toggle('open');
 }
 
-function saveGeneralidadesState() {
-  try {
-    const openIds = getGeneralidadesAccordions()
-      .filter(block => block.open)
-      .map(block => block.dataset.accordionId)
-      .filter(Boolean);
-    localStorage.setItem(accordionStorageKey, JSON.stringify(openIds));
-  } catch (err) {
-    return;
-  }
-}
-
-function loadGeneralidadesState() {
-  try {
-    const raw = localStorage.getItem(accordionStorageKey);
-    if (!raw) return;
-    const openIds = new Set(JSON.parse(raw));
-    getGeneralidadesAccordions().forEach(block => {
-      block.open = openIds.has(block.dataset.accordionId);
-    });
-  } catch (err) {
-    return;
-  }
-}
-
-function setAllGeneralidades(open) {
-  getGeneralidadesAccordions().forEach(block => {
-    block.open = open;
+/* Search */
+function filterCards(q){
+  const term=q.toLowerCase().trim();
+  const cards=document.querySelectorAll('.mod-card[data-search]');
+  let visible=0;
+  cards.forEach(c=>{
+    const match=!term||c.dataset.search.includes(term)||c.querySelector('.mod-name').textContent.toLowerCase().includes(term);
+    c.style.display=match?'':'none';
+    if(match) visible++;
   });
-  saveGeneralidadesState();
+  document.getElementById('countBadge').textContent=visible+(visible===1?' módulo':' módulos');
+  document.getElementById('emptyState').classList.toggle('show',visible===0);
 }
-
-loadGeneralidadesState();
-getGeneralidadesAccordions().forEach(block => {
-  block.addEventListener('toggle', saveGeneralidadesState);
-});
-
-document.getElementById('expandGeneralidades')?.addEventListener('click', () => {
-  setAllGeneralidades(true);
-});
-
-document.getElementById('collapseGeneralidades')?.addEventListener('click', () => {
-  setAllGeneralidades(false);
-});
-
-document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
