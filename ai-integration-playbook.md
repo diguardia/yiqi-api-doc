@@ -64,7 +64,7 @@ Estas reglas deben considerarse fuente de verdad al construir recetas para bots:
    - Referencia operativa alternativa: el `schemaId` también aparece en URLs del frontend YiQi.
 
 5. **Usuario de integración**
-   - Recomendado (y próximo a obligatorio): usar usuario no interactivo por integración, marcado como **INTEGRADOR**.
+   - Recomendado (y próximo a obligatorio): usar usuario no interactivo por integración, con el permiso **Acceso API** habilitado (atributo técnico `INTEGRADOR` en `USUARIOS`, sin cambios de nombre para quien opera directo sobre el metamodelo).
    - Evitar compartir usuario humano entre frontend y procesos automáticos.
 
 6. **Datos demo**

@@ -30,8 +30,20 @@
       "summary": "Get a valid bearer token",
       "post": {
         "summary": "Get a bearer token.",
-        "description": "Emite el token de acceso que consume el resto de la API.\n\nEl body va **form-urlencoded** (`application/x-www-form-urlencoded`), no JSON.\n\n**En producción** el `access_token` es de vida corta y viene acompañado de un `refresh_token`: cuando expira, se pide uno nuevo con `grant_type=refresh_token` en vez de repetir usuario y contraseña. Usá siempre el `expires_in` de la respuesta para saber cuánto dura; no lo hardcodees.\n\n**En legacy** no hay `refresh_token`: el token es de larguísima duración y la respuesta trae además `userName`, `.issued` y `.expires`.\n\nEste endpoint es el único que no requiere token.",
+        "description": "Emite el token de acceso que consume el resto de la API.\n\nEl body va **form-urlencoded** (`application/x-www-form-urlencoded`), no JSON.\n\n**En producción** el `access_token` es de vida corta y viene acompañado de un `refresh_token`: cuando expira, se pide uno nuevo con `grant_type=refresh_token` en vez de repetir usuario y contraseña. Usá siempre el `expires_in` de la respuesta para saber cuánto dura; no lo hardcodees.\n\n**En legacy** no hay `refresh_token`: el token es de larguísima duración y la respuesta trae además `userName`, `.issued` y `.expires`.\n\nEste endpoint es el único que no requiere token.\n\n**Autenticación con `client_id`** (solo en producción): las integraciones de confianza pueden identificarse mandando además el header `Authorization: Basic base64(client_id:client_secret)` (RFC 6749 §2.3.1). Es opcional en `grant_type=password` y `grant_type=refresh_token` - se manda junto con las credenciales del usuario, y el token resultante queda asociado a esa aplicación además de al usuario, sin cambiar nada más del flujo. Es obligatorio en `grant_type=client_credentials`, el único grant que no lleva usuario. Para obtener un `client_id` propio, solicitarlo a YiQi - no es autogestionable.",
         "operationId": "GetToken",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "description": "`Basic base64(client_id:client_secret)` (RFC 6749 §2.3.1). Opcional en `grant_type=password`/`refresh_token` para identificar la aplicación además del usuario; obligatorio en `grant_type=client_credentials`. Solo en producción.",
+            "schema": {
+              "type": "string",
+              "example": "Basic ZnJvbnRlbmQtZWplbXBsbzpzZWNyZXRvLWRlLWVqZW1wbG8="
+            }
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -44,10 +56,11 @@
                 "properties": {
                   "grant_type": {
                     "type": "string",
-                    "description": "`password` para autenticar con usuario y contraseña. `refresh_token` para renovar un token vencido sin volver a mandar credenciales (solo en producción).",
+                    "description": "`password` para autenticar con usuario y contraseña. `refresh_token` para renovar un token vencido sin volver a mandar credenciales (solo en producción). `client_credentials` para que una aplicación de confianza se autentique a sí misma sin usuario, con un `client_id` propio (solo en producción, ver la descripción del endpoint).",
                     "enum": [
                       "password",
-                      "refresh_token"
+                      "refresh_token",
+                      "client_credentials"
                     ],
                     "example": "password"
                   },
@@ -131,12 +144,22 @@
             }
           },
           "401": {
-            "description": "Invalid username or password, o refresh_token vencido/ya usado. Solo en producción: en legacy este caso da 400.",
+            "description": "Invalid username or password, refresh_token vencido/ya usado, o `client_id`/secret inválido en el header `Authorization: Basic` (cuando se manda). Solo en producción: en legacy el caso de usuario/contraseña da 400, y no hay `client_id`.",
             "content": {
               "application/json": {
-                "example": {
-                  "error": "invalid_grant",
-                  "error_description": "Invalid username or password"
+                "examples": {
+                  "usuario o contraseña inválidos": {
+                    "value": {
+                      "error": "invalid_grant",
+                      "error_description": "Invalid username or password"
+                    }
+                  },
+                  "client_id o secret inválido": {
+                    "value": {
+                      "error": "invalid_client",
+                      "error_description": "Invalid client credentials"
+                    }
+                  }
                 }
               }
             }

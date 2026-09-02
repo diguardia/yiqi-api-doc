@@ -42,7 +42,8 @@ Reglas operativas para agentes (fuente rapida):
 - Healthcheck canonico: GET /accountapi/GetLoginInformation
 - Regla de schemaId: usar schemaId de GetLoginInformation como metodo primario
 - Fallback de schemaId: GET /schemasapi/GetAvailable
-- Usuario recomendado para integracion: usuario no interactivo con check INTEGRADOR
+- Usuario recomendado para integracion: usuario no interactivo con el permiso "Acceso API" habilitado (atributo tecnico INTEGRADOR en USUARIOS, mismo campo, titulo nuevo)
+- client_id: NO hace falta para desarrollar ni probar (alcanza con el usuario de Acceso API de arriba). Se vuelve necesario recien al homologar la integracion para el Marketplace; se solicita a YiQi en ese momento (no autogestionable) y se usa via header Authorization: Basic base64(client_id:client_secret) en POST /token
 - Datos demo estables: no disponibles
 - Rate limit general: 300 requests/minuto bajo /api, particionado por usuario autenticado (no por schemaId; sin usuario, por IP)
 - Rate limit de /token: 5 requests/minuto por IP
