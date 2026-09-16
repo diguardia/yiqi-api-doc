@@ -2962,6 +2962,12 @@
                       "description": "Referencia adicional para el asiento contable.",
                       "nullable": true
                     },
+                    "ASIE_SIN_MOVIMIENTOS": {
+                      "title": "Sin movimientos contables",
+                      "type": "boolean",
+                      "description": "Indica si el asiento no tiene movimientos contables asociados.",
+                      "nullable": true
+                    },
                     "MOVIMIENTOS": {
                       "title": "Movimientos",
                       "type": "array",
@@ -3712,6 +3718,12 @@
                         "type": "string",
                         "description": "Referencia adicional para el asiento contable.",
                         "nullable": true
+                      },
+                      "ASIE_SIN_MOVIMIENTOS": {
+                        "title": "Sin movimientos contables",
+                        "type": "boolean",
+                        "description": "Indica si el asiento no tiene movimientos contables asociados.",
+                        "nullable": true
                       }
                     },
                     "description": "A Asiento instance.\n\nOnly Asiento's own attributes are returned here: a foreign key travels as its id (e.g. `XXXX_ID_XXXX`), not as the referenced instance's description. Columns joined from related entities (aliased `<fkPrefix>_<ATTRIBUTE>`, e.g. `TIDD_NOMBRE`) do exist, but they are list columns: request them explicitly through `POST /ASIENTO/query` (the `field` enum there lists every available column, related ones included) or add them to a smartie. For a single instance, `GET /ASIENTO/{id}?includeFkTexts=true` returns `attsFkTexts` with the descriptive text behind each foreign key."
@@ -4067,6 +4079,7 @@
                             "ASIE_BALANCEADO",
                             "ASIE_INFO",
                             "ASIE_DIAS_DE_DIFERENCIA_C",
+                            "ASIE_SIN_MOVIMIENTOS",
                             "ASIE_FECHA",
                             "ASIE_CODIGO",
                             "ASIE_ANULADO",
@@ -4143,6 +4156,7 @@
                             "ASIE_BALANCEADO",
                             "ASIE_INFO",
                             "ASIE_DIAS_DE_DIFERENCIA_C",
+                            "ASIE_SIN_MOVIMIENTOS",
                             "ASIE_FECHA",
                             "ASIE_CODIGO",
                             "ASIE_ANULADO",
@@ -34335,6 +34349,18 @@
                               "type": "number",
                               "nullable": true
                             },
+                            "DEIC_IVA_COMPUT": {
+                              "title": "IVA Computable",
+                              "type": "number",
+                              "description": "Parte del IVA de este comprobante que es computable como crédito fiscal, según el % Computable IVA de cada línea de origen.",
+                              "nullable": true
+                            },
+                            "DEIC_IVA_NO_COMPUT": {
+                              "title": "IVA No Computable",
+                              "type": "number",
+                              "description": "Parte del IVA de este comprobante que no es computable como crédito fiscal (se imputa como mayor costo en el asiento).",
+                              "nullable": true
+                            },
                             "DEIC_PERC_IVA": {
                               "title": "Perc. IVA",
                               "type": "number",
@@ -34737,6 +34763,16 @@
                             "type": "number",
                             "nullable": true
                           },
+                          "DEIC_IVA_COMPUT": {
+                            "title": "IVA Computable",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "DEIC_IVA_NO_COMPUT": {
+                            "title": "IVA No Computable",
+                            "type": "number",
+                            "nullable": true
+                          },
                           "DEIC_PERC_IVA": {
                             "title": "Perc. IVA",
                             "type": "number",
@@ -35072,6 +35108,18 @@
                             "DEIC_IVA_OTROS": {
                               "title": "IVA Otros",
                               "type": "number",
+                              "nullable": true
+                            },
+                            "DEIC_IVA_COMPUT": {
+                              "title": "IVA Computable",
+                              "type": "number",
+                              "description": "Parte del IVA de este comprobante que es computable como crédito fiscal, según el % Computable IVA de cada línea de origen.",
+                              "nullable": true
+                            },
+                            "DEIC_IVA_NO_COMPUT": {
+                              "title": "IVA No Computable",
+                              "type": "number",
+                              "description": "Parte del IVA de este comprobante que no es computable como crédito fiscal (se imputa como mayor costo en el asiento).",
                               "nullable": true
                             },
                             "DEIC_PERC_IVA": {

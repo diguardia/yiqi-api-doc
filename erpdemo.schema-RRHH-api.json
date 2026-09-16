@@ -83149,6 +83149,13 @@
                               "description": " This is a foreign key to Alícuota de IVA. An id of Alícuota de IVA is expected",
                               "nullable": true
                             },
+                            "DEFC_PORC_COMPUTABLE": {
+                              "title": "% Computable IVA",
+                              "type": "decimal",
+                              "description": "Porcentaje del IVA de esta línea que es computable como crédito fiscal (Libro IVA Compras, posición de IVA y asiento contable). Si no se completa, se considera 100% computable, que es el comportamiento habitual. Usar un valor menor a 100 para casos de crédito fiscal parcial o no computable (por ejemplo automóviles, gastos no vinculados a la actividad gravada, compras a monotributistas/responsables no inscriptos o prorrateo del art. 13 de la Ley de IVA).",
+                              "default": "100",
+                              "nullable": true
+                            },
                             "DEFC_IMPUESTOS_INTERNOS": {
                               "title": "Impuestos Internos",
                               "type": "number",
@@ -83589,6 +83596,11 @@
                             "title": "Factura",
                             "type": "integer"
                           },
+                          "DEFC_FACTURA_PROVEEDOR": {
+                            "title": "Factura - Proveedor",
+                            "type": "string",
+                            "nullable": true
+                          },
                           "CODC_ID_CODC": {
                             "title": "Concepto",
                             "type": "integer",
@@ -83642,6 +83654,11 @@
                           "DEFC_IVA": {
                             "title": "IVA",
                             "type": "number",
+                            "nullable": true
+                          },
+                          "DEFC_PORC_COMPUTABLE": {
+                            "title": "% Computable IVA",
+                            "type": "decimal",
                             "nullable": true
                           },
                           "DEFC_IMPUESTOS_INTERNOS": {
@@ -84020,6 +84037,13 @@
                               "title": "Alícuota",
                               "type": "integer",
                               "description": " This is a foreign key to Alícuota de IVA. An id of Alícuota de IVA is expected",
+                              "nullable": true
+                            },
+                            "DEFC_PORC_COMPUTABLE": {
+                              "title": "% Computable IVA",
+                              "type": "decimal",
+                              "description": "Porcentaje del IVA de esta línea que es computable como crédito fiscal (Libro IVA Compras, posición de IVA y asiento contable). Si no se completa, se considera 100% computable, que es el comportamiento habitual. Usar un valor menor a 100 para casos de crédito fiscal parcial o no computable (por ejemplo automóviles, gastos no vinculados a la actividad gravada, compras a monotributistas/responsables no inscriptos o prorrateo del art. 13 de la Ley de IVA).",
+                              "default": "100",
                               "nullable": true
                             },
                             "DEFC_IMPUESTOS_INTERNOS": {
@@ -94335,9 +94359,8 @@
             "required": true,
             "schema": {
               "enum": [
-                "RECIBO_SUELDO_v4.0",
-                "RECIBO_SUELDO_v3.2",
-                "RECIBO_SUELDO_v6.6"
+                "RECIBO_SUELDO_v6.6",
+                "RECIBO_SUELDO_COSTO_EMPLEADOR_v1.0"
               ],
               "type": "string"
             }

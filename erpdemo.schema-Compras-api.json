@@ -549,8 +549,7 @@
                             "PRSE_ID_PRSE": {
                               "title": "Producto/Servicio",
                               "type": "integer",
-                              "description": " This is a foreign key to Producto Servicio. An id of Producto Servicio is expected\n This attribute is mandatory when the instance is at state 'Proyectada'",
-                              "nullable": true
+                              "description": "Valores fijos e identicos en todos los esquemas: 1 = Productos, 2 = Servicios, 3 = Productos y Servicios. PRODUCTO_SERVICIO no es una entidad consultable por la API publica (no tiene /query ni /search), asi que este mapeo hay que usarlo tal cual en vez de intentar resolverlo contra la entidad relacionada.\n This is a foreign key to Producto Servicio. An id of Producto Servicio is expected"
                             },
                             "ACCF_ID_ACCF": {
                               "title": "Actividad crédito fiscal",
@@ -1520,8 +1519,7 @@
                           },
                           "PRSE_ID_PRSE": {
                             "title": "Producto/Servicio",
-                            "type": "integer",
-                            "nullable": true
+                            "type": "integer"
                           },
                           "ACCF_ID_ACCF": {
                             "title": "Actividad crédito fiscal",
@@ -1615,6 +1613,16 @@
                           },
                           "FACO_IVA_OTROS": {
                             "title": "IVA Otros",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "FACO_IVA_COMPUT": {
+                            "title": "IVA Computable",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "FACO_IVA_NO_COMPUT": {
+                            "title": "IVA No Computable",
                             "type": "number",
                             "nullable": true
                           },
@@ -2523,8 +2531,7 @@
                             "PRSE_ID_PRSE": {
                               "title": "Producto/Servicio",
                               "type": "integer",
-                              "description": " This is a foreign key to Producto Servicio. An id of Producto Servicio is expected\n This attribute is mandatory when the instance is at state 'Proyectada'",
-                              "nullable": true
+                              "description": "Valores fijos e identicos en todos los esquemas: 1 = Productos, 2 = Servicios, 3 = Productos y Servicios. PRODUCTO_SERVICIO no es una entidad consultable por la API publica (no tiene /query ni /search), asi que este mapeo hay que usarlo tal cual en vez de intentar resolverlo contra la entidad relacionada.\n This is a foreign key to Producto Servicio. An id of Producto Servicio is expected"
                             },
                             "ACCF_ID_ACCF": {
                               "title": "Actividad crédito fiscal",
@@ -5191,6 +5198,13 @@
                         "description": " This is a foreign key to Alícuota de IVA. An id of Alícuota de IVA is expected",
                         "nullable": true
                       },
+                      "DEFC_PORC_COMPUTABLE": {
+                        "title": "% Computable IVA",
+                        "type": "decimal",
+                        "description": "Porcentaje del IVA de esta línea que es computable como crédito fiscal (Libro IVA Compras, posición de IVA y asiento contable). Si no se completa, se considera 100% computable, que es el comportamiento habitual. Usar un valor menor a 100 para casos de crédito fiscal parcial o no computable (por ejemplo automóviles, gastos no vinculados a la actividad gravada, compras a monotributistas/responsables no inscriptos o prorrateo del art. 13 de la Ley de IVA).",
+                        "default": "100",
+                        "nullable": true
+                      },
                       "DEFC_IMPUESTOS_INTERNOS": {
                         "title": "Impuestos Internos",
                         "type": "number",
@@ -5450,6 +5464,11 @@
                       "type": "integer",
                       "description": "Foreign key to Factura de compra"
                     },
+                    "DEFC_FACTURA_PROVEEDOR": {
+                      "title": "Factura - Proveedor",
+                      "type": "string",
+                      "nullable": true
+                    },
                     "CODC_ID_CODC": {
                       "title": "Concepto",
                       "type": "integer",
@@ -5506,6 +5525,12 @@
                     "DEFC_IVA": {
                       "title": "IVA",
                       "type": "number",
+                      "nullable": true
+                    },
+                    "DEFC_PORC_COMPUTABLE": {
+                      "title": "% Computable IVA",
+                      "type": "decimal",
+                      "description": "Porcentaje del IVA de esta línea que es computable como crédito fiscal (Libro IVA Compras, posición de IVA y asiento contable). Si no se completa, se considera 100% computable, que es el comportamiento habitual. Usar un valor menor a 100 para casos de crédito fiscal parcial o no computable (por ejemplo automóviles, gastos no vinculados a la actividad gravada, compras a monotributistas/responsables no inscriptos o prorrateo del art. 13 de la Ley de IVA).",
                       "nullable": true
                     },
                     "DEFC_IMPUESTOS_INTERNOS": {
@@ -5753,6 +5778,13 @@
                         "title": "Alícuota",
                         "type": "integer",
                         "description": " This is a foreign key to Alícuota de IVA. An id of Alícuota de IVA is expected",
+                        "nullable": true
+                      },
+                      "DEFC_PORC_COMPUTABLE": {
+                        "title": "% Computable IVA",
+                        "type": "decimal",
+                        "description": "Porcentaje del IVA de esta línea que es computable como crédito fiscal (Libro IVA Compras, posición de IVA y asiento contable). Si no se completa, se considera 100% computable, que es el comportamiento habitual. Usar un valor menor a 100 para casos de crédito fiscal parcial o no computable (por ejemplo automóviles, gastos no vinculados a la actividad gravada, compras a monotributistas/responsables no inscriptos o prorrateo del art. 13 de la Ley de IVA).",
+                        "default": "100",
                         "nullable": true
                       },
                       "DEFC_IMPUESTOS_INTERNOS": {
@@ -6172,6 +6204,15 @@
             }
           },
           {
+            "name": "DEFC_PORC_COMPUTABLE",
+            "in": "query",
+            "description": "% Computable IVA",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "decimal"
+            }
+          },
+          {
             "name": "DEFC_TOTAL",
             "in": "query",
             "description": "Subtotal",
@@ -6247,6 +6288,11 @@
                         "type": "integer",
                         "description": "Foreign key to Factura de compra"
                       },
+                      "DEFC_FACTURA_PROVEEDOR": {
+                        "title": "Factura - Proveedor",
+                        "type": "string",
+                        "nullable": true
+                      },
                       "CODC_ID_CODC": {
                         "title": "Concepto",
                         "type": "integer",
@@ -6303,6 +6349,12 @@
                       "DEFC_IVA": {
                         "title": "IVA",
                         "type": "number",
+                        "nullable": true
+                      },
+                      "DEFC_PORC_COMPUTABLE": {
+                        "title": "% Computable IVA",
+                        "type": "decimal",
+                        "description": "Porcentaje del IVA de esta línea que es computable como crédito fiscal (Libro IVA Compras, posición de IVA y asiento contable). Si no se completa, se considera 100% computable, que es el comportamiento habitual. Usar un valor menor a 100 para casos de crédito fiscal parcial o no computable (por ejemplo automóviles, gastos no vinculados a la actividad gravada, compras a monotributistas/responsables no inscriptos o prorrateo del art. 13 de la Ley de IVA).",
                         "nullable": true
                       },
                       "DEFC_IMPUESTOS_INTERNOS": {
@@ -6725,6 +6777,7 @@
                       "properties": {
                         "field": {
                           "enum": [
+                            "DEFC_FACTURA_PROVEEDOR",
                             "DEFC_NOMBRE_MATE",
                             "DEFC_CONCEPTO_COMPLETO",
                             "DEFC_NETO",
@@ -6736,6 +6789,7 @@
                             "DEFC_CANTIDAD",
                             "DEFC_PRECIO_UNITARIO",
                             "DEFC_PORC_BONIFICACION",
+                            "DEFC_PORC_COMPUTABLE",
                             "DEFC_IMPUESTOS_INTERNOS",
                             "DEFC_EXCLUIR_MOVIMIENTO",
                             "DEFC_CANTIDAD_DAADOS",
@@ -6803,6 +6857,7 @@
                       "properties": {
                         "columnName": {
                           "enum": [
+                            "DEFC_FACTURA_PROVEEDOR",
                             "DEFC_NOMBRE_MATE",
                             "DEFC_CONCEPTO_COMPLETO",
                             "DEFC_NETO",
@@ -6814,6 +6869,7 @@
                             "DEFC_CANTIDAD",
                             "DEFC_PRECIO_UNITARIO",
                             "DEFC_PORC_BONIFICACION",
+                            "DEFC_PORC_COMPUTABLE",
                             "DEFC_IMPUESTOS_INTERNOS",
                             "DEFC_EXCLUIR_MOVIMIENTO",
                             "DEFC_CANTIDAD_DAADOS",
@@ -7892,7 +7948,8 @@
                   "data": {
                     "required": [
                       "CLIE_ID_PROV",
-                      "TIFA_ID_TIFA"
+                      "TIFA_ID_TIFA",
+                      "PRSE_ID_PRSE"
                     ],
                     "type": "object",
                     "properties": {
@@ -8029,8 +8086,7 @@
                       "PRSE_ID_PRSE": {
                         "title": "Producto/Servicio",
                         "type": "integer",
-                        "description": " This is a foreign key to Producto Servicio. An id of Producto Servicio is expected\n This attribute is mandatory when the instance is at state 'Proyectada'",
-                        "nullable": true
+                        "description": "Valores fijos e identicos en todos los esquemas: 1 = Productos, 2 = Servicios, 3 = Productos y Servicios. PRODUCTO_SERVICIO no es una entidad consultable por la API publica (no tiene /query ni /search), asi que este mapeo hay que usarlo tal cual en vez de intentar resolverlo contra la entidad relacionada.\n This is a foreign key to Producto Servicio. An id of Producto Servicio is expected"
                       },
                       "ACCF_ID_ACCF": {
                         "title": "Actividad crédito fiscal",
@@ -8147,6 +8203,13 @@
                               "title": "Alícuota",
                               "type": "integer",
                               "description": " This is a foreign key to Alícuota de IVA. An id of Alícuota de IVA is expected",
+                              "nullable": true
+                            },
+                            "DEFC_PORC_COMPUTABLE": {
+                              "title": "% Computable IVA",
+                              "type": "decimal",
+                              "description": "Porcentaje del IVA de esta línea que es computable como crédito fiscal (Libro IVA Compras, posición de IVA y asiento contable). Si no se completa, se considera 100% computable, que es el comportamiento habitual. Usar un valor menor a 100 para casos de crédito fiscal parcial o no computable (por ejemplo automóviles, gastos no vinculados a la actividad gravada, compras a monotributistas/responsables no inscriptos o prorrateo del art. 13 de la Ley de IVA).",
+                              "default": "100",
                               "nullable": true
                             },
                             "DEFC_IMPUESTOS_INTERNOS": {
@@ -9037,8 +9100,7 @@
                     "PRSE_ID_PRSE": {
                       "title": "Producto/Servicio",
                       "type": "integer",
-                      "description": "Foreign key to Producto Servicio",
-                      "nullable": true
+                      "description": "Valores fijos e identicos en todos los esquemas: 1 = Productos, 2 = Servicios, 3 = Productos y Servicios. PRODUCTO_SERVICIO no es una entidad consultable por la API publica (no tiene /query ni /search), asi que este mapeo hay que usarlo tal cual en vez de intentar resolverlo contra la entidad relacionada.\nForeign key to Producto Servicio"
                     },
                     "ACCF_ID_ACCF": {
                       "title": "Actividad crédito fiscal",
@@ -9140,6 +9202,18 @@
                     "FACO_IVA_OTROS": {
                       "title": "IVA Otros",
                       "type": "number",
+                      "nullable": true
+                    },
+                    "FACO_IVA_COMPUT": {
+                      "title": "IVA Computable",
+                      "type": "number",
+                      "description": "Parte del IVA de la factura que es computable como crédito fiscal, según el % Computable IVA cargado en cada línea del detalle.",
+                      "nullable": true
+                    },
+                    "FACO_IVA_NO_COMPUT": {
+                      "title": "IVA No Computable",
+                      "type": "number",
+                      "description": "Parte del IVA de la factura que no es computable como crédito fiscal (se imputa como mayor costo). Es 0 salvo que alguna línea del detalle tenga cargado un % Computable IVA menor a 100.",
                       "nullable": true
                     },
                     "FACO_TOTAL_GRAVADO": {
@@ -9285,6 +9359,11 @@
                             "title": "Factura",
                             "type": "integer"
                           },
+                          "DEFC_FACTURA_PROVEEDOR": {
+                            "title": "Factura - Proveedor",
+                            "type": "string",
+                            "nullable": true
+                          },
                           "CODC_ID_CODC": {
                             "title": "Concepto",
                             "type": "integer",
@@ -9338,6 +9417,11 @@
                           "DEFC_IVA": {
                             "title": "IVA",
                             "type": "number",
+                            "nullable": true
+                          },
+                          "DEFC_PORC_COMPUTABLE": {
+                            "title": "% Computable IVA",
+                            "type": "decimal",
                             "nullable": true
                           },
                           "DEFC_IMPUESTOS_INTERNOS": {
@@ -9611,6 +9695,16 @@
                             "type": "number",
                             "nullable": true
                           },
+                          "NODC_IVA_COMPUT": {
+                            "title": "IVA Computable",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "NODC_IVA_NO_COMPUT": {
+                            "title": "IVA No Computable",
+                            "type": "number",
+                            "nullable": true
+                          },
                           "NODC_TOTAL_GRAVADO": {
                             "title": "Total Gravado",
                             "type": "number",
@@ -9845,6 +9939,16 @@
                           },
                           "NOCC_IVA_OTROS": {
                             "title": "IVA Otros",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "NOCC_IVA_COMPUT": {
+                            "title": "IVA Computable",
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "NOCC_IVA_NO_COMPUT": {
+                            "title": "IVA No Computable",
                             "type": "number",
                             "nullable": true
                           },
@@ -10382,7 +10486,8 @@
                   "data": {
                     "required": [
                       "CLIE_ID_PROV",
-                      "TIFA_ID_TIFA"
+                      "TIFA_ID_TIFA",
+                      "PRSE_ID_PRSE"
                     ],
                     "type": "object",
                     "properties": {
@@ -10519,8 +10624,7 @@
                       "PRSE_ID_PRSE": {
                         "title": "Producto/Servicio",
                         "type": "integer",
-                        "description": " This is a foreign key to Producto Servicio. An id of Producto Servicio is expected\n This attribute is mandatory when the instance is at state 'Proyectada'",
-                        "nullable": true
+                        "description": "Valores fijos e identicos en todos los esquemas: 1 = Productos, 2 = Servicios, 3 = Productos y Servicios. PRODUCTO_SERVICIO no es una entidad consultable por la API publica (no tiene /query ni /search), asi que este mapeo hay que usarlo tal cual en vez de intentar resolverlo contra la entidad relacionada.\n This is a foreign key to Producto Servicio. An id of Producto Servicio is expected"
                       },
                       "ACCF_ID_ACCF": {
                         "title": "Actividad crédito fiscal",
@@ -10637,6 +10741,13 @@
                               "title": "Alícuota",
                               "type": "integer",
                               "description": " This is a foreign key to Alícuota de IVA. An id of Alícuota de IVA is expected",
+                              "nullable": true
+                            },
+                            "DEFC_PORC_COMPUTABLE": {
+                              "title": "% Computable IVA",
+                              "type": "decimal",
+                              "description": "Porcentaje del IVA de esta línea que es computable como crédito fiscal (Libro IVA Compras, posición de IVA y asiento contable). Si no se completa, se considera 100% computable, que es el comportamiento habitual. Usar un valor menor a 100 para casos de crédito fiscal parcial o no computable (por ejemplo automóviles, gastos no vinculados a la actividad gravada, compras a monotributistas/responsables no inscriptos o prorrateo del art. 13 de la Ley de IVA).",
+                              "default": "100",
                               "nullable": true
                             },
                             "DEFC_IMPUESTOS_INTERNOS": {
@@ -11481,6 +11592,15 @@
             }
           },
           {
+            "name": "PRSE_ID_PRSE",
+            "in": "query",
+            "description": "Producto/Servicio",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
             "name": "FACO_IDENTIFICADOR",
             "in": "query",
             "description": "Identificador",
@@ -11751,8 +11871,7 @@
                       "PRSE_ID_PRSE": {
                         "title": "Producto/Servicio",
                         "type": "integer",
-                        "description": "Foreign key to Producto Servicio",
-                        "nullable": true
+                        "description": "Valores fijos e identicos en todos los esquemas: 1 = Productos, 2 = Servicios, 3 = Productos y Servicios. PRODUCTO_SERVICIO no es una entidad consultable por la API publica (no tiene /query ni /search), asi que este mapeo hay que usarlo tal cual en vez de intentar resolverlo contra la entidad relacionada.\nForeign key to Producto Servicio"
                       },
                       "ACCF_ID_ACCF": {
                         "title": "Actividad crédito fiscal",
@@ -11854,6 +11973,18 @@
                       "FACO_IVA_OTROS": {
                         "title": "IVA Otros",
                         "type": "number",
+                        "nullable": true
+                      },
+                      "FACO_IVA_COMPUT": {
+                        "title": "IVA Computable",
+                        "type": "number",
+                        "description": "Parte del IVA de la factura que es computable como crédito fiscal, según el % Computable IVA cargado en cada línea del detalle.",
+                        "nullable": true
+                      },
+                      "FACO_IVA_NO_COMPUT": {
+                        "title": "IVA No Computable",
+                        "type": "number",
+                        "description": "Parte del IVA de la factura que no es computable como crédito fiscal (se imputa como mayor costo). Es 0 salvo que alguna línea del detalle tenga cargado un % Computable IVA menor a 100.",
                         "nullable": true
                       },
                       "FACO_TOTAL_GRAVADO": {
@@ -12364,6 +12495,8 @@
                             "FACO_IVA_21",
                             "FACO_IVA_105",
                             "FACO_IVA_OTROS",
+                            "FACO_IVA_COMPUT",
+                            "FACO_IVA_NO_COMPUT",
                             "FACO_TOTAL_GRAVADO",
                             "FACO_TOTAL_NO_GRAVADO",
                             "FACO_TOTAL_EXENTO",
@@ -12484,6 +12617,8 @@
                             "FACO_IVA_21",
                             "FACO_IVA_105",
                             "FACO_IVA_OTROS",
+                            "FACO_IVA_COMPUT",
+                            "FACO_IVA_NO_COMPUT",
                             "FACO_TOTAL_GRAVADO",
                             "FACO_TOTAL_NO_GRAVADO",
                             "FACO_TOTAL_EXENTO",
@@ -12754,7 +12889,7 @@
           {
             "name": "state",
             "in": "query",
-            "description": "Target state name. Possibles values: <ul><li>Anulada</li>\n<li>Cancelada por NC</li>\n<li>Cargando interés</li>\n<li>Copiando Factura</li>\n<li>Creando NC</li>\n<li>Pagada</li>\n<li>Pagando con pago electronico</li>\n<li>Pagando con transferencia</li>\n<li>Pagando en efectivo</li>\n<li>Proyectada</li>\n<li>Recibida</li>\n<li>Regenerando asiento</li></ul>",
+            "description": "Target state name. Possibles values: <ul><li>Anulada</li>\n<li>Cancelada por NC</li>\n<li>Cargando interés</li>\n<li>Cargando percepciones</li>\n<li>Copiando Factura</li>\n<li>Creando NC</li>\n<li>Pagada</li>\n<li>Pagando con pago electronico</li>\n<li>Pagando con transferencia</li>\n<li>Pagando en efectivo</li>\n<li>Proyectada</li>\n<li>Recibida</li>\n<li>Regenerando asiento</li></ul>",
             "required": true,
             "schema": {
               "type": "string"
@@ -12787,11 +12922,6 @@
                     "title": "1er. venc.",
                     "type": "string",
                     "description": "Required when transitioning to state 'Recibida'. Rejected for any other target state. Fecha del primer vencimiento de la factura"
-                  },
-                  "PRSE_ID_PRSE": {
-                    "title": "Producto/Servicio",
-                    "type": "integer",
-                    "description": "Required when transitioning to state 'Proyectada'. Rejected for any other target state."
                   },
                   "CAJA_ID_CAJA": {
                     "title": "Caja",
@@ -13007,7 +13137,7 @@
           {
             "name": "state",
             "in": "query",
-            "description": "Target state name, applied to every id. Possibles values: <ul><li>Anulada</li>\n<li>Cancelada por NC</li>\n<li>Cargando interés</li>\n<li>Copiando Factura</li>\n<li>Creando NC</li>\n<li>Pagada</li>\n<li>Pagando con pago electronico</li>\n<li>Pagando con transferencia</li>\n<li>Pagando en efectivo</li>\n<li>Proyectada</li>\n<li>Recibida</li>\n<li>Regenerando asiento</li></ul>",
+            "description": "Target state name, applied to every id. Possibles values: <ul><li>Anulada</li>\n<li>Cancelada por NC</li>\n<li>Cargando interés</li>\n<li>Cargando percepciones</li>\n<li>Copiando Factura</li>\n<li>Creando NC</li>\n<li>Pagada</li>\n<li>Pagando con pago electronico</li>\n<li>Pagando con transferencia</li>\n<li>Pagando en efectivo</li>\n<li>Proyectada</li>\n<li>Recibida</li>\n<li>Regenerando asiento</li></ul>",
             "required": true,
             "schema": {
               "type": "string"
@@ -20806,6 +20936,20 @@
                               "description": " This attribute is mandatory when the instance is at state 'Pendiente'",
                               "nullable": true
                             },
+                            "MONE_ID_MONE": {
+                              "title": "Moneda",
+                              "type": "integer",
+                              "description": " This is a foreign key to Moneda. An id of Moneda is expected\n This attribute is mandatory when the instance is at state 'Pendiente'",
+                              "default": "PARAM.MONE_ID_MONE",
+                              "nullable": true
+                            },
+                            "CRED_COTIZACION_ORIGINAL": {
+                              "title": "Cotización original",
+                              "type": "number",
+                              "description": "Cotización inicial del crédito. Se conserva aunque las Órdenes de Pago de sus cuotas utilicen otra cotización.\n This attribute is mandatory when the instance is at state 'Pendiente'",
+                              "default": "1",
+                              "nullable": true
+                            },
                             "CRED_TNA": {
                               "title": "TNA",
                               "type": "number",
@@ -22655,6 +22799,16 @@
                             "type": "number",
                             "nullable": true
                           },
+                          "MONE_ID_MONE": {
+                            "title": "Moneda",
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "CRED_COTIZACION_ORIGINAL": {
+                            "title": "Cotización original",
+                            "type": "number",
+                            "nullable": true
+                          },
                           "CRED_TNA": {
                             "title": "TNA",
                             "type": "number",
@@ -24180,6 +24334,20 @@
                               "title": "Capital",
                               "type": "number",
                               "description": " This attribute is mandatory when the instance is at state 'Pendiente'",
+                              "nullable": true
+                            },
+                            "MONE_ID_MONE": {
+                              "title": "Moneda",
+                              "type": "integer",
+                              "description": " This is a foreign key to Moneda. An id of Moneda is expected\n This attribute is mandatory when the instance is at state 'Pendiente'",
+                              "default": "PARAM.MONE_ID_MONE",
+                              "nullable": true
+                            },
+                            "CRED_COTIZACION_ORIGINAL": {
+                              "title": "Cotización original",
+                              "type": "number",
+                              "description": "Cotización inicial del crédito. Se conserva aunque las Órdenes de Pago de sus cuotas utilicen otra cotización.\n This attribute is mandatory when the instance is at state 'Pendiente'",
+                              "default": "1",
                               "nullable": true
                             },
                             "CRED_TNA": {
@@ -32520,6 +32688,2028 @@
         }
       }
     },
+    "/CORREOS_PROCESADOS": {
+      "post": {
+        "tags": [
+          "Integraciones / Correos procesados"
+        ],
+        "summary": "Create a Correos procesados.",
+        "description": "Creates a new instance of Correos procesados.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "COPR_MENSAJE_UID": {
+                        "title": "UID del mensaje",
+                        "type": "integer",
+                        "description": "Identificador del mensaje dentro del buzón IMAP.",
+                        "nullable": true
+                      },
+                      "COPR_ASUNTO": {
+                        "title": "Asunto",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Asunto del correo recibido.",
+                        "nullable": true
+                      },
+                      "COPR_REMITENTE": {
+                        "title": "Remitente",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Dirección o nombre del remitente del correo.",
+                        "nullable": true
+                      },
+                      "COPR_FECHA_RECIBIDO": {
+                        "title": "Fecha de recepción",
+                        "type": "string",
+                        "description": "Fecha en la que se recibió el correo.",
+                        "nullable": true
+                      },
+                      "COPR_NOMBRE_ADJUNTO": {
+                        "title": "Nombre del adjunto",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Nombre del archivo adjunto revisado.",
+                        "nullable": true
+                      },
+                      "COPR_ESTADO": {
+                        "title": "Estado",
+                        "maxLength": 100,
+                        "enum": [
+                          "PROCESADO",
+                          "ERROR",
+                          "OMITIDO"
+                        ],
+                        "type": "string",
+                        "description": "Resultado del procesamiento del correo o adjunto.",
+                        "nullable": true
+                      },
+                      "COPR_MOTIVO": {
+                        "title": "Motivo",
+                        "type": "string",
+                        "description": "Detalle del resultado, error u omisión del procesamiento.",
+                        "nullable": true
+                      },
+                      "COPR_CUIT": {
+                        "title": "CUIT detectado",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "CUIT detectado en el correo, el adjunto o el texto extraído.",
+                        "nullable": true
+                      },
+                      "COPR_OCR_ID": {
+                        "title": "ID de OCR",
+                        "type": "integer",
+                        "description": "ID de la instancia OCR creada en YiQi, si corresponde.",
+                        "nullable": true
+                      }
+                    },
+                    "description": "Instance data"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Request processed. Check `ok`: a business validation failure also returns HTTP 200, with ok=false and the reason in `error`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean",
+                      "description": "True if the instance was saved. Business validation failures are reported as HTTP 200 with ok=false and a message in `error` - always check this flag."
+                    },
+                    "newId": {
+                      "type": "integer",
+                      "description": "Id of the saved Correos procesados (the new id when creating, the same id when updating). This is the field that carries the identifier - there is no `id` field in this response."
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Error message when ok=false. Null on success.",
+                      "nullable": true
+                    },
+                    "parameter": {
+                      "type": "string",
+                      "description": "The full saved instance, serialized as a JSON **string** (not a nested object) - same content as GET /CORREOS_PROCESADOS/{id} with includeChildren=true. Parse it to read it.",
+                      "nullable": true
+                    }
+                  },
+                  "example": {
+                    "ok": true,
+                    "newId": 12345,
+                    "error": null,
+                    "parameter": "{\"id\":12345, ...}"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
+          }
+        }
+      }
+    },
+    "/CORREOS_PROCESADOS/{id}": {
+      "get": {
+        "tags": [
+          "Integraciones / Correos procesados"
+        ],
+        "description": "Get a Correos procesados by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Correos procesados id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "includeTransitions",
+            "in": "query",
+            "description": "Whether to include the state transitions available for this instance, as `transitions` (default: false)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeFkTexts",
+            "in": "query",
+            "description": "Whether to include `attsFkTexts`: the descriptive text behind every foreign key / user / profile / fixed-value attribute, keyed by physical name (default: false). Use it to show \"Acme S.A.\" where the attribute carries `9744`. Opt-in because it costs one query per foreign key attribute.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "COPR_MENSAJE_UID": {
+                      "title": "UID del mensaje",
+                      "type": "integer",
+                      "description": "Identificador del mensaje dentro del buzón IMAP.",
+                      "nullable": true
+                    },
+                    "COPR_ASUNTO": {
+                      "title": "Asunto",
+                      "type": "string",
+                      "description": "Asunto del correo recibido.",
+                      "nullable": true
+                    },
+                    "COPR_REMITENTE": {
+                      "title": "Remitente",
+                      "type": "string",
+                      "description": "Dirección o nombre del remitente del correo.",
+                      "nullable": true
+                    },
+                    "COPR_FECHA_RECIBIDO": {
+                      "title": "Fecha de recepción",
+                      "type": "string",
+                      "description": "Fecha en la que se recibió el correo.",
+                      "nullable": true
+                    },
+                    "COPR_NOMBRE_ADJUNTO": {
+                      "title": "Nombre del adjunto",
+                      "type": "string",
+                      "description": "Nombre del archivo adjunto revisado.",
+                      "nullable": true
+                    },
+                    "COPR_ESTADO": {
+                      "title": "Estado",
+                      "enum": [
+                        "PROCESADO",
+                        "ERROR",
+                        "OMITIDO"
+                      ],
+                      "type": "string",
+                      "description": "Resultado del procesamiento del correo o adjunto.",
+                      "nullable": true
+                    },
+                    "COPR_MOTIVO": {
+                      "title": "Motivo",
+                      "type": "string",
+                      "description": "Detalle del resultado, error u omisión del procesamiento.",
+                      "nullable": true
+                    },
+                    "COPR_CUIT": {
+                      "title": "CUIT detectado",
+                      "type": "string",
+                      "description": "CUIT detectado en el correo, el adjunto o el texto extraído.",
+                      "nullable": true
+                    },
+                    "COPR_OCR_ID": {
+                      "title": "ID de OCR",
+                      "type": "integer",
+                      "description": "ID de la instancia OCR creada en YiQi, si corresponde.",
+                      "nullable": true
+                    },
+                    "transitions": {
+                      "title": "Available state transitions",
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "State transitions available for this instance (included when includeTransitions=true)"
+                    },
+                    "attsFkTexts": {
+                      "title": "Foreign key texts",
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "Descriptive text of every foreign key / user / profile / fixed-value attribute that has a value, keyed by physical name (included when includeFkTexts=true). Example: `\"TIDD_ID_TIDD\": \"CUIT\"`. Attributes without a value are omitted, not returned as empty."
+                    }
+                  },
+                  "description": "A Correos procesados instance.\n\nOnly Correos procesados's own attributes are returned here: a foreign key travels as its id (e.g. `XXXX_ID_XXXX`), not as the referenced instance's description. Columns joined from related entities (aliased `<fkPrefix>_<ATTRIBUTE>`, e.g. `TIDD_NOMBRE`) do exist, but they are list columns: request them explicitly through `POST /CORREOS_PROCESADOS/query` (the `field` enum there lists every available column, related ones included) or add them to a smartie. For a single instance, `GET /CORREOS_PROCESADOS/{id}?includeFkTexts=true` returns `attsFkTexts` with the descriptive text behind each foreign key."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity or instance not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Integraciones / Correos procesados"
+        ],
+        "summary": "Update a Correos procesados by id.",
+        "description": "Update a Correos procesados. The id in the path wins: it is written over `data.id` before saving, so it does not need to be repeated in the body.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Correos procesados id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "COPR_MENSAJE_UID": {
+                        "title": "UID del mensaje",
+                        "type": "integer",
+                        "description": "Identificador del mensaje dentro del buzón IMAP.",
+                        "nullable": true
+                      },
+                      "COPR_ASUNTO": {
+                        "title": "Asunto",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Asunto del correo recibido.",
+                        "nullable": true
+                      },
+                      "COPR_REMITENTE": {
+                        "title": "Remitente",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Dirección o nombre del remitente del correo.",
+                        "nullable": true
+                      },
+                      "COPR_FECHA_RECIBIDO": {
+                        "title": "Fecha de recepción",
+                        "type": "string",
+                        "description": "Fecha en la que se recibió el correo.",
+                        "nullable": true
+                      },
+                      "COPR_NOMBRE_ADJUNTO": {
+                        "title": "Nombre del adjunto",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Nombre del archivo adjunto revisado.",
+                        "nullable": true
+                      },
+                      "COPR_ESTADO": {
+                        "title": "Estado",
+                        "maxLength": 100,
+                        "enum": [
+                          "PROCESADO",
+                          "ERROR",
+                          "OMITIDO"
+                        ],
+                        "type": "string",
+                        "description": "Resultado del procesamiento del correo o adjunto.",
+                        "nullable": true
+                      },
+                      "COPR_MOTIVO": {
+                        "title": "Motivo",
+                        "type": "string",
+                        "description": "Detalle del resultado, error u omisión del procesamiento.",
+                        "nullable": true
+                      },
+                      "COPR_CUIT": {
+                        "title": "CUIT detectado",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "CUIT detectado en el correo, el adjunto o el texto extraído.",
+                        "nullable": true
+                      },
+                      "COPR_OCR_ID": {
+                        "title": "ID de OCR",
+                        "type": "integer",
+                        "description": "ID de la instancia OCR creada en YiQi, si corresponde.",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Request processed. Check `ok`: a business validation failure also returns HTTP 200, with ok=false and the reason in `error`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean",
+                      "description": "True if the instance was saved. Business validation failures are reported as HTTP 200 with ok=false and a message in `error` - always check this flag."
+                    },
+                    "newId": {
+                      "type": "integer",
+                      "description": "Id of the saved Correos procesados (the new id when creating, the same id when updating). This is the field that carries the identifier - there is no `id` field in this response."
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Error message when ok=false. Null on success.",
+                      "nullable": true
+                    },
+                    "parameter": {
+                      "type": "string",
+                      "description": "The full saved instance, serialized as a JSON **string** (not a nested object) - same content as GET /CORREOS_PROCESADOS/{id} with includeChildren=true. Parse it to read it.",
+                      "nullable": true
+                    }
+                  },
+                  "example": {
+                    "ok": true,
+                    "newId": 12345,
+                    "error": null,
+                    "parameter": "{\"id\":12345, ...}"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to edit instances of this entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity or instance not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Integraciones / Correos procesados"
+        ],
+        "summary": "Delete a Correos procesados by id.",
+        "description": "Delete a Correos procesados",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Correos procesados id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Result message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - entity name empty or id not greater than 0",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to delete instances of this entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity or instance not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CORREOS_PROCESADOS/search": {
+      "get": {
+        "tags": [
+          "Integraciones / Correos procesados"
+        ],
+        "summary": "Fast search endpoint. Returns a capped, non-paginated set of Correos procesados records; prefer /query for controlled, production-grade listings.",
+        "description": "Performs a lightweight search over Correos procesados instances. Every query parameter below that matches an attribute's physical name is applied as an equality filter; omit them all to list the first records. The result set is capped and not paginated, so this endpoint is meant for quick lookups. For production listings that require configurable pagination, explicit column selection, or advanced filters, prefer /query.\n\nOnly Correos procesados's own attributes are returned here: a foreign key travels as its id (e.g. `XXXX_ID_XXXX`), not as the referenced instance's description. Columns joined from related entities (aliased `<fkPrefix>_<ATTRIBUTE>`, e.g. `TIDD_NOMBRE`) do exist, but they are list columns: request them explicitly through `POST /CORREOS_PROCESADOS/query` (the `field` enum there lists every available column, related ones included) or add them to a smartie. For a single instance, `GET /CORREOS_PROCESADOS/{id}?includeFkTexts=true` returns `attsFkTexts` with the descriptive text behind each foreign key.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Matching instances, as a flat array (not wrapped in an object). Child entities are not included.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "title": "Instance unique identifier",
+                        "type": "integer"
+                      },
+                      "ESTA_NOMBRE": {
+                        "title": "State name",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "ESTA_CODIGO": {
+                        "title": "State code",
+                        "type": "integer",
+                        "nullable": true
+                      },
+                      "AUDI_FECHA_ALTA": {
+                        "title": "Creation date",
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "AUDI_FECHA_MODIF": {
+                        "title": "Last modification date",
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "COPR_MENSAJE_UID": {
+                        "title": "UID del mensaje",
+                        "type": "integer",
+                        "description": "Identificador del mensaje dentro del buzón IMAP.",
+                        "nullable": true
+                      },
+                      "COPR_ASUNTO": {
+                        "title": "Asunto",
+                        "type": "string",
+                        "description": "Asunto del correo recibido.",
+                        "nullable": true
+                      },
+                      "COPR_REMITENTE": {
+                        "title": "Remitente",
+                        "type": "string",
+                        "description": "Dirección o nombre del remitente del correo.",
+                        "nullable": true
+                      },
+                      "COPR_FECHA_RECIBIDO": {
+                        "title": "Fecha de recepción",
+                        "type": "string",
+                        "description": "Fecha en la que se recibió el correo.",
+                        "nullable": true
+                      },
+                      "COPR_NOMBRE_ADJUNTO": {
+                        "title": "Nombre del adjunto",
+                        "type": "string",
+                        "description": "Nombre del archivo adjunto revisado.",
+                        "nullable": true
+                      },
+                      "COPR_ESTADO": {
+                        "title": "Estado",
+                        "enum": [
+                          "PROCESADO",
+                          "ERROR",
+                          "OMITIDO"
+                        ],
+                        "type": "string",
+                        "description": "Resultado del procesamiento del correo o adjunto.",
+                        "nullable": true
+                      },
+                      "COPR_MOTIVO": {
+                        "title": "Motivo",
+                        "type": "string",
+                        "description": "Detalle del resultado, error u omisión del procesamiento.",
+                        "nullable": true
+                      },
+                      "COPR_CUIT": {
+                        "title": "CUIT detectado",
+                        "type": "string",
+                        "description": "CUIT detectado en el correo, el adjunto o el texto extraído.",
+                        "nullable": true
+                      },
+                      "COPR_OCR_ID": {
+                        "title": "ID de OCR",
+                        "type": "integer",
+                        "description": "ID de la instancia OCR creada en YiQi, si corresponde.",
+                        "nullable": true
+                      }
+                    },
+                    "description": "A Correos procesados instance.\n\nOnly Correos procesados's own attributes are returned here: a foreign key travels as its id (e.g. `XXXX_ID_XXXX`), not as the referenced instance's description. Columns joined from related entities (aliased `<fkPrefix>_<ATTRIBUTE>`, e.g. `TIDD_NOMBRE`) do exist, but they are list columns: request them explicitly through `POST /CORREOS_PROCESADOS/query` (the `field` enum there lists every available column, related ones included) or add them to a smartie. For a single instance, `GET /CORREOS_PROCESADOS/{id}?includeFkTexts=true` returns `attsFkTexts` with the descriptive text behind each foreign key."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - entity name empty",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CORREOS_PROCESADOS/smartie": {
+      "get": {
+        "tags": [
+          "Integraciones / Correos procesados"
+        ],
+        "summary": "Get a page of a smartie (saved list configuration)",
+        "description": "Runs a saved list configuration (columns, filters, sorting) and returns one page of it.\n\n**The keys of each `data` row are the smartie's configured columns, not the entity schema.** A smartie can include columns joined from related entities (aliased `<fkPrefix>_<ATTRIBUTE>`, e.g. `TIDD_NOMBRE`, `ALIV_PORCENTAJE`), which is why the response may contain fields that do not appear in this entity's own attributes. The `columns` array of the response always describes exactly what came back.\n\nColumns whose attribute group the caller cannot see are dropped from both `data` and `columns`. If you need a stable, explicit column set, prefer `POST /CORREOS_PROCESADOS/query`.",
+        "parameters": [
+          {
+            "name": "smartieId",
+            "in": "query",
+            "description": "Smartie id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (1-based). Defaults to 1 when omitted.",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": " Search term",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Page returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Rows of the page. Each row is keyed by the smartie's column names (related-entity columns included); `id` and `ESTA_CODIGO` are added when the rows represent instances (i.e. the query does not group or pivot)."
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records matching the query (ignoring pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Definition of the columns actually returned - the authoritative list of the keys present in `data`"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - entity name or smartieId empty",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token / user could not be resolved"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found, or smartie not found for this entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CORREOS_PROCESADOS/query": {
+      "post": {
+        "tags": [
+          "Integraciones / Correos procesados"
+        ],
+        "summary": "Execute dynamic query without persisted smartie",
+        "description": "Performs a dynamic query on Correos procesados instances with custom columns, filters, sorting, aggregations, and configurable pagination. Use this endpoint for production-grade listings that require predictable performance, payload control, and advanced filtering. Unlike /search, /query allows explicit column selection and page size configuration, making it the preferred option for list screens, integrations, and high-volume data retrieval scenarios. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dynamic query parameters including pagination, columns, filters, and search criteria",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "page"
+                ],
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Page number (1-based)",
+                    "default": 1
+                  },
+                  "pageSize": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Number of records per page",
+                    "default": 50
+                  },
+                  "search": {
+                    "type": "string",
+                    "description": "Free-text term applied over the requested columns: a LIKE '%term%' against each column in `columns` whose data type supports it, OR-ed together. It narrows both `data` and `total`. Combine it with `filters` for exact conditions.",
+                    "nullable": true
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "field"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "enum": [
+                            "COPR_MENSAJE_UID",
+                            "COPR_ASUNTO",
+                            "COPR_REMITENTE",
+                            "COPR_FECHA_RECIBIDO",
+                            "COPR_NOMBRE_ADJUNTO",
+                            "COPR_ESTADO",
+                            "COPR_MOTIVO",
+                            "COPR_CUIT",
+                            "COPR_OCR_ID",
+                            "id",
+                            "DESC_ESTADO",
+                            "ESTA_CODIGO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Custom column title (optional)",
+                          "nullable": true
+                        },
+                        "sortDirection": {
+                          "enum": [
+                            "ASC",
+                            "DESC"
+                          ],
+                          "type": "string",
+                          "description": "Sort direction",
+                          "nullable": true
+                        },
+                        "order": {
+                          "type": "integer",
+                          "description": "Column display order (optional)",
+                          "nullable": true
+                        },
+                        "sortOrder": {
+                          "type": "integer",
+                          "description": "Sort priority order (optional)",
+                          "nullable": true
+                        },
+                        "aggregation": {
+                          "enum": [
+                            "SUM",
+                            "COUNT",
+                            "AVG",
+                            "MIN",
+                            "MAX"
+                          ],
+                          "type": "string",
+                          "description": "Aggregation function",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Column specifications. If null or empty, default header columns will be used",
+                    "nullable": true
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "columnName",
+                        "operator",
+                        "value"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "columnName": {
+                          "enum": [
+                            "COPR_MENSAJE_UID",
+                            "COPR_ASUNTO",
+                            "COPR_REMITENTE",
+                            "COPR_FECHA_RECIBIDO",
+                            "COPR_NOMBRE_ADJUNTO",
+                            "COPR_ESTADO",
+                            "COPR_MOTIVO",
+                            "COPR_CUIT",
+                            "COPR_OCR_ID",
+                            "id",
+                            "DESC_ESTADO",
+                            "ESTA_CODIGO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Column name to filter (required). Available columns from `columns` (entity view columns plus the raw id of Usuario-typed attributes), plus the physical id of related entities (e.g. CLIE_ID_CLIE) which - unlike Usuario ids - are filter-only: filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
+                        },
+                        "operator": {
+                          "enum": [
+                            "=",
+                            "!=",
+                            ">",
+                            "<",
+                            ">=",
+                            "<=",
+                            "LIKE"
+                          ],
+                          "type": "string",
+                          "description": "Comparison operator"
+                        },
+                        "value": {
+                          "description": "Value to compare. Type should match column data type",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Filter specifications",
+                    "nullable": true
+                  }
+                }
+              },
+              "example": {
+                "page": 1,
+                "pageSize": 10,
+                "search": "",
+                "columns": [
+                  {
+                    "field": "COLUMN_NAME",
+                    "title": "Column Title",
+                    "sortDirection": "ASC",
+                    "sortOrder": 1
+                  }
+                ],
+                "filters": [
+                  {
+                    "columnName": "COLUMN_NAME",
+                    "operator": "=",
+                    "value": "value"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Rows of the page, keyed by the `field` of each requested column. `id` and `ESTA_CODIGO` are added when the rows represent instances (i.e. no column uses an aggregation)."
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records matching the query (ignoring pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Definition of the columns actually returned - the authoritative list of the keys present in `data`"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters, unknown column name, or unsupported operator",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CORREOS_PROCESADOS/file": {
+      "get": {
+        "tags": [
+          "Integraciones / Correos procesados"
+        ],
+        "summary": "Descarga un archivo de una entidad",
+        "description": "Devuelve el archivo cargado en un atributo de tipo archivo de una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archivo encontrado. El cuerpo es el archivo en crudo; el nombre viaja en el header Content-Disposition.",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El usuario no tiene permisos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Integraciones / Correos procesados"
+        ],
+        "summary": "Carga o reemplaza un archivo en una entidad",
+        "description": "Guarda el archivo en el atributo de tipo archivo de una instancia de entidad. Soporta dos formatos: multipart/form-data o binary directo (application/octet-stream, application/pdf, etc.).",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "description": "Tipo de contenido (MIME) del archivo (ej: application/pdf, image/png). Opcional: si se omite se toma el del multipart, o application/octet-stream.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Nombre del archivo (opcional, se puede inferir del multipart)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Archivo a cargar. Puede enviarse como multipart/form-data o como binary directo.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "Contenido del archivo",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido binario del archivo enviado directamente",
+                "format": "binary"
+              }
+            },
+            "application/pdf": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido PDF enviado directamente",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Archivo guardado correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Result message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El usuario no tiene permisos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ya hay una carga en curso para este mismo archivo. Reintentar cuando termine.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CORREOS_PROCESADOS/report": {
+      "get": {
+        "tags": [
+          "Integraciones / Correos procesados"
+        ],
+        "summary": "Descarga un reporte asociado a una entidad",
+        "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "reportName",
+            "in": "query",
+            "description": "Nombre del reporte",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reporte encontrado. El cuerpo es el PDF en crudo; el nombre viaja en el header Content-Disposition.",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un reporte con ese nombre en la entidad",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El usuario no tiene permisos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/NOVEDAD_FACTURA_COMP": {
       "post": {
         "tags": [
@@ -37931,7 +40121,7 @@
                               "nullable": true
                             },
                             "DEMC_FECHA_DE_DOCUMENTO": {
-                              "title": "Fecha de Documento",
+                              "title": "Fecha de emisión",
                               "type": "string",
                               "nullable": true
                             }
@@ -38250,7 +40440,7 @@
                             "nullable": true
                           },
                           "DEMC_FECHA_DE_DOCUMENTO": {
-                            "title": "Fecha de Documento",
+                            "title": "Fecha de emisión",
                             "type": "string",
                             "nullable": true
                           }
@@ -38446,7 +40636,7 @@
                               "nullable": true
                             },
                             "DEMC_FECHA_DE_DOCUMENTO": {
-                              "title": "Fecha de Documento",
+                              "title": "Fecha de emisión",
                               "type": "string",
                               "nullable": true
                             }
@@ -40501,6 +42691,13 @@
                               "description": " This is a foreign key to Alícuota de IVA. An id of Alícuota de IVA is expected",
                               "nullable": true
                             },
+                            "DENC_PORC_COMPUTABLE": {
+                              "title": "% Computable IVA",
+                              "type": "decimal",
+                              "description": "Porcentaje del IVA de esta línea que es computable como crédito fiscal. Si no se completa, se considera 100% computable, igual que en la factura de compra que se está ajustando.",
+                              "default": "100",
+                              "nullable": true
+                            },
                             "DENC_IMPUESTOS_INTERNOS": {
                               "title": "Impuestos Internos",
                               "type": "number",
@@ -40898,6 +43095,18 @@
                       "type": "number",
                       "nullable": true
                     },
+                    "NOCC_IVA_COMPUT": {
+                      "title": "IVA Computable",
+                      "type": "number",
+                      "description": "Parte del IVA de la nota de crédito que es computable como crédito fiscal, según el % Computable IVA cargado en cada línea del detalle.",
+                      "nullable": true
+                    },
+                    "NOCC_IVA_NO_COMPUT": {
+                      "title": "IVA No Computable",
+                      "type": "number",
+                      "description": "Parte del IVA de la nota de crédito que no es computable como crédito fiscal (se imputa como mayor costo).",
+                      "nullable": true
+                    },
                     "NOCC_TOTAL_GRAVADO": {
                       "title": "Total Gravado",
                       "type": "number",
@@ -41161,6 +43370,11 @@
                           "DENC_IVA": {
                             "title": "IVA",
                             "type": "number",
+                            "nullable": true
+                          },
+                          "DENC_PORC_COMPUTABLE": {
+                            "title": "% Computable IVA",
+                            "type": "decimal",
                             "nullable": true
                           },
                           "DENC_IMPUESTOS_INTERNOS": {
@@ -41546,6 +43760,13 @@
                               "title": "Alícuota",
                               "type": "integer",
                               "description": " This is a foreign key to Alícuota de IVA. An id of Alícuota de IVA is expected",
+                              "nullable": true
+                            },
+                            "DENC_PORC_COMPUTABLE": {
+                              "title": "% Computable IVA",
+                              "type": "decimal",
+                              "description": "Porcentaje del IVA de esta línea que es computable como crédito fiscal. Si no se completa, se considera 100% computable, igual que en la factura de compra que se está ajustando.",
+                              "default": "100",
                               "nullable": true
                             },
                             "DENC_IMPUESTOS_INTERNOS": {
@@ -42187,6 +44408,18 @@
                         "type": "number",
                         "nullable": true
                       },
+                      "NOCC_IVA_COMPUT": {
+                        "title": "IVA Computable",
+                        "type": "number",
+                        "description": "Parte del IVA de la nota de crédito que es computable como crédito fiscal, según el % Computable IVA cargado en cada línea del detalle.",
+                        "nullable": true
+                      },
+                      "NOCC_IVA_NO_COMPUT": {
+                        "title": "IVA No Computable",
+                        "type": "number",
+                        "description": "Parte del IVA de la nota de crédito que no es computable como crédito fiscal (se imputa como mayor costo).",
+                        "nullable": true
+                      },
                       "NOCC_TOTAL_GRAVADO": {
                         "title": "Total Gravado",
                         "type": "number",
@@ -42715,6 +44948,8 @@
                             "NOCC_IVA_21",
                             "NOCC_IVA_105",
                             "NOCC_IVA_OTROS",
+                            "NOCC_IVA_COMPUT",
+                            "NOCC_IVA_NO_COMPUT",
                             "NOCC_TOTAL_GRAVADO",
                             "NOCC_TOTAL_NO_GRAVADO",
                             "NOCC_TOTAL_EXENTO",
@@ -42823,6 +45058,8 @@
                             "NOCC_IVA_21",
                             "NOCC_IVA_105",
                             "NOCC_IVA_OTROS",
+                            "NOCC_IVA_COMPUT",
+                            "NOCC_IVA_NO_COMPUT",
                             "NOCC_TOTAL_GRAVADO",
                             "NOCC_TOTAL_NO_GRAVADO",
                             "NOCC_TOTAL_EXENTO",
@@ -44114,6 +46351,13 @@
                               "description": " This is a foreign key to Alícuota de IVA. An id of Alícuota de IVA is expected",
                               "nullable": true
                             },
+                            "DEND_PORC_COMPUTABLE": {
+                              "title": "% Computable IVA",
+                              "type": "decimal",
+                              "description": "Porcentaje del IVA de esta línea que es computable como crédito fiscal. Si no se completa, se considera 100% computable, igual que en la factura de compra que se está ajustando.",
+                              "default": "100",
+                              "nullable": true
+                            },
                             "DEND_IMPUESTOS_INTERNOS": {
                               "title": "Impuestos Internos",
                               "type": "number",
@@ -44457,6 +46701,18 @@
                       "type": "number",
                       "nullable": true
                     },
+                    "NODC_IVA_COMPUT": {
+                      "title": "IVA Computable",
+                      "type": "number",
+                      "description": "Parte del IVA de la nota de débito que es computable como crédito fiscal, según el % Computable IVA cargado en cada línea del detalle.",
+                      "nullable": true
+                    },
+                    "NODC_IVA_NO_COMPUT": {
+                      "title": "IVA No Computable",
+                      "type": "number",
+                      "description": "Parte del IVA de la nota de débito que no es computable como crédito fiscal (se imputa como mayor costo).",
+                      "nullable": true
+                    },
                     "NODC_TOTAL_GRAVADO": {
                       "title": "Total Gravado",
                       "type": "number",
@@ -44678,6 +46934,11 @@
                           "DEND_IVA": {
                             "title": "IVA",
                             "type": "number",
+                            "nullable": true
+                          },
+                          "DEND_PORC_COMPUTABLE": {
+                            "title": "% Computable IVA",
+                            "type": "decimal",
                             "nullable": true
                           },
                           "DEND_IMPUESTOS_INTERNOS": {
@@ -45003,6 +47264,13 @@
                               "title": "Alícuota",
                               "type": "integer",
                               "description": " This is a foreign key to Alícuota de IVA. An id of Alícuota de IVA is expected",
+                              "nullable": true
+                            },
+                            "DEND_PORC_COMPUTABLE": {
+                              "title": "% Computable IVA",
+                              "type": "decimal",
+                              "description": "Porcentaje del IVA de esta línea que es computable como crédito fiscal. Si no se completa, se considera 100% computable, igual que en la factura de compra que se está ajustando.",
+                              "default": "100",
                               "nullable": true
                             },
                             "DEND_IMPUESTOS_INTERNOS": {
@@ -45599,6 +47867,18 @@
                         "type": "number",
                         "nullable": true
                       },
+                      "NODC_IVA_COMPUT": {
+                        "title": "IVA Computable",
+                        "type": "number",
+                        "description": "Parte del IVA de la nota de débito que es computable como crédito fiscal, según el % Computable IVA cargado en cada línea del detalle.",
+                        "nullable": true
+                      },
+                      "NODC_IVA_NO_COMPUT": {
+                        "title": "IVA No Computable",
+                        "type": "number",
+                        "description": "Parte del IVA de la nota de débito que no es computable como crédito fiscal (se imputa como mayor costo).",
+                        "nullable": true
+                      },
                       "NODC_TOTAL_GRAVADO": {
                         "title": "Total Gravado",
                         "type": "number",
@@ -46085,6 +48365,8 @@
                             "NODC_IVA_21",
                             "NODC_IVA_105",
                             "NODC_IVA_OTROS",
+                            "NODC_IVA_COMPUT",
+                            "NODC_IVA_NO_COMPUT",
                             "NODC_TOTAL_GRAVADO",
                             "NODC_TOTAL_NO_GRAVADO",
                             "NODC_TOTAL_EXENTO",
@@ -46187,6 +48469,8 @@
                             "NODC_IVA_21",
                             "NODC_IVA_105",
                             "NODC_IVA_OTROS",
+                            "NODC_IVA_COMPUT",
+                            "NODC_IVA_NO_COMPUT",
                             "NODC_TOTAL_GRAVADO",
                             "NODC_TOTAL_NO_GRAVADO",
                             "NODC_TOTAL_EXENTO",
@@ -72891,7 +75175,7 @@
           {
             "name": "state",
             "in": "query",
-            "description": "Target state name. Possibles values: <ul><li>Anulada</li>\n<li>Creada</li></ul>",
+            "description": "Target state name. Possibles values: <ul><li>Anulada</li>\n<li>Cancelada</li>\n<li>Creada</li></ul>",
             "required": true,
             "schema": {
               "type": "string"
@@ -73072,7 +75356,7 @@
           {
             "name": "state",
             "in": "query",
-            "description": "Target state name, applied to every id. Possibles values: <ul><li>Anulada</li>\n<li>Creada</li></ul>",
+            "description": "Target state name, applied to every id. Possibles values: <ul><li>Anulada</li>\n<li>Cancelada</li>\n<li>Creada</li></ul>",
             "required": true,
             "schema": {
               "type": "string"
@@ -93983,6 +96267,10 @@
     {
       "name": "Carga resumida / Carga resumida de Compra",
       "description": "Carga resumida de Compra"
+    },
+    {
+      "name": "Integraciones / Correos procesados",
+      "description": "Correos procesados"
     },
     {
       "name": "Integraciones / Novedad Factura Compra",

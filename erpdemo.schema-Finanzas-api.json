@@ -27503,6 +27503,20 @@
                         "description": " This attribute is mandatory when the instance is at state 'Pendiente'",
                         "nullable": true
                       },
+                      "MONE_ID_MONE": {
+                        "title": "Moneda",
+                        "type": "integer",
+                        "description": " This is a foreign key to Moneda. An id of Moneda is expected\n This attribute is mandatory when the instance is at state 'Pendiente'",
+                        "default": "PARAM.MONE_ID_MONE",
+                        "nullable": true
+                      },
+                      "CRED_COTIZACION_ORIGINAL": {
+                        "title": "Cotización original",
+                        "type": "number",
+                        "description": "Cotización inicial del crédito. Se conserva aunque las Órdenes de Pago de sus cuotas utilicen otra cotización.\n This attribute is mandatory when the instance is at state 'Pendiente'",
+                        "default": "1",
+                        "nullable": true
+                      },
                       "CRED_TNA": {
                         "title": "TNA",
                         "type": "number",
@@ -27853,6 +27867,18 @@
                       "type": "number",
                       "nullable": true
                     },
+                    "MONE_ID_MONE": {
+                      "title": "Moneda",
+                      "type": "integer",
+                      "description": "Foreign key to Moneda",
+                      "nullable": true
+                    },
+                    "CRED_COTIZACION_ORIGINAL": {
+                      "title": "Cotización original",
+                      "type": "number",
+                      "description": "Cotización inicial del crédito. Se conserva aunque las Órdenes de Pago de sus cuotas utilicen otra cotización.",
+                      "nullable": true
+                    },
                     "CRED_TNA": {
                       "title": "TNA",
                       "type": "number",
@@ -28169,6 +28195,20 @@
                         "title": "Capital",
                         "type": "number",
                         "description": " This attribute is mandatory when the instance is at state 'Pendiente'",
+                        "nullable": true
+                      },
+                      "MONE_ID_MONE": {
+                        "title": "Moneda",
+                        "type": "integer",
+                        "description": " This is a foreign key to Moneda. An id of Moneda is expected\n This attribute is mandatory when the instance is at state 'Pendiente'",
+                        "default": "PARAM.MONE_ID_MONE",
+                        "nullable": true
+                      },
+                      "CRED_COTIZACION_ORIGINAL": {
+                        "title": "Cotización original",
+                        "type": "number",
+                        "description": "Cotización inicial del crédito. Se conserva aunque las Órdenes de Pago de sus cuotas utilicen otra cotización.\n This attribute is mandatory when the instance is at state 'Pendiente'",
+                        "default": "1",
                         "nullable": true
                       },
                       "CRED_TNA": {
@@ -28718,6 +28758,18 @@
                         "type": "number",
                         "nullable": true
                       },
+                      "MONE_ID_MONE": {
+                        "title": "Moneda",
+                        "type": "integer",
+                        "description": "Foreign key to Moneda",
+                        "nullable": true
+                      },
+                      "CRED_COTIZACION_ORIGINAL": {
+                        "title": "Cotización original",
+                        "type": "number",
+                        "description": "Cotización inicial del crédito. Se conserva aunque las Órdenes de Pago de sus cuotas utilicen otra cotización.",
+                        "nullable": true
+                      },
                       "CRED_TNA": {
                         "title": "TNA",
                         "type": "number",
@@ -29161,6 +29213,7 @@
                             "CRED_FECHA_OTORGAMIENTO",
                             "CRED_PLAZO_MESES",
                             "CRED_MONTO_NOMINAL",
+                            "CRED_COTIZACION_ORIGINAL",
                             "CRED_TNA",
                             "CRED_ARHC_ID_2704",
                             "CRED_INTERESES_RESARCITOR",
@@ -29241,6 +29294,7 @@
                             "CRED_FECHA_OTORGAMIENTO",
                             "CRED_PLAZO_MESES",
                             "CRED_MONTO_NOMINAL",
+                            "CRED_COTIZACION_ORIGINAL",
                             "CRED_TNA",
                             "CRED_ARHC_ID_2704",
                             "CRED_INTERESES_RESARCITOR",
@@ -29255,6 +29309,7 @@
                             "AUDI_FECHA_ALTA",
                             "AUDI_FECHA_MODIF",
                             "CLIE_ID_ENTI",
+                            "MONE_ID_MONE",
                             "CUCO_ID_CUCO",
                             "CASH_ID_CASH",
                             "CUDE_ID_CUOR",
@@ -29518,6 +29573,16 @@
                     "title": "Capital",
                     "type": "number",
                     "description": "Required when transitioning to state 'Pendiente'. Rejected for any other target state."
+                  },
+                  "MONE_ID_MONE": {
+                    "title": "Moneda",
+                    "type": "integer",
+                    "description": "Required when transitioning to state 'Pendiente'. Rejected for any other target state."
+                  },
+                  "CRED_COTIZACION_ORIGINAL": {
+                    "title": "Cotización original",
+                    "type": "number",
+                    "description": "Required when transitioning to state 'Pendiente'. Rejected for any other target state. Cotización inicial del crédito. Se conserva aunque las Órdenes de Pago de sus cuotas utilicen otra cotización."
                   },
                   "CRED_TNA": {
                     "title": "TNA",
@@ -46117,6 +46182,13 @@
                               "type": "string",
                               "nullable": true
                             },
+                            "CIDC_GUID": {
+                              "title": "GUID",
+                              "maxLength": 100,
+                              "type": "string",
+                              "default": "CIDC_ID",
+                              "nullable": true
+                            },
                             "CIDC_IMPORTE_EFECTIVO_SIS": {
                               "title": "Importe efectivo sistema",
                               "type": "number",
@@ -46728,6 +46800,11 @@
                             "type": "string",
                             "nullable": true
                           },
+                          "CIDC_GUID": {
+                            "title": "GUID",
+                            "type": "string",
+                            "nullable": true
+                          },
                           "CIDC_TOTAL_BILLETES": {
                             "title": "Importe efectivo arqueo",
                             "type": "number",
@@ -46795,11 +46872,6 @@
                           },
                           "CIDC_FECHA_ULTIMO_CIERRE": {
                             "title": "Fecha último cierre",
-                            "type": "string",
-                            "nullable": true
-                          },
-                          "CIDC_GUID": {
-                            "title": "GUID",
                             "type": "string",
                             "nullable": true
                           }
@@ -47360,6 +47432,13 @@
                               "title": "Tipo de Acción",
                               "maxLength": 100,
                               "type": "string",
+                              "nullable": true
+                            },
+                            "CIDC_GUID": {
+                              "title": "GUID",
+                              "maxLength": 100,
+                              "type": "string",
+                              "default": "CIDC_ID",
                               "nullable": true
                             },
                             "CIDC_IMPORTE_EFECTIVO_SIS": {

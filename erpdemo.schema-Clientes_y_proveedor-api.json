@@ -655,19 +655,19 @@
                               "nullable": true
                             },
                             "CONT_TELABORAL": {
-                              "title": "Telï¿½fono laboral",
+                              "title": "Teléfono laboral",
                               "maxLength": 100,
                               "type": "string",
                               "nullable": true
                             },
                             "CONT_TEPARTIC": {
-                              "title": "Telï¿½fono particular",
+                              "title": "Teléfono particular",
                               "maxLength": 100,
                               "type": "string",
                               "nullable": true
                             },
                             "CONT_CELULAR": {
-                              "title": "Telï¿½fono celular",
+                              "title": "Teléfono celular",
                               "maxLength": 100,
                               "type": "string",
                               "nullable": true
@@ -684,12 +684,12 @@
                               "nullable": true
                             },
                             "CONT_EMAIL": {
-                              "title": "Correo electrï¿½nico",
+                              "title": "Correo electrónico",
                               "type": "string",
                               "nullable": true
                             },
                             "CONT_ULTIMOCONT": {
-                              "title": "Fecha ï¿½ltimo contacto",
+                              "title": "Fecha último contacto",
                               "type": "string",
                               "nullable": true
                             },
@@ -842,7 +842,7 @@
                             "PRSE_ID_PRSE": {
                               "title": "Producto / Servicio",
                               "type": "integer",
-                              "description": " This is a foreign key to Producto Servicio. An id of Producto Servicio is expected",
+                              "description": "Valores fijos e identicos en todos los esquemas: 1 = Productos, 2 = Servicios, 3 = Productos y Servicios. PRODUCTO_SERVICIO no es una entidad consultable por la API publica (no tiene /query ni /search), asi que este mapeo hay que usarlo tal cual en vez de intentar resolverlo contra la entidad relacionada.\n This is a foreign key to Producto Servicio. An id of Producto Servicio is expected",
                               "default": "PARAM.PRSE_ID_TARI",
                               "nullable": true
                             },
@@ -1429,6 +1429,42 @@
                           "description": "Child entity of Padrón Alícuotas"
                         },
                         "description": "Array of child entities of Padrón Alícuotas"
+                      },
+                      "AlícuotaProveedoresDefault": {
+                        "title": "Alícuota proveedores default",
+                        "type": "array",
+                        "items": {
+                          "title": "Alícuota proveedores default",
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "title": "Instance unique identifier",
+                              "type": "integer",
+                              "description": "Instance identity. If ommited a new instance is created."
+                            },
+                            "COPE_ID_COPE": {
+                              "title": "Concepto de Percepción",
+                              "type": "integer",
+                              "description": " This is a foreign key to Concepto Percepción. An id of Concepto Percepción is expected"
+                            },
+                            "ALIC_ALICUOTA": {
+                              "title": "Alícuota",
+                              "type": "number"
+                            },
+                            "ALIC_FECHA_DESDE": {
+                              "title": "Fecha Desde",
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "ALIC_FECHA_HASTA": {
+                              "title": "Fecha Hasta",
+                              "type": "string",
+                              "nullable": true
+                            }
+                          },
+                          "description": "Child entity of Alícuota proveedores default"
+                        },
+                        "description": "Array of child entities of Alícuota proveedores default"
                       }
                     },
                     "description": "Instance data. Key attributes (CLIE_NOMBRE, CLIE_CUIT, CLIE_CODIGO) must be unique across all instances."
@@ -2389,17 +2425,17 @@
                             "nullable": true
                           },
                           "CONT_TELABORAL": {
-                            "title": "Telï¿½fono laboral",
+                            "title": "Teléfono laboral",
                             "type": "string",
                             "nullable": true
                           },
                           "CONT_TEPARTIC": {
-                            "title": "Telï¿½fono particular",
+                            "title": "Teléfono particular",
                             "type": "string",
                             "nullable": true
                           },
                           "CONT_CELULAR": {
-                            "title": "Telï¿½fono celular",
+                            "title": "Teléfono celular",
                             "type": "string",
                             "nullable": true
                           },
@@ -2414,12 +2450,12 @@
                             "nullable": true
                           },
                           "CONT_EMAIL": {
-                            "title": "Correo electrï¿½nico",
+                            "title": "Correo electrónico",
                             "type": "string",
                             "nullable": true
                           },
                           "CONT_ULTIMOCONT": {
-                            "title": "Fecha ï¿½ltimo contacto",
+                            "title": "Fecha último contacto",
                             "type": "string",
                             "nullable": true
                           },
@@ -3222,6 +3258,38 @@
                       },
                       "description": "Child entities of Padrón Alícuotas (included when includeChildren=true)"
                     },
+                    "ALÍCUOTAPROVEEDORESDEFAULT": {
+                      "title": "Alícuota proveedores default",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "CLIE_ID_CLIE": {
+                            "title": "Proveedor",
+                            "type": "integer"
+                          },
+                          "COPE_ID_COPE": {
+                            "title": "Concepto de Percepción",
+                            "type": "integer"
+                          },
+                          "ALIC_ALICUOTA": {
+                            "title": "Alícuota",
+                            "type": "number"
+                          },
+                          "ALIC_FECHA_DESDE": {
+                            "title": "Fecha Desde",
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "ALIC_FECHA_HASTA": {
+                            "title": "Fecha Hasta",
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "description": "Child entities of Alícuota proveedores default (included when includeChildren=true)"
+                    },
                     "transitions": {
                       "title": "Available state transitions",
                       "type": "array",
@@ -3970,19 +4038,19 @@
                               "nullable": true
                             },
                             "CONT_TELABORAL": {
-                              "title": "Telï¿½fono laboral",
+                              "title": "Teléfono laboral",
                               "maxLength": 100,
                               "type": "string",
                               "nullable": true
                             },
                             "CONT_TEPARTIC": {
-                              "title": "Telï¿½fono particular",
+                              "title": "Teléfono particular",
                               "maxLength": 100,
                               "type": "string",
                               "nullable": true
                             },
                             "CONT_CELULAR": {
-                              "title": "Telï¿½fono celular",
+                              "title": "Teléfono celular",
                               "maxLength": 100,
                               "type": "string",
                               "nullable": true
@@ -3999,12 +4067,12 @@
                               "nullable": true
                             },
                             "CONT_EMAIL": {
-                              "title": "Correo electrï¿½nico",
+                              "title": "Correo electrónico",
                               "type": "string",
                               "nullable": true
                             },
                             "CONT_ULTIMOCONT": {
-                              "title": "Fecha ï¿½ltimo contacto",
+                              "title": "Fecha último contacto",
                               "type": "string",
                               "nullable": true
                             },
@@ -4157,7 +4225,7 @@
                             "PRSE_ID_PRSE": {
                               "title": "Producto / Servicio",
                               "type": "integer",
-                              "description": " This is a foreign key to Producto Servicio. An id of Producto Servicio is expected",
+                              "description": "Valores fijos e identicos en todos los esquemas: 1 = Productos, 2 = Servicios, 3 = Productos y Servicios. PRODUCTO_SERVICIO no es una entidad consultable por la API publica (no tiene /query ni /search), asi que este mapeo hay que usarlo tal cual en vez de intentar resolverlo contra la entidad relacionada.\n This is a foreign key to Producto Servicio. An id of Producto Servicio is expected",
                               "default": "PARAM.PRSE_ID_TARI",
                               "nullable": true
                             },
@@ -4744,6 +4812,42 @@
                           "description": "Child entity of Padrón Alícuotas"
                         },
                         "description": "Array of child entities of Padrón Alícuotas"
+                      },
+                      "AlícuotaProveedoresDefault": {
+                        "title": "Alícuota proveedores default",
+                        "type": "array",
+                        "items": {
+                          "title": "Alícuota proveedores default",
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "title": "Instance unique identifier",
+                              "type": "integer",
+                              "description": "Instance identity. If ommited a new instance is created."
+                            },
+                            "COPE_ID_COPE": {
+                              "title": "Concepto de Percepción",
+                              "type": "integer",
+                              "description": " This is a foreign key to Concepto Percepción. An id of Concepto Percepción is expected"
+                            },
+                            "ALIC_ALICUOTA": {
+                              "title": "Alícuota",
+                              "type": "number"
+                            },
+                            "ALIC_FECHA_DESDE": {
+                              "title": "Fecha Desde",
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "ALIC_FECHA_HASTA": {
+                              "title": "Fecha Hasta",
+                              "type": "string",
+                              "nullable": true
+                            }
+                          },
+                          "description": "Child entity of Alícuota proveedores default"
+                        },
+                        "description": "Array of child entities of Alícuota proveedores default"
                       }
                     }
                   }
@@ -7246,7 +7350,8 @@
                 "REPORTE_DE_COBRANZA_v2.5",
                 "REPORTE_DE_COBRA_PROVE",
                 "CC_CLIE_MONE_DOC",
-                "CC_PROV_MONE_DOC"
+                "CC_PROV_MONE_DOC",
+                "CC_CLIENTE_CONTABLE_v1.0"
               ],
               "type": "string"
             }
@@ -7357,7 +7462,7 @@
           "Contacto"
         ],
         "summary": "Create a Contacto.",
-        "description": "Creates a new instance of Contacto.\n\n**Key Attributes (Unique):** `CLIE_ID_CLIE` (Empresa), `CONT_NOMBRE` (Nombre y apellido), `CONT_EMAIL` (Correo electrï¿½nico), `CONT_DNI` (DNI)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
+        "description": "Creates a new instance of Contacto.\n\n**Key Attributes (Unique):** `CLIE_ID_CLIE` (Empresa), `CONT_NOMBRE` (Nombre y apellido), `CONT_EMAIL` (Correo electrónico), `CONT_DNI` (DNI)\n\nThese attributes form the entity's unique key. If you attempt to create an instance with key values that already exist, the API will return HTTP 409 Conflict.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -7396,19 +7501,19 @@
                         "nullable": true
                       },
                       "CONT_TELABORAL": {
-                        "title": "Telï¿½fono laboral",
+                        "title": "Teléfono laboral",
                         "maxLength": 100,
                         "type": "string",
                         "nullable": true
                       },
                       "CONT_TEPARTIC": {
-                        "title": "Telï¿½fono particular",
+                        "title": "Teléfono particular",
                         "maxLength": 100,
                         "type": "string",
                         "nullable": true
                       },
                       "CONT_CELULAR": {
-                        "title": "Telï¿½fono celular",
+                        "title": "Teléfono celular",
                         "maxLength": 100,
                         "type": "string",
                         "nullable": true
@@ -7425,12 +7530,12 @@
                         "nullable": true
                       },
                       "CONT_EMAIL": {
-                        "title": "Correo electrï¿½nico",
+                        "title": "Correo electrónico",
                         "type": "string",
                         "nullable": true
                       },
                       "CONT_ULTIMOCONT": {
-                        "title": "Fecha ï¿½ltimo contacto",
+                        "title": "Fecha último contacto",
                         "type": "string",
                         "nullable": true
                       },
@@ -7728,17 +7833,17 @@
                       "nullable": true
                     },
                     "CONT_TELABORAL": {
-                      "title": "Telï¿½fono laboral",
+                      "title": "Teléfono laboral",
                       "type": "string",
                       "nullable": true
                     },
                     "CONT_TEPARTIC": {
-                      "title": "Telï¿½fono particular",
+                      "title": "Teléfono particular",
                       "type": "string",
                       "nullable": true
                     },
                     "CONT_CELULAR": {
-                      "title": "Telï¿½fono celular",
+                      "title": "Teléfono celular",
                       "type": "string",
                       "nullable": true
                     },
@@ -7754,12 +7859,12 @@
                       "nullable": true
                     },
                     "CONT_EMAIL": {
-                      "title": "Correo electrï¿½nico",
+                      "title": "Correo electrónico",
                       "type": "string",
                       "nullable": true
                     },
                     "CONT_ULTIMOCONT": {
-                      "title": "Fecha ï¿½ltimo contacto",
+                      "title": "Fecha último contacto",
                       "type": "string",
                       "nullable": true
                     },
@@ -7998,19 +8103,19 @@
                         "nullable": true
                       },
                       "CONT_TELABORAL": {
-                        "title": "Telï¿½fono laboral",
+                        "title": "Teléfono laboral",
                         "maxLength": 100,
                         "type": "string",
                         "nullable": true
                       },
                       "CONT_TEPARTIC": {
-                        "title": "Telï¿½fono particular",
+                        "title": "Teléfono particular",
                         "maxLength": 100,
                         "type": "string",
                         "nullable": true
                       },
                       "CONT_CELULAR": {
-                        "title": "Telï¿½fono celular",
+                        "title": "Teléfono celular",
                         "maxLength": 100,
                         "type": "string",
                         "nullable": true
@@ -8027,12 +8132,12 @@
                         "nullable": true
                       },
                       "CONT_EMAIL": {
-                        "title": "Correo electrï¿½nico",
+                        "title": "Correo electrónico",
                         "type": "string",
                         "nullable": true
                       },
                       "CONT_ULTIMOCONT": {
-                        "title": "Fecha ï¿½ltimo contacto",
+                        "title": "Fecha último contacto",
                         "type": "string",
                         "nullable": true
                       },
@@ -8452,7 +8557,7 @@
           {
             "name": "CONT_EMAIL",
             "in": "query",
-            "description": "Correo electrï¿½nico",
+            "description": "Correo electrónico",
             "allowEmptyValue": true,
             "schema": {
               "type": "string"
@@ -8554,17 +8659,17 @@
                         "nullable": true
                       },
                       "CONT_TELABORAL": {
-                        "title": "Telï¿½fono laboral",
+                        "title": "Teléfono laboral",
                         "type": "string",
                         "nullable": true
                       },
                       "CONT_TEPARTIC": {
-                        "title": "Telï¿½fono particular",
+                        "title": "Teléfono particular",
                         "type": "string",
                         "nullable": true
                       },
                       "CONT_CELULAR": {
-                        "title": "Telï¿½fono celular",
+                        "title": "Teléfono celular",
                         "type": "string",
                         "nullable": true
                       },
@@ -8580,12 +8685,12 @@
                         "nullable": true
                       },
                       "CONT_EMAIL": {
-                        "title": "Correo electrï¿½nico",
+                        "title": "Correo electrónico",
                         "type": "string",
                         "nullable": true
                       },
                       "CONT_ULTIMOCONT": {
-                        "title": "Fecha ï¿½ltimo contacto",
+                        "title": "Fecha último contacto",
                         "type": "string",
                         "nullable": true
                       },

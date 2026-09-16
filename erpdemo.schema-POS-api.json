@@ -2398,6 +2398,13 @@
                         "type": "string",
                         "nullable": true
                       },
+                      "CIDC_GUID": {
+                        "title": "GUID",
+                        "maxLength": 100,
+                        "type": "string",
+                        "default": "CIDC_ID",
+                        "nullable": true
+                      },
                       "CIDC_IMPORTE_EFECTIVO_SIS": {
                         "title": "Importe efectivo sistema",
                         "type": "number",
@@ -2728,6 +2735,11 @@
                       "type": "string",
                       "nullable": true
                     },
+                    "CIDC_GUID": {
+                      "title": "GUID",
+                      "type": "string",
+                      "nullable": true
+                    },
                     "CIDC_TOTAL_BILLETES": {
                       "title": "Importe efectivo arqueo",
                       "type": "number",
@@ -2796,11 +2808,6 @@
                     },
                     "CIDC_FECHA_ULTIMO_CIERRE": {
                       "title": "Fecha último cierre",
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "CIDC_GUID": {
-                      "title": "GUID",
                       "type": "string",
                       "nullable": true
                     },
@@ -3029,6 +3036,13 @@
                         "title": "Tipo de Acción",
                         "maxLength": 100,
                         "type": "string",
+                        "nullable": true
+                      },
+                      "CIDC_GUID": {
+                        "title": "GUID",
+                        "maxLength": 100,
+                        "type": "string",
+                        "default": "CIDC_ID",
                         "nullable": true
                       },
                       "CIDC_IMPORTE_EFECTIVO_SIS": {
@@ -3513,6 +3527,11 @@
                         "type": "string",
                         "nullable": true
                       },
+                      "CIDC_GUID": {
+                        "title": "GUID",
+                        "type": "string",
+                        "nullable": true
+                      },
                       "CIDC_TOTAL_BILLETES": {
                         "title": "Importe efectivo arqueo",
                         "type": "number",
@@ -3581,11 +3600,6 @@
                       },
                       "CIDC_FECHA_ULTIMO_CIERRE": {
                         "title": "Fecha último cierre",
-                        "type": "string",
-                        "nullable": true
-                      },
-                      "CIDC_GUID": {
-                        "title": "GUID",
                         "type": "string",
                         "nullable": true
                       }
@@ -3947,6 +3961,7 @@
                             "CIDC_LOGIN",
                             "CIDC_CERRADA",
                             "CIDC_TIPO_DE_ACCION",
+                            "CIDC_GUID",
                             "CIDC_IMPORTE_EFECTIVO_SIS",
                             "CIDC_IMPORTE_TARJETAS_SIS",
                             "CIDC_DIF_REAL_VS_REPORT",
@@ -4025,6 +4040,7 @@
                             "CIDC_LOGIN",
                             "CIDC_CERRADA",
                             "CIDC_TIPO_DE_ACCION",
+                            "CIDC_GUID",
                             "CIDC_IMPORTE_EFECTIVO_SIS",
                             "CIDC_IMPORTE_TARJETAS_SIS",
                             "CIDC_DIF_REAL_VS_REPORT",
@@ -9733,6 +9749,12 @@
                         "maxLength": 100,
                         "type": "string",
                         "nullable": true
+                      },
+                      "DEOR_GUID": {
+                        "title": "GUID",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
                       }
                     },
                     "description": "Instance data. Key attributes (DEOR_GUID) must be unique across all instances."
@@ -9993,7 +10015,7 @@
                     "ASIE_ID_ASIE": {
                       "title": "Asiento",
                       "type": "integer",
-                      "description": "Foreign key to Asiento",
+                      "description": "Asiento contable asociado al movimiento.\nForeign key to Asiento",
                       "nullable": true
                     },
                     "DEOR_GUID": {
@@ -10174,6 +10196,12 @@
                       },
                       "DEOR_LOGIN": {
                         "title": "Login",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "DEOR_GUID": {
+                        "title": "GUID",
                         "maxLength": 100,
                         "type": "string",
                         "nullable": true
@@ -10589,7 +10617,7 @@
                       "ASIE_ID_ASIE": {
                         "title": "Asiento",
                         "type": "integer",
-                        "description": "Foreign key to Asiento",
+                        "description": "Asiento contable asociado al movimiento.\nForeign key to Asiento",
                         "nullable": true
                       },
                       "DEOR_GUID": {
@@ -10952,6 +10980,7 @@
                             "DEOR_TIPO",
                             "DEOR_RETIRO_DE_TICKETS",
                             "DEOR_LOGIN",
+                            "DEOR_GUID",
                             "DEOR_USUARIO_NOMBRE",
                             "id",
                             "DESC_ESTADO",
@@ -11024,6 +11053,7 @@
                             "DEOR_TIPO",
                             "DEOR_RETIRO_DE_TICKETS",
                             "DEOR_LOGIN",
+                            "DEOR_GUID",
                             "DEOR_USUARIO_NOMBRE",
                             "id",
                             "DESC_ESTADO",
@@ -12198,6 +12228,13 @@
                         "type": "integer",
                         "nullable": true
                       },
+                      "ORDV_GUID": {
+                        "title": "GUID",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Movido de Oculto a General el 2026-08-11: es el identificador que genera el POS al crear la orden y la unica forma de correlacionar una venta local con la orden en el servidor antes de que tenga numero de factura/orden asignado. Estando en Oculto, la API publica (/api/public/ORDEN_DE_VENTA/search) no lo devolvia, y el POS no podia encontrar por GUID la orden que acababa de sincronizar.",
+                        "nullable": true
+                      },
                       "OrdenDeProducción": {
                         "title": "Orden de Producción",
                         "type": "array",
@@ -12453,6 +12490,12 @@
                             "DEDO_ASIGNADA_A_REMITO": {
                               "title": "Asignada a Remito",
                               "type": "boolean",
+                              "nullable": true
+                            },
+                            "DEDO_GUID": {
+                              "title": "GUID",
+                              "maxLength": 100,
+                              "type": "string",
                               "nullable": true
                             }
                           },
@@ -12936,6 +12979,12 @@
                               "title": "Fecha",
                               "type": "string",
                               "nullable": true
+                            },
+                            "TIDO_GUID": {
+                              "title": "GUID",
+                              "maxLength": 100,
+                              "type": "string",
+                              "nullable": true
                             }
                           },
                           "description": "Child entity of Ticket"
@@ -12962,6 +13011,11 @@
                               "title": "Impuesto Código",
                               "maxLength": 100,
                               "type": "string"
+                            },
+                            "PEDO_ES_DEVOLUCION": {
+                              "title": "Es Devolucion",
+                              "type": "boolean",
+                              "nullable": true
                             },
                             "PERE_ID_PERE": {
                               "title": "Percepción Realizada",
@@ -13263,6 +13317,7 @@
                     "ORDV_TOTAL_CON_DESCUENTOS": {
                       "title": "Total c/ dtos",
                       "type": "number",
+                      "description": "Es el campo que hay que usar para \"el total de la orden\" desde afuera del ERP (API publica /api/public/ORDEN_DE_VENTA/search, integraciones, el POS). ORDV_TOTAL no sirve para eso: esta en el grupo Oculto y la API publica no lo devuelve.",
                       "nullable": true
                     },
                     "ORDV_TOTAL_COBRADO": {
@@ -13416,6 +13471,12 @@
                       "type": "integer",
                       "nullable": true
                     },
+                    "ORDV_GUID": {
+                      "title": "GUID",
+                      "type": "string",
+                      "description": "Movido de Oculto a General el 2026-08-11: es el identificador que genera el POS al crear la orden y la unica forma de correlacionar una venta local con la orden en el servidor antes de que tenga numero de factura/orden asignado. Estando en Oculto, la API publica (/api/public/ORDEN_DE_VENTA/search) no lo devolvia, y el POS no podia encontrar por GUID la orden que acababa de sincronizar.",
+                      "nullable": true
+                    },
                     "ORDV_DESPACHAR_REMITO": {
                       "title": "Despachar Remito",
                       "type": "boolean",
@@ -13498,23 +13559,19 @@
                     "ORDV_TOTAL": {
                       "title": "Total",
                       "type": "number",
-                      "description": "Se usa en el script que genera factura para calcular el %",
+                      "description": "Se usa en el script que genera factura para calcular el %. NO usar desde afuera del ERP (integraciones, POS): esta en el grupo Oculto y la API publica (/api/public/ORDEN_DE_VENTA/search) no lo devuelve. Para \"el total de la orden\" desde afuera usar ORDV_TOTAL_CON_DESCUENTOS.",
                       "nullable": true
                     },
                     "ORDV_TOTAL_FACTURADO": {
                       "title": "Total Facturado",
                       "type": "number",
-                      "description": "Se usa en el script que genera factura para calcular el %",
+                      "description": "Se usa en el script que genera factura para calcular el %. NO usar desde afuera del ERP (integraciones, POS): esta en el grupo Oculto y la API publica (/api/public/ORDEN_DE_VENTA/search) no lo devuelve. Para \"total facturado\" desde afuera usar ORDV_TOTAL_FACT.",
                       "nullable": true
                     },
                     "ORDV_POS": {
                       "title": "POS",
                       "type": "boolean",
-                      "nullable": true
-                    },
-                    "ORDV_GUID": {
-                      "title": "GUID",
-                      "type": "string",
+                      "description": "Indica si la orden fue creada en el punto de venta.",
                       "nullable": true
                     },
                     "ORDV_SENA_CARGADA": {
@@ -14335,6 +14392,11 @@
                       "items": {
                         "type": "object",
                         "properties": {
+                          "DEVO_PLAN_STOCK": {
+                            "title": "Plan de movimientos de stock",
+                            "type": "string",
+                            "nullable": true
+                          },
                           "ORDV_ID_ORDV": {
                             "title": "Orden de Venta",
                             "type": "integer"
@@ -14468,6 +14530,11 @@
                           "PEDO_IMPUESTO": {
                             "title": "Impuesto Código",
                             "type": "string"
+                          },
+                          "PEDO_ES_DEVOLUCION": {
+                            "title": "Es Devolucion",
+                            "type": "boolean",
+                            "nullable": true
                           },
                           "PERE_ID_PERE": {
                             "title": "Percepción Realizada",
@@ -14746,6 +14813,13 @@
                         "type": "integer",
                         "nullable": true
                       },
+                      "ORDV_GUID": {
+                        "title": "GUID",
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "Movido de Oculto a General el 2026-08-11: es el identificador que genera el POS al crear la orden y la unica forma de correlacionar una venta local con la orden en el servidor antes de que tenga numero de factura/orden asignado. Estando en Oculto, la API publica (/api/public/ORDEN_DE_VENTA/search) no lo devolvia, y el POS no podia encontrar por GUID la orden que acababa de sincronizar.",
+                        "nullable": true
+                      },
                       "OrdenDeProducción": {
                         "title": "Orden de Producción",
                         "type": "array",
@@ -15001,6 +15075,12 @@
                             "DEDO_ASIGNADA_A_REMITO": {
                               "title": "Asignada a Remito",
                               "type": "boolean",
+                              "nullable": true
+                            },
+                            "DEDO_GUID": {
+                              "title": "GUID",
+                              "maxLength": 100,
+                              "type": "string",
                               "nullable": true
                             }
                           },
@@ -15484,6 +15564,12 @@
                               "title": "Fecha",
                               "type": "string",
                               "nullable": true
+                            },
+                            "TIDO_GUID": {
+                              "title": "GUID",
+                              "maxLength": 100,
+                              "type": "string",
+                              "nullable": true
                             }
                           },
                           "description": "Child entity of Ticket"
@@ -15510,6 +15596,11 @@
                               "title": "Impuesto Código",
                               "maxLength": 100,
                               "type": "string"
+                            },
+                            "PEDO_ES_DEVOLUCION": {
+                              "title": "Es Devolucion",
+                              "type": "boolean",
+                              "nullable": true
                             },
                             "PERE_ID_PERE": {
                               "title": "Percepción Realizada",
@@ -16035,6 +16126,7 @@
                       "ORDV_TOTAL_CON_DESCUENTOS": {
                         "title": "Total c/ dtos",
                         "type": "number",
+                        "description": "Es el campo que hay que usar para \"el total de la orden\" desde afuera del ERP (API publica /api/public/ORDEN_DE_VENTA/search, integraciones, el POS). ORDV_TOTAL no sirve para eso: esta en el grupo Oculto y la API publica no lo devuelve.",
                         "nullable": true
                       },
                       "ORDV_TOTAL_COBRADO": {
@@ -16188,6 +16280,12 @@
                         "type": "integer",
                         "nullable": true
                       },
+                      "ORDV_GUID": {
+                        "title": "GUID",
+                        "type": "string",
+                        "description": "Movido de Oculto a General el 2026-08-11: es el identificador que genera el POS al crear la orden y la unica forma de correlacionar una venta local con la orden en el servidor antes de que tenga numero de factura/orden asignado. Estando en Oculto, la API publica (/api/public/ORDEN_DE_VENTA/search) no lo devolvia, y el POS no podia encontrar por GUID la orden que acababa de sincronizar.",
+                        "nullable": true
+                      },
                       "ORDV_DESPACHAR_REMITO": {
                         "title": "Despachar Remito",
                         "type": "boolean",
@@ -16270,23 +16368,19 @@
                       "ORDV_TOTAL": {
                         "title": "Total",
                         "type": "number",
-                        "description": "Se usa en el script que genera factura para calcular el %",
+                        "description": "Se usa en el script que genera factura para calcular el %. NO usar desde afuera del ERP (integraciones, POS): esta en el grupo Oculto y la API publica (/api/public/ORDEN_DE_VENTA/search) no lo devuelve. Para \"el total de la orden\" desde afuera usar ORDV_TOTAL_CON_DESCUENTOS.",
                         "nullable": true
                       },
                       "ORDV_TOTAL_FACTURADO": {
                         "title": "Total Facturado",
                         "type": "number",
-                        "description": "Se usa en el script que genera factura para calcular el %",
+                        "description": "Se usa en el script que genera factura para calcular el %. NO usar desde afuera del ERP (integraciones, POS): esta en el grupo Oculto y la API publica (/api/public/ORDEN_DE_VENTA/search) no lo devuelve. Para \"total facturado\" desde afuera usar ORDV_TOTAL_FACT.",
                         "nullable": true
                       },
                       "ORDV_POS": {
                         "title": "POS",
                         "type": "boolean",
-                        "nullable": true
-                      },
-                      "ORDV_GUID": {
-                        "title": "GUID",
-                        "type": "string",
+                        "description": "Indica si la orden fue creada en el punto de venta.",
                         "nullable": true
                       },
                       "ORDV_SENA_CARGADA": {
@@ -16673,6 +16767,7 @@
                             "ORDV_CODIGO_POS",
                             "ORDV_NRO_FACTURA_ANUL",
                             "ORDV_NRO_NC_ANUL",
+                            "ORDV_GUID",
                             "id",
                             "DESC_ESTADO",
                             "ESTA_CODIGO",
@@ -16766,6 +16861,7 @@
                             "ORDV_CODIGO_POS",
                             "ORDV_NRO_FACTURA_ANUL",
                             "ORDV_NRO_NC_ANUL",
+                            "ORDV_GUID",
                             "id",
                             "DESC_ESTADO",
                             "ESTA_CODIGO",

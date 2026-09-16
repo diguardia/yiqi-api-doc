@@ -6661,6 +6661,1948 @@
         }
       }
     },
+    "/HIST_CRM_ART": {
+      "post": {
+        "tags": [
+          "Histórico de CRM por artículo"
+        ],
+        "summary": "Create a Histórico de CRM por artículo.",
+        "description": "Creates a new instance of Histórico de CRM por artículo.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "required": [
+                      "MATE_ID_MATE",
+                      "HCRA_FECHA",
+                      "HCRA_CRM_UNITARIO",
+                      "MONE_ID_MONE"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "MATE_ID_MATE": {
+                        "title": "Artículo",
+                        "type": "integer",
+                        "description": " This is a foreign key to Artículo. An id of Artículo is expected"
+                      },
+                      "HCRA_FECHA": {
+                        "title": "Fecha efectiva",
+                        "type": "string",
+                        "default": "PARAM.PARA_HOY"
+                      },
+                      "HCRA_CRM_UNITARIO": {
+                        "title": "CRM unitario",
+                        "type": "number"
+                      },
+                      "MONE_ID_MONE": {
+                        "title": "Moneda",
+                        "type": "integer",
+                        "description": " This is a foreign key to Moneda. An id of Moneda is expected",
+                        "default": "PARAM.MONE_ID_MONE"
+                      }
+                    },
+                    "description": "Instance data"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Request processed. Check `ok`: a business validation failure also returns HTTP 200, with ok=false and the reason in `error`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean",
+                      "description": "True if the instance was saved. Business validation failures are reported as HTTP 200 with ok=false and a message in `error` - always check this flag."
+                    },
+                    "newId": {
+                      "type": "integer",
+                      "description": "Id of the saved Histórico de CRM por artículo (the new id when creating, the same id when updating). This is the field that carries the identifier - there is no `id` field in this response."
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Error message when ok=false. Null on success.",
+                      "nullable": true
+                    },
+                    "parameter": {
+                      "type": "string",
+                      "description": "The full saved instance, serialized as a JSON **string** (not a nested object) - same content as GET /HIST_CRM_ART/{id} with includeChildren=true. Parse it to read it.",
+                      "nullable": true
+                    }
+                  },
+                  "example": {
+                    "ok": true,
+                    "newId": 12345,
+                    "error": null,
+                    "parameter": "{\"id\":12345, ...}"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to create instances of this entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
+          }
+        }
+      }
+    },
+    "/HIST_CRM_ART/{id}": {
+      "get": {
+        "tags": [
+          "Histórico de CRM por artículo"
+        ],
+        "description": "Get a Histórico de CRM por artículo by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Histórico de CRM por artículo id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "Whether to include child entities in the response (default: true)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "includeTransitions",
+            "in": "query",
+            "description": "Whether to include the state transitions available for this instance, as `transitions` (default: false)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeFkTexts",
+            "in": "query",
+            "description": "Whether to include `attsFkTexts`: the descriptive text behind every foreign key / user / profile / fixed-value attribute, keyed by physical name (default: false). Use it to show \"Acme S.A.\" where the attribute carries `9744`. Opt-in because it costs one query per foreign key attribute.",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "title": "Instance unique identifier",
+                      "type": "integer"
+                    },
+                    "ESTA_NOMBRE": {
+                      "title": "State name",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ESTA_CODIGO": {
+                      "title": "State code",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "AUDI_FECHA_ALTA": {
+                      "title": "Creation date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "AUDI_FECHA_MODIF": {
+                      "title": "Last modification date",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "MATE_ID_MATE": {
+                      "title": "Artículo",
+                      "type": "integer",
+                      "description": "Foreign key to Artículo"
+                    },
+                    "HCRA_FECHA": {
+                      "title": "Fecha efectiva",
+                      "type": "string"
+                    },
+                    "HCRA_CRM_UNITARIO": {
+                      "title": "CRM unitario",
+                      "type": "number"
+                    },
+                    "MONE_ID_MONE": {
+                      "title": "Moneda",
+                      "type": "integer",
+                      "description": "Foreign key to Moneda"
+                    },
+                    "HCRA_ORIGEN": {
+                      "title": "Entidad origen",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "HCRA_ID_ORIGEN": {
+                      "title": "Identificador origen",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "HCRA_CLAVE": {
+                      "title": "Clave idempotente",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "transitions": {
+                      "title": "Available state transitions",
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "State transitions available for this instance (included when includeTransitions=true)"
+                    },
+                    "attsFkTexts": {
+                      "title": "Foreign key texts",
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "Descriptive text of every foreign key / user / profile / fixed-value attribute that has a value, keyed by physical name (included when includeFkTexts=true). Example: `\"TIDD_ID_TIDD\": \"CUIT\"`. Attributes without a value are omitted, not returned as empty."
+                    }
+                  },
+                  "description": "A Histórico de CRM por artículo instance.\n\nOnly Histórico de CRM por artículo's own attributes are returned here: a foreign key travels as its id (e.g. `XXXX_ID_XXXX`), not as the referenced instance's description. Columns joined from related entities (aliased `<fkPrefix>_<ATTRIBUTE>`, e.g. `TIDD_NOMBRE`) do exist, but they are list columns: request them explicitly through `POST /HIST_CRM_ART/query` (the `field` enum there lists every available column, related ones included) or add them to a smartie. For a single instance, `GET /HIST_CRM_ART/{id}?includeFkTexts=true` returns `attsFkTexts` with the descriptive text behind each foreign key."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to access this resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity or instance not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Histórico de CRM por artículo"
+        ],
+        "summary": "Update a Histórico de CRM por artículo by id.",
+        "description": "Update a Histórico de CRM por artículo. The id in the path wins: it is written over `data.id` before saving, so it does not need to be repeated in the body.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Histórico de CRM por artículo id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "schemaId",
+                  "data"
+                ],
+                "type": "object",
+                "properties": {
+                  "schemaId": {
+                    "title": "Schema Id",
+                    "type": "integer"
+                  },
+                  "data": {
+                    "required": [
+                      "MATE_ID_MATE",
+                      "HCRA_FECHA",
+                      "HCRA_CRM_UNITARIO",
+                      "MONE_ID_MONE"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "MATE_ID_MATE": {
+                        "title": "Artículo",
+                        "type": "integer",
+                        "description": " This is a foreign key to Artículo. An id of Artículo is expected"
+                      },
+                      "HCRA_FECHA": {
+                        "title": "Fecha efectiva",
+                        "type": "string",
+                        "default": "PARAM.PARA_HOY"
+                      },
+                      "HCRA_CRM_UNITARIO": {
+                        "title": "CRM unitario",
+                        "type": "number"
+                      },
+                      "MONE_ID_MONE": {
+                        "title": "Moneda",
+                        "type": "integer",
+                        "description": " This is a foreign key to Moneda. An id of Moneda is expected",
+                        "default": "PARAM.MONE_ID_MONE"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Request processed. Check `ok`: a business validation failure also returns HTTP 200, with ok=false and the reason in `error`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean",
+                      "description": "True if the instance was saved. Business validation failures are reported as HTTP 200 with ok=false and a message in `error` - always check this flag."
+                    },
+                    "newId": {
+                      "type": "integer",
+                      "description": "Id of the saved Histórico de CRM por artículo (the new id when creating, the same id when updating). This is the field that carries the identifier - there is no `id` field in this response."
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Error message when ok=false. Null on success.",
+                      "nullable": true
+                    },
+                    "parameter": {
+                      "type": "string",
+                      "description": "The full saved instance, serialized as a JSON **string** (not a nested object) - same content as GET /HIST_CRM_ART/{id} with includeChildren=true. Parse it to read it.",
+                      "nullable": true
+                    }
+                  },
+                  "example": {
+                    "ok": true,
+                    "newId": 12345,
+                    "error": null,
+                    "parameter": "{\"id\":12345, ...}"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid data or missing required fields",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to edit instances of this entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity or instance not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict - Duplicate instance detected"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Histórico de CRM por artículo"
+        ],
+        "summary": "Delete a Histórico de CRM por artículo by id.",
+        "description": "Delete a Histórico de CRM por artículo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Histórico de CRM por artículo id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instance deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Result message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - entity name empty or id not greater than 0",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to delete instances of this entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity or instance not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/HIST_CRM_ART/search": {
+      "get": {
+        "tags": [
+          "Histórico de CRM por artículo"
+        ],
+        "summary": "Fast search endpoint. Returns a capped, non-paginated set of Histórico de CRM por artículo records; prefer /query for controlled, production-grade listings.",
+        "description": "Performs a lightweight search over Histórico de CRM por artículo instances. Every query parameter below that matches an attribute's physical name is applied as an equality filter; omit them all to list the first records. The result set is capped and not paginated, so this endpoint is meant for quick lookups. For production listings that require configurable pagination, explicit column selection, or advanced filters, prefer /query.\n\nOnly Histórico de CRM por artículo's own attributes are returned here: a foreign key travels as its id (e.g. `XXXX_ID_XXXX`), not as the referenced instance's description. Columns joined from related entities (aliased `<fkPrefix>_<ATTRIBUTE>`, e.g. `TIDD_NOMBRE`) do exist, but they are list columns: request them explicitly through `POST /HIST_CRM_ART/query` (the `field` enum there lists every available column, related ones included) or add them to a smartie. For a single instance, `GET /HIST_CRM_ART/{id}?includeFkTexts=true` returns `attsFkTexts` with the descriptive text behind each foreign key.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "MATE_ID_MATE",
+            "in": "query",
+            "description": "Artículo",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "HCRA_FECHA",
+            "in": "query",
+            "description": "Fecha efectiva",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "HCRA_CRM_UNITARIO",
+            "in": "query",
+            "description": "CRM unitario",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "MONE_ID_MONE",
+            "in": "query",
+            "description": "Moneda",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "HCRA_ORIGEN",
+            "in": "query",
+            "description": "Entidad origen",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "HCRA_CLAVE",
+            "in": "query",
+            "description": "Clave idempotente",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Matching instances, as a flat array (not wrapped in an object). Child entities are not included.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "title": "Instance unique identifier",
+                        "type": "integer"
+                      },
+                      "ESTA_NOMBRE": {
+                        "title": "State name",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "ESTA_CODIGO": {
+                        "title": "State code",
+                        "type": "integer",
+                        "nullable": true
+                      },
+                      "AUDI_FECHA_ALTA": {
+                        "title": "Creation date",
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "AUDI_FECHA_MODIF": {
+                        "title": "Last modification date",
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "MATE_ID_MATE": {
+                        "title": "Artículo",
+                        "type": "integer",
+                        "description": "Foreign key to Artículo"
+                      },
+                      "HCRA_FECHA": {
+                        "title": "Fecha efectiva",
+                        "type": "string"
+                      },
+                      "HCRA_CRM_UNITARIO": {
+                        "title": "CRM unitario",
+                        "type": "number"
+                      },
+                      "MONE_ID_MONE": {
+                        "title": "Moneda",
+                        "type": "integer",
+                        "description": "Foreign key to Moneda"
+                      },
+                      "HCRA_ORIGEN": {
+                        "title": "Entidad origen",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "HCRA_ID_ORIGEN": {
+                        "title": "Identificador origen",
+                        "type": "integer",
+                        "nullable": true
+                      },
+                      "HCRA_CLAVE": {
+                        "title": "Clave idempotente",
+                        "type": "string",
+                        "nullable": true
+                      }
+                    },
+                    "description": "A Histórico de CRM por artículo instance.\n\nOnly Histórico de CRM por artículo's own attributes are returned here: a foreign key travels as its id (e.g. `XXXX_ID_XXXX`), not as the referenced instance's description. Columns joined from related entities (aliased `<fkPrefix>_<ATTRIBUTE>`, e.g. `TIDD_NOMBRE`) do exist, but they are list columns: request them explicitly through `POST /HIST_CRM_ART/query` (the `field` enum there lists every available column, related ones included) or add them to a smartie. For a single instance, `GET /HIST_CRM_ART/{id}?includeFkTexts=true` returns `attsFkTexts` with the descriptive text behind each foreign key."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - entity name empty",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/HIST_CRM_ART/smartie": {
+      "get": {
+        "tags": [
+          "Histórico de CRM por artículo"
+        ],
+        "summary": "Get a page of a smartie (saved list configuration)",
+        "description": "Runs a saved list configuration (columns, filters, sorting) and returns one page of it.\n\n**The keys of each `data` row are the smartie's configured columns, not the entity schema.** A smartie can include columns joined from related entities (aliased `<fkPrefix>_<ATTRIBUTE>`, e.g. `TIDD_NOMBRE`, `ALIV_PORCENTAJE`), which is why the response may contain fields that do not appear in this entity's own attributes. The `columns` array of the response always describes exactly what came back.\n\nColumns whose attribute group the caller cannot see are dropped from both `data` and `columns`. If you need a stable, explicit column set, prefer `POST /HIST_CRM_ART/query`.",
+        "parameters": [
+          {
+            "name": "smartieId",
+            "in": "query",
+            "description": "Smartie id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": " Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (1-based). Defaults to 1 when omitted.",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": " Search term",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Page returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Rows of the page. Each row is keyed by the smartie's column names (related-entity columns included); `id` and `ESTA_CODIGO` are added when the rows represent instances (i.e. the query does not group or pivot)."
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records matching the query (ignoring pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Definition of the columns actually returned - the authoritative list of the keys present in `data`"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - entity name or smartieId empty",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token / user could not be resolved"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found, or smartie not found for this entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/HIST_CRM_ART/query": {
+      "post": {
+        "tags": [
+          "Histórico de CRM por artículo"
+        ],
+        "summary": "Execute dynamic query without persisted smartie",
+        "description": "Performs a dynamic query on Histórico de CRM por artículo instances with custom columns, filters, sorting, aggregations, and configurable pagination. Use this endpoint for production-grade listings that require predictable performance, payload control, and advanced filtering. Unlike /search, /query allows explicit column selection and page size configuration, making it the preferred option for list screens, integrations, and high-volume data retrieval scenarios. This endpoint allows ad-hoc queries without requiring a saved smartie configuration.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema identificator",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dynamic query parameters including pagination, columns, filters, and search criteria",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "page"
+                ],
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Page number (1-based)",
+                    "default": 1
+                  },
+                  "pageSize": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "description": "Number of records per page",
+                    "default": 50
+                  },
+                  "search": {
+                    "type": "string",
+                    "description": "Free-text term applied over the requested columns: a LIKE '%term%' against each column in `columns` whose data type supports it, OR-ed together. It narrows both `data` and `total`. Combine it with `filters` for exact conditions.",
+                    "nullable": true
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "field"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "enum": [
+                            "HCRA_FECHA",
+                            "HCRA_CRM_UNITARIO",
+                            "HCRA_ORIGEN",
+                            "HCRA_ID_ORIGEN",
+                            "HCRA_CLAVE",
+                            "id",
+                            "DESC_ESTADO",
+                            "ESTA_CODIGO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF"
+                          ],
+                          "type": "string",
+                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name."
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Custom column title (optional)",
+                          "nullable": true
+                        },
+                        "sortDirection": {
+                          "enum": [
+                            "ASC",
+                            "DESC"
+                          ],
+                          "type": "string",
+                          "description": "Sort direction",
+                          "nullable": true
+                        },
+                        "order": {
+                          "type": "integer",
+                          "description": "Column display order (optional)",
+                          "nullable": true
+                        },
+                        "sortOrder": {
+                          "type": "integer",
+                          "description": "Sort priority order (optional)",
+                          "nullable": true
+                        },
+                        "aggregation": {
+                          "enum": [
+                            "SUM",
+                            "COUNT",
+                            "AVG",
+                            "MIN",
+                            "MAX"
+                          ],
+                          "type": "string",
+                          "description": "Aggregation function",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Column specifications. If null or empty, default header columns will be used",
+                    "nullable": true
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "columnName",
+                        "operator",
+                        "value"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "columnName": {
+                          "enum": [
+                            "HCRA_FECHA",
+                            "HCRA_CRM_UNITARIO",
+                            "HCRA_ORIGEN",
+                            "HCRA_ID_ORIGEN",
+                            "HCRA_CLAVE",
+                            "id",
+                            "DESC_ESTADO",
+                            "ESTA_CODIGO",
+                            "AUDI_USUA_ALTA",
+                            "AUDI_USUA_MODIF",
+                            "AUDI_FECHA_ALTA",
+                            "AUDI_FECHA_MODIF",
+                            "MATE_ID_MATE",
+                            "MONE_ID_MONE"
+                          ],
+                          "type": "string",
+                          "description": "Column name to filter (required). Available columns from `columns` (entity view columns plus the raw id of Usuario-typed attributes), plus the physical id of related entities (e.g. CLIE_ID_CLIE) which - unlike Usuario ids - are filter-only: filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
+                        },
+                        "operator": {
+                          "enum": [
+                            "=",
+                            "!=",
+                            ">",
+                            "<",
+                            ">=",
+                            "<=",
+                            "LIKE"
+                          ],
+                          "type": "string",
+                          "description": "Comparison operator"
+                        },
+                        "value": {
+                          "description": "Value to compare. Type should match column data type",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "description": "Filter specifications",
+                    "nullable": true
+                  }
+                }
+              },
+              "example": {
+                "page": 1,
+                "pageSize": 10,
+                "search": "",
+                "columns": [
+                  {
+                    "field": "COLUMN_NAME",
+                    "title": "Column Title",
+                    "sortDirection": "ASC",
+                    "sortOrder": 1
+                  }
+                ],
+                "filters": [
+                  {
+                    "columnName": "COLUMN_NAME",
+                    "operator": "=",
+                    "value": "value"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Rows of the page, keyed by the `field` of each requested column. `id` and `ESTA_CODIGO` are added when the rows represent instances (i.e. no column uses an aggregation)."
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of records matching the query (ignoring pagination)"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "Definition of the columns actually returned - the authoritative list of the keys present in `data`"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters, unknown column name, or unsupported operator",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid token"
+          },
+          "403": {
+            "description": "User does not have permission to view this entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/HIST_CRM_ART/file": {
+      "get": {
+        "tags": [
+          "Histórico de CRM por artículo"
+        ],
+        "summary": "Descarga un archivo de una entidad",
+        "description": "Devuelve el archivo cargado en un atributo de tipo archivo de una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archivo encontrado. El cuerpo es el archivo en crudo; el nombre viaja en el header Content-Disposition.",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El usuario no tiene permisos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Histórico de CRM por artículo"
+        ],
+        "summary": "Carga o reemplaza un archivo en una entidad",
+        "description": "Guarda el archivo en el atributo de tipo archivo de una instancia de entidad. Soporta dos formatos: multipart/form-data o binary directo (application/octet-stream, application/pdf, etc.).",
+        "parameters": [
+          {
+            "name": "attributeName",
+            "in": "query",
+            "description": "Nombre del atributo de tipo archivo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "contentType",
+            "in": "query",
+            "description": "Tipo de contenido (MIME) del archivo (ej: application/pdf, image/png). Opcional: si se omite se toma el del multipart, o application/octet-stream.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "Nombre del archivo (opcional, se puede inferir del multipart)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Archivo a cargar. Puede enviarse como multipart/form-data o como binary directo.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "Contenido del archivo",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido binario del archivo enviado directamente",
+                "format": "binary"
+              }
+            },
+            "application/pdf": {
+              "schema": {
+                "type": "string",
+                "description": "Contenido PDF enviado directamente",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Archivo guardado correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Result message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un Atributo con ese nombre en la entidad / El atributo no es de tipo archivo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El usuario no tiene permisos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Ya hay una carga en curso para este mismo archivo. Reintentar cuando termine.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/HIST_CRM_ART/report": {
+      "get": {
+        "tags": [
+          "Histórico de CRM por artículo"
+        ],
+        "summary": "Descarga un reporte asociado a una entidad",
+        "description": "Devuelve el reporte solicitado (nombre y contenido en binario) para una instancia de entidad.",
+        "parameters": [
+          {
+            "name": "reportName",
+            "in": "query",
+            "description": "Nombre del reporte",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "instanceId",
+            "in": "query",
+            "description": "Id de la instancia",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Id del esquema",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reporte encontrado. El cuerpo es el PDF en crudo; el nombre viaja en el header Content-Disposition.",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No existe una Entidad con ese nombre / No existe una instancia en Entidad con ese Id / No existe un reporte con ese nombre en la entidad",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El usuario no tiene permisos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/MATERIAL": {
       "post": {
         "tags": [
@@ -18331,6 +20273,11 @@
                             "title": "Agrupador",
                             "type": "string",
                             "nullable": true
+                          },
+                          "TIUN_ID_TIUN": {
+                            "title": "Tipo de Unidad",
+                            "type": "integer",
+                            "nullable": true
                           }
                         }
                       },
@@ -25462,7 +27409,6 @@
                   "data": {
                     "required": [
                       "EXTE_ID_EXTE",
-                      "PEDI_ID_PEDI",
                       "ESAC_ACCION"
                     ],
                     "type": "object",
@@ -25705,7 +27651,8 @@
                     "PEDI_ID_PEDI": {
                       "title": "Pedido",
                       "type": "integer",
-                      "description": "Foreign key to Pedido"
+                      "description": "Foreign key to Pedido",
+                      "nullable": true
                     },
                     "ESAC_ACCION": {
                       "title": "Acción",
@@ -25848,7 +27795,6 @@
                   "data": {
                     "required": [
                       "EXTE_ID_EXTE",
-                      "PEDI_ID_PEDI",
                       "ESAC_ACCION"
                     ],
                     "type": "object",
@@ -26201,15 +28147,6 @@
             }
           },
           {
-            "name": "PEDI_ID_PEDI",
-            "in": "query",
-            "description": "Pedido",
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
             "name": "ESAC_ACCION",
             "in": "query",
             "description": "Acción",
@@ -26261,7 +28198,8 @@
                       "PEDI_ID_PEDI": {
                         "title": "Pedido",
                         "type": "integer",
-                        "description": "Foreign key to Pedido"
+                        "description": "Foreign key to Pedido",
+                        "nullable": true
                       },
                       "ESAC_ACCION": {
                         "title": "Acción",
@@ -65393,7 +67331,6 @@
             "schema": {
               "enum": [
                 "PICKING_LIST_ERPv1.0",
-                "REMI_TRANSPORTE",
                 "MULT_REMI_TRANSPORTE"
               ],
               "type": "string"
@@ -74490,6 +76427,11 @@
                       "type": "string",
                       "nullable": true
                     },
+                    "MOST_FECHA_DOCUMENTO": {
+                      "title": "Fecha documental",
+                      "type": "string",
+                      "nullable": true
+                    },
                     "MOST_SALDO_ACTUAL": {
                       "title": "Saldo Actual",
                       "type": "number",
@@ -75369,6 +77311,11 @@
                         "type": "string",
                         "nullable": true
                       },
+                      "MOST_FECHA_DOCUMENTO": {
+                        "title": "Fecha documental",
+                        "type": "string",
+                        "nullable": true
+                      },
                       "MOST_SALDO_ACTUAL": {
                         "title": "Saldo Actual",
                         "type": "number",
@@ -75817,6 +77764,7 @@
                             "MOST_PRECIO_COMPRA",
                             "MOST_CANTIDAD_DESTINO",
                             "MOST_ENTIDAD_ORIGEN",
+                            "MOST_FECHA_DOCUMENTO",
                             "MOST_SALDO_ACTUAL",
                             "MOST_CMV",
                             "MOST_FIFO",
@@ -75907,6 +77855,7 @@
                             "MOST_PRECIO_COMPRA",
                             "MOST_CANTIDAD_DESTINO",
                             "MOST_ENTIDAD_ORIGEN",
+                            "MOST_FECHA_DOCUMENTO",
                             "MOST_SALDO_ACTUAL",
                             "MOST_CMV",
                             "MOST_FIFO",
@@ -86164,6 +88113,12 @@
                         "description": " This is a foreign key to Ubicación de stock. An id of Ubicación de stock is expected",
                         "nullable": true
                       },
+                      "CEDI_ID_NUEV": {
+                        "title": "Ubicación Final",
+                        "type": "integer",
+                        "description": "Se completa automáticamente con la ubicación configurada en la Condición de la devolución. Si está vacío, configure la ubicación en la condición seleccionada antes de procesar.\n This is a foreign key to Ubicación de stock. An id of Ubicación de stock is expected",
+                        "nullable": true
+                      },
                       "Detalle": {
                         "title": "Detalle",
                         "type": "array",
@@ -86865,6 +88820,12 @@
                         "title": "Origen",
                         "type": "integer",
                         "description": " This is a foreign key to Ubicación de stock. An id of Ubicación de stock is expected",
+                        "nullable": true
+                      },
+                      "CEDI_ID_NUEV": {
+                        "title": "Ubicación Final",
+                        "type": "integer",
+                        "description": "Se completa automáticamente con la ubicación configurada en la Condición de la devolución. Si está vacío, configure la ubicación en la condición seleccionada antes de procesar.\n This is a foreign key to Ubicación de stock. An id of Ubicación de stock is expected",
                         "nullable": true
                       },
                       "Detalle": {
@@ -91521,6 +93482,12 @@
                               "type": "integer",
                               "description": " This is a foreign key to Ubicación de stock. An id of Ubicación de stock is expected",
                               "nullable": true
+                            },
+                            "CEDI_ID_NUEV": {
+                              "title": "Ubicación Final",
+                              "type": "integer",
+                              "description": "Se completa automáticamente con la ubicación configurada en la Condición de la devolución. Si está vacío, configure la ubicación en la condición seleccionada antes de procesar.\n This is a foreign key to Ubicación de stock. An id of Ubicación de stock is expected",
+                              "nullable": true
                             }
                           },
                           "description": "Child entity of Remito de Devolución"
@@ -92906,6 +94873,12 @@
                               "title": "Origen",
                               "type": "integer",
                               "description": " This is a foreign key to Ubicación de stock. An id of Ubicación de stock is expected",
+                              "nullable": true
+                            },
+                            "CEDI_ID_NUEV": {
+                              "title": "Ubicación Final",
+                              "type": "integer",
+                              "description": "Se completa automáticamente con la ubicación configurada en la Condición de la devolución. Si está vacío, configure la ubicación en la condición seleccionada antes de procesar.\n This is a foreign key to Ubicación de stock. An id of Ubicación de stock is expected",
                               "nullable": true
                             }
                           },
@@ -95847,17 +97820,17 @@
                           },
                           "REIR_CANTIDAD": {
                             "title": "Cant. Recibida",
-                            "type": "integer",
+                            "type": "number",
                             "nullable": true
                           },
                           "REIR_CANTIDAD_DEVUELTOS": {
                             "title": "Cant. devueltos",
-                            "type": "integer",
+                            "type": "number",
                             "nullable": true
                           },
                           "REIR_CANTIDAD_ENVIADA": {
                             "title": "Cant. Enviada",
-                            "type": "integer",
+                            "type": "number",
                             "nullable": true
                           },
                           "REIR_COLOR": {
@@ -95872,7 +97845,7 @@
                           },
                           "REIR_CANTIDAD_EN_TRANSITO": {
                             "title": "# en tránsito",
-                            "type": "integer",
+                            "type": "number",
                             "nullable": true
                           },
                           "REIR_NRO_SERIE": {
@@ -95887,12 +97860,12 @@
                           },
                           "REIR_NUEVA_CANTIDAD_RECIB": {
                             "title": "Nueva Cantidad Recibidos",
-                            "type": "integer",
+                            "type": "number",
                             "nullable": true
                           },
                           "REIR_NUEVA_CANTIDAD_DEVUE": {
                             "title": "Nueva Cantidad Devueltos",
-                            "type": "integer",
+                            "type": "number",
                             "nullable": true
                           }
                         }
@@ -106619,6 +108592,33 @@
                         "title": "Fecha de OC",
                         "type": "string",
                         "nullable": true
+                      },
+                      "STOCK_DISPONIBLE": {
+                        "title": "Stock disponible actual",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "NRO_REMITO_ORDEN": {
+                        "title": "Nro Remito (orden)",
+                        "type": "integer",
+                        "nullable": true
+                      },
+                      "FECHA_PROCESADO": {
+                        "title": "Fecha de procesado",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "NRO_SERIE": {
+                        "title": "Nro de serie",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "NRO_LOTE": {
+                        "title": "Lote",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
                       }
                     },
                     "description": "Instance data"
@@ -106924,6 +108924,31 @@
                       "type": "string",
                       "nullable": true
                     },
+                    "STOCK_DISPONIBLE": {
+                      "title": "Stock disponible actual",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "NRO_REMITO_ORDEN": {
+                      "title": "Nro Remito (orden)",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "FECHA_PROCESADO": {
+                      "title": "Fecha de procesado",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "NRO_SERIE": {
+                      "title": "Nro de serie",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "NRO_LOTE": {
+                      "title": "Lote",
+                      "type": "string",
+                      "nullable": true
+                    },
                     "transitions": {
                       "title": "Available state transitions",
                       "type": "array",
@@ -107150,6 +109175,33 @@
                       },
                       "FECHA_OC": {
                         "title": "Fecha de OC",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "STOCK_DISPONIBLE": {
+                        "title": "Stock disponible actual",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "NRO_REMITO_ORDEN": {
+                        "title": "Nro Remito (orden)",
+                        "type": "integer",
+                        "nullable": true
+                      },
+                      "FECHA_PROCESADO": {
+                        "title": "Fecha de procesado",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "NRO_SERIE": {
+                        "title": "Nro de serie",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "NRO_LOTE": {
+                        "title": "Lote",
+                        "maxLength": 100,
                         "type": "string",
                         "nullable": true
                       }
@@ -107640,6 +109692,51 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "STOCK_DISPONIBLE",
+            "in": "query",
+            "description": "Stock disponible actual",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "NRO_REMITO_ORDEN",
+            "in": "query",
+            "description": "Nro Remito (orden)",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "FECHA_PROCESADO",
+            "in": "query",
+            "description": "Fecha de procesado",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "NRO_SERIE",
+            "in": "query",
+            "description": "Nro de serie",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "NRO_LOTE",
+            "in": "query",
+            "description": "Lote",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -107768,6 +109865,31 @@
                       },
                       "FECHA_OC": {
                         "title": "Fecha de OC",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "STOCK_DISPONIBLE": {
+                        "title": "Stock disponible actual",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "NRO_REMITO_ORDEN": {
+                        "title": "Nro Remito (orden)",
+                        "type": "integer",
+                        "nullable": true
+                      },
+                      "FECHA_PROCESADO": {
+                        "title": "Fecha de procesado",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "NRO_SERIE": {
+                        "title": "Nro de serie",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "NRO_LOTE": {
+                        "title": "Lote",
                         "type": "string",
                         "nullable": true
                       }
@@ -108139,6 +110261,11 @@
                             "OBSERVACIONES",
                             "NRO_OC",
                             "FECHA_OC",
+                            "STOCK_DISPONIBLE",
+                            "NRO_REMITO_ORDEN",
+                            "FECHA_PROCESADO",
+                            "NRO_SERIE",
+                            "NRO_LOTE",
                             "id",
                             "DESC_ESTADO",
                             "ESTA_CODIGO",
@@ -108222,6 +110349,11 @@
                             "OBSERVACIONES",
                             "NRO_OC",
                             "FECHA_OC",
+                            "STOCK_DISPONIBLE",
+                            "NRO_REMITO_ORDEN",
+                            "FECHA_PROCESADO",
+                            "NRO_SERIE",
+                            "NRO_LOTE",
                             "id",
                             "DESC_ESTADO",
                             "ESTA_CODIGO",
@@ -109049,6 +111181,59 @@
                         "maxLength": 100,
                         "type": "string",
                         "nullable": true
+                      },
+                      "VALOR_DECLARADO": {
+                        "title": "Remito de Venta - Valor declarado",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "EMISOR_CUIT": {
+                        "title": "Remitente - CUIT",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_RAZON_SOCIAL": {
+                        "title": "Remitente - Razón social",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_DOMICILIO": {
+                        "title": "Remitente - Domicilio",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_LOCALIDAD": {
+                        "title": "Remitente - Localidad",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_TE1": {
+                        "title": "Remitente - Teléfono 1",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_TE2": {
+                        "title": "Remitente - Teléfono 2",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_WEB": {
+                        "title": "Remitente - Web",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_MAIL": {
+                        "title": "Remitente - Mail",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
                       }
                     },
                     "description": "Instance data"
@@ -109409,6 +111594,51 @@
                       "type": "string",
                       "nullable": true
                     },
+                    "VALOR_DECLARADO": {
+                      "title": "Remito de Venta - Valor declarado",
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "EMISOR_CUIT": {
+                      "title": "Remitente - CUIT",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EMISOR_RAZON_SOCIAL": {
+                      "title": "Remitente - Razón social",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EMISOR_DOMICILIO": {
+                      "title": "Remitente - Domicilio",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EMISOR_LOCALIDAD": {
+                      "title": "Remitente - Localidad",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EMISOR_TE1": {
+                      "title": "Remitente - Teléfono 1",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EMISOR_TE2": {
+                      "title": "Remitente - Teléfono 2",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EMISOR_WEB": {
+                      "title": "Remitente - Web",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "EMISOR_MAIL": {
+                      "title": "Remitente - Mail",
+                      "type": "string",
+                      "nullable": true
+                    },
                     "transitions": {
                       "title": "Available state transitions",
                       "type": "array",
@@ -109703,6 +111933,59 @@
                       },
                       "LISTA_PRECIO_NOMBRE": {
                         "title": "Pedido Lista de Precio - Nombre",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "VALOR_DECLARADO": {
+                        "title": "Remito de Venta - Valor declarado",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "EMISOR_CUIT": {
+                        "title": "Remitente - CUIT",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_RAZON_SOCIAL": {
+                        "title": "Remitente - Razón social",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_DOMICILIO": {
+                        "title": "Remitente - Domicilio",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_LOCALIDAD": {
+                        "title": "Remitente - Localidad",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_TE1": {
+                        "title": "Remitente - Teléfono 1",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_TE2": {
+                        "title": "Remitente - Teléfono 2",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_WEB": {
+                        "title": "Remitente - Web",
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_MAIL": {
+                        "title": "Remitente - Mail",
                         "maxLength": 100,
                         "type": "string",
                         "nullable": true
@@ -110176,6 +112459,87 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "VALOR_DECLARADO",
+            "in": "query",
+            "description": "Remito de Venta - Valor declarado",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "EMISOR_CUIT",
+            "in": "query",
+            "description": "Remitente - CUIT",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "EMISOR_RAZON_SOCIAL",
+            "in": "query",
+            "description": "Remitente - Razón social",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "EMISOR_DOMICILIO",
+            "in": "query",
+            "description": "Remitente - Domicilio",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "EMISOR_LOCALIDAD",
+            "in": "query",
+            "description": "Remitente - Localidad",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "EMISOR_TE1",
+            "in": "query",
+            "description": "Remitente - Teléfono 1",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "EMISOR_TE2",
+            "in": "query",
+            "description": "Remitente - Teléfono 2",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "EMISOR_WEB",
+            "in": "query",
+            "description": "Remitente - Web",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "EMISOR_MAIL",
+            "in": "query",
+            "description": "Remitente - Mail",
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -110359,6 +112723,51 @@
                       },
                       "LISTA_PRECIO_NOMBRE": {
                         "title": "Pedido Lista de Precio - Nombre",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "VALOR_DECLARADO": {
+                        "title": "Remito de Venta - Valor declarado",
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "EMISOR_CUIT": {
+                        "title": "Remitente - CUIT",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_RAZON_SOCIAL": {
+                        "title": "Remitente - Razón social",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_DOMICILIO": {
+                        "title": "Remitente - Domicilio",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_LOCALIDAD": {
+                        "title": "Remitente - Localidad",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_TE1": {
+                        "title": "Remitente - Teléfono 1",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_TE2": {
+                        "title": "Remitente - Teléfono 2",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_WEB": {
+                        "title": "Remitente - Web",
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "EMISOR_MAIL": {
+                        "title": "Remitente - Mail",
                         "type": "string",
                         "nullable": true
                       }
@@ -110741,6 +113150,15 @@
                             "CLIE_TE1",
                             "CLIE_TE2",
                             "LISTA_PRECIO_NOMBRE",
+                            "VALOR_DECLARADO",
+                            "EMISOR_CUIT",
+                            "EMISOR_RAZON_SOCIAL",
+                            "EMISOR_DOMICILIO",
+                            "EMISOR_LOCALIDAD",
+                            "EMISOR_TE1",
+                            "EMISOR_TE2",
+                            "EMISOR_WEB",
+                            "EMISOR_MAIL",
                             "id",
                             "DESC_ESTADO",
                             "ESTA_CODIGO",
@@ -110835,6 +113253,15 @@
                             "CLIE_TE1",
                             "CLIE_TE2",
                             "LISTA_PRECIO_NOMBRE",
+                            "VALOR_DECLARADO",
+                            "EMISOR_CUIT",
+                            "EMISOR_RAZON_SOCIAL",
+                            "EMISOR_DOMICILIO",
+                            "EMISOR_LOCALIDAD",
+                            "EMISOR_TE1",
+                            "EMISOR_TE2",
+                            "EMISOR_WEB",
+                            "EMISOR_MAIL",
                             "id",
                             "DESC_ESTADO",
                             "ESTA_CODIGO",
@@ -116459,7 +118886,7 @@
                             "nullable": true
                           },
                           "DVST_FECHA_CRM": {
-                            "title": "Fecha CRM",
+                            "title": "CRM histórico",
                             "type": "string",
                             "nullable": true
                           },
@@ -118182,6 +120609,10 @@
     {
       "name": "Artículo Base",
       "description": "Artículo Base"
+    },
+    {
+      "name": "Histórico de CRM por artículo",
+      "description": "Histórico de CRM por artículo"
     },
     {
       "name": "Artículo",
