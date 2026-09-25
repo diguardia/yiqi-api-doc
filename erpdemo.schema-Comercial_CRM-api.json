@@ -133,7 +133,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -158,9 +158,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -575,7 +586,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -600,9 +611,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -1113,7 +1135,7 @@
           {
             "name": "page",
             "in": "query",
-            "description": "Page number (1-based). Defaults to 1 when omitted.",
+            "description": "Page number (1-based). Defaults to 1 when omitted. A page past the last one returns an empty `data` with the real `total`.",
             "schema": {
               "type": "integer",
               "default": 1
@@ -1296,7 +1318,7 @@
                   "page": {
                     "minimum": 1,
                     "type": "integer",
-                    "description": "Page number (1-based)",
+                    "description": "Page number (1-based). A page past the last one returns an empty `data` with the real `total` (iterate until `data` comes back empty, or use `total` / `pageSize`).",
                     "default": 1
                   },
                   "pageSize": {
@@ -1331,10 +1353,15 @@
                             "AUDI_USUA_ALTA",
                             "AUDI_USUA_MODIF",
                             "AUDI_FECHA_ALTA",
-                            "AUDI_FECHA_MODIF"
+                            "AUDI_FECHA_MODIF",
+                            "CLIE_ID_CLIE",
+                            "CONT_ID_CONT",
+                            "TIDA_ID_TIDA",
+                            "VEHA_ID_VEHA",
+                            "OPDN_ID_OPOR"
                           ],
                           "type": "string",
-                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name."
+                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name. Same for the physical id of related entities (e.g. MATE_ID_MATE): request it to correlate each row with the related record in one call, instead of one filtered query per candidate."
                         },
                         "title": {
                           "type": "string",
@@ -1369,7 +1396,7 @@
                             "MAX"
                           ],
                           "type": "string",
-                          "description": "Aggregation function",
+                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). Any value outside this list is rejected with 400.",
                           "nullable": true
                         }
                       }
@@ -1407,7 +1434,7 @@
                             "OPDN_ID_OPOR"
                           ],
                           "type": "string",
-                          "description": "Column name to filter (required). Available columns from `columns` (entity view columns plus the raw id of Usuario-typed attributes), plus the physical id of related entities (e.g. CLIE_ID_CLIE) which - unlike Usuario ids - are filter-only: filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
+                          "description": "Column name to filter (required). Same set as `columns`: entity view columns plus the raw id of Usuario-typed attributes and the physical id of related entities (e.g. CLIE_ID_CLIE). Attributes of a related entity are reachable only one hop away and only for the physical, non-relation attributes the view already joins (the `<ALIAS>_<ATTRIBUTE>` columns in this list); the related record's workflow state, its calculated attributes and anything two relations away are not filterable here - that needs a view entity that exposes it as its own column."
                         },
                         "operator": {
                           "enum": [
@@ -1428,7 +1455,7 @@
                         }
                       }
                     },
-                    "description": "Filter specifications",
+                    "description": "Filter specifications. All filters are combined with AND; there is no OR between filters (for a set of values, issue one query per value or use `search`). Filters apply to the individual records, before any aggregation.",
                     "nullable": true
                   }
                 }
@@ -2569,7 +2596,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -2594,9 +2621,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -3067,7 +3105,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -3092,9 +3130,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -3554,7 +3603,7 @@
           {
             "name": "page",
             "in": "query",
-            "description": "Page number (1-based). Defaults to 1 when omitted.",
+            "description": "Page number (1-based). Defaults to 1 when omitted. A page past the last one returns an empty `data` with the real `total`.",
             "schema": {
               "type": "integer",
               "default": 1
@@ -3737,7 +3786,7 @@
                   "page": {
                     "minimum": 1,
                     "type": "integer",
-                    "description": "Page number (1-based)",
+                    "description": "Page number (1-based). A page past the last one returns an empty `data` with the real `total` (iterate until `data` comes back empty, or use `total` / `pageSize`).",
                     "default": 1
                   },
                   "pageSize": {
@@ -3770,10 +3819,11 @@
                             "AUDI_USUA_ALTA",
                             "AUDI_USUA_MODIF",
                             "AUDI_FECHA_ALTA",
-                            "AUDI_FECHA_MODIF"
+                            "AUDI_FECHA_MODIF",
+                            "LIDP_ID_LIDP"
                           ],
                           "type": "string",
-                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name."
+                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name. Same for the physical id of related entities (e.g. MATE_ID_MATE): request it to correlate each row with the related record in one call, instead of one filtered query per candidate."
                         },
                         "title": {
                           "type": "string",
@@ -3808,7 +3858,7 @@
                             "MAX"
                           ],
                           "type": "string",
-                          "description": "Aggregation function",
+                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). Any value outside this list is rejected with 400.",
                           "nullable": true
                         }
                       }
@@ -3840,7 +3890,7 @@
                             "LIDP_ID_LIDP"
                           ],
                           "type": "string",
-                          "description": "Column name to filter (required). Available columns from `columns` (entity view columns plus the raw id of Usuario-typed attributes), plus the physical id of related entities (e.g. CLIE_ID_CLIE) which - unlike Usuario ids - are filter-only: filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
+                          "description": "Column name to filter (required). Same set as `columns`: entity view columns plus the raw id of Usuario-typed attributes and the physical id of related entities (e.g. CLIE_ID_CLIE). Attributes of a related entity are reachable only one hop away and only for the physical, non-relation attributes the view already joins (the `<ALIAS>_<ATTRIBUTE>` columns in this list); the related record's workflow state, its calculated attributes and anything two relations away are not filterable here - that needs a view entity that exposes it as its own column."
                         },
                         "operator": {
                           "enum": [
@@ -3861,7 +3911,7 @@
                         }
                       }
                     },
-                    "description": "Filter specifications",
+                    "description": "Filter specifications. All filters are combined with AND; there is no OR between filters (for a set of values, issue one query per value or use `search`). Filters apply to the individual records, before any aggregation.",
                     "nullable": true
                   }
                 }
@@ -4938,7 +4988,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -4963,9 +5013,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -5370,7 +5431,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -5395,9 +5456,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -5822,7 +5894,7 @@
           {
             "name": "page",
             "in": "query",
-            "description": "Page number (1-based). Defaults to 1 when omitted.",
+            "description": "Page number (1-based). Defaults to 1 when omitted. A page past the last one returns an empty `data` with the real `total`.",
             "schema": {
               "type": "integer",
               "default": 1
@@ -6005,7 +6077,7 @@
                   "page": {
                     "minimum": 1,
                     "type": "integer",
-                    "description": "Page number (1-based)",
+                    "description": "Page number (1-based). A page past the last one returns an empty `data` with the real `total` (iterate until `data` comes back empty, or use `total` / `pageSize`).",
                     "default": 1
                   },
                   "pageSize": {
@@ -6040,7 +6112,7 @@
                             "AUDI_FECHA_MODIF"
                           ],
                           "type": "string",
-                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name."
+                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name. Same for the physical id of related entities (e.g. MATE_ID_MATE): request it to correlate each row with the related record in one call, instead of one filtered query per candidate."
                         },
                         "title": {
                           "type": "string",
@@ -6075,7 +6147,7 @@
                             "MAX"
                           ],
                           "type": "string",
-                          "description": "Aggregation function",
+                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). Any value outside this list is rejected with 400.",
                           "nullable": true
                         }
                       }
@@ -6105,7 +6177,7 @@
                             "AUDI_FECHA_MODIF"
                           ],
                           "type": "string",
-                          "description": "Column name to filter (required). Available columns from `columns` (entity view columns plus the raw id of Usuario-typed attributes), plus the physical id of related entities (e.g. CLIE_ID_CLIE) which - unlike Usuario ids - are filter-only: filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
+                          "description": "Column name to filter (required). Same set as `columns`: entity view columns plus the raw id of Usuario-typed attributes and the physical id of related entities (e.g. CLIE_ID_CLIE). Attributes of a related entity are reachable only one hop away and only for the physical, non-relation attributes the view already joins (the `<ALIAS>_<ATTRIBUTE>` columns in this list); the related record's workflow state, its calculated attributes and anything two relations away are not filterable here - that needs a view entity that exposes it as its own column."
                         },
                         "operator": {
                           "enum": [
@@ -6126,7 +6198,7 @@
                         }
                       }
                     },
-                    "description": "Filter specifications",
+                    "description": "Filter specifications. All filters are combined with AND; there is no OR between filters (for a set of values, issue one query per value or use `search`). Filters apply to the individual records, before any aggregation.",
                     "nullable": true
                   }
                 }
@@ -6984,7 +7056,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -7009,9 +7081,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -7777,7 +7860,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -7802,9 +7885,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -8361,7 +8455,7 @@
           {
             "name": "page",
             "in": "query",
-            "description": "Page number (1-based). Defaults to 1 when omitted.",
+            "description": "Page number (1-based). Defaults to 1 when omitted. A page past the last one returns an empty `data` with the real `total`.",
             "schema": {
               "type": "integer",
               "default": 1
@@ -8544,7 +8638,7 @@
                   "page": {
                     "minimum": 1,
                     "type": "integer",
-                    "description": "Page number (1-based)",
+                    "description": "Page number (1-based). A page past the last one returns an empty `data` with the real `total` (iterate until `data` comes back empty, or use `total` / `pageSize`).",
                     "default": 1
                   },
                   "pageSize": {
@@ -8594,10 +8688,12 @@
                             "AUDI_USUA_ALTA",
                             "AUDI_USUA_MODIF",
                             "AUDI_FECHA_ALTA",
-                            "AUDI_FECHA_MODIF"
+                            "AUDI_FECHA_MODIF",
+                            "ORCO_ID_ORCO",
+                            "PROY_ID_PROY"
                           ],
                           "type": "string",
-                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name."
+                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name. Same for the physical id of related entities (e.g. MATE_ID_MATE): request it to correlate each row with the related record in one call, instead of one filtered query per candidate."
                         },
                         "title": {
                           "type": "string",
@@ -8632,7 +8728,7 @@
                             "MAX"
                           ],
                           "type": "string",
-                          "description": "Aggregation function",
+                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). Any value outside this list is rejected with 400.",
                           "nullable": true
                         }
                       }
@@ -8682,7 +8778,7 @@
                             "PROY_ID_PROY"
                           ],
                           "type": "string",
-                          "description": "Column name to filter (required). Available columns from `columns` (entity view columns plus the raw id of Usuario-typed attributes), plus the physical id of related entities (e.g. CLIE_ID_CLIE) which - unlike Usuario ids - are filter-only: filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
+                          "description": "Column name to filter (required). Same set as `columns`: entity view columns plus the raw id of Usuario-typed attributes and the physical id of related entities (e.g. CLIE_ID_CLIE). Attributes of a related entity are reachable only one hop away and only for the physical, non-relation attributes the view already joins (the `<ALIAS>_<ATTRIBUTE>` columns in this list); the related record's workflow state, its calculated attributes and anything two relations away are not filterable here - that needs a view entity that exposes it as its own column."
                         },
                         "operator": {
                           "enum": [
@@ -8703,7 +8799,7 @@
                         }
                       }
                     },
-                    "description": "Filter specifications",
+                    "description": "Filter specifications. All filters are combined with AND; there is no OR between filters (for a set of values, issue one query per value or use `search`). Filters apply to the individual records, before any aggregation.",
                     "nullable": true
                   }
                 }
@@ -9508,7 +9604,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -9533,9 +9629,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -10088,7 +10195,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -10113,9 +10220,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -10658,7 +10776,7 @@
           {
             "name": "page",
             "in": "query",
-            "description": "Page number (1-based). Defaults to 1 when omitted.",
+            "description": "Page number (1-based). Defaults to 1 when omitted. A page past the last one returns an empty `data` with the real `total`.",
             "schema": {
               "type": "integer",
               "default": 1
@@ -10841,7 +10959,7 @@
                   "page": {
                     "minimum": 1,
                     "type": "integer",
-                    "description": "Page number (1-based)",
+                    "description": "Page number (1-based). A page past the last one returns an empty `data` with the real `total` (iterate until `data` comes back empty, or use `total` / `pageSize`).",
                     "default": 1
                   },
                   "pageSize": {
@@ -10889,10 +11007,15 @@
                             "AUDI_USUA_ALTA",
                             "AUDI_USUA_MODIF",
                             "AUDI_FECHA_ALTA",
-                            "AUDI_FECHA_MODIF"
+                            "AUDI_FECHA_MODIF",
+                            "ORCO_ID_ORCO",
+                            "CAMP_ID_CAMP",
+                            "OPDN_ID_OPDN",
+                            "UNDN_ID_UNDN",
+                            "VEHA_ID_VEHA"
                           ],
                           "type": "string",
-                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name."
+                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name. Same for the physical id of related entities (e.g. MATE_ID_MATE): request it to correlate each row with the related record in one call, instead of one filtered query per candidate."
                         },
                         "title": {
                           "type": "string",
@@ -10927,7 +11050,7 @@
                             "MAX"
                           ],
                           "type": "string",
-                          "description": "Aggregation function",
+                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). Any value outside this list is rejected with 400.",
                           "nullable": true
                         }
                       }
@@ -10978,7 +11101,7 @@
                             "VEHA_ID_VEHA"
                           ],
                           "type": "string",
-                          "description": "Column name to filter (required). Available columns from `columns` (entity view columns plus the raw id of Usuario-typed attributes), plus the physical id of related entities (e.g. CLIE_ID_CLIE) which - unlike Usuario ids - are filter-only: filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
+                          "description": "Column name to filter (required). Same set as `columns`: entity view columns plus the raw id of Usuario-typed attributes and the physical id of related entities (e.g. CLIE_ID_CLIE). Attributes of a related entity are reachable only one hop away and only for the physical, non-relation attributes the view already joins (the `<ALIAS>_<ATTRIBUTE>` columns in this list); the related record's workflow state, its calculated attributes and anything two relations away are not filterable here - that needs a view entity that exposes it as its own column."
                         },
                         "operator": {
                           "enum": [
@@ -10999,7 +11122,7 @@
                         }
                       }
                     },
-                    "description": "Filter specifications",
+                    "description": "Filter specifications. All filters are combined with AND; there is no OR between filters (for a set of values, issue one query per value or use `search`). Filters apply to the individual records, before any aggregation.",
                     "nullable": true
                   }
                 }
@@ -11954,7 +12077,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -11979,9 +12102,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -13027,7 +13161,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -13052,9 +13186,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -13789,7 +13934,7 @@
           {
             "name": "page",
             "in": "query",
-            "description": "Page number (1-based). Defaults to 1 when omitted.",
+            "description": "Page number (1-based). Defaults to 1 when omitted. A page past the last one returns an empty `data` with the real `total`.",
             "schema": {
               "type": "integer",
               "default": 1
@@ -13972,7 +14117,7 @@
                   "page": {
                     "minimum": 1,
                     "type": "integer",
-                    "description": "Page number (1-based)",
+                    "description": "Page number (1-based). A page past the last one returns an empty `data` with the real `total` (iterate until `data` comes back empty, or use `total` / `pageSize`).",
                     "default": 1
                   },
                   "pageSize": {
@@ -14034,10 +14179,26 @@
                             "AUDI_USUA_ALTA",
                             "AUDI_USUA_MODIF",
                             "AUDI_FECHA_ALTA",
-                            "AUDI_FECHA_MODIF"
+                            "AUDI_FECHA_MODIF",
+                            "TIDC_ID_TDCC",
+                            "VEHA_ID_VEHA",
+                            "PROY_ID_PROY",
+                            "MDCC_ID_MDCC",
+                            "OPDN_ID_OPDN",
+                            "CLIE_ID_CLIE",
+                            "SUCU_ID_SUCU",
+                            "CONT_ID_CONT",
+                            "MONE_ID_MONE",
+                            "LIDP_ID_LIDP",
+                            "EXTE_ID_EXTE",
+                            "PEDI_ID_PEDI",
+                            "TIFA_ID_TIFA",
+                            "COVE_ID_COVE",
+                            "MODR_ID_MODR",
+                            "TRLO_ID_TRLO"
                           ],
                           "type": "string",
-                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name."
+                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name. Same for the physical id of related entities (e.g. MATE_ID_MATE): request it to correlate each row with the related record in one call, instead of one filtered query per candidate."
                         },
                         "title": {
                           "type": "string",
@@ -14072,7 +14233,7 @@
                             "MAX"
                           ],
                           "type": "string",
-                          "description": "Aggregation function",
+                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). Any value outside this list is rejected with 400.",
                           "nullable": true
                         }
                       }
@@ -14148,7 +14309,7 @@
                             "TRLO_ID_TRLO"
                           ],
                           "type": "string",
-                          "description": "Column name to filter (required). Available columns from `columns` (entity view columns plus the raw id of Usuario-typed attributes), plus the physical id of related entities (e.g. CLIE_ID_CLIE) which - unlike Usuario ids - are filter-only: filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
+                          "description": "Column name to filter (required). Same set as `columns`: entity view columns plus the raw id of Usuario-typed attributes and the physical id of related entities (e.g. CLIE_ID_CLIE). Attributes of a related entity are reachable only one hop away and only for the physical, non-relation attributes the view already joins (the `<ALIAS>_<ATTRIBUTE>` columns in this list); the related record's workflow state, its calculated attributes and anything two relations away are not filterable here - that needs a view entity that exposes it as its own column."
                         },
                         "operator": {
                           "enum": [
@@ -14169,7 +14330,7 @@
                         }
                       }
                     },
-                    "description": "Filter specifications",
+                    "description": "Filter specifications. All filters are combined with AND; there is no OR between filters (for a set of values, issue one query per value or use `search`). Filters apply to the individual records, before any aggregation.",
                     "nullable": true
                   }
                 }
@@ -15249,7 +15410,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -15274,9 +15435,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -15645,7 +15817,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -15670,9 +15842,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -16155,7 +16338,7 @@
           {
             "name": "page",
             "in": "query",
-            "description": "Page number (1-based). Defaults to 1 when omitted.",
+            "description": "Page number (1-based). Defaults to 1 when omitted. A page past the last one returns an empty `data` with the real `total`.",
             "schema": {
               "type": "integer",
               "default": 1
@@ -16338,7 +16521,7 @@
                   "page": {
                     "minimum": 1,
                     "type": "integer",
-                    "description": "Page number (1-based)",
+                    "description": "Page number (1-based). A page past the last one returns an empty `data` with the real `total` (iterate until `data` comes back empty, or use `total` / `pageSize`).",
                     "default": 1
                   },
                   "pageSize": {
@@ -16379,10 +16562,12 @@
                             "AUDI_USUA_ALTA",
                             "AUDI_USUA_MODIF",
                             "AUDI_FECHA_ALTA",
-                            "AUDI_FECHA_MODIF"
+                            "AUDI_FECHA_MODIF",
+                            "ANDG_ID_ANDG",
+                            "CLIE_ID_CLIE"
                           ],
                           "type": "string",
-                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name."
+                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name. Same for the physical id of related entities (e.g. MATE_ID_MATE): request it to correlate each row with the related record in one call, instead of one filtered query per candidate."
                         },
                         "title": {
                           "type": "string",
@@ -16417,7 +16602,7 @@
                             "MAX"
                           ],
                           "type": "string",
-                          "description": "Aggregation function",
+                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). Any value outside this list is rejected with 400.",
                           "nullable": true
                         }
                       }
@@ -16458,7 +16643,7 @@
                             "CLIE_ID_CLIE"
                           ],
                           "type": "string",
-                          "description": "Column name to filter (required). Available columns from `columns` (entity view columns plus the raw id of Usuario-typed attributes), plus the physical id of related entities (e.g. CLIE_ID_CLIE) which - unlike Usuario ids - are filter-only: filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
+                          "description": "Column name to filter (required). Same set as `columns`: entity view columns plus the raw id of Usuario-typed attributes and the physical id of related entities (e.g. CLIE_ID_CLIE). Attributes of a related entity are reachable only one hop away and only for the physical, non-relation attributes the view already joins (the `<ALIAS>_<ATTRIBUTE>` columns in this list); the related record's workflow state, its calculated attributes and anything two relations away are not filterable here - that needs a view entity that exposes it as its own column."
                         },
                         "operator": {
                           "enum": [
@@ -16479,7 +16664,7 @@
                         }
                       }
                     },
-                    "description": "Filter specifications",
+                    "description": "Filter specifications. All filters are combined with AND; there is no OR between filters (for a set of values, issue one query per value or use `search`). Filters apply to the individual records, before any aggregation.",
                     "nullable": true
                   }
                 }
@@ -17466,7 +17651,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -17491,9 +17676,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -18596,7 +18792,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -18621,9 +18817,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -19222,7 +19429,7 @@
           {
             "name": "page",
             "in": "query",
-            "description": "Page number (1-based). Defaults to 1 when omitted.",
+            "description": "Page number (1-based). Defaults to 1 when omitted. A page past the last one returns an empty `data` with the real `total`.",
             "schema": {
               "type": "integer",
               "default": 1
@@ -19405,7 +19612,7 @@
                   "page": {
                     "minimum": 1,
                     "type": "integer",
-                    "description": "Page number (1-based)",
+                    "description": "Page number (1-based). A page past the last one returns an empty `data` with the real `total` (iterate until `data` comes back empty, or use `total` / `pageSize`).",
                     "default": 1
                   },
                   "pageSize": {
@@ -19454,10 +19661,22 @@
                             "AUDI_USUA_MODIF",
                             "AUDI_FECHA_ALTA",
                             "AUDI_FECHA_MODIF",
-                            "OPDN_RESPONSABLE"
+                            "OPDN_RESPONSABLE",
+                            "CONT_ID_CONT",
+                            "ORCO_ID_ORCO",
+                            "CAMP_ID_CAMP",
+                            "VEHA_ID_VEHA",
+                            "RUBR_ID_RUBR",
+                            "SUBR_ID_SUBR",
+                            "SEYI_ID_SERV",
+                            "RANE_ID_RANE",
+                            "PRIO_ID_PRIO",
+                            "UNDN_ID_UNDN",
+                            "COVE_ID_COVE",
+                            "TRLO_ID_TRLO"
                           ],
                           "type": "string",
-                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name."
+                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name. Same for the physical id of related entities (e.g. MATE_ID_MATE): request it to correlate each row with the related record in one call, instead of one filtered query per candidate."
                         },
                         "title": {
                           "type": "string",
@@ -19492,7 +19711,7 @@
                             "MAX"
                           ],
                           "type": "string",
-                          "description": "Aggregation function",
+                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). Any value outside this list is rejected with 400.",
                           "nullable": true
                         }
                       }
@@ -19551,7 +19770,7 @@
                             "TRLO_ID_TRLO"
                           ],
                           "type": "string",
-                          "description": "Column name to filter (required). Available columns from `columns` (entity view columns plus the raw id of Usuario-typed attributes), plus the physical id of related entities (e.g. CLIE_ID_CLIE) which - unlike Usuario ids - are filter-only: filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
+                          "description": "Column name to filter (required). Same set as `columns`: entity view columns plus the raw id of Usuario-typed attributes and the physical id of related entities (e.g. CLIE_ID_CLIE). Attributes of a related entity are reachable only one hop away and only for the physical, non-relation attributes the view already joins (the `<ALIAS>_<ATTRIBUTE>` columns in this list); the related record's workflow state, its calculated attributes and anything two relations away are not filterable here - that needs a view entity that exposes it as its own column."
                         },
                         "operator": {
                           "enum": [
@@ -19572,7 +19791,7 @@
                         }
                       }
                     },
-                    "description": "Filter specifications",
+                    "description": "Filter specifications. All filters are combined with AND; there is no OR between filters (for a set of values, issue one query per value or use `search`). Filters apply to the individual records, before any aggregation.",
                     "nullable": true
                   }
                 }
@@ -20768,7 +20987,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -20793,9 +21012,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -21362,7 +21592,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -21387,9 +21617,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -22085,7 +22326,7 @@
           {
             "name": "page",
             "in": "query",
-            "description": "Page number (1-based). Defaults to 1 when omitted.",
+            "description": "Page number (1-based). Defaults to 1 when omitted. A page past the last one returns an empty `data` with the real `total`.",
             "schema": {
               "type": "integer",
               "default": 1
@@ -22268,7 +22509,7 @@
                   "page": {
                     "minimum": 1,
                     "type": "integer",
-                    "description": "Page number (1-based)",
+                    "description": "Page number (1-based). A page past the last one returns an empty `data` with the real `total` (iterate until `data` comes back empty, or use `total` / `pageSize`).",
                     "default": 1
                   },
                   "pageSize": {
@@ -22320,10 +22561,17 @@
                             "AUDI_USUA_ALTA",
                             "AUDI_USUA_MODIF",
                             "AUDI_FECHA_ALTA",
-                            "AUDI_FECHA_MODIF"
+                            "AUDI_FECHA_MODIF",
+                            "CLIE_ID_CLIE",
+                            "SEYI_ID_SEYI",
+                            "PROY_ID_PROY",
+                            "PRSE_ID_PRSE",
+                            "MONE_ID_MONE",
+                            "PUVE_ID_PUVE",
+                            "TIFA_ID_TIFA"
                           ],
                           "type": "string",
-                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name."
+                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name. Same for the physical id of related entities (e.g. MATE_ID_MATE): request it to correlate each row with the related record in one call, instead of one filtered query per candidate."
                         },
                         "title": {
                           "type": "string",
@@ -22358,7 +22606,7 @@
                             "MAX"
                           ],
                           "type": "string",
-                          "description": "Aggregation function",
+                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). Any value outside this list is rejected with 400.",
                           "nullable": true
                         }
                       }
@@ -22415,7 +22663,7 @@
                             "TIFA_ID_TIFA"
                           ],
                           "type": "string",
-                          "description": "Column name to filter (required). Available columns from `columns` (entity view columns plus the raw id of Usuario-typed attributes), plus the physical id of related entities (e.g. CLIE_ID_CLIE) which - unlike Usuario ids - are filter-only: filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
+                          "description": "Column name to filter (required). Same set as `columns`: entity view columns plus the raw id of Usuario-typed attributes and the physical id of related entities (e.g. CLIE_ID_CLIE). Attributes of a related entity are reachable only one hop away and only for the physical, non-relation attributes the view already joins (the `<ALIAS>_<ATTRIBUTE>` columns in this list); the related record's workflow state, its calculated attributes and anything two relations away are not filterable here - that needs a view entity that exposes it as its own column."
                         },
                         "operator": {
                           "enum": [
@@ -22436,7 +22684,7 @@
                         }
                       }
                     },
-                    "description": "Filter specifications",
+                    "description": "Filter specifications. All filters are combined with AND; there is no OR between filters (for a set of values, issue one query per value or use `search`). Filters apply to the individual records, before any aggregation.",
                     "nullable": true
                   }
                 }
@@ -23577,7 +23825,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -23602,9 +23850,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -24038,7 +24297,7 @@
             }
           },
           "400": {
-            "description": "Bad request - invalid data or missing required fields",
+            "description": "Bad request - invalid data, missing required fields, or a field the caller is not allowed to write (`errors` names which one, keyed by its path in the payload)",
             "content": {
               "application/json": {
                 "schema": {
@@ -24063,9 +24322,20 @@
                       "type": "integer",
                       "description": "HTTP status code (ProblemDetails)",
                       "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Per-field errors (RFC 7807 ValidationProblemDetails), keyed by the field's path in the request payload. The key is the physical attribute name for a header field (`ORDV_CLIE_ID`), or the full path including the row index for a field inside a nested child collection (`Cobros[0].COBR_R_D_TARJETA`). `title` stays generic, so this is where the offending field is named.",
+                      "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -24503,7 +24773,7 @@
           {
             "name": "page",
             "in": "query",
-            "description": "Page number (1-based). Defaults to 1 when omitted.",
+            "description": "Page number (1-based). Defaults to 1 when omitted. A page past the last one returns an empty `data` with the real `total`.",
             "schema": {
               "type": "integer",
               "default": 1
@@ -24686,7 +24956,7 @@
                   "page": {
                     "minimum": 1,
                     "type": "integer",
-                    "description": "Page number (1-based)",
+                    "description": "Page number (1-based). A page past the last one returns an empty `data` with the real `total` (iterate until `data` comes back empty, or use `total` / `pageSize`).",
                     "default": 1
                   },
                   "pageSize": {
@@ -24722,7 +24992,7 @@
                             "AUDI_FECHA_MODIF"
                           ],
                           "type": "string",
-                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name."
+                          "description": "Physical column name (required). Available columns from entity view, plus the raw id of Usuario-typed attributes (e.g. ORDC_SOLICITADA_POR) even though the resolved username (e.g. ORDC_SOLICITADA_POR_NOMBRE) is offered separately - request the raw id to cross-reference against your own user directory instead of the resolved display name. Same for the physical id of related entities (e.g. MATE_ID_MATE): request it to correlate each row with the related record in one call, instead of one filtered query per candidate."
                         },
                         "title": {
                           "type": "string",
@@ -24757,7 +25027,7 @@
                             "MAX"
                           ],
                           "type": "string",
-                          "description": "Aggregation function",
+                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). Any value outside this list is rejected with 400.",
                           "nullable": true
                         }
                       }
@@ -24788,7 +25058,7 @@
                             "AUDI_FECHA_MODIF"
                           ],
                           "type": "string",
-                          "description": "Column name to filter (required). Available columns from `columns` (entity view columns plus the raw id of Usuario-typed attributes), plus the physical id of related entities (e.g. CLIE_ID_CLIE) which - unlike Usuario ids - are filter-only: filtering by the related id doesn't need the related row's data, only the row's id, so it's supported here even though selecting/sorting by it isn't."
+                          "description": "Column name to filter (required). Same set as `columns`: entity view columns plus the raw id of Usuario-typed attributes and the physical id of related entities (e.g. CLIE_ID_CLIE). Attributes of a related entity are reachable only one hop away and only for the physical, non-relation attributes the view already joins (the `<ALIAS>_<ATTRIBUTE>` columns in this list); the related record's workflow state, its calculated attributes and anything two relations away are not filterable here - that needs a view entity that exposes it as its own column."
                         },
                         "operator": {
                           "enum": [
@@ -24809,7 +25079,7 @@
                         }
                       }
                     },
-                    "description": "Filter specifications",
+                    "description": "Filter specifications. All filters are combined with AND; there is no OR between filters (for a set of values, issue one query per value or use `search`). Filters apply to the individual records, before any aggregation.",
                     "nullable": true
                   }
                 }
