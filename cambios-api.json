@@ -1,7 +1,151 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-12",
+  "updatedAt": "2026-09-24",
   "entries": [
+    {
+      "id": "2026-09-24-query-paginacion-y-agregaciones",
+      "date": "2026-09-24",
+      "type": "incompatible",
+      "breaking": true,
+      "title": "/query y /smartie: página inexistente vacía y agregación inválida rechazada",
+      "summary": "Pedir una página posterior a la última ahora devuelve data vacío con el total real, y un valor desconocido en columns[].aggregation ahora responde 400.",
+      "details": [
+        "Antes, una página posterior a la última devolvía otra vez la última página. Ahora devuelve data: [] y el mismo total, así que el patrón de pedir la página siguiente hasta que data venga vacío termina correctamente.",
+        "Aplica a POST /ENTIDAD/query y a GET /ENTIDAD/smartie paginado. Las smarties pivoteadas no paginan y no cambian.",
+        "Antes, un valor de aggregation fuera de SUM, COUNT, AVG, MIN y MAX se ignoraba y la consulta devolvía filas sin agrupar. Ahora responde 400 con el mensaje Unsupported aggregation. Los valores válidos se aceptan en mayúsculas o minúsculas.",
+        "Si tu integración calculaba las páginas a partir de total y pageSize, o usaba solo valores válidos de aggregation, no necesita cambios."
+      ],
+      "scope": {
+        "endpoints": ["POST /ENTIDAD/query", "GET /ENTIDAD/smartie"],
+        "modules": [
+          "Calidad",
+          "Clientes y proveedores",
+          "Comercial / CRM",
+          "Compras",
+          "Contabilidad",
+          "Editorial",
+          "Finanzas",
+          "Gestión",
+          "Mensajería",
+          "Parámetros",
+          "POS",
+          "Producción",
+          "RRHH",
+          "Stock",
+          "Ventas",
+          "YiQi Services"
+        ]
+      },
+      "example": {
+        "request": {
+          "page": 99,
+          "pageSize": 50
+        },
+        "response": {
+          "data": [],
+          "total": 120
+        }
+      }
+    },
+    {
+      "id": "2026-09-24-query-agregaciones-total",
+      "date": "2026-09-24",
+      "type": "corrección",
+      "breaking": false,
+      "title": "/query: total correcto con agregaciones y semántica documentada",
+      "summary": "Cuando todas las columnas de /query tienen aggregation, total ahora es 1, que es la cantidad real de filas devueltas. Además se documentó cómo agrupan las agregaciones.",
+      "details": [
+        "En cuanto una columna tiene aggregation, la consulta agrupa: las columnas sin aggregation forman el agrupamiento y cada fila de data es un grupo, sin id ni ESTA_CODIGO.",
+        "Con agregación, total cuenta grupos y no registros, y page/pageSize paginan grupos. Se puede ordenar por una columna agregada con sortDirection y sortOrder.",
+        "COUNT cuenta valores distintos y no nulos de la columna. Para contar registros por grupo, contá una columna única por registro, como id.",
+        "filters y search se aplican a los registros antes de agrupar; no hay forma de filtrar por un valor agregado. Todos los filters se combinan con AND.",
+        "Corrección: si todas las columnas estaban agregadas, data traía una sola fila pero total informaba la cantidad de registros subyacentes. Ahora informa 1, o 0 si no hay registros.",
+        "Cada especificación OpenAPI incluye ahora un ejemplo agrupado armado con los atributos de la entidad."
+      ],
+      "scope": {
+        "endpoints": ["POST /ENTIDAD/query", "GET /ENTIDAD/smartie"],
+        "modules": [
+          "Calidad",
+          "Clientes y proveedores",
+          "Comercial / CRM",
+          "Compras",
+          "Contabilidad",
+          "Editorial",
+          "Finanzas",
+          "Gestión",
+          "Mensajería",
+          "Parámetros",
+          "POS",
+          "Producción",
+          "RRHH",
+          "Stock",
+          "Ventas",
+          "YiQi Services"
+        ]
+      },
+      "example": {
+        "endpoint": "POST /MOVIMIENTO_CONTABLE/query?schemaId=1",
+        "body": {
+          "page": 1,
+          "pageSize": 50,
+          "columns": [
+            { "field": "CUCO_ID_CUCO" },
+            { "field": "id", "title": "Movimientos", "aggregation": "COUNT" },
+            { "field": "MOCO_DEBE", "aggregation": "SUM", "sortDirection": "DESC", "sortOrder": 1 },
+            { "field": "MOCO_HABER", "aggregation": "SUM" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "2026-09-09-query-columnas-ids-relacionados",
+      "date": "2026-09-09",
+      "type": "mejora",
+      "breaking": false,
+      "title": "IDs de entidades relacionadas como columnas de /query",
+      "summary": "Los endpoints POST /ENTIDAD/query ahora aceptan los IDs físicos de las entidades relacionadas también en columns, no solo en filters.",
+      "details": [
+        "Reemplaza la limitación de la entrada del 10/08/2026: los IDs relacionados, por ejemplo CLIE_ID_CLIE o CUCO_ID_CUCO, ahora se pueden pedir como columnas de salida, ordenar y usar como agrupamiento en consultas con aggregation.",
+        "Sirve para correlacionar cada fila con el registro relacionado en una sola consulta, en lugar de una consulta filtrada por cada candidato.",
+        "Los IDs de atributos de tipo Usuario ya estaban disponibles en columns desde el 12/08/2026; ahora ambos tipos de ID se comportan igual.",
+        "De una entidad relacionada solo se alcanzan, a un salto, los atributos físicos que la vista ya incluye (columnas ALIAS_ATRIBUTO del enum de cada especificación). El estado de workflow de la entidad relacionada, sus atributos calculados y los datos a dos relaciones de distancia no están disponibles como columna ni como filtro; para eso hace falta una entidad vista que los exponga.",
+        "Los campos disponibles dependen de cada entidad y están enumerados en su especificación OpenAPI."
+      ],
+      "scope": {
+        "endpoints": ["POST /ENTIDAD/query"],
+        "modules": [
+          "Calidad",
+          "Clientes y proveedores",
+          "Comercial / CRM",
+          "Compras",
+          "Contabilidad",
+          "Editorial",
+          "Finanzas",
+          "Gestión",
+          "Mensajería",
+          "Parámetros",
+          "POS",
+          "Producción",
+          "RRHH",
+          "Stock",
+          "Ventas",
+          "YiQi Services"
+        ]
+      },
+      "example": {
+        "columns": [
+          { "field": "MOCO_DEBE" },
+          { "field": "CUCO_ID_CUCO", "sortDirection": "ASC", "sortOrder": 1 }
+        ],
+        "filters": [
+          {
+            "columnName": "ASIE_ID_ASIE",
+            "operator": "=",
+            "value": 123
+          }
+        ]
+      }
+    },
     {
       "id": "2026-08-12-changestate-atributos-obligatorios",
       "date": "2026-08-12",

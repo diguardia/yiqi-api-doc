@@ -1113,7 +1113,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -1405,25 +1405,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -1446,7 +1451,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -9775,7 +9780,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -10349,25 +10354,58 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
+                },
+                "grouped": {
+                  "summary": "Grouped: one row per SECT_ID_SECT",
+                  "description": "`SECT_ID_SECT` has no aggregation, so it is the GROUP BY: each row of `data` is one SECT_ID_SECT with its record count (COUNT of `id`, a DISTINCT count) and the SUM of `EMPL_PORC_DE_REDUCCION` and the SUM of `EMPL_SUELDO_BASE`, sorted by the first total. `total` counts groups, and `page`/`pageSize` paginate groups.",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 50,
+                    "columns": [
+                      {
+                        "field": "SECT_ID_SECT"
+                      },
+                      {
+                        "field": "id",
+                        "title": "Records",
+                        "aggregation": "COUNT"
+                      },
+                      {
+                        "field": "EMPL_PORC_DE_REDUCCION",
+                        "aggregation": "SUM",
+                        "sortDirection": "DESC",
+                        "sortOrder": 1
+                      },
+                      {
+                        "field": "EMPL_SUELDO_BASE",
+                        "aggregation": "SUM"
+                      }
+                    ]
                   }
-                ]
+                }
               }
             }
           },
@@ -10390,7 +10428,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -12715,7 +12753,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -13007,25 +13045,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -13048,7 +13091,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -15001,7 +15044,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -15287,25 +15330,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -15328,7 +15376,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -16875,7 +16923,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -17157,25 +17205,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -17198,7 +17251,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -18806,7 +18859,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -19094,25 +19147,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -19135,7 +19193,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -20646,7 +20704,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -20924,25 +20982,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -20965,7 +21028,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -22483,7 +22546,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -22763,25 +22826,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -22804,7 +22872,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -25366,7 +25434,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -25686,25 +25754,58 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
+                },
+                "grouped": {
+                  "summary": "Grouped: one row per CLIE_ID_CLIE",
+                  "description": "`CLIE_ID_CLIE` has no aggregation, so it is the GROUP BY: each row of `data` is one CLIE_ID_CLIE with its record count (COUNT of `id`, a DISTINCT count) and the SUM of `BUPE_SALARIO_NETO_DESDE` and the SUM of `BUPE_SALARIO_NETO_HASTA`, sorted by the first total. `total` counts groups, and `page`/`pageSize` paginate groups.",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 50,
+                    "columns": [
+                      {
+                        "field": "CLIE_ID_CLIE"
+                      },
+                      {
+                        "field": "id",
+                        "title": "Records",
+                        "aggregation": "COUNT"
+                      },
+                      {
+                        "field": "BUPE_SALARIO_NETO_DESDE",
+                        "aggregation": "SUM",
+                        "sortDirection": "DESC",
+                        "sortOrder": 1
+                      },
+                      {
+                        "field": "BUPE_SALARIO_NETO_HASTA",
+                        "aggregation": "SUM"
+                      }
+                    ]
                   }
-                ]
+                }
               }
             }
           },
@@ -25727,7 +25828,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -28583,7 +28684,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -28933,25 +29034,54 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
+                },
+                "grouped": {
+                  "summary": "Grouped: one row per LOBA_ID_LOBA",
+                  "description": "`LOBA_ID_LOBA` has no aggregation, so it is the GROUP BY: each row of `data` is one LOBA_ID_LOBA with its record count (COUNT of `id`, a DISTINCT count) and the SUM of `CAND_SALARIO_NETO_PRET`, sorted by the first total. `total` counts groups, and `page`/`pageSize` paginate groups.",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 50,
+                    "columns": [
+                      {
+                        "field": "LOBA_ID_LOBA"
+                      },
+                      {
+                        "field": "id",
+                        "title": "Records",
+                        "aggregation": "COUNT"
+                      },
+                      {
+                        "field": "CAND_SALARIO_NETO_PRET",
+                        "aggregation": "SUM",
+                        "sortDirection": "DESC",
+                        "sortOrder": 1
+                      }
+                    ]
                   }
-                ]
+                }
               }
             }
           },
@@ -28974,7 +29104,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -31037,7 +31167,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -31323,25 +31453,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -31364,7 +31499,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -32984,7 +33119,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -33270,25 +33405,54 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
+                },
+                "grouped": {
+                  "summary": "Grouped: one row per EMPL_ID_EMPL",
+                  "description": "`EMPL_ID_EMPL` has no aggregation, so it is the GROUP BY: each row of `data` is one EMPL_ID_EMPL with its record count (COUNT of `id`, a DISTINCT count) and the SUM of `CAEM_COSTO_NETO_ASOCIADO`, sorted by the first total. `total` counts groups, and `page`/`pageSize` paginate groups.",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 50,
+                    "columns": [
+                      {
+                        "field": "EMPL_ID_EMPL"
+                      },
+                      {
+                        "field": "id",
+                        "title": "Records",
+                        "aggregation": "COUNT"
+                      },
+                      {
+                        "field": "CAEM_COSTO_NETO_ASOCIADO",
+                        "aggregation": "SUM",
+                        "sortDirection": "DESC",
+                        "sortOrder": 1
+                      }
+                    ]
                   }
-                ]
+                }
               }
             }
           },
@@ -33311,7 +33475,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -35537,7 +35701,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -35873,25 +36037,54 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
+                },
+                "grouped": {
+                  "summary": "Grouped: one row per CLIE_ID_CLIE",
+                  "description": "`CLIE_ID_CLIE` has no aggregation, so it is the GROUP BY: each row of `data` is one CLIE_ID_CLIE with its record count (COUNT of `id`, a DISTINCT count) and the SUM of `CAPA_COSTO_NETO`, sorted by the first total. `total` counts groups, and `page`/`pageSize` paginate groups.",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 50,
+                    "columns": [
+                      {
+                        "field": "CLIE_ID_CLIE"
+                      },
+                      {
+                        "field": "id",
+                        "title": "Records",
+                        "aggregation": "COUNT"
+                      },
+                      {
+                        "field": "CAPA_COSTO_NETO",
+                        "aggregation": "SUM",
+                        "sortDirection": "DESC",
+                        "sortOrder": 1
+                      }
+                    ]
                   }
-                ]
+                }
               }
             }
           },
@@ -35914,7 +36107,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -38161,7 +38354,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -38457,25 +38650,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -38498,7 +38696,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -40002,7 +40200,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -40278,25 +40476,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -40319,7 +40522,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -42177,7 +42380,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -42479,25 +42682,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -42520,7 +42728,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -44492,7 +44700,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -44772,25 +44980,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -44813,7 +45026,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -46311,7 +46524,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -46587,25 +46800,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -46628,7 +46846,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -48126,7 +48344,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -48402,25 +48620,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -48443,7 +48666,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -49941,7 +50164,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -50217,25 +50440,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -50258,7 +50486,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -51776,7 +52004,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -52056,25 +52284,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -52097,7 +52330,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -53783,7 +54016,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -54073,25 +54306,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -54114,7 +54352,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -55765,7 +56003,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -56053,25 +56291,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -56094,7 +56337,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -58218,7 +58461,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -58510,25 +58753,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -58551,7 +58799,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -60081,7 +60329,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -60359,25 +60607,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -60400,7 +60653,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -62115,7 +62368,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -62405,25 +62658,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -62446,7 +62704,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -64409,7 +64667,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -64691,25 +64949,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -64732,7 +64995,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -66392,7 +66655,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -66682,25 +66945,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -66723,7 +66991,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -68381,7 +68649,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -68673,25 +68941,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -68714,7 +68987,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -70447,7 +70720,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -70743,25 +71016,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -70784,7 +71062,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -72878,7 +73156,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -73170,25 +73448,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -73211,7 +73494,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -75404,7 +75687,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -75746,25 +76029,54 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
+                },
+                "grouped": {
+                  "summary": "Grouped: one row per NACI_ID_NACI",
+                  "description": "`NACI_ID_NACI` has no aggregation, so it is the GROUP BY: each row of `data` is one NACI_ID_NACI with its record count (COUNT of `id`, a DISTINCT count) and the SUM of `SOAL_SUELDO_NETO_PRETENDI`, sorted by the first total. `total` counts groups, and `page`/`pageSize` paginate groups.",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 50,
+                    "columns": [
+                      {
+                        "field": "NACI_ID_NACI"
+                      },
+                      {
+                        "field": "id",
+                        "title": "Records",
+                        "aggregation": "COUNT"
+                      },
+                      {
+                        "field": "SOAL_SUELDO_NETO_PRETENDI",
+                        "aggregation": "SUM",
+                        "sortDirection": "DESC",
+                        "sortOrder": 1
+                      }
+                    ]
                   }
-                ]
+                }
               }
             }
           },
@@ -75787,7 +76099,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -77920,7 +78232,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -78214,25 +78526,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -78255,7 +78572,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -80336,7 +80653,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -80630,25 +80947,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -80671,7 +80993,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -82588,7 +82910,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -82868,25 +83190,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -82909,7 +83236,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -85607,7 +85934,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -85893,25 +86220,54 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
+                },
+                "grouped": {
+                  "summary": "Grouped: one row per EMPL_ID_EMPL",
+                  "description": "`EMPL_ID_EMPL` has no aggregation, so it is the GROUP BY: each row of `data` is one EMPL_ID_EMPL with its record count (COUNT of `id`, a DISTINCT count) and the SUM of `HOSO_TOTAL_A_COBRAR`, sorted by the first total. `total` counts groups, and `page`/`pageSize` paginate groups.",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 50,
+                    "columns": [
+                      {
+                        "field": "EMPL_ID_EMPL"
+                      },
+                      {
+                        "field": "id",
+                        "title": "Records",
+                        "aggregation": "COUNT"
+                      },
+                      {
+                        "field": "HOSO_TOTAL_A_COBRAR",
+                        "aggregation": "SUM",
+                        "sortDirection": "DESC",
+                        "sortOrder": 1
+                      }
+                    ]
                   }
-                ]
+                }
               }
             }
           },
@@ -85934,7 +86290,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -87591,7 +87947,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -87887,25 +88243,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -87928,7 +88289,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -90642,7 +91003,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -90974,25 +91335,58 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
+                },
+                "grouped": {
+                  "summary": "Grouped: one row per PASU_ID_PASU",
+                  "description": "`PASU_ID_PASU` has no aggregation, so it is the GROUP BY: each row of `data` is one PASU_ID_PASU with its record count (COUNT of `id`, a DISTINCT count) and the SUM of `DEPA_HORAS_TOTALES` and the SUM of `DEPA_HORAS_NOCTURNAS`, sorted by the first total. `total` counts groups, and `page`/`pageSize` paginate groups.",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 50,
+                    "columns": [
+                      {
+                        "field": "PASU_ID_PASU"
+                      },
+                      {
+                        "field": "id",
+                        "title": "Records",
+                        "aggregation": "COUNT"
+                      },
+                      {
+                        "field": "DEPA_HORAS_TOTALES",
+                        "aggregation": "SUM",
+                        "sortDirection": "DESC",
+                        "sortOrder": 1
+                      },
+                      {
+                        "field": "DEPA_HORAS_NOCTURNAS",
+                        "aggregation": "SUM"
+                      }
+                    ]
                   }
-                ]
+                }
               }
             }
           },
@@ -91015,7 +91409,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -94117,7 +94511,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -94425,25 +94819,30 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
-                  }
-                ]
+                }
               }
             }
           },
@@ -94466,7 +94865,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -97120,7 +97519,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -97474,25 +97873,58 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
+                },
+                "grouped": {
+                  "summary": "Grouped: one row per PASU_ID_PASU",
+                  "description": "`PASU_ID_PASU` has no aggregation, so it is the GROUP BY: each row of `data` is one PASU_ID_PASU with its record count (COUNT of `id`, a DISTINCT count) and the SUM of `NPLD_HS_EXTRAS_100` and the SUM of `NPLD_HS_EXTRAS_50`, sorted by the first total. `total` counts groups, and `page`/`pageSize` paginate groups.",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 50,
+                    "columns": [
+                      {
+                        "field": "PASU_ID_PASU"
+                      },
+                      {
+                        "field": "id",
+                        "title": "Records",
+                        "aggregation": "COUNT"
+                      },
+                      {
+                        "field": "NPLD_HS_EXTRAS_100",
+                        "aggregation": "SUM",
+                        "sortDirection": "DESC",
+                        "sortOrder": 1
+                      },
+                      {
+                        "field": "NPLD_HS_EXTRAS_50",
+                        "aggregation": "SUM"
+                      }
+                    ]
                   }
-                ]
+                }
               }
             }
           },
@@ -97515,7 +97947,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -99108,7 +99540,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
@@ -99394,25 +99826,54 @@
                   }
                 }
               },
-              "example": {
-                "page": 1,
-                "pageSize": 10,
-                "search": "",
-                "columns": [
-                  {
-                    "field": "COLUMN_NAME",
-                    "title": "Column Title",
-                    "sortDirection": "ASC",
-                    "sortOrder": 1
+              "examples": {
+                "basic": {
+                  "summary": "Plain listing with a filter",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "search": "",
+                    "columns": [
+                      {
+                        "field": "COLUMN_NAME",
+                        "title": "Column Title",
+                        "sortDirection": "ASC",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "filters": [
+                      {
+                        "columnName": "COLUMN_NAME",
+                        "operator": "=",
+                        "value": "value"
+                      }
+                    ]
                   }
-                ],
-                "filters": [
-                  {
-                    "columnName": "COLUMN_NAME",
-                    "operator": "=",
-                    "value": "value"
+                },
+                "grouped": {
+                  "summary": "Grouped: one row per EMPL_ID_EMPL",
+                  "description": "`EMPL_ID_EMPL` has no aggregation, so it is the GROUP BY: each row of `data` is one EMPL_ID_EMPL with its record count (COUNT of `id`, a DISTINCT count) and the SUM of `SODA_IMPORTE_SOLICITADO`, sorted by the first total. `total` counts groups, and `page`/`pageSize` paginate groups.",
+                  "value": {
+                    "page": 1,
+                    "pageSize": 50,
+                    "columns": [
+                      {
+                        "field": "EMPL_ID_EMPL"
+                      },
+                      {
+                        "field": "id",
+                        "title": "Records",
+                        "aggregation": "COUNT"
+                      },
+                      {
+                        "field": "SODA_IMPORTE_SOLICITADO",
+                        "aggregation": "SUM",
+                        "sortDirection": "DESC",
+                        "sortOrder": 1
+                      }
+                    ]
                   }
-                ]
+                }
               }
             }
           },
@@ -99435,7 +99896,7 @@
                     },
                     "total": {
                       "type": "integer",
-                      "description": "Total number of records matching the query (ignoring pagination)"
+                      "description": "Total number of rows matching the query, ignoring pagination. When the query aggregates (some column has an `aggregation`), each row is a group, so this counts groups, not the underlying records - and it is 1 when every column is aggregated."
                     },
                     "columns": {
                       "type": "array",
