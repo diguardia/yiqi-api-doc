@@ -1,7 +1,58 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-24",
+  "updatedAt": "2026-09-28",
   "entries": [
+    {
+      "id": "2026-09-28-numeros-formato-invariante",
+      "date": "2026-09-28",
+      "type": "corrección",
+      "breaking": false,
+      "title": "Alta y modificación: números solo en formato invariante, 400 si no",
+      "summary": "La API acepta los números solo con punto como separador decimal y sin separador de miles. Un número con otro formato ahora responde 400 con el campo en errors, en vez de un error 500.",
+      "details": [
+        "Vale para todos los atributos numéricos (entero, decimal, moneda y porcentaje), en la cabecera y en los renglones hijos. Se acepta un número JSON o un string con el mismo formato; un string vacío equivale a null.",
+        "357723.64 es válido; 357.723,64 y 357,723.64 no. La API no adivina la configuración regional: 1.234 se lee siempre como uno coma dos tres cuatro.",
+        "Antes, un número con formato regional terminaba en un error 500 sin indicar el campo. Ahora la respuesta es 400 (ValidationProblemDetails) y errors nombra el campo, con la ruta completa si está en un renglón hijo.",
+        "Si tu integración ya manda números JSON o strings con punto decimal y sin separador de miles, no necesita cambios."
+      ],
+      "scope": {
+        "endpoints": ["POST /ENTIDAD", "PUT /ENTIDAD/{id}"],
+        "modules": [
+          "Calidad",
+          "Clientes y proveedores",
+          "Comercial / CRM",
+          "Compras",
+          "Contabilidad",
+          "Editorial",
+          "Finanzas",
+          "Gestión",
+          "Mensajería",
+          "Parámetros",
+          "POS",
+          "Producción",
+          "RRHH",
+          "Stock",
+          "Ventas",
+          "YiQi Services"
+        ]
+      },
+      "example": {
+        "request": {
+          "data": {
+            "DetalleFacturaCompra": [
+              { "DEFC_PRECIO_UNITARIO": "357.723,64" }
+            ]
+          }
+        },
+        "response": {
+          "status": 400,
+          "title": "El pedido incluye un valor numérico inválido.",
+          "errors": {
+            "DetalleFacturaCompra[0].DEFC_PRECIO_UNITARIO": ["Se espera un número con punto decimal, p. ej. 357723.64"]
+          }
+        }
+      }
+    },
     {
       "id": "2026-09-24-query-paginacion-y-agregaciones",
       "date": "2026-09-24",

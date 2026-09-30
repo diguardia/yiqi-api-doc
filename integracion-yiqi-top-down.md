@@ -81,6 +81,8 @@ Este flujo ya está alineado con la guía `ai-integration-playbook.md`.
 
 - **Riesgo:** Ambigüedad en convenciones transversales (paginación, filtros, formato de fecha).
   - **Mitigación:** Definir un contrato interno en el integrador y mapear por endpoint.
+- **Riesgo:** Enviar números con formato regional (`357.723,64`).
+  - **Mitigación:** La API acepta los números solo en formato invariante: punto como separador decimal y sin separador de miles (`357723.64`). Si no, responde `400` con el campo en `errors`. Serializar siempre los números sin depender de la configuración regional de la máquina.
 - **Riesgo:** Errores de autenticación por diferencias entre specs.
   - **Mitigación:** Encapsular auth en un cliente único y pruebas de humo tempranas.
 - **Riesgo:** Integración “por módulo” sin visión de proceso.

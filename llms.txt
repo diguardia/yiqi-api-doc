@@ -49,6 +49,7 @@ Reglas operativas para agentes (fuente rapida):
 - Rate limit de /token: 5 requests/minuto por IP
 - Rate limit de escrituras pesadas (ej. PutFile): 60 requests cada 5 minutos por usuario
 - Concurrencia: maximo 8 requests simultaneas en vuelo por usuario bajo /api, sin cola (el excedente devuelve 429 al instante)
+- Formato numerico: la API acepta los numeros SOLO en formato invariante, con punto como separador decimal y sin separador de miles (357723.64, nunca 357.723,64 ni 357,723.64). Mandar un numero JSON o un string con ese mismo formato; si no, responde 400 con el campo en errors
 - Header Retry-After (segundos): presente en el 429 de los limites por ventana (general, /token, escrituras pesadas); ausente en el 429 por limite de concurrencia (no es time-based, ahi conviene backoff exponencial)
 
 Quickstart oficial para bots (prioridad actual):

@@ -17,7 +17,7 @@ Hoy el portal ya tiene los OpenAPI por módulo y un índice (`modules.json`). Pa
 
 3. **Convenciones transversales documentadas en un único lugar**
    - Paginación (`page`, `size`, `limit`, etc.).
-   - Filtros, ordenamiento y formato de fechas.
+   - Filtros, ordenamiento y formato de fechas y números (números: ver sección 2.8).
    - Reglas de idempotencia (por ejemplo, creación de comprobantes).
    - Estructura estándar de errores.
 
@@ -77,6 +77,12 @@ Estas reglas deben considerarse fuente de verdad al construir recetas para bots:
    - Concurrencia: máximo **8 requests simultáneas en vuelo** por usuario bajo `/api`. No hay cola: la request excedente se rechaza al toque con `429`, no queda esperando.
    - Header `Retry-After` (segundos): presente en los `429` de las tres cuotas por ventana (general, `/token`, escrituras pesadas). **No** está presente en el `429` por límite de concurrencia, porque ese límite no es por ventana de tiempo sino por requests activas ahora mismo — ahí conviene reintentar con backoff exponencial en vez de esperar un valor fijo.
    - Recomendación de diseño: mantener el paralelismo de un mismo cliente por debajo de 8 requests simultáneas hacia `/api`, y ante un `429` leer `Retry-After` cuando esté presente en vez de adivinar el tiempo de espera.
+
+8. **Formato numérico**
+   - La API acepta los números **solo en formato invariante**: punto como separador decimal y sin separador de miles. `357723.64` sí; `357.723,64` y `357,723.64` no.
+   - Vale para todos los atributos numéricos (entero, decimal, moneda y porcentaje), en la cabecera y en los renglones hijos. Se puede mandar un número JSON o un string con ese mismo formato (`"357723.64"`); un string vacío equivale a `null`.
+   - Si el valor no respeta el formato, la API responde `400` y nombra el campo en `errors`, con la ruta completa si está en un renglón hijo (por ejemplo `DetalleFacturaCompra[0].DEFC_PRECIO_UNITARIO`).
+   - La API no adivina la configuración regional: formatear los números antes de enviarlos, sin importar el idioma de la máquina que los genera.
 
 ## 3) Prompt recomendado para pasarle a la IA
 

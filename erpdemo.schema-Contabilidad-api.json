@@ -2,6 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "erpdemo.schema Contabilidad",
+    "description": "**Number format.** Numeric attributes (integer, decimal, currency and percentage) are accepted only in invariant format: a dot as the decimal separator and no thousands separator - `357723.64`, never `357.723,64` nor `357,723.64`. Send a JSON number, or a string in that same format (`\"357723.64\"`); an empty string counts as null. Anything else is rejected with 400 (ValidationProblemDetails) naming the offending field in `errors`, with its full path when it is inside a child collection (`DetalleFacturaCompra[0].DEFC_PRECIO_UNITARIO`). The API does not guess the caller's culture, so format numbers before sending them.",
     "version": "1.0"
   },
   "servers": [
@@ -217,7 +218,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -772,7 +773,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -2814,7 +2815,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -3420,7 +3421,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -5467,7 +5468,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -5985,7 +5986,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -7660,7 +7661,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -8195,7 +8196,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -10363,7 +10364,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -11297,7 +11298,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -13391,7 +13392,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -14004,7 +14005,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -16047,7 +16048,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -16429,7 +16430,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -18387,7 +18388,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -18889,7 +18890,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -20633,7 +20634,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -21105,7 +21106,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -23132,7 +23133,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -23509,7 +23510,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -25372,7 +25373,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -25759,7 +25760,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -27655,7 +27656,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -28032,7 +28033,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -30123,7 +30124,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -30918,7 +30919,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -32911,7 +32912,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -33317,7 +33318,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -35011,7 +35012,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -35782,7 +35783,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -37841,7 +37842,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -38559,7 +38560,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -40433,7 +40434,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -40814,7 +40815,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -42710,7 +42711,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -43112,7 +43113,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -45059,7 +45060,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -45467,7 +45468,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -47451,7 +47452,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -48001,7 +48002,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -50124,7 +50125,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -50578,7 +50579,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -52639,7 +52640,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -53155,7 +53156,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -54846,7 +54847,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -55287,7 +55288,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -56897,7 +56898,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -57295,7 +57296,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -58856,7 +58857,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -59284,7 +59285,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -60936,7 +60937,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -61470,7 +61471,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -63499,7 +63500,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -63982,7 +63983,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -65600,7 +65601,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -66173,7 +66174,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -68349,7 +68350,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
@@ -68823,7 +68824,7 @@
                       "nullable": true
                     }
                   },
-                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, `errors` names which one - do not parse `title` for it, it is deliberately generic."
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`).\n\nWhen the payload includes a field the caller is not allowed to write, or a number that is not in invariant format (see the general notes), `errors` names which one - do not parse `title` for it, it is deliberately generic."
                 }
               }
             }
