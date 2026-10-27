@@ -2,7 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "erpdemo.schema Mensajería",
-    "description": "**Number format.** Numeric attributes (integer, decimal, currency and percentage) are accepted only in invariant format: a dot as the decimal separator and no thousands separator - `357723.64`, never `357.723,64` nor `357,723.64`. Send a JSON number, or a string in that same format (`\"357723.64\"`); an empty string counts as null. Anything else is rejected with 400 (ValidationProblemDetails) naming the offending field in `errors`, with its full path when it is inside a child collection (`DetalleFacturaCompra[0].DEFC_PRECIO_UNITARIO`). The API does not guess the caller's culture, so format numbers before sending them.",
+    "description": "**Number format.** Numeric attributes (integer, decimal, currency and percentage) are accepted only in invariant format: a dot as the decimal separator and no thousands separator - `357723.64`, never `357.723,64` nor `357,723.64`. Send a JSON number, or a string in that same format (`\"357723.64\"`); an empty string counts as null. Anything else is rejected with 400 (ValidationProblemDetails) naming the offending field in `errors`, with its full path when it is inside a child collection (`DetalleFacturaCompra[0].DEFC_PRECIO_UNITARIO`). The API does not guess the caller's culture, so format numbers before sending them.\n\n**Foreign key ids.** To get the ids a foreign key attribute accepts, use the lookup endpoints of the entity being written, not the referenced entity: `GET /{entity}/rootdropdowns`, `GET /{entity}/fields/{field}/search` and, for fields that depend on another one, `GET /{entity}/fields/{field}/dropdown`. They only require permission to view `{entity}`: a user who can create an invoice gets the valid points of sale even if the point of sale entity itself is restricted to administrators. They return `{ value, title }` pairs; reading other attributes of the referenced entity does require permission on it.",
     "version": "1.0"
   },
   "servers": [
@@ -1211,10 +1211,15 @@
                             "COUNT",
                             "AVG",
                             "MIN",
-                            "MAX"
+                            "MAX",
+                            "DAY",
+                            "WEEK",
+                            "MONTH",
+                            "YEAR",
+                            "HOUR"
                           ],
                           "type": "string",
-                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). Any value outside this list is rejected with 400.",
+                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). `DAY`, `WEEK`, `MONTH`, `YEAR` and `HOUR` are not aggregations but date groupings: they transform a date column (`DAY` → the date without time, `MONTH` → \"yyyy-MM\", `WEEK` → week number, `YEAR`, `HOUR` → 0-23) and group by the result - e.g. a DAY column plus a COUNT column gives records per day. Any value outside this list is rejected with 400.",
                           "nullable": true
                         }
                       }
@@ -1227,8 +1232,7 @@
                     "items": {
                       "required": [
                         "columnName",
-                        "operator",
-                        "value"
+                        "operator"
                       ],
                       "type": "object",
                       "properties": {
@@ -1257,18 +1261,31 @@
                             "<",
                             ">=",
                             "<=",
-                            "LIKE"
+                            "LIKE",
+                            "NOT LIKE",
+                            "IN",
+                            "NOT IN",
+                            "IS_EMPTY",
+                            "IS_NOT_EMPTY",
+                            "TODAY",
+                            "YESTERDAY",
+                            "BEFORE_TODAY",
+                            "ON_OR_BEFORE_TODAY",
+                            "AFTER_TODAY",
+                            "ON_OR_AFTER_TODAY",
+                            "CURRENT_MONTH",
+                            "PREVIOUS_MONTH"
                           ],
                           "type": "string",
-                          "description": "Comparison operator"
+                          "description": "Comparison operator. `IN` / `NOT IN` take an array `value` (at most 200 items, no nulls). `IS_EMPTY` / `IS_NOT_EMPTY` and the date operators (`TODAY`, `YESTERDAY`, `BEFORE_TODAY`, `ON_OR_BEFORE_TODAY`, `AFTER_TODAY`, `ON_OR_AFTER_TODAY`, `CURRENT_MONTH`, `PREVIOUS_MONTH`) ignore `value`; the date operators cover whole days (time of day included) and only accept date columns (400 otherwise). Named operators are case-insensitive."
                         },
                         "value": {
-                          "description": "Value to compare. Type should match column data type",
+                          "description": "Value to compare. Type should match column data type. An array for `IN` / `NOT IN`; ignored by `IS_EMPTY`, `IS_NOT_EMPTY` and the date operators.",
                           "nullable": true
                         }
                       }
                     },
-                    "description": "Filter specifications. All filters are combined with AND; there is no OR between filters (for a set of values, issue one query per value or use `search`). Filters apply to the individual records, before any aggregation.",
+                    "description": "Filter specifications. Filters are combined with AND; for a set of values of one column use the `IN` operator (OR between the values). Filters apply to the individual records, before any aggregation.",
                     "nullable": true
                   }
                 }
@@ -1914,7 +1931,7 @@
                       "PEDI_ID_PEDI": {
                         "title": "Pedido",
                         "type": "integer",
-                        "description": " This is a foreign key to Pedido. An id of Pedido is expected"
+                        "description": " This is a foreign key to Pedido. An id of Pedido is expected\n Valid ids: `GET /MENSAJE_DE_PEDIDO/fields/PEDI_ID_PEDI/search?term=...`. Only requires permission to view Mensaje de Pedido, not on the referenced entity."
                       },
                       "MEDP_PROCEDENCIA": {
                         "title": "Procedencia",
@@ -2420,7 +2437,7 @@
                       "PEDI_ID_PEDI": {
                         "title": "Pedido",
                         "type": "integer",
-                        "description": " This is a foreign key to Pedido. An id of Pedido is expected"
+                        "description": " This is a foreign key to Pedido. An id of Pedido is expected\n Valid ids: `GET /MENSAJE_DE_PEDIDO/fields/PEDI_ID_PEDI/search?term=...`. Only requires permission to view Mensaje de Pedido, not on the referenced entity."
                       },
                       "MEDP_PROCEDENCIA": {
                         "title": "Procedencia",
@@ -3324,10 +3341,15 @@
                             "COUNT",
                             "AVG",
                             "MIN",
-                            "MAX"
+                            "MAX",
+                            "DAY",
+                            "WEEK",
+                            "MONTH",
+                            "YEAR",
+                            "HOUR"
                           ],
                           "type": "string",
-                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). Any value outside this list is rejected with 400.",
+                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). `DAY`, `WEEK`, `MONTH`, `YEAR` and `HOUR` are not aggregations but date groupings: they transform a date column (`DAY` → the date without time, `MONTH` → \"yyyy-MM\", `WEEK` → week number, `YEAR`, `HOUR` → 0-23) and group by the result - e.g. a DAY column plus a COUNT column gives records per day. Any value outside this list is rejected with 400.",
                           "nullable": true
                         }
                       }
@@ -3340,8 +3362,7 @@
                     "items": {
                       "required": [
                         "columnName",
-                        "operator",
-                        "value"
+                        "operator"
                       ],
                       "type": "object",
                       "properties": {
@@ -3376,18 +3397,31 @@
                             "<",
                             ">=",
                             "<=",
-                            "LIKE"
+                            "LIKE",
+                            "NOT LIKE",
+                            "IN",
+                            "NOT IN",
+                            "IS_EMPTY",
+                            "IS_NOT_EMPTY",
+                            "TODAY",
+                            "YESTERDAY",
+                            "BEFORE_TODAY",
+                            "ON_OR_BEFORE_TODAY",
+                            "AFTER_TODAY",
+                            "ON_OR_AFTER_TODAY",
+                            "CURRENT_MONTH",
+                            "PREVIOUS_MONTH"
                           ],
                           "type": "string",
-                          "description": "Comparison operator"
+                          "description": "Comparison operator. `IN` / `NOT IN` take an array `value` (at most 200 items, no nulls). `IS_EMPTY` / `IS_NOT_EMPTY` and the date operators (`TODAY`, `YESTERDAY`, `BEFORE_TODAY`, `ON_OR_BEFORE_TODAY`, `AFTER_TODAY`, `ON_OR_AFTER_TODAY`, `CURRENT_MONTH`, `PREVIOUS_MONTH`) ignore `value`; the date operators cover whole days (time of day included) and only accept date columns (400 otherwise). Named operators are case-insensitive."
                         },
                         "value": {
-                          "description": "Value to compare. Type should match column data type",
+                          "description": "Value to compare. Type should match column data type. An array for `IN` / `NOT IN`; ignored by `IS_EMPTY`, `IS_NOT_EMPTY` and the date operators.",
                           "nullable": true
                         }
                       }
                     },
-                    "description": "Filter specifications. All filters are combined with AND; there is no OR between filters (for a set of values, issue one query per value or use `search`). Filters apply to the individual records, before any aggregation.",
+                    "description": "Filter specifications. Filters are combined with AND; for a set of values of one column use the `IN` operator (OR between the values). Filters apply to the individual records, before any aggregation.",
                     "nullable": true
                   }
                 }
@@ -4393,6 +4427,179 @@
         }
       }
     },
+    "/MENSAJE_DE_PEDIDO/fields/{field}/search": {
+      "get": {
+        "tags": [
+          "Mensaje de Pedido"
+        ],
+        "summary": "Search the valid ids of a foreign key of Mensaje de Pedido.",
+        "description": "Searches the instances a foreign key attribute can reference by their display text and returns `{ value, title }` pairs; `value` is the id to send in that attribute. Works for any foreign key that does not depend on another field, including the ones too large for `rootdropdowns`.\n\n**Permissions:** only requires permission to view Mensaje de Pedido. No permission on the referenced entity is needed, so a user who can create this entity can always get the ids its foreign keys accept, even when the referenced entity (typically a configuration table) is restricted to other profiles. Fields in an attribute group the user cannot see are not returned.",
+        "parameters": [
+          {
+            "name": "field",
+            "in": "path",
+            "description": "Physical name of the foreign key attribute",
+            "required": true,
+            "schema": {
+              "enum": [
+                "PEDI_ID_PEDI"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema Id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "term",
+            "in": "query",
+            "description": "Text to search in the display attribute of the referenced entity. Empty returns the first results.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Maximum number of results (default 20)",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Matching instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string",
+                        "description": "Id to send in the foreign key attribute (as a string)."
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "Display text of the referenced instance."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "FieldNotSearchable: the field is not a foreign key, or it depends on another field (use `fields/{field}/dropdown`)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User does not have permission to view Mensaje de Pedido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FieldNotFound: the field does not exist or the user cannot see it",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/MENSAJE_DE_TIENDA": {
       "post": {
         "tags": [
@@ -4462,7 +4669,7 @@
                       "EXTE_ID_EXTE": {
                         "title": "Origen de pedido",
                         "type": "integer",
-                        "description": " This is a foreign key to Origen de Pedido. An id of Origen de Pedido is expected",
+                        "description": " This is a foreign key to Origen de Pedido. An id of Origen de Pedido is expected\n Valid ids: `GET /MENSAJE_DE_TIENDA/fields/EXTE_ID_EXTE/search?term=...` (or all of them at once in `GET /MENSAJE_DE_TIENDA/rootdropdowns`). Only requires permission to view Mensaje de tienda, not on the referenced entity.",
                         "nullable": true
                       },
                       "MEDT_DATE_CREATED": {
@@ -4965,7 +5172,7 @@
                       "EXTE_ID_EXTE": {
                         "title": "Origen de pedido",
                         "type": "integer",
-                        "description": " This is a foreign key to Origen de Pedido. An id of Origen de Pedido is expected",
+                        "description": " This is a foreign key to Origen de Pedido. An id of Origen de Pedido is expected\n Valid ids: `GET /MENSAJE_DE_TIENDA/fields/EXTE_ID_EXTE/search?term=...` (or all of them at once in `GET /MENSAJE_DE_TIENDA/rootdropdowns`). Only requires permission to view Mensaje de tienda, not on the referenced entity.",
                         "nullable": true
                       },
                       "MEDT_DATE_CREATED": {
@@ -5862,10 +6069,15 @@
                             "COUNT",
                             "AVG",
                             "MIN",
-                            "MAX"
+                            "MAX",
+                            "DAY",
+                            "WEEK",
+                            "MONTH",
+                            "YEAR",
+                            "HOUR"
                           ],
                           "type": "string",
-                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). Any value outside this list is rejected with 400.",
+                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). `DAY`, `WEEK`, `MONTH`, `YEAR` and `HOUR` are not aggregations but date groupings: they transform a date column (`DAY` → the date without time, `MONTH` → \"yyyy-MM\", `WEEK` → week number, `YEAR`, `HOUR` → 0-23) and group by the result - e.g. a DAY column plus a COUNT column gives records per day. Any value outside this list is rejected with 400.",
                           "nullable": true
                         }
                       }
@@ -5878,8 +6090,7 @@
                     "items": {
                       "required": [
                         "columnName",
-                        "operator",
-                        "value"
+                        "operator"
                       ],
                       "type": "object",
                       "properties": {
@@ -5919,18 +6130,31 @@
                             "<",
                             ">=",
                             "<=",
-                            "LIKE"
+                            "LIKE",
+                            "NOT LIKE",
+                            "IN",
+                            "NOT IN",
+                            "IS_EMPTY",
+                            "IS_NOT_EMPTY",
+                            "TODAY",
+                            "YESTERDAY",
+                            "BEFORE_TODAY",
+                            "ON_OR_BEFORE_TODAY",
+                            "AFTER_TODAY",
+                            "ON_OR_AFTER_TODAY",
+                            "CURRENT_MONTH",
+                            "PREVIOUS_MONTH"
                           ],
                           "type": "string",
-                          "description": "Comparison operator"
+                          "description": "Comparison operator. `IN` / `NOT IN` take an array `value` (at most 200 items, no nulls). `IS_EMPTY` / `IS_NOT_EMPTY` and the date operators (`TODAY`, `YESTERDAY`, `BEFORE_TODAY`, `ON_OR_BEFORE_TODAY`, `AFTER_TODAY`, `ON_OR_AFTER_TODAY`, `CURRENT_MONTH`, `PREVIOUS_MONTH`) ignore `value`; the date operators cover whole days (time of day included) and only accept date columns (400 otherwise). Named operators are case-insensitive."
                         },
                         "value": {
-                          "description": "Value to compare. Type should match column data type",
+                          "description": "Value to compare. Type should match column data type. An array for `IN` / `NOT IN`; ignored by `IS_EMPTY`, `IS_NOT_EMPTY` and the date operators.",
                           "nullable": true
                         }
                       }
                     },
-                    "description": "Filter specifications. All filters are combined with AND; there is no OR between filters (for a set of values, issue one query per value or use `search`). Filters apply to the individual records, before any aggregation.",
+                    "description": "Filter specifications. Filters are combined with AND; for a set of values of one column use the `IN` operator (OR between the values). Filters apply to the individual records, before any aggregation.",
                     "nullable": true
                   }
                 }
@@ -6919,6 +7143,303 @@
         }
       }
     },
+    "/MENSAJE_DE_TIENDA/rootdropdowns": {
+      "get": {
+        "tags": [
+          "Mensaje de tienda"
+        ],
+        "summary": "Options of every combo of Mensaje de tienda that does not depend on another field.",
+        "description": "Returns, keyed by physical name, the `{ value, title }` options of: `EXTE_ID_EXTE` (Origen de pedido). `value` is the id to send in that attribute.\n\n**Permissions:** only requires permission to view Mensaje de tienda. No permission on the referenced entity is needed, so a user who can create this entity can always get the ids its foreign keys accept, even when the referenced entity (typically a configuration table) is restricted to other profiles. Fields in an attribute group the user cannot see are not returned.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema Id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Options by field",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "EXTE_ID_EXTE": {
+                      "title": "Origen de pedido",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "string",
+                            "description": "Id to send in the foreign key attribute (as a string)."
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "Display text of the referenced instance."
+                          }
+                        }
+                      }
+                    },
+                    "_searchable": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "boolean"
+                      },
+                      "description": "Only present when some combo has too many options to be listed: `{ field: true }` for each one. Those fields are not in the response; look them up with `fields/{field}/search`."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User does not have permission to view Mensaje de tienda",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/MENSAJE_DE_TIENDA/fields/{field}/search": {
+      "get": {
+        "tags": [
+          "Mensaje de tienda"
+        ],
+        "summary": "Search the valid ids of a foreign key of Mensaje de tienda.",
+        "description": "Searches the instances a foreign key attribute can reference by their display text and returns `{ value, title }` pairs; `value` is the id to send in that attribute. Works for any foreign key that does not depend on another field, including the ones too large for `rootdropdowns`.\n\n**Permissions:** only requires permission to view Mensaje de tienda. No permission on the referenced entity is needed, so a user who can create this entity can always get the ids its foreign keys accept, even when the referenced entity (typically a configuration table) is restricted to other profiles. Fields in an attribute group the user cannot see are not returned.",
+        "parameters": [
+          {
+            "name": "field",
+            "in": "path",
+            "description": "Physical name of the foreign key attribute",
+            "required": true,
+            "schema": {
+              "enum": [
+                "EXTE_ID_EXTE"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema Id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "term",
+            "in": "query",
+            "description": "Text to search in the display attribute of the referenced entity. Empty returns the first results.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Maximum number of results (default 20)",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Matching instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string",
+                        "description": "Id to send in the foreign key attribute (as a string)."
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "Display text of the referenced instance."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "FieldNotSearchable: the field is not a foreign key, or it depends on another field (use `fields/{field}/dropdown`)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User does not have permission to view Mensaje de tienda",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FieldNotFound: the field does not exist or the user cannot see it",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/MSJ_DE_PUBLI": {
       "post": {
         "tags": [
@@ -6946,7 +7467,7 @@
                       "PUBL_ID_PUBL": {
                         "title": "Publicación",
                         "type": "integer",
-                        "description": " This is a foreign key to Publicación. An id of Publicación is expected",
+                        "description": " This is a foreign key to Publicación. An id of Publicación is expected\n Valid ids: `GET /MSJ_DE_PUBLI/fields/PUBL_ID_PUBL/search?term=...`. Only requires permission to view Mensaje de Publicacion, not on the referenced entity.",
                         "nullable": true
                       },
                       "MSDP_REMITENTE": {
@@ -7391,7 +7912,7 @@
                       "PUBL_ID_PUBL": {
                         "title": "Publicación",
                         "type": "integer",
-                        "description": " This is a foreign key to Publicación. An id of Publicación is expected",
+                        "description": " This is a foreign key to Publicación. An id of Publicación is expected\n Valid ids: `GET /MSJ_DE_PUBLI/fields/PUBL_ID_PUBL/search?term=...`. Only requires permission to view Mensaje de Publicacion, not on the referenced entity.",
                         "nullable": true
                       },
                       "MSDP_REMITENTE": {
@@ -8250,10 +8771,15 @@
                             "COUNT",
                             "AVG",
                             "MIN",
-                            "MAX"
+                            "MAX",
+                            "DAY",
+                            "WEEK",
+                            "MONTH",
+                            "YEAR",
+                            "HOUR"
                           ],
                           "type": "string",
-                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). Any value outside this list is rejected with 400.",
+                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). `DAY`, `WEEK`, `MONTH`, `YEAR` and `HOUR` are not aggregations but date groupings: they transform a date column (`DAY` → the date without time, `MONTH` → \"yyyy-MM\", `WEEK` → week number, `YEAR`, `HOUR` → 0-23) and group by the result - e.g. a DAY column plus a COUNT column gives records per day. Any value outside this list is rejected with 400.",
                           "nullable": true
                         }
                       }
@@ -8266,8 +8792,7 @@
                     "items": {
                       "required": [
                         "columnName",
-                        "operator",
-                        "value"
+                        "operator"
                       ],
                       "type": "object",
                       "properties": {
@@ -8303,18 +8828,31 @@
                             "<",
                             ">=",
                             "<=",
-                            "LIKE"
+                            "LIKE",
+                            "NOT LIKE",
+                            "IN",
+                            "NOT IN",
+                            "IS_EMPTY",
+                            "IS_NOT_EMPTY",
+                            "TODAY",
+                            "YESTERDAY",
+                            "BEFORE_TODAY",
+                            "ON_OR_BEFORE_TODAY",
+                            "AFTER_TODAY",
+                            "ON_OR_AFTER_TODAY",
+                            "CURRENT_MONTH",
+                            "PREVIOUS_MONTH"
                           ],
                           "type": "string",
-                          "description": "Comparison operator"
+                          "description": "Comparison operator. `IN` / `NOT IN` take an array `value` (at most 200 items, no nulls). `IS_EMPTY` / `IS_NOT_EMPTY` and the date operators (`TODAY`, `YESTERDAY`, `BEFORE_TODAY`, `ON_OR_BEFORE_TODAY`, `AFTER_TODAY`, `ON_OR_AFTER_TODAY`, `CURRENT_MONTH`, `PREVIOUS_MONTH`) ignore `value`; the date operators cover whole days (time of day included) and only accept date columns (400 otherwise). Named operators are case-insensitive."
                         },
                         "value": {
-                          "description": "Value to compare. Type should match column data type",
+                          "description": "Value to compare. Type should match column data type. An array for `IN` / `NOT IN`; ignored by `IS_EMPTY`, `IS_NOT_EMPTY` and the date operators.",
                           "nullable": true
                         }
                       }
                     },
-                    "description": "Filter specifications. All filters are combined with AND; there is no OR between filters (for a set of values, issue one query per value or use `search`). Filters apply to the individual records, before any aggregation.",
+                    "description": "Filter specifications. Filters are combined with AND; for a set of values of one column use the `IN` operator (OR between the values). Filters apply to the individual records, before any aggregation.",
                     "nullable": true
                   }
                 }
@@ -9286,6 +9824,179 @@
           },
           "403": {
             "description": "El usuario no tiene permisos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/MSJ_DE_PUBLI/fields/{field}/search": {
+      "get": {
+        "tags": [
+          "Mensaje de Publicacion"
+        ],
+        "summary": "Search the valid ids of a foreign key of Mensaje de Publicacion.",
+        "description": "Searches the instances a foreign key attribute can reference by their display text and returns `{ value, title }` pairs; `value` is the id to send in that attribute. Works for any foreign key that does not depend on another field, including the ones too large for `rootdropdowns`.\n\n**Permissions:** only requires permission to view Mensaje de Publicacion. No permission on the referenced entity is needed, so a user who can create this entity can always get the ids its foreign keys accept, even when the referenced entity (typically a configuration table) is restricted to other profiles. Fields in an attribute group the user cannot see are not returned.",
+        "parameters": [
+          {
+            "name": "field",
+            "in": "path",
+            "description": "Physical name of the foreign key attribute",
+            "required": true,
+            "schema": {
+              "enum": [
+                "PUBL_ID_PUBL"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema Id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "term",
+            "in": "query",
+            "description": "Text to search in the display attribute of the referenced entity. Empty returns the first results.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Maximum number of results (default 20)",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Matching instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string",
+                        "description": "Id to send in the foreign key attribute (as a string)."
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "Display text of the referenced instance."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "FieldNotSearchable: the field is not a foreign key, or it depends on another field (use `fields/{field}/dropdown`)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User does not have permission to view Mensaje de Publicacion",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FieldNotFound: the field does not exist or the user cannot see it",
             "content": {
               "application/json": {
                 "schema": {

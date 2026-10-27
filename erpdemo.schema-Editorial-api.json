@@ -2,7 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "erpdemo.schema Editorial",
-    "description": "**Number format.** Numeric attributes (integer, decimal, currency and percentage) are accepted only in invariant format: a dot as the decimal separator and no thousands separator - `357723.64`, never `357.723,64` nor `357,723.64`. Send a JSON number, or a string in that same format (`\"357723.64\"`); an empty string counts as null. Anything else is rejected with 400 (ValidationProblemDetails) naming the offending field in `errors`, with its full path when it is inside a child collection (`DetalleFacturaCompra[0].DEFC_PRECIO_UNITARIO`). The API does not guess the caller's culture, so format numbers before sending them.",
+    "description": "**Number format.** Numeric attributes (integer, decimal, currency and percentage) are accepted only in invariant format: a dot as the decimal separator and no thousands separator - `357723.64`, never `357.723,64` nor `357,723.64`. Send a JSON number, or a string in that same format (`\"357723.64\"`); an empty string counts as null. Anything else is rejected with 400 (ValidationProblemDetails) naming the offending field in `errors`, with its full path when it is inside a child collection (`DetalleFacturaCompra[0].DEFC_PRECIO_UNITARIO`). The API does not guess the caller's culture, so format numbers before sending them.\n\n**Foreign key ids.** To get the ids a foreign key attribute accepts, use the lookup endpoints of the entity being written, not the referenced entity: `GET /{entity}/rootdropdowns`, `GET /{entity}/fields/{field}/search` and, for fields that depend on another one, `GET /{entity}/fields/{field}/dropdown`. They only require permission to view `{entity}`: a user who can create an invoice gets the valid points of sale even if the point of sale entity itself is restricted to administrators. They return `{ value, title }` pairs; reading other attributes of the referenced entity does require permission on it.",
     "version": "1.0"
   },
   "servers": [
@@ -48,13 +48,13 @@
                       "MATE_ID_MATE": {
                         "title": "Artículo",
                         "type": "integer",
-                        "description": " This is a foreign key to Artículo. An id of Artículo is expected",
+                        "description": " This is a foreign key to Artículo. An id of Artículo is expected\n Valid ids: `GET /COMISION_POR_ARTICUL/fields/MATE_ID_MATE/search?term=...`. Only requires permission to view Comisión por artículo, not on the referenced entity.",
                         "nullable": true
                       },
                       "CLIE_ID_CLIE": {
                         "title": "Autor",
                         "type": "integer",
-                        "description": " This is a foreign key to Empresa. An id of Empresa is expected",
+                        "description": " This is a foreign key to Empresa. An id of Empresa is expected\n Valid ids: `GET /COMISION_POR_ARTICUL/fields/CLIE_ID_CLIE/search?term=...`. Only requires permission to view Comisión por artículo, not on the referenced entity.",
                         "nullable": true
                       },
                       "COPA_PORC_NACIONAL": {
@@ -510,13 +510,13 @@
                       "MATE_ID_MATE": {
                         "title": "Artículo",
                         "type": "integer",
-                        "description": " This is a foreign key to Artículo. An id of Artículo is expected",
+                        "description": " This is a foreign key to Artículo. An id of Artículo is expected\n Valid ids: `GET /COMISION_POR_ARTICUL/fields/MATE_ID_MATE/search?term=...`. Only requires permission to view Comisión por artículo, not on the referenced entity.",
                         "nullable": true
                       },
                       "CLIE_ID_CLIE": {
                         "title": "Autor",
                         "type": "integer",
-                        "description": " This is a foreign key to Empresa. An id of Empresa is expected",
+                        "description": " This is a foreign key to Empresa. An id of Empresa is expected\n Valid ids: `GET /COMISION_POR_ARTICUL/fields/CLIE_ID_CLIE/search?term=...`. Only requires permission to view Comisión por artículo, not on the referenced entity.",
                         "nullable": true
                       },
                       "COPA_PORC_NACIONAL": {
@@ -1376,10 +1376,15 @@
                             "COUNT",
                             "AVG",
                             "MIN",
-                            "MAX"
+                            "MAX",
+                            "DAY",
+                            "WEEK",
+                            "MONTH",
+                            "YEAR",
+                            "HOUR"
                           ],
                           "type": "string",
-                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). Any value outside this list is rejected with 400.",
+                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). `DAY`, `WEEK`, `MONTH`, `YEAR` and `HOUR` are not aggregations but date groupings: they transform a date column (`DAY` → the date without time, `MONTH` → \"yyyy-MM\", `WEEK` → week number, `YEAR`, `HOUR` → 0-23) and group by the result - e.g. a DAY column plus a COUNT column gives records per day. Any value outside this list is rejected with 400.",
                           "nullable": true
                         }
                       }
@@ -1392,8 +1397,7 @@
                     "items": {
                       "required": [
                         "columnName",
-                        "operator",
-                        "value"
+                        "operator"
                       ],
                       "type": "object",
                       "properties": {
@@ -1429,18 +1433,31 @@
                             "<",
                             ">=",
                             "<=",
-                            "LIKE"
+                            "LIKE",
+                            "NOT LIKE",
+                            "IN",
+                            "NOT IN",
+                            "IS_EMPTY",
+                            "IS_NOT_EMPTY",
+                            "TODAY",
+                            "YESTERDAY",
+                            "BEFORE_TODAY",
+                            "ON_OR_BEFORE_TODAY",
+                            "AFTER_TODAY",
+                            "ON_OR_AFTER_TODAY",
+                            "CURRENT_MONTH",
+                            "PREVIOUS_MONTH"
                           ],
                           "type": "string",
-                          "description": "Comparison operator"
+                          "description": "Comparison operator. `IN` / `NOT IN` take an array `value` (at most 200 items, no nulls). `IS_EMPTY` / `IS_NOT_EMPTY` and the date operators (`TODAY`, `YESTERDAY`, `BEFORE_TODAY`, `ON_OR_BEFORE_TODAY`, `AFTER_TODAY`, `ON_OR_AFTER_TODAY`, `CURRENT_MONTH`, `PREVIOUS_MONTH`) ignore `value`; the date operators cover whole days (time of day included) and only accept date columns (400 otherwise). Named operators are case-insensitive."
                         },
                         "value": {
-                          "description": "Value to compare. Type should match column data type",
+                          "description": "Value to compare. Type should match column data type. An array for `IN` / `NOT IN`; ignored by `IS_EMPTY`, `IS_NOT_EMPTY` and the date operators.",
                           "nullable": true
                         }
                       }
                     },
-                    "description": "Filter specifications. All filters are combined with AND; there is no OR between filters (for a set of values, issue one query per value or use `search`). Filters apply to the individual records, before any aggregation.",
+                    "description": "Filter specifications. Filters are combined with AND; for a set of values of one column use the `IN` operator (OR between the values). Filters apply to the individual records, before any aggregation.",
                     "nullable": true
                   }
                 }
@@ -2076,6 +2093,180 @@
         }
       }
     },
+    "/COMISION_POR_ARTICUL/fields/{field}/search": {
+      "get": {
+        "tags": [
+          "Comisión por artículo"
+        ],
+        "summary": "Search the valid ids of a foreign key of Comisión por artículo.",
+        "description": "Searches the instances a foreign key attribute can reference by their display text and returns `{ value, title }` pairs; `value` is the id to send in that attribute. Works for any foreign key that does not depend on another field, including the ones too large for `rootdropdowns`.\n\n**Permissions:** only requires permission to view Comisión por artículo. No permission on the referenced entity is needed, so a user who can create this entity can always get the ids its foreign keys accept, even when the referenced entity (typically a configuration table) is restricted to other profiles. Fields in an attribute group the user cannot see are not returned.",
+        "parameters": [
+          {
+            "name": "field",
+            "in": "path",
+            "description": "Physical name of the foreign key attribute",
+            "required": true,
+            "schema": {
+              "enum": [
+                "MATE_ID_MATE",
+                "CLIE_ID_CLIE"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema Id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "term",
+            "in": "query",
+            "description": "Text to search in the display attribute of the referenced entity. Empty returns the first results.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Maximum number of results (default 20)",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Matching instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string",
+                        "description": "Id to send in the foreign key attribute (as a string)."
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "Display text of the referenced instance."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "FieldNotSearchable: the field is not a foreign key, or it depends on another field (use `fields/{field}/dropdown`)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User does not have permission to view Comisión por artículo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FieldNotFound: the field does not exist or the user cannot see it",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/COMISION_POR_AUTOR": {
       "post": {
         "tags": [
@@ -2103,19 +2294,19 @@
                       "LDDA_ID_LDDA": {
                         "title": "Liquidación",
                         "type": "integer",
-                        "description": " This is a foreign key to Liq. Derechos de Autor. An id of Liq. Derechos de Autor is expected",
+                        "description": " This is a foreign key to Liq. Derechos de Autor. An id of Liq. Derechos de Autor is expected\n Valid ids: `GET /COMISION_POR_AUTOR/fields/LDDA_ID_LDDA/search?term=...` (or all of them at once in `GET /COMISION_POR_AUTOR/rootdropdowns`). Only requires permission to view Registro comisión por autor., not on the referenced entity.",
                         "nullable": true
                       },
                       "CLIE_ID_CLIE": {
                         "title": "Autor",
                         "type": "integer",
-                        "description": " This is a foreign key to Empresa. An id of Empresa is expected",
+                        "description": " This is a foreign key to Empresa. An id of Empresa is expected\n Valid ids: `GET /COMISION_POR_AUTOR/fields/CLIE_ID_CLIE/search?term=...`. Only requires permission to view Registro comisión por autor., not on the referenced entity.",
                         "nullable": true
                       },
                       "MATE_ID_MATE": {
                         "title": "Libro",
                         "type": "integer",
-                        "description": " This is a foreign key to Artículo. An id of Artículo is expected",
+                        "description": " This is a foreign key to Artículo. An id of Artículo is expected\n Valid ids: `GET /COMISION_POR_AUTOR/fields/MATE_ID_MATE/search?term=...`. Only requires permission to view Registro comisión por autor., not on the referenced entity.",
                         "nullable": true
                       },
                       "COPA_DOCUMENTO": {
@@ -2153,13 +2344,13 @@
                       "FACT_ID_FACT": {
                         "title": "Factura",
                         "type": "integer",
-                        "description": " This is a foreign key to Factura. An id of Factura is expected",
+                        "description": " This is a foreign key to Factura. An id of Factura is expected\n Valid ids: `GET /COMISION_POR_AUTOR/fields/FACT_ID_FACT/search?term=...`. Only requires permission to view Registro comisión por autor., not on the referenced entity.",
                         "nullable": true
                       },
                       "NOCR_ID_NOCR": {
                         "title": "Nota",
                         "type": "integer",
-                        "description": " This is a foreign key to Nota de Crédito (V). An id of Nota de Crédito (V) is expected",
+                        "description": " This is a foreign key to Nota de Crédito (V). An id of Nota de Crédito (V) is expected\n Valid ids: `GET /COMISION_POR_AUTOR/fields/NOCR_ID_NOCR/search?term=...`. Only requires permission to view Registro comisión por autor., not on the referenced entity.",
                         "nullable": true
                       },
                       "COPA_NACIONAL": {
@@ -2617,19 +2808,19 @@
                       "LDDA_ID_LDDA": {
                         "title": "Liquidación",
                         "type": "integer",
-                        "description": " This is a foreign key to Liq. Derechos de Autor. An id of Liq. Derechos de Autor is expected",
+                        "description": " This is a foreign key to Liq. Derechos de Autor. An id of Liq. Derechos de Autor is expected\n Valid ids: `GET /COMISION_POR_AUTOR/fields/LDDA_ID_LDDA/search?term=...` (or all of them at once in `GET /COMISION_POR_AUTOR/rootdropdowns`). Only requires permission to view Registro comisión por autor., not on the referenced entity.",
                         "nullable": true
                       },
                       "CLIE_ID_CLIE": {
                         "title": "Autor",
                         "type": "integer",
-                        "description": " This is a foreign key to Empresa. An id of Empresa is expected",
+                        "description": " This is a foreign key to Empresa. An id of Empresa is expected\n Valid ids: `GET /COMISION_POR_AUTOR/fields/CLIE_ID_CLIE/search?term=...`. Only requires permission to view Registro comisión por autor., not on the referenced entity.",
                         "nullable": true
                       },
                       "MATE_ID_MATE": {
                         "title": "Libro",
                         "type": "integer",
-                        "description": " This is a foreign key to Artículo. An id of Artículo is expected",
+                        "description": " This is a foreign key to Artículo. An id of Artículo is expected\n Valid ids: `GET /COMISION_POR_AUTOR/fields/MATE_ID_MATE/search?term=...`. Only requires permission to view Registro comisión por autor., not on the referenced entity.",
                         "nullable": true
                       },
                       "COPA_DOCUMENTO": {
@@ -2667,13 +2858,13 @@
                       "FACT_ID_FACT": {
                         "title": "Factura",
                         "type": "integer",
-                        "description": " This is a foreign key to Factura. An id of Factura is expected",
+                        "description": " This is a foreign key to Factura. An id of Factura is expected\n Valid ids: `GET /COMISION_POR_AUTOR/fields/FACT_ID_FACT/search?term=...`. Only requires permission to view Registro comisión por autor., not on the referenced entity.",
                         "nullable": true
                       },
                       "NOCR_ID_NOCR": {
                         "title": "Nota",
                         "type": "integer",
-                        "description": " This is a foreign key to Nota de Crédito (V). An id of Nota de Crédito (V) is expected",
+                        "description": " This is a foreign key to Nota de Crédito (V). An id of Nota de Crédito (V) is expected\n Valid ids: `GET /COMISION_POR_AUTOR/fields/NOCR_ID_NOCR/search?term=...`. Only requires permission to view Registro comisión por autor., not on the referenced entity.",
                         "nullable": true
                       },
                       "COPA_NACIONAL": {
@@ -3550,10 +3741,15 @@
                             "COUNT",
                             "AVG",
                             "MIN",
-                            "MAX"
+                            "MAX",
+                            "DAY",
+                            "WEEK",
+                            "MONTH",
+                            "YEAR",
+                            "HOUR"
                           ],
                           "type": "string",
-                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). Any value outside this list is rejected with 400.",
+                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). `DAY`, `WEEK`, `MONTH`, `YEAR` and `HOUR` are not aggregations but date groupings: they transform a date column (`DAY` → the date without time, `MONTH` → \"yyyy-MM\", `WEEK` → week number, `YEAR`, `HOUR` → 0-23) and group by the result - e.g. a DAY column plus a COUNT column gives records per day. Any value outside this list is rejected with 400.",
                           "nullable": true
                         }
                       }
@@ -3566,8 +3762,7 @@
                     "items": {
                       "required": [
                         "columnName",
-                        "operator",
-                        "value"
+                        "operator"
                       ],
                       "type": "object",
                       "properties": {
@@ -3608,18 +3803,31 @@
                             "<",
                             ">=",
                             "<=",
-                            "LIKE"
+                            "LIKE",
+                            "NOT LIKE",
+                            "IN",
+                            "NOT IN",
+                            "IS_EMPTY",
+                            "IS_NOT_EMPTY",
+                            "TODAY",
+                            "YESTERDAY",
+                            "BEFORE_TODAY",
+                            "ON_OR_BEFORE_TODAY",
+                            "AFTER_TODAY",
+                            "ON_OR_AFTER_TODAY",
+                            "CURRENT_MONTH",
+                            "PREVIOUS_MONTH"
                           ],
                           "type": "string",
-                          "description": "Comparison operator"
+                          "description": "Comparison operator. `IN` / `NOT IN` take an array `value` (at most 200 items, no nulls). `IS_EMPTY` / `IS_NOT_EMPTY` and the date operators (`TODAY`, `YESTERDAY`, `BEFORE_TODAY`, `ON_OR_BEFORE_TODAY`, `AFTER_TODAY`, `ON_OR_AFTER_TODAY`, `CURRENT_MONTH`, `PREVIOUS_MONTH`) ignore `value`; the date operators cover whole days (time of day included) and only accept date columns (400 otherwise). Named operators are case-insensitive."
                         },
                         "value": {
-                          "description": "Value to compare. Type should match column data type",
+                          "description": "Value to compare. Type should match column data type. An array for `IN` / `NOT IN`; ignored by `IS_EMPTY`, `IS_NOT_EMPTY` and the date operators.",
                           "nullable": true
                         }
                       }
                     },
-                    "description": "Filter specifications. All filters are combined with AND; there is no OR between filters (for a set of values, issue one query per value or use `search`). Filters apply to the individual records, before any aggregation.",
+                    "description": "Filter specifications. Filters are combined with AND; for a set of values of one column use the `IN` operator (OR between the values). Filters apply to the individual records, before any aggregation.",
                     "nullable": true
                   }
                 }
@@ -4255,6 +4463,307 @@
         }
       }
     },
+    "/COMISION_POR_AUTOR/rootdropdowns": {
+      "get": {
+        "tags": [
+          "Registro comisión por autor."
+        ],
+        "summary": "Options of every combo of Registro comisión por autor. that does not depend on another field.",
+        "description": "Returns, keyed by physical name, the `{ value, title }` options of: `LDDA_ID_LDDA` (Liquidación). `value` is the id to send in that attribute.\n\n**Permissions:** only requires permission to view Registro comisión por autor.. No permission on the referenced entity is needed, so a user who can create this entity can always get the ids its foreign keys accept, even when the referenced entity (typically a configuration table) is restricted to other profiles. Fields in an attribute group the user cannot see are not returned.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema Id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Options by field",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "LDDA_ID_LDDA": {
+                      "title": "Liquidación",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "string",
+                            "description": "Id to send in the foreign key attribute (as a string)."
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "Display text of the referenced instance."
+                          }
+                        }
+                      }
+                    },
+                    "_searchable": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "boolean"
+                      },
+                      "description": "Only present when some combo has too many options to be listed: `{ field: true }` for each one. Those fields are not in the response; look them up with `fields/{field}/search`."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User does not have permission to view Registro comisión por autor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/COMISION_POR_AUTOR/fields/{field}/search": {
+      "get": {
+        "tags": [
+          "Registro comisión por autor."
+        ],
+        "summary": "Search the valid ids of a foreign key of Registro comisión por autor..",
+        "description": "Searches the instances a foreign key attribute can reference by their display text and returns `{ value, title }` pairs; `value` is the id to send in that attribute. Works for any foreign key that does not depend on another field, including the ones too large for `rootdropdowns`.\n\n**Permissions:** only requires permission to view Registro comisión por autor.. No permission on the referenced entity is needed, so a user who can create this entity can always get the ids its foreign keys accept, even when the referenced entity (typically a configuration table) is restricted to other profiles. Fields in an attribute group the user cannot see are not returned.",
+        "parameters": [
+          {
+            "name": "field",
+            "in": "path",
+            "description": "Physical name of the foreign key attribute",
+            "required": true,
+            "schema": {
+              "enum": [
+                "LDDA_ID_LDDA",
+                "CLIE_ID_CLIE",
+                "MATE_ID_MATE",
+                "FACT_ID_FACT",
+                "NOCR_ID_NOCR"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema Id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "term",
+            "in": "query",
+            "description": "Text to search in the display attribute of the referenced entity. Empty returns the first results.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Maximum number of results (default 20)",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Matching instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string",
+                        "description": "Id to send in the foreign key attribute (as a string)."
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "Display text of the referenced instance."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "FieldNotSearchable: the field is not a foreign key, or it depends on another field (use `fields/{field}/dropdown`)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User does not have permission to view Registro comisión por autor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FieldNotFound: the field does not exist or the user cannot see it",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/DET_LIQ_DERECHOS_DE_": {
       "post": {
         "tags": [
@@ -4282,13 +4791,13 @@
                       "LDDA_ID_LDDA": {
                         "title": "Liquidación",
                         "type": "integer",
-                        "description": " This is a foreign key to Liq. Derechos de Autor. An id of Liq. Derechos de Autor is expected",
+                        "description": " This is a foreign key to Liq. Derechos de Autor. An id of Liq. Derechos de Autor is expected\n Valid ids: `GET /DET_LIQ_DERECHOS_DE_/fields/LDDA_ID_LDDA/search?term=...` (or all of them at once in `GET /DET_LIQ_DERECHOS_DE_/rootdropdowns`). Only requires permission to view Det Liq Derechos de Autor, not on the referenced entity.",
                         "nullable": true
                       },
                       "CLIE_ID_CLIE": {
                         "title": "Autor",
                         "type": "integer",
-                        "description": " This is a foreign key to Empresa. An id of Empresa is expected",
+                        "description": " This is a foreign key to Empresa. An id of Empresa is expected\n Valid ids: `GET /DET_LIQ_DERECHOS_DE_/fields/CLIE_ID_CLIE/search?term=...`. Only requires permission to view Det Liq Derechos de Autor, not on the referenced entity.",
                         "nullable": true
                       },
                       "DLDD_NACIONAL": {
@@ -4698,13 +5207,13 @@
                       "LDDA_ID_LDDA": {
                         "title": "Liquidación",
                         "type": "integer",
-                        "description": " This is a foreign key to Liq. Derechos de Autor. An id of Liq. Derechos de Autor is expected",
+                        "description": " This is a foreign key to Liq. Derechos de Autor. An id of Liq. Derechos de Autor is expected\n Valid ids: `GET /DET_LIQ_DERECHOS_DE_/fields/LDDA_ID_LDDA/search?term=...` (or all of them at once in `GET /DET_LIQ_DERECHOS_DE_/rootdropdowns`). Only requires permission to view Det Liq Derechos de Autor, not on the referenced entity.",
                         "nullable": true
                       },
                       "CLIE_ID_CLIE": {
                         "title": "Autor",
                         "type": "integer",
-                        "description": " This is a foreign key to Empresa. An id of Empresa is expected",
+                        "description": " This is a foreign key to Empresa. An id of Empresa is expected\n Valid ids: `GET /DET_LIQ_DERECHOS_DE_/fields/CLIE_ID_CLIE/search?term=...`. Only requires permission to view Det Liq Derechos de Autor, not on the referenced entity.",
                         "nullable": true
                       },
                       "DLDD_NACIONAL": {
@@ -5524,10 +6033,15 @@
                             "COUNT",
                             "AVG",
                             "MIN",
-                            "MAX"
+                            "MAX",
+                            "DAY",
+                            "WEEK",
+                            "MONTH",
+                            "YEAR",
+                            "HOUR"
                           ],
                           "type": "string",
-                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). Any value outside this list is rejected with 400.",
+                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). `DAY`, `WEEK`, `MONTH`, `YEAR` and `HOUR` are not aggregations but date groupings: they transform a date column (`DAY` → the date without time, `MONTH` → \"yyyy-MM\", `WEEK` → week number, `YEAR`, `HOUR` → 0-23) and group by the result - e.g. a DAY column plus a COUNT column gives records per day. Any value outside this list is rejected with 400.",
                           "nullable": true
                         }
                       }
@@ -5540,8 +6054,7 @@
                     "items": {
                       "required": [
                         "columnName",
-                        "operator",
-                        "value"
+                        "operator"
                       ],
                       "type": "object",
                       "properties": {
@@ -5573,18 +6086,31 @@
                             "<",
                             ">=",
                             "<=",
-                            "LIKE"
+                            "LIKE",
+                            "NOT LIKE",
+                            "IN",
+                            "NOT IN",
+                            "IS_EMPTY",
+                            "IS_NOT_EMPTY",
+                            "TODAY",
+                            "YESTERDAY",
+                            "BEFORE_TODAY",
+                            "ON_OR_BEFORE_TODAY",
+                            "AFTER_TODAY",
+                            "ON_OR_AFTER_TODAY",
+                            "CURRENT_MONTH",
+                            "PREVIOUS_MONTH"
                           ],
                           "type": "string",
-                          "description": "Comparison operator"
+                          "description": "Comparison operator. `IN` / `NOT IN` take an array `value` (at most 200 items, no nulls). `IS_EMPTY` / `IS_NOT_EMPTY` and the date operators (`TODAY`, `YESTERDAY`, `BEFORE_TODAY`, `ON_OR_BEFORE_TODAY`, `AFTER_TODAY`, `ON_OR_AFTER_TODAY`, `CURRENT_MONTH`, `PREVIOUS_MONTH`) ignore `value`; the date operators cover whole days (time of day included) and only accept date columns (400 otherwise). Named operators are case-insensitive."
                         },
                         "value": {
-                          "description": "Value to compare. Type should match column data type",
+                          "description": "Value to compare. Type should match column data type. An array for `IN` / `NOT IN`; ignored by `IS_EMPTY`, `IS_NOT_EMPTY` and the date operators.",
                           "nullable": true
                         }
                       }
                     },
-                    "description": "Filter specifications. All filters are combined with AND; there is no OR between filters (for a set of values, issue one query per value or use `search`). Filters apply to the individual records, before any aggregation.",
+                    "description": "Filter specifications. Filters are combined with AND; for a set of values of one column use the `IN` operator (OR between the values). Filters apply to the individual records, before any aggregation.",
                     "nullable": true
                   }
                 }
@@ -6570,6 +7096,304 @@
           },
           "403": {
             "description": "El usuario no tiene permisos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/DET_LIQ_DERECHOS_DE_/rootdropdowns": {
+      "get": {
+        "tags": [
+          "Det Liq Derechos de Autor"
+        ],
+        "summary": "Options of every combo of Det Liq Derechos de Autor that does not depend on another field.",
+        "description": "Returns, keyed by physical name, the `{ value, title }` options of: `LDDA_ID_LDDA` (Liquidación). `value` is the id to send in that attribute.\n\n**Permissions:** only requires permission to view Det Liq Derechos de Autor. No permission on the referenced entity is needed, so a user who can create this entity can always get the ids its foreign keys accept, even when the referenced entity (typically a configuration table) is restricted to other profiles. Fields in an attribute group the user cannot see are not returned.",
+        "parameters": [
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema Id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Options by field",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "LDDA_ID_LDDA": {
+                      "title": "Liquidación",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "string",
+                            "description": "Id to send in the foreign key attribute (as a string)."
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "Display text of the referenced instance."
+                          }
+                        }
+                      }
+                    },
+                    "_searchable": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "boolean"
+                      },
+                      "description": "Only present when some combo has too many options to be listed: `{ field: true }` for each one. Those fields are not in the response; look them up with `fields/{field}/search`."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User does not have permission to view Det Liq Derechos de Autor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/DET_LIQ_DERECHOS_DE_/fields/{field}/search": {
+      "get": {
+        "tags": [
+          "Det Liq Derechos de Autor"
+        ],
+        "summary": "Search the valid ids of a foreign key of Det Liq Derechos de Autor.",
+        "description": "Searches the instances a foreign key attribute can reference by their display text and returns `{ value, title }` pairs; `value` is the id to send in that attribute. Works for any foreign key that does not depend on another field, including the ones too large for `rootdropdowns`.\n\n**Permissions:** only requires permission to view Det Liq Derechos de Autor. No permission on the referenced entity is needed, so a user who can create this entity can always get the ids its foreign keys accept, even when the referenced entity (typically a configuration table) is restricted to other profiles. Fields in an attribute group the user cannot see are not returned.",
+        "parameters": [
+          {
+            "name": "field",
+            "in": "path",
+            "description": "Physical name of the foreign key attribute",
+            "required": true,
+            "schema": {
+              "enum": [
+                "LDDA_ID_LDDA",
+                "CLIE_ID_CLIE"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "schemaId",
+            "in": "query",
+            "description": "Schema Id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "term",
+            "in": "query",
+            "description": "Text to search in the display attribute of the referenced entity. Empty returns the first results.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Maximum number of results (default 20)",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Matching instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string",
+                        "description": "Id to send in the foreign key attribute (as a string)."
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "Display text of the referenced instance."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "FieldNotSearchable: the field is not a foreign key, or it depends on another field (use `fields/{field}/dropdown`)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User does not have permission to view Det Liq Derechos de Autor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message (endpoint validations)",
+                      "nullable": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message (state change / delete results)",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Error message (ProblemDetails)",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code (ProblemDetails)",
+                      "nullable": true
+                    }
+                  },
+                  "description": "Error payload. Read whichever of these is present: endpoint validations return `error`, state-change/delete results return `message`, and domain exceptions are mapped to RFC 7807 ProblemDetails (`title` / `status`)."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FieldNotFound: the field does not exist or the user cannot see it",
             "content": {
               "application/json": {
                 "schema": {
@@ -7955,10 +8779,15 @@
                             "COUNT",
                             "AVG",
                             "MIN",
-                            "MAX"
+                            "MAX",
+                            "DAY",
+                            "WEEK",
+                            "MONTH",
+                            "YEAR",
+                            "HOUR"
                           ],
                           "type": "string",
-                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). Any value outside this list is rejected with 400.",
+                          "description": "Aggregation function. As soon as one column has an aggregation, the query is grouped: every requested column WITHOUT an aggregation becomes part of the GROUP BY, and each row of `data` is one group (no `id`/`ESTA_CODIGO` keys); if every column is aggregated, the result is a single row. `total` then counts groups, not underlying records, and `page`/`pageSize` paginate groups. An aggregated column can be sorted with `sortDirection`/`sortOrder` (it orders by the aggregated value). `COUNT` counts DISTINCT non-null values of the column, not rows - to count records per group, COUNT a column that is unique per record (e.g. `id`). `filters` and `search` are applied to the individual records BEFORE grouping; there is no way to filter on an aggregated value (no HAVING). `DAY`, `WEEK`, `MONTH`, `YEAR` and `HOUR` are not aggregations but date groupings: they transform a date column (`DAY` → the date without time, `MONTH` → \"yyyy-MM\", `WEEK` → week number, `YEAR`, `HOUR` → 0-23) and group by the result - e.g. a DAY column plus a COUNT column gives records per day. Any value outside this list is rejected with 400.",
                           "nullable": true
                         }
                       }
@@ -7971,8 +8800,7 @@
                     "items": {
                       "required": [
                         "columnName",
-                        "operator",
-                        "value"
+                        "operator"
                       ],
                       "type": "object",
                       "properties": {
@@ -8003,18 +8831,31 @@
                             "<",
                             ">=",
                             "<=",
-                            "LIKE"
+                            "LIKE",
+                            "NOT LIKE",
+                            "IN",
+                            "NOT IN",
+                            "IS_EMPTY",
+                            "IS_NOT_EMPTY",
+                            "TODAY",
+                            "YESTERDAY",
+                            "BEFORE_TODAY",
+                            "ON_OR_BEFORE_TODAY",
+                            "AFTER_TODAY",
+                            "ON_OR_AFTER_TODAY",
+                            "CURRENT_MONTH",
+                            "PREVIOUS_MONTH"
                           ],
                           "type": "string",
-                          "description": "Comparison operator"
+                          "description": "Comparison operator. `IN` / `NOT IN` take an array `value` (at most 200 items, no nulls). `IS_EMPTY` / `IS_NOT_EMPTY` and the date operators (`TODAY`, `YESTERDAY`, `BEFORE_TODAY`, `ON_OR_BEFORE_TODAY`, `AFTER_TODAY`, `ON_OR_AFTER_TODAY`, `CURRENT_MONTH`, `PREVIOUS_MONTH`) ignore `value`; the date operators cover whole days (time of day included) and only accept date columns (400 otherwise). Named operators are case-insensitive."
                         },
                         "value": {
-                          "description": "Value to compare. Type should match column data type",
+                          "description": "Value to compare. Type should match column data type. An array for `IN` / `NOT IN`; ignored by `IS_EMPTY`, `IS_NOT_EMPTY` and the date operators.",
                           "nullable": true
                         }
                       }
                     },
-                    "description": "Filter specifications. All filters are combined with AND; there is no OR between filters (for a set of values, issue one query per value or use `search`). Filters apply to the individual records, before any aggregation.",
+                    "description": "Filter specifications. Filters are combined with AND; for a set of values of one column use the `IN` operator (OR between the values). Filters apply to the individual records, before any aggregation.",
                     "nullable": true
                   }
                 }
